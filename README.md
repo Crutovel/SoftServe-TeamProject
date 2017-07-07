@@ -1,4 +1,4 @@
-# Code style in idea
+# Code style in Idea
 
 ## Google code style
 
