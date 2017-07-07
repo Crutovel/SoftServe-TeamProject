@@ -1,4 +1,4 @@
-#Code style in idea
+# Code style in idea
 
 Чтобы подключить google code style для автоматического редактирования кода в Idea необходимо:
 1. Скачать google code style: https://github.com/google/styleguide
