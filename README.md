@@ -1,4 +1,6 @@
-The current project is to be an online IT-Academy organisational app, where all the students and teachers will be able to plan, organize and schedule their work effectively.
+# IT-Academy Project
+
+## The current project is to be an online IT-Academy organisational app, where all the students and teachers will be able to plan, organize and schedule their work effectively.
 
 
 
