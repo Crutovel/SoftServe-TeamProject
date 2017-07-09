@@ -21,3 +21,6 @@ choose an option "CheckStyle-IDEA", install and restart your Idea
 2) Download a file: https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
 3) And finally, in the Idea go to: Settings/Other Settings/Checkstyle/Configuration File,
 add the file "google_checks.xml" and choose it to be a configuration file.
+
+### How to read data from db
+ Read only user has login = user_ro and password = 12345qwerty
