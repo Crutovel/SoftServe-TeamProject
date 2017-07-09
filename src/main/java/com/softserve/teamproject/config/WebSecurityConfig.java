@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.web.configuration
         .EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration
         .WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -32,21 +30,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .and()
-                .formLogin().loginPage("/signin.jsp").permitAll()
-                .defaultSuccessUrl("/welcome.jsp")
+                .formLogin()//.loginPage("/signin").permitAll()
+                .defaultSuccessUrl("/welcome")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .failureUrl("/signin-error.jsp")
+                .failureUrl("/signin-error")
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/")
                 .and()
                 .rememberMe().key("token").tokenValiditySeconds(3600);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+////We don't need a password encoder while we don't have registration
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
@@ -59,7 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authProvider
                 = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
+////We don't need a password encoder while we don't have registration
+//        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 }
