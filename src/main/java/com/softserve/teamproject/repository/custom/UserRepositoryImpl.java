@@ -4,12 +4,13 @@ import static com.softserve.teamproject.repository.expression.UserExpressions.ge
 
 import com.softserve.teamproject.entity.QUser;
 import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.repository.UserRepository;
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 
 public class UserRepositoryImpl extends QueryDslRepositorySupport implements UserRepositoryCustom {
 
-  public UserRepositoryImpl(Class<?> domainClass) {
-    super(domainClass);
+  public UserRepositoryImpl() {
+    super(User.class);
   }
 
   public User getUserByNickName(String nickName) {
