@@ -1,5 +1,8 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.entity.Role;
+import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,13 +41,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userName) throws
             UsernameNotFoundException {
-        User user = userRepository.getUserByUserName(userName);
+        User user = userRepository.getUserByNickName(userName);
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         Role role = user.getRole();
         grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 
         return new org.springframework.security.core.userdetails.User(user
-                .getUsername(), user.getPassword(), grantedAuthorities);
+                .getNickName(), user.getPassword(), grantedAuthorities);
     }
 }

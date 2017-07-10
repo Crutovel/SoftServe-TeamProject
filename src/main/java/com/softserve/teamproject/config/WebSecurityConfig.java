@@ -21,11 +21,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().withUser("ram").password("ram123").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("ravan").password("ravan123").roles("USER");
+        auth.inMemoryAuthentication().withUser("kans").password("kans123").roles("USER");
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/welcome").authenticated()
+                .antMatchers("/**").authenticated()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
@@ -53,6 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
+
+/*
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider
@@ -61,5 +70,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ////We don't need a password encoder while we don't have registration
 //        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
-    }
+    }*/
 }

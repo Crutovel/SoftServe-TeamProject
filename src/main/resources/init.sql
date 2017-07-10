@@ -3,7 +3,7 @@ CREATE SCHEMA CAESAR CHARACTER SET UTF8;
 USE CAESAR;
 
 CREATE USER IF NOT EXISTS 'db_admin'@'localhost' IDENTIFIED BY 'rNT5Vn[j(>R2r6.UXcJwtv];`RWewYH`';
-GRANT ALL PRIVILEGES ON CAESAR.* TO 'admin'@'localhost';
+GRANT ALL PRIVILEGES ON CAESAR.* TO 'db_admin'@'localhost';
 
 CREATE USER IF NOT EXISTS 'user_ro'@'localhost' IDENTIFIED BY '12345qwerty';
 GRANT SELECT ON CAESAR.* TO 'user_ro'@'localhost';
