@@ -43,6 +43,7 @@ insert into specialization (`name`) values ('ua_test_automation_boot_camp_for_mo
 insert into specialization (`name`) values ('ua_software_ingeneering_with_testing');
 insert into country (`name`) values ('Ukraine');
 insert into country (`name`) values ('Hungary');
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 insert into location (`name`,country_id,coordinator_id) values ('Dnipro',1,2);
 insert into location (`name`,country_id,coordinator_id) values ('Sofia',2,3);
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Oleg','Shcets',3,'2017-01-01','OlegShvets','ghd22df','teacher in softServe. Dnipro',1);
@@ -65,3 +66,4 @@ insert into phone (`value`,user_id) values ('+344-04-252-66-32',3);
 insert into contact_link (`value`,user_id) values ('https://linkedin.com/OlegShvets',1);
 insert into contact_link (`value`,user_id) values ('https://linkedin.com/PapaJS',2);
 insert into contact_link (`value`,user_id) values ('https://vk.com/bukhanochka',4);
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
