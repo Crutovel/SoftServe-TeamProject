@@ -18,7 +18,6 @@ import org.springframework.security.core.AuthenticationException;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
 
