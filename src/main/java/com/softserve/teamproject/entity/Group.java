@@ -29,10 +29,10 @@ public class Group {
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
   private Location location;
 
-  @Column(name = "start_date")
+  @Column(name = "start_date", columnDefinition = "DATE")
   private LocalDate startDate;
 
-  @Column(name = "finish_date")
+  @Column(name = "finish_date", columnDefinition = "DATE")
   private LocalDate finishDate;
 
   @ManyToOne
