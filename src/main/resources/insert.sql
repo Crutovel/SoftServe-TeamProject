@@ -43,14 +43,20 @@ insert into specialization (`name`) values ("ua_test_automation_boot_camp_for_mo
 insert into specialization (`name`) values ("ua_software_ingeneering_with_testing");
 insert into country (`name`) values ("Ukraine");
 insert into country (`name`) values ("Hungary");
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 insert into location (`name`,country_id,coordinator_id) values ("Dnipro",1,2);
 insert into location (`name`,country_id,coordinator_id) values ("Sofia",2,3);
-insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ("Oleg","Shcets",3,"2017-01-01","OlegShvets","ghd22df","teacher in softServe. Dnipro",1);
-insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ("Dmytro","Petin",4,"2017-02-02","DmytroPetin","fgdfg24sd","coordinator in Dnipro",1);
-insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ("Lucas","Lukichich",4,"2017-03-03","LukasLukichich","fjgf24sd","coordinator in Sofia",2);
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info) values ("Oleg","Shcets",3,"2017-01-01","OlegShvets","ghd22df","teacher in softServe. Dnipro");
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info) values ("Dmytro","Petin",4,"2017-02-02","DmytroPetin","fgdfg24sd","coordinator in Dnipro");
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info) values ("Lucas","Lukichich",4,"2017-03-03","LukasLukichich","fjgf24sd","coordinator in Sofia");
 insert into `group` (`name`,teacher_id,location_id,start_date,finish_date,status_id,specialization_id) values ("DP-115",1,1,"2017-04-29","2017-08-18",4,7);
-insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ("Lev","Bukhanets",2,"2017-04-04","Myst1c","sdfhs332w","student Lev",1);
-insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ("Dmytro","Kholod",2,"2017-05-05","DimaKh","sdasdfdew","student Dima",1);
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info) values ("Lev","Bukhanets",2,"2017-04-04","Myst1c","sdfhs332w","student Lev");
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info) values ("Dmytro","Kholod",2,"2017-05-05","DimaKh","sdasdfdew","student Dima");
+insert into user_location(user_id,location_id) values (1,1);
+insert into user_location(user_id,location_id) values (2,1);
+insert into user_location(user_id,location_id) values (3,2);
+insert into user_location(user_id,location_id) values (4,1);
+insert into user_location(user_id,location_id) values (5,1);
 insert into student_group (group_id,user_id) values (1,4);
 insert into student_group (group_id,user_id) values (1,5);
 insert into email (`value`,is_it_primary,user_id) values ("olshvets@gmail.com",true,1);
@@ -65,6 +71,4 @@ insert into phone (`value`,user_id) values ("+344-04-252-66-32",3);
 insert into contact_link (`value`,user_id) values ("https://linkedin.com/OlegShvets",1);
 insert into contact_link (`value`,user_id) values ("https://linkedin.com/PapaJS",2);
 insert into contact_link (`value`,user_id) values ("https://vk.com/bukhanochka",4);
-
-
-
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
