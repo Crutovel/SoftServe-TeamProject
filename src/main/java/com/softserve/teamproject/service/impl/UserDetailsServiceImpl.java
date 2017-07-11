@@ -11,40 +11,43 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The class implements UserDetailsService interface and overrides its loadUserByUsername(String
+ * userName) method.
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
+  private UserRepository userRepository;
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+  @Autowired
+  public void setUserRepository(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
-    public UserDetailsServiceImpl() {
-    }
+  public UserDetailsServiceImpl() {
+  }
 
-    /**
-     * This is an obligatory method that implements the similar method of the
-     * UserDetailsService interface. Here we get a user from the repository by
-     * user's name, then get his role and then we return a value of UserDetails type,
-     * which is actually provided by the framework itself. It's basically the
-     * procedure of user authorization.
-     *
-     * @param userName
-     * @return
-     * @throws UsernameNotFoundException
-     */
-    @Override
-    public UserDetails loadUserByUsername(String userName) throws
-            UsernameNotFoundException {
-        User user = userRepository.getUserByUserName(userName);
+  /**
+   * This is an obligatory method that implements the similar method of the
+   * UserDetailsService interface. Here we get a user from the repository by
+   * user's name, then get his role and then we return a value of UserDetails type,
+   * which is actually provided by the framework itself. It's basically the
+   * procedure of user authorization.
+   *
+   * @throws UsernameNotFoundException is thrown when there is no user with the corresponding user
+   * name.
+   */
+  @Override
+  public UserDetails loadUserByUsername(String userName) throws
+      UsernameNotFoundException {
+    User user = userRepository.getUserByNickName(userName);
 
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        Role role = user.getRole();
-        grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+    Role role = user.getRole();
+    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 
-        return new org.springframework.security.core.userdetails.User(user
-                .getUsername(), user.getPassword(), grantedAuthorities);
-    }
+    return new org.springframework.security.core.userdetails.User(user
+        .getNickName(), user.getPassword(), grantedAuthorities);
+  }
 }

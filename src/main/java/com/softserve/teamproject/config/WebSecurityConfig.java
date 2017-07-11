@@ -4,16 +4,16 @@ import com.softserve.teamproject.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao
-        .DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders
-        .AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration
-        .EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration
-        .WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 
+/**
+ * The class provides basic security configuration.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,33 +23,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/welcome").authenticated()
-                .and()
-                .csrf().disable()
-                .authorizeRequests()
-                .and()
-                .formLogin()//.loginPage("/signin").permitAll()
-                .defaultSuccessUrl("/welcome")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .failureUrl("/signin-error")
-                .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/")
-                .and()
-                .rememberMe().key("token").tokenValiditySeconds(3600);
+        // @formatter:off
+    http
+        .authorizeRequests()
+          .antMatchers("/**").authenticated().and()
+        .formLogin()
+          .defaultSuccessUrl("/welcome")
+          .usernameParameter("username")
+          .passwordParameter("password")
+          .failureUrl("/signin-error").and()
+        .logout()
+          .logoutUrl("/logout")
+          .logoutSuccessUrl("/").and()
+        .rememberMe().key("token").tokenValiditySeconds(3600);
+    // @formatter:on
     }
 
-////We don't need a password encoder while we don't have registration
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
+            throws AuthenticationException {
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -58,8 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider authProvider
                 = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
-////We don't need a password encoder while we don't have registration
-//        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 }
