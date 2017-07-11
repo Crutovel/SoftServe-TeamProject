@@ -168,7 +168,7 @@ public class User {
   public void setContactLinks(Set<ContactLink> contactLinks) {
     this.contactLinks = contactLinks;
   }
-
+/*
   @Override
   public String toString() {
     return "User{"
@@ -186,5 +186,5 @@ public class User {
         + ", phones=" + phones
         + ", contactLinks=" + contactLinks
         + '}';
-  }
+  }*/
 }

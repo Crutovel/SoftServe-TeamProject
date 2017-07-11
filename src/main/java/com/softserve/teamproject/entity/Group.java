@@ -25,9 +25,9 @@ public class Group {
   @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
   private User teacher;
 
-  @ManyToOne
+  /*@ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-  private Location location;
+  private Location location;*/
 
   @Column(name = "start_date")
   private LocalDate startDate;
@@ -70,13 +70,13 @@ public class Group {
     this.teacher = teacher;
   }
 
-  public Location getLocation() {
+ /* public Location getLocation() {
     return location;
   }
 
   public void setLocation(Location location) {
     this.location = location;
-  }
+  }*/
 
   public LocalDate getStartDate() {
     return startDate;
@@ -116,7 +116,7 @@ public class Group {
         + "id=" + id
         + ", name='" + name + '\''
         + ", teacher=" + teacher
-        + ", location=" + location
+//        + ", location=" + location
         + ", startDate=" + startDate
         + ", finishDate=" + finishDate
         + ", status=" + status

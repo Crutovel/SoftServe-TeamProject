@@ -4,15 +4,11 @@ import com.softserve.teamproject.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao
-        .DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders
-        .AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration
-        .EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration
-        .WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +23,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().withUser("ravan").password("ravan123").roles("USER");
         auth.inMemoryAuthentication().withUser("kans").password("kans123").roles("USER");
     }*/
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication().withUser("ram").password("ram123").roles("ADMIN");
+//        auth.inMemoryAuthentication().withUser("ravan").password("ravan123").roles("USER");
+//        auth.inMemoryAuthentication().withUser("kans").password("kans123").roles("USER");
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .and()
-                .formLogin()//.loginPage("/signin").permitAll()
+               .formLogin()//.loginPage("/signin").permitAll()
                 .defaultSuccessUrl("/welcome")
                 .usernameParameter("username")
                 .passwordParameter("password")
