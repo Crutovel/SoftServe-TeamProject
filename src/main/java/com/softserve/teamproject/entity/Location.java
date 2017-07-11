@@ -1,16 +1,16 @@
 package com.softserve.teamproject.entity;
 
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 
 @Entity
@@ -24,18 +24,14 @@ public class Location {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
   private Country country;
 
-  @OneToOne
-  @JoinColumn(name = "coordinator_id", referencedColumnName = "id", nullable = false)
-  private User coordinator;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
+  private Set<Groups> groups;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
-  private Set<Group> groups;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
   private Set<User> users;
 
   public Location() {
@@ -65,19 +61,11 @@ public class Location {
     this.country = country;
   }
 
-  public User getCoordinator() {
-    return coordinator;
-  }
-
-  public void setCoordinator(User coordinator) {
-    this.coordinator = coordinator;
-  }
-
-  public Set<Group> getGroups() {
+  public Set<Groups> getGroups() {
     return groups;
   }
 
-  public void setGroups(Set<Group> groups) {
+  public void setGroups(Set<Groups> groups) {
     this.groups = groups;
   }
 
@@ -95,7 +83,6 @@ public class Location {
         + "id=" + id
         + ", name='" + name + '\''
         + ", country=" + country
-        + ", coordinator=" + coordinator
         + ", groups=" + groups
         + ", users=" + users
         + '}';

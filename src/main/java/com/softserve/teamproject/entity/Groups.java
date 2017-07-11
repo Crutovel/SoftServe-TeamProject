@@ -3,6 +3,7 @@ package com.softserve.teamproject.entity;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "group")
-public class Group {
+@Table(name = "groups")
+public class Groups {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,13 +22,21 @@ public class Group {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
-  private User teacher;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "teacher_id", nullable = false)
+  private User user;
 
-  @ManyToOne
-  @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "location_id", nullable = false)
   private Location location;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "status_id", nullable = false)
+  private Status status;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "specialization_id", nullable = false)
+  private Specialization specialization;
 
   @Column(name = "start_date")
   private LocalDate startDate;
@@ -35,15 +44,7 @@ public class Group {
   @Column(name = "finish_date")
   private LocalDate finishDate;
 
-  @ManyToOne
-  @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
-  private Status status;
-
-  @ManyToOne
-  @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
-  private Specialization specialization;
-
-  public Group() {
+  public Groups() {
   }
 
   public int getId() {
@@ -63,11 +64,11 @@ public class Group {
   }
 
   public User getTeacher() {
-    return teacher;
+    return user;
   }
 
-  public void setTeacher(User teacher) {
-    this.teacher = teacher;
+  public void setTeacher(User user) {
+    this.user = user;
   }
 
   public Location getLocation() {
@@ -112,10 +113,10 @@ public class Group {
 
   @Override
   public String toString() {
-    return "Group{"
+    return "Groups{"
         + "id=" + id
         + ", name='" + name + '\''
-        + ", teacher=" + teacher
+        + ", teacher=" + user
         + ", location=" + location
         + ", startDate=" + startDate
         + ", finishDate=" + finishDate

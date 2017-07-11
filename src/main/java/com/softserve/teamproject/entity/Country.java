@@ -1,7 +1,6 @@
 package com.softserve.teamproject.entity;
 
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,8 +21,8 @@ public class Country {
   @Column(name = "name")
   private String name;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "country", cascade = CascadeType.ALL)
-  private Set<Location> locations;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
+  private Set<Location> location;
 
   public Country() {
   }
@@ -45,11 +44,11 @@ public class Country {
   }
 
   public Set<Location> getLocations() {
-    return locations;
+    return location;
   }
 
-  public void setLocations(Set<Location> locations) {
-    this.locations = locations;
+  public void setLocations(Set<Location> location) {
+    this.location = location;
   }
 
   @Override
@@ -57,7 +56,7 @@ public class Country {
     return "Country{"
         + "id=" + id
         + ", name='" + name + '\''
-        + ", locations=" + locations
+        + ", locations=" + location
         + '}';
   }
 }

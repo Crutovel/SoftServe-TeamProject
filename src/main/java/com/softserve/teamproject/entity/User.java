@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,7 +63,18 @@ public class User {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private Set<ContactLink> contactLinks;
 
+  @OneToMany(fetch = FetchType.LAZY , mappedBy = "user")
+  private Set<Groups> groups;
+
   public User() {
+  }
+
+  public Set<Groups> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(Set<Groups> groups) {
+    this.groups = groups;
   }
 
   public int getId() {
