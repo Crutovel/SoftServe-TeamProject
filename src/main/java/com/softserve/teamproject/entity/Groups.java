@@ -1,6 +1,7 @@
 package com.softserve.teamproject.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,19 +23,19 @@ public class Groups {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "teacher_id", nullable = false)
   private User user;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "location_id", nullable = false)
   private Location location;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "status_id", nullable = false)
   private Status status;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "specialization_id", nullable = false)
   private Specialization specialization;
 
@@ -112,8 +113,31 @@ public class Groups {
   }
 
   @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Groups other = (Groups) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
+        && Objects.equals(user, other.user) && Objects.equals(location, other.location)
+        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
+        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, user, location, startDate, finishDate, status, specialization);
+  }
+
+  @Override
   public String toString() {
-    return "Groups{"
+    return "Group{"
         + "id=" + id
         + ", name='" + name + '\''
         + ", teacher=" + user

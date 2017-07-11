@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,6 +51,27 @@ public class RoleCategory {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    RoleCategory other = (RoleCategory) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
+        && Objects.equals(roles, other.roles);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, roles);
   }
 
   @Override

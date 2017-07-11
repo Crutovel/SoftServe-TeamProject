@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,6 +50,27 @@ public class ContactLink {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    ContactLink other = (ContactLink) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(value, other.value)
+        && Objects.equals(user, other.user);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, value, user);
   }
 
   @Override

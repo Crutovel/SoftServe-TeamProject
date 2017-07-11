@@ -1,6 +1,8 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,14 +26,14 @@ public class Location {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne
   @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
   private Country country;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<Groups> groups;
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<User> users;
 
   public Location() {
@@ -75,6 +77,28 @@ public class Location {
 
   public void setUsers(Set<User> users) {
     this.users = users;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Location other = (Location) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
+        && Objects.equals(country, other.country)
+        && Objects.equals(groups, other.groups) && Objects.equals(users, other.users);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, country, groups, users);
   }
 
   @Override
