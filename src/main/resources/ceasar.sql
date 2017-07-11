@@ -2,18 +2,14 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `сeasar` ;
-
-CREATE SCHEMA IF NOT EXISTS `сeasar` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `сeasar` ;
-
+DROP TABLE IF EXISTS `role_category`;
 CREATE TABLE `role_category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -22,19 +18,19 @@ CREATE TABLE `role` (
   INDEX `fk_role_category1_idx` (`category_id` ASC),
   CONSTRAINT `fk_role_category1`
     FOREIGN KEY (`category_id`)
-    REFERENCES `Ceasar`.`role_category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `caesar`.`role_category` (`id`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -45,17 +41,17 @@ CREATE TABLE `location` (
   INDEX `fk_location_user1_idx` (`coordinator_id` ASC),
   CONSTRAINT `fk_location_country1`
     FOREIGN KEY (`country_id`)
-    REFERENCES `Ceasar`.`country` (`id`)
+    REFERENCES `caesar`.`country` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_location_user1`
     FOREIGN KEY (`coordinator_id`)
-    REFERENCES `Ceasar`.`user` (`id`)
+    REFERENCES `caesar`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
@@ -72,17 +68,17 @@ CREATE TABLE `user` (
   INDEX `fk_user_location1_idx` (`location_id` ASC),
   CONSTRAINT `fk_user_role1`
     FOREIGN KEY (`role_id`)
-    REFERENCES `Ceasar`.`role` (`id`)
+    REFERENCES `caesar`.`role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_location1`
     FOREIGN KEY (`location_id`)
-    REFERENCES `Ceasar`.`location` (`id`)
+    REFERENCES `caesar`.`location` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `email`;
 CREATE TABLE `email` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(45) NOT NULL,
@@ -92,12 +88,12 @@ CREATE TABLE `email` (
   INDEX `fk_email_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_email_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `Ceasar`.`user` (`id`)
+    REFERENCES `caesar`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `phone`;
 CREATE TABLE `phone` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(45) NOT NULL,
@@ -106,12 +102,12 @@ CREATE TABLE `phone` (
   INDEX `fk_phone_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_phone_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `Ceasar`.`user` (`id`)
+    REFERENCES `caesar`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `contact_link`;
 CREATE TABLE `contact_link` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(45) NOT NULL,
@@ -120,19 +116,19 @@ CREATE TABLE `contact_link` (
   INDEX `fk_contact_link_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_contact_link_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `Ceasar`.`user` (`id`)
+    REFERENCES `caesar`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `status_category`;
 CREATE TABLE `status_category` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -141,19 +137,19 @@ CREATE TABLE `status` (
   INDEX `fk_status_status_category1_idx` (`category_id` ASC),
   CONSTRAINT `fk_status_status_category1`
     FOREIGN KEY (`category_id`)
-    REFERENCES `Ceasar`.`status_category` (`id`)
+    REFERENCES `caesar`.`status_category` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `specialization`;
 CREATE TABLE `specialization` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -170,27 +166,27 @@ CREATE TABLE `group` (
   INDEX `fk_group_spetialization1_idx` (`specialization_id` ASC),
   CONSTRAINT `fk_group_user1`
     FOREIGN KEY (`teacher_id`)
-    REFERENCES `Ceasar`.`user` (`id`)
+    REFERENCES `caesar`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_group_status1`
     FOREIGN KEY (`status_id`)
-    REFERENCES `Ceasar`.`status` (`id`)
+    REFERENCES `caesar`.`status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_group_location1`
     FOREIGN KEY (`location_id`)
-    REFERENCES `Ceasar`.`location` (`id`)
+    REFERENCES `caesar`.`location` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_group_spetialization1`
     FOREIGN KEY (`specialization_id`)
-    REFERENCES `Ceasar`.`specialization` (`id`)
+    REFERENCES `caesar`.`specialization` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
+DROP TABLE IF EXISTS `student_group`;
 CREATE TABLE `student_group` (
   `group_id` INT NOT NULL,
   `user_id` INT NOT NULL,
@@ -198,12 +194,12 @@ CREATE TABLE `student_group` (
   INDEX `fk_student_group_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_student_group_group1`
     FOREIGN KEY (`group_id`)
-    REFERENCES `Ceasar`.`group` (`id`)
+    REFERENCES `caesar`.`group` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_student_group_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `Ceasar`.`user` (`id`)
+    REFERENCES `caesar`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
