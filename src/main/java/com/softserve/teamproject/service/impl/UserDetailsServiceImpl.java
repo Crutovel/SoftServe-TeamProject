@@ -20,6 +20,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   private UserRepository userRepository;
 
+
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
     this.userRepository = userRepository;
@@ -28,6 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetailsServiceImpl() {
   }
 
+
   /**
    * This is an obligatory method that implements the similar method of the
    * UserDetailsService interface. Here we get a user from the repository by
@@ -35,6 +37,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
    * which is actually provided by the framework itself. It's basically the
    * procedure of user authorization.
    *
+   * @param userName String value
+   * @return UserDetails with user permission
    * @throws UsernameNotFoundException is thrown when there is no user with the corresponding user
    * name.
    */

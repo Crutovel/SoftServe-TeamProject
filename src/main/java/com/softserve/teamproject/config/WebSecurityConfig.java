@@ -18,12 +18,14 @@ import org.springframework.security.core.AuthenticationException;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // @formatter:off
+  @Autowired
+  private UserDetailsServiceImpl userDetailsService;
+
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    // @formatter:off
     http
         .authorizeRequests()
           .antMatchers("/**").authenticated().and()
@@ -37,20 +39,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .logoutSuccessUrl("/").and()
         .rememberMe().key("token").tokenValiditySeconds(3600);
     // @formatter:on
-    }
+  }
 
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws AuthenticationException {
-        auth.authenticationProvider(authenticationProvider());
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth)
+      throws AuthenticationException {
+    auth.authenticationProvider(authenticationProvider());
+  }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider
-                = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        return authProvider;
-    }
+
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService);
+    return authProvider;
+  }
 }
