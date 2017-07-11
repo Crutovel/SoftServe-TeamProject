@@ -2,6 +2,7 @@ package com.softserve.teamproject.entity;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -167,6 +168,33 @@ public class User {
 
   public void setContactLinks(Set<ContactLink> contactLinks) {
     this.contactLinks = contactLinks;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    User other = (User) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName)
+        && Objects.equals(lastName, other.lastName) && Objects.equals(role, other.role)
+        && Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(nickName, other.nickName)
+        && Objects.equals(password, other.password) && Objects.equals(selfInfo, other.selfInfo)
+        && Arrays.equals(image, other.image) && Objects.equals(location, other.location)
+        && Objects.equals(emails, other.emails) && Objects.equals(phones, other.phones)
+        && Objects.equals(contactLinks, other.contactLinks);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, firstName, lastName, role, dateOfBirth, nickName, password, selfInfo,
+        image, location, emails, phones, contactLinks);
   }
 
   @Override
