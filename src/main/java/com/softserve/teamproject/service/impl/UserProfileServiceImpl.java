@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserProfileServiceImpl implements UserProfileService {
 
-  UserRepository userRepository;
+  private UserRepository userRepository;
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -18,7 +18,6 @@ public class UserProfileServiceImpl implements UserProfileService {
 
   @Override
   public User getUserProfile(String principalName) {
-    User user = userRepository.getUserByNickName(principalName);
-    return user;
+    return userRepository.getUserByNickName(principalName);
   }
 }

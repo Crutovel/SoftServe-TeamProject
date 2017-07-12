@@ -10,21 +10,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * controller that used for handle user profile.
- * user photo is converted into JSON format as a Base64 string
+ * Controller that used for handle user profile.
+ * User photo is converted into JSON format as a Base64 string
  */
 @RestController
 public class UserProfileController {
 
-  UserProfileService userProfileService;
+  private UserProfileService userProfileService;
 
   @Autowired
-  public  void setUserProfileService(UserProfileService userProfileService){
-    this.userProfileService= userProfileService;
+  public void setUserProfileService(UserProfileService userProfileService) {
+    this.userProfileService = userProfileService;
   }
 
   /**
-   * get user info of current user
+   * Get user info of current user
+   *
    * @param principal authorized user
    * @return user info of authorized user
    */
@@ -32,7 +33,7 @@ public class UserProfileController {
   public
   @ResponseBody
   User getUserProfile(Principal principal) {
-    User user=userProfileService.getUserProfile(principal.getName());
+    User user = userProfileService.getUserProfile(principal.getName());
     return user;
   }
 }
