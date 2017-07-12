@@ -68,6 +68,7 @@ public class Location {
     this.country = country;
   }
 
+  @JsonIgnore
   public User getCoordinator() {
     return coordinator;
   }
