@@ -35,11 +35,4 @@ public class UserProfileController {
     User user=userProfileService.getUserProfile(principal.getName());
     return user;
   }
-
-  @RequestMapping(value = "/", method = RequestMethod.GET)
-  public
-  @ResponseBody
-  User getMainPage() {
-    return null;
-  }
 }

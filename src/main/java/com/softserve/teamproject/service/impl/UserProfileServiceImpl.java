@@ -1,7 +1,8 @@
-package com.softserve.teamproject.service;
+package com.softserve.teamproject.service.impl;
 
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
