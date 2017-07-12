@@ -21,7 +21,6 @@ public class SecurityServiceImpl implements SecurityService {
   @Autowired
   private UserDetailsService userDetailsService;
 
-
   /**
    * Method returns a name of the logged in user. We can use it to say hello
    * to the user.
@@ -38,7 +37,6 @@ public class SecurityServiceImpl implements SecurityService {
 
     return null;
   }
-
 
   /**
    * The method is used to log in a user automatically after the registration.
