@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
@@ -114,6 +116,7 @@ public class User {
     this.nickName = nickName;
   }
 
+  @JsonIgnore
   public String getPassword() {
     return password;
   }

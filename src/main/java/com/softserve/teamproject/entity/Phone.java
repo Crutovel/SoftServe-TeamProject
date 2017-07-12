@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +46,7 @@ public class Phone {
     this.value = value;
   }
 
+  @JsonIgnore
   public User getUser() {
     return user;
   }
