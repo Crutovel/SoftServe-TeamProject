@@ -1,5 +1,8 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,12 +57,34 @@ public class Email {
     isPrimary = primary;
   }
 
+  @JsonIgnore
   public User getUser() {
     return user;
   }
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Email other = (Email) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(value, other.value)
+        && Objects.equals(isPrimary, other.isPrimary);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, value, isPrimary);
   }
 
   @Override

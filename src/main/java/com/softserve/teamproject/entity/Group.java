@@ -1,6 +1,7 @@
 package com.softserve.teamproject.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,10 +30,10 @@ public class Group {
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
   private Location location;
 
-  @Column(name = "start_date")
+  @Column(name = "start_date", columnDefinition = "DATE")
   private LocalDate startDate;
 
-  @Column(name = "finish_date")
+  @Column(name = "finish_date", columnDefinition = "DATE")
   private LocalDate finishDate;
 
   @ManyToOne
@@ -108,6 +109,29 @@ public class Group {
 
   public void setSpecialization(Specialization specialization) {
     this.specialization = specialization;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Group other = (Group) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
+        && Objects.equals(teacher, other.teacher) && Objects.equals(location, other.location)
+        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
+        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, teacher, location, startDate, finishDate, status, specialization);
   }
 
   @Override

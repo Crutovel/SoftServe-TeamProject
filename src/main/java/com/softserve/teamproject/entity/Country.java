@@ -1,5 +1,8 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,12 +47,34 @@ public class Country {
     this.name = name;
   }
 
+  @JsonIgnore
   public Set<Location> getLocations() {
     return locations;
   }
 
   public void setLocations(Set<Location> locations) {
     this.locations = locations;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Country other = (Country) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
+        && Objects.equals(locations, other.locations);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, locations);
   }
 
   @Override
