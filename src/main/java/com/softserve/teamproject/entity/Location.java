@@ -104,6 +104,7 @@ public class Location {
         + ", country=" + country
         + ", groups=" + groups
         + ", users=" + users
+        + ", coordinator=" + coordinator
         + '}';
   }
 }
