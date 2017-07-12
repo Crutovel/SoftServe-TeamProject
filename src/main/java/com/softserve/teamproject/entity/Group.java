@@ -125,10 +125,8 @@ public class Group {
     Group other = (Group) otherObject;
     return Objects.equals(id, other.id) && Objects.equals(name, other.name)
         && Objects.equals(teacher, other.teacher) && Objects.equals(location, other.location)
-        && Objects.equals(startDate, other.startDate) && Objects
-        .equals(finishDate, other.finishDate)
-        && Objects.equals(status, other.status) && Objects
-        .equals(specialization, other.specialization);
+        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
+        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
   }
 
   @Override
