@@ -1,8 +1,9 @@
 package com.softserve.teamproject.service.impl;
 
-import com.softserve.teamproject.entity.Role;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,13 +12,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
-
+/**
+ * The class implements UserDetailsService interface and overrides it's method loadUserByUsername
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
+  private UserRepository userRepository;
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -33,6 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
    * user's name, then get his role and then we return a value of UserDetails type,
    * which is actually provided by the framework itself. It's basically the
    * procedure of user authorization.
+   *
+   * @param userName String value
+   * @return UserDetails with user permission
+   * @throws UsernameNotFoundException if there is no such user in the database
    */
   @Override
   public UserDetails loadUserByUsername(String userName) throws
@@ -44,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
     //Role role = user.getRole();
-    grantedAuthorities.add(new SimpleGrantedAuthority("Маманя"));
+    grantedAuthorities.add(new SimpleGrantedAuthority("Authenticated User"));
 
     return new org.springframework.security.core.userdetails.User(user
         .getNickName(), user.getPassword(), grantedAuthorities);
