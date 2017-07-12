@@ -17,49 +17,55 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    @Autowired
-    CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
+  private UserDetailsServiceImpl userDetailsService;
+  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+  private CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        //@formatter:off
+  @Autowired
+  WebSecurityConfig(UserDetailsServiceImpl userDetailsService,
+      RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+      CustomSavedRequestAwareAuthenticationSuccessHandler successHandler) {
+        this.userDetailsService=userDetailsService;
+        this.restAuthenticationEntryPoint=restAuthenticationEntryPoint;
+        this.successHandler=successHandler;
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    //@formatter:off
         http
-              .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-              .authorizeRequests()
+            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+            .authorizeRequests()
                 .antMatchers("/**").authenticated().and()
-              .formLogin()
+            .formLogin()
                 .loginPage("/login").permitAll()
                 .successHandler(successHandler)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler()).and()
-              .logout()
+            .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/").and()
-              .rememberMe().key("token").tokenValiditySeconds(3600);
+            .rememberMe().key("token").tokenValiditySeconds(3600);
         //@formatter:on
-    }
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth)
+      throws Exception {
+    auth.authenticationProvider(authenticationProvider());
+  }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider
-                = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        return authProvider;
-    }
+  @Bean
+  public DaoAuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authProvider
+        = new DaoAuthenticationProvider();
+    authProvider.setUserDetailsService(userDetailsService);
+    return authProvider;
+  }
 
-    @Bean
-    public CustomSavedRequestAwareAuthenticationSuccessHandler getSuccessHandler() {
-        return new CustomSavedRequestAwareAuthenticationSuccessHandler();
-    }
+  @Bean
+  public CustomSavedRequestAwareAuthenticationSuccessHandler getSuccessHandler() {
+    return new CustomSavedRequestAwareAuthenticationSuccessHandler();
+  }
 }
