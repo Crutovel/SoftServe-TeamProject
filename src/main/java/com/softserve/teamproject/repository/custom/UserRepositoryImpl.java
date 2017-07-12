@@ -14,7 +14,7 @@ public class UserRepositoryImpl extends QueryDslRepositorySupport implements Use
   }
 
   public User getUserByNickName(String nickName) {
-    return (User) from(QUser.user).where(getByNickName(nickName));
+    return from(QUser.user).where(getByNickName(nickName)).fetchFirst();
   }
 
 }
