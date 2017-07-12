@@ -1,6 +1,5 @@
 package com.softserve.teamproject.entity;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,27 +49,6 @@ public class Role {
 
   public void setRoleCategory(RoleCategory roleCategory) {
     this.roleCategory = roleCategory;
-  }
-
-  @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    Role other = (Role) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(roleCategory, other.roleCategory);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, roleCategory);
   }
 
   @Override
