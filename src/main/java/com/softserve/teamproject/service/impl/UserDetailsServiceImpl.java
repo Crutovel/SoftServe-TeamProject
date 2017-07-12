@@ -1,5 +1,7 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.repository.UserRepository;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
- * The class implements UserDetailsService interface and overrides its loadUserByUsername(String
- * userName) method.
+ * The class implements UserDetailsService interface and overrides it's method loadUserByUsername
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   private UserRepository userRepository;
-
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -27,7 +27,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   public UserDetailsServiceImpl() {
   }
-
 
   /**
    * This is an obligatory method that implements the similar method of the
@@ -38,8 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
    *
    * @param userName String value
    * @return UserDetails with user permission
-   * @throws UsernameNotFoundException is thrown when there is no user with the corresponding user
-   * name.
+   * @throws UsernameNotFoundException if there is no such user in the database
    */
   @Override
   public UserDetails loadUserByUsername(String userName) throws
@@ -48,9 +46,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     if (user == null) {
       throw new UsernameNotFoundException("User " + userName + " is not found.");
     }
+
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-    Role role = user.getRole();
-    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
+    //Role role = user.getRole();
+    grantedAuthorities.add(new SimpleGrantedAuthority("Authenticated User"));
 
     return new org.springframework.security.core.userdetails.User(user
         .getNickName(), user.getPassword(), grantedAuthorities);

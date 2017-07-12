@@ -1,5 +1,7 @@
 package com.softserve.teamproject.config;
 
+import com.softserve.teamproject.controller.CustomSavedRequestAwareAuthenticationSuccessHandler;
+import com.softserve.teamproject.controller.RestAuthenticationEntryPoint;
 import com.softserve.teamproject.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,49 +11,55 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-/**
- * The class provides basic security configuration.
- */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Autowired
+    CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        //@formatter:off
+        http
+              .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+              .authorizeRequests()
+                .antMatchers("/**").authenticated().and()
+              .formLogin()
+                .loginPage("/login").permitAll()
+                .successHandler(successHandler)
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler()).and()
+              .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/").and()
+              .rememberMe().key("token").tokenValiditySeconds(3600);
+        //@formatter:on
+    }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    // @formatter:off
-    http
-        .authorizeRequests()
-          .antMatchers("/**").authenticated().and()
-        .formLogin()
-          .defaultSuccessUrl("/welcome")
-          .usernameParameter("username")
-          .passwordParameter("password")
-          .failureUrl("/signin-error").and()
-        .logout()
-          .logoutUrl("/logout")
-          .logoutSuccessUrl("/").and()
-        .rememberMe().key("token").tokenValiditySeconds(3600);
-    // @formatter:on
-  }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth.authenticationProvider(authenticationProvider());
+    }
 
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider
+                = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        return authProvider;
+    }
 
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth)
-      throws AuthenticationException {
-    auth.authenticationProvider(authenticationProvider());
-  }
-
-
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    authProvider.setUserDetailsService(userDetailsService);
-    return authProvider;
-  }
+    @Bean
+    public CustomSavedRequestAwareAuthenticationSuccessHandler getSuccessHandler() {
+        return new CustomSavedRequestAwareAuthenticationSuccessHandler();
+    }
 }
