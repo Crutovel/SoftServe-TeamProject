@@ -56,27 +56,6 @@ public class Phone {
   }
 
   @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    Phone other = (Phone) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(value, other.value)
-        && Objects.equals(user, other.user);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, value, user);
-  }
-
-  @Override
   public String toString() {
     return "Phone{"
         + "id=" + id

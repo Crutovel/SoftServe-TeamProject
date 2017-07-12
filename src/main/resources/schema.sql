@@ -35,13 +35,20 @@ CREATE TABLE `location` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `country_id` INT NOT NULL,
+  `coordinator_id` INT,
   PRIMARY KEY (`id`),
   INDEX `fk_location_country1_idx` (`country_id` ASC),
+  INDEX `fk_location_user1_idx` (`coordinator_id` ASC),
   CONSTRAINT `fk_location_country1`
     FOREIGN KEY (`country_id`)
     REFERENCES `caesar`.`country` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+CONSTRAINT `fk_location_user1`
+FOREIGN KEY (`coordinator_id`)
+REFERENCES `caesar`.`user` (`id`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `user`;
@@ -152,7 +159,6 @@ CREATE TABLE `educational_group` (
   `finish_date` DATE NOT NULL,
   `status_id` INT NOT NULL,
   `specialization_id` INT NOT NULL,
-  `coordinator_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_group_user1_idx` (`teacher_id` ASC),
   INDEX `fk_group_status1_idx` (`status_id` ASC),

@@ -111,28 +111,6 @@ public class Group {
     this.specialization = specialization;
   }
 
-  @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    Group other = (Group) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(teacher, other.teacher) && Objects.equals(location, other.location)
-        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
-        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, teacher, location, startDate, finishDate, status, specialization);
-  }
 
   @Override
   public String toString() {

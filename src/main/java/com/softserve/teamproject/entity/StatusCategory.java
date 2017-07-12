@@ -39,26 +39,6 @@ public class StatusCategory {
   }
 
   @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    StatusCategory other = (StatusCategory) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name);
-  }
-
-  @Override
   public String toString() {
     return "StatusCategory{"
         + "id=" + id

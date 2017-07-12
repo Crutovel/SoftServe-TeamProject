@@ -28,18 +28,20 @@ public class Location {
   private String name;
 
   @ManyToOne
+  @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
+  private User coordinator;
+
+  @ManyToOne
   @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
   private Country country;
-
-  @OneToOne
-  @JoinColumn(name = "coordinator_id", referencedColumnName = "id", nullable = false)
-  private User coordinator;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<Group> groups;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<User> users;
+
+
 
   public Location() {
   }
@@ -68,7 +70,6 @@ public class Location {
     this.country = country;
   }
 
-  @JsonIgnore
   public User getCoordinator() {
     return coordinator;
   }
@@ -96,34 +97,11 @@ public class Location {
   }
 
   @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    Location other = (Location) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(country, other.country) && Objects.equals(coordinator, other.coordinator)
-        && Objects.equals(groups, other.groups) && Objects.equals(users, other.users);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, country, coordinator, groups, users);
-  }
-
-  @Override
   public String toString() {
     return "Location{"
         + "id=" + id
         + ", name='" + name + '\''
         + ", country=" + country
-        + ", coordinator=" + coordinator
         + ", groups=" + groups
         + ", users=" + users
         + '}';

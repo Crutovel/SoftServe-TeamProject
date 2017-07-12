@@ -53,27 +53,6 @@ public class Role {
   }
 
   @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    Role other = (Role) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(roleCategory, other.roleCategory);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, roleCategory);
-  }
-
-  @Override
   public String toString() {
     return "Role{"
         + "id=" + id

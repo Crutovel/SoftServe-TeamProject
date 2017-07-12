@@ -53,27 +53,6 @@ public class Status {
   }
 
   @Override
-  public boolean equals(Object otherObject) {
-    if (this == otherObject) {
-      return true;
-    }
-    if (otherObject == null) {
-      return false;
-    }
-    if (getClass() != otherObject.getClass()) {
-      return false;
-    }
-    Status other = (Status) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(statusCategory, other.statusCategory);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, statusCategory);
-  }
-
-  @Override
   public String toString() {
     return "Status{"
         + "id=" + id

@@ -16,23 +16,17 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-  private UserDetailsServiceImpl userDetailsService;
-  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-  private CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
-
   @Autowired
-  WebSecurityConfig(UserDetailsServiceImpl userDetailsService,
-      RestAuthenticationEntryPoint restAuthenticationEntryPoint,
-      CustomSavedRequestAwareAuthenticationSuccessHandler successHandler) {
-        this.userDetailsService=userDetailsService;
-        this.restAuthenticationEntryPoint=restAuthenticationEntryPoint;
-        this.successHandler=successHandler;
-  }
+  private UserDetailsServiceImpl userDetailsService;
+  @Autowired
+  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+  @Autowired
+  private CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     //@formatter:off
+    http.csrf().disable();
         http
             .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
             .authorizeRequests()
