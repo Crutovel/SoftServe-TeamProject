@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -66,6 +68,7 @@ public class Location {
     this.country = country;
   }
 
+  @JsonIgnore
   public User getCoordinator() {
     return coordinator;
   }
@@ -74,6 +77,7 @@ public class Location {
     this.coordinator = coordinator;
   }
 
+  @JsonIgnore
   public Set<Group> getGroups() {
     return groups;
   }
@@ -82,6 +86,7 @@ public class Location {
     this.groups = groups;
   }
 
+  @JsonIgnore
   public Set<User> getUsers() {
     return users;
   }

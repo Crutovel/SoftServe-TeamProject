@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -45,6 +47,7 @@ public class RoleCategory {
     this.name = name;
   }
 
+  @JsonIgnore
   public Set<Role> getRoles() {
     return roles;
   }
