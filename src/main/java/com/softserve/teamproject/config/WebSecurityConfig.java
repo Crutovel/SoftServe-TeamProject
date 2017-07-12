@@ -1,5 +1,7 @@
 package com.softserve.teamproject.config;
 
+import com.softserve.teamproject.controller.CustomSavedRequestAwareAuthenticationSuccessHandler;
+import com.softserve.teamproject.controller.RestAuthenticationEntryPoint;
 import com.softserve.teamproject.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -16,7 +19,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
-
+    @Autowired
+    RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Autowired
+    CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
    /* @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("ram").password("ram123").roles("ADMIN");
@@ -32,18 +38,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http    .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**").authenticated()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
                 .and()
-               .formLogin()//.loginPage("/signin").permitAll()
-                .defaultSuccessUrl("/welcome")
+               .formLogin().loginPage("/login").permitAll()
+                .successHandler(successHandler)
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .failureUrl("/signin-error")
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/")
                 .and()
@@ -72,5 +79,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 ////We don't need a password encoder while we don't have registration
 //        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+
+    @Bean
+    public CustomSavedRequestAwareAuthenticationSuccessHandler getSuccessHandler() {
+        return new CustomSavedRequestAwareAuthenticationSuccessHandler();
     }
 }
