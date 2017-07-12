@@ -1,6 +1,5 @@
 package com.softserve.teamproject.entity;
 
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
