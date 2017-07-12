@@ -45,16 +45,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //@formatter:on
   }
 
+
   @Override
   protected void configure(AuthenticationManagerBuilder auth)
       throws Exception {
     auth.authenticationProvider(authenticationProvider());
   }
 
+
   @Bean
   public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider
-        = new DaoAuthenticationProvider();
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
     authProvider.setUserDetailsService(userDetailsService);
     return authProvider;
   }
