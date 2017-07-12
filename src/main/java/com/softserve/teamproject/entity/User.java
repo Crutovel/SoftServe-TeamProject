@@ -2,22 +2,27 @@ package com.softserve.teamproject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -66,6 +71,12 @@ public class User {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private Set<ContactLink> contactLinks;
+
+  @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+  @JoinTable(name = "student_group",
+          joinColumns = {@JoinColumn(name = "user_id")},
+          inverseJoinColumns = {@JoinColumn(name = "group_id")})
+  private Set<Group> groups = new HashSet<Group>();
 
   public User() {
   }
@@ -175,6 +186,14 @@ public class User {
     this.contactLinks = contactLinks;
   }
 
+  public Set<Group> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(Set<Group> groups) {
+    this.groups = groups;
+  }
+
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -210,6 +229,7 @@ public class User {
         + ", emails=" + emails
         + ", phones=" + phones
         + ", contactLinks=" + contactLinks
+        + ", groups=" + groups
         + '}';
   }
 }

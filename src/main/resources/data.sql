@@ -43,9 +43,10 @@ insert into specialization (`name`) values ('ua_test_automation_boot_camp_for_mo
 insert into specialization (`name`) values ('ua_software_ingeneering_with_testing');
 insert into country (`name`) values ('Ukraine');
 insert into country (`name`) values ('Hungary');
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 insert into location (`name`,country_id,coordinator_id) values ('Dnipro',1,NULL);
 insert into location (`name`,country_id,coordinator_id) values ('Sofia',2,NULL);
-insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Oleg','Shcets',3,'2017-01-01','OlegShvets','ghd22df','teacher in softServe. Dnipro',1);
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Oleg','Shvets',3,'2017-01-01','OlegShvets','ghd22df','teacher in softServe. Dnipro',1);
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Dmytro','Petin',4,'2017-02-02','DmytroPetin','fgdfg24sd','coordinator in Dnipro',1);
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Lucas','Lukichich',4,'2017-03-03','LukasLukichich','fjgf24sd','coordinator in Sofia',2);
 insert into `educational_group` (`name`,teacher_id,location_id,start_date,finish_date,status_id,specialization_id) values ('DP-115',1,1,'2017-04-29','2017-08-18',4,7);
@@ -67,3 +68,4 @@ insert into contact_link (`value`,user_id) values ('https://linkedin.com/PapaJS'
 insert into contact_link (`value`,user_id) values ('https://vk.com/bukhanochka',4);
 update location SET coordinator_id = 2 WHERE name='Dnipro';
 update location SET coordinator_id = 3 WHERE name='Sofia';
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
