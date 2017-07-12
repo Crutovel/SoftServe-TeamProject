@@ -152,6 +152,7 @@ CREATE TABLE `educational_group` (
   `finish_date` DATE NOT NULL,
   `status_id` INT NOT NULL,
   `specialization_id` INT NOT NULL,
+  `coordinator_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_group_user1_idx` (`teacher_id` ASC),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
