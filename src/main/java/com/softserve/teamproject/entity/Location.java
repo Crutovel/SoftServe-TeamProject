@@ -28,20 +28,18 @@ public class Location {
   private String name;
 
   @ManyToOne
-  @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
-  private User coordinator;
-
-  @ManyToOne
   @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
   private Country country;
+
+  @OneToOne
+  @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
+  private User coordinator;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<Group> groups;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<User> users;
-
-
 
   public Location() {
   }
