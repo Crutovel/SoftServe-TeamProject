@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.entity.Role;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
 import java.util.HashSet;
@@ -47,7 +48,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       throw new UsernameNotFoundException("User " + userName + " is not found.");
     }
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-    grantedAuthorities.add(new SimpleGrantedAuthority("Authenticated User"));
+    Role role = user.getRole();
+    grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
 
     return new org.springframework.security.core.userdetails.User(user
         .getNickName(), user.getPassword(), grantedAuthorities);

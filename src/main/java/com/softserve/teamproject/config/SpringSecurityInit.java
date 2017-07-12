@@ -6,7 +6,6 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  * The class extends AbstractSecurityWebApplicationInitializer class that helps us map the
  * springSecurityFilterChain.
  */
-
 public class SpringSecurityInit extends AbstractSecurityWebApplicationInitializer {
 
 }
