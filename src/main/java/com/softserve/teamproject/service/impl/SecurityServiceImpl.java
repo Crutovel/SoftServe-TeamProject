@@ -3,14 +3,15 @@ package com.softserve.teamproject.service.impl;
 import com.softserve.teamproject.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication
+    .UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * The class implements SecurityService interface and overrides its methods findLoggedInUsername()
- * and autoLogin(String username, String password).
+ * The class impements SecurityService interface and provides methods to find the logged-in user
+ * name and auto log in a user after the registration.
  */
 public class SecurityServiceImpl implements SecurityService {
 
@@ -47,7 +48,8 @@ public class SecurityServiceImpl implements SecurityService {
    */
   @Override
   public void autoLogin(String username, String password) {
-    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+    UserDetails userDetails = userDetailsService.loadUserByUsername
+        (username);
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(userDetails,
             password, userDetails.getAuthorities());
@@ -55,7 +57,8 @@ public class SecurityServiceImpl implements SecurityService {
     authenticationManager.authenticate(authenticationToken);
 
     if (authenticationToken.isAuthenticated()) {
-      SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+      SecurityContextHolder.getContext().setAuthentication
+          (authenticationToken);
     }
   }
 
