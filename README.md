@@ -2,7 +2,7 @@
 
 The current project is to be an online IT-Academy organizational app, where all the students and teachers will be able to plan, organize and schedule their work effectively.
 
-## Develpment
+## Development
 
 ### How to read data from db
 
