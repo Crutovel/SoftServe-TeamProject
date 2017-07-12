@@ -27,15 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
         .authorizeRequests()
-        .antMatchers("/**").authenticated().and()
+          .antMatchers("/**").authenticated().and()
         .formLogin()
-        .defaultSuccessUrl("/welcome")
-        .usernameParameter("username")
-        .passwordParameter("password")
-        .failureUrl("/signin-error").and()
+          .defaultSuccessUrl("/welcome")
+          .usernameParameter("username")
+          .passwordParameter("password")
+          .failureUrl("/signin-error").and()
         .logout()
-        .logoutUrl("/logout")
-        .logoutSuccessUrl("/").and()
+          .logoutUrl("/logout")
+          .logoutSuccessUrl("/").and()
         .rememberMe().key("token").tokenValiditySeconds(3600);
     // @formatter:on
   }
