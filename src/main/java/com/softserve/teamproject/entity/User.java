@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "user")
@@ -38,6 +40,7 @@ public class User {
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
 
+  @NaturalId
   @Column(name = "nick_name")
   private String nickName;
 
@@ -173,6 +176,33 @@ public class User {
   }
 
   @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    User other = (User) otherObject;
+//    return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName)
+//        && Objects.equals(lastName, other.lastName) && Objects.equals(role, other.role)
+//        && Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(nickName, other.nickName)
+//        && Objects.equals(password, other.password) && Objects.equals(selfInfo, other.selfInfo)
+//        && Arrays.equals(image, other.image) && Objects.equals(location, other.location)
+//        && Objects.equals(emails, other.emails) && Objects.equals(phones, other.phones)
+//        && Objects.equals(contactLinks, other.contactLinks);
+    return Objects.equals(id, other.id) && Objects.equals(nickName, other.nickName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nickName);
+  }
+
+  @Override
   public String toString() {
     return "User{"
         + "id=" + id
@@ -184,7 +214,7 @@ public class User {
         + ", password='" + password + '\''
         + ", selfInfo='" + selfInfo + '\''
         + ", image=" + Arrays.toString(image)
-        + ", location=" + location
+//        + ", location=" + location
         + ", emails=" + emails
         + ", phones=" + phones
         + ", contactLinks=" + contactLinks

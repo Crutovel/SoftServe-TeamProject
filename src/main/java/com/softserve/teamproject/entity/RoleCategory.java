@@ -2,6 +2,7 @@ package com.softserve.teamproject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "role_category")
@@ -24,7 +27,8 @@ public class RoleCategory {
   @Column(name = "name")
   private String name;
 
-  @OneToMany(fetch = FetchType.EAGER, mappedBy = "roleCategory", cascade = CascadeType.ALL)
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(mappedBy = "roleCategory", cascade = CascadeType.ALL)
   private Set<Role> roles;
 
   public RoleCategory() {
@@ -53,6 +57,27 @@ public class RoleCategory {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    RoleCategory other = (RoleCategory) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+    //&& Objects.equals(roles, other.roles);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
   }
 
   @Override
