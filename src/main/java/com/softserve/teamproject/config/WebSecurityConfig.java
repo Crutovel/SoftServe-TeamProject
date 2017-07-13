@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 /**
  * The class provides basic security configurations, configures log-in and log-out process as well
@@ -50,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .failureHandler(new SimpleUrlAuthenticationFailureHandler()).and()
         .logout()
             .logoutUrl("/logout")
-            .logoutSuccessUrl("/").and()
+            .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()).and()
         .rememberMe().key("token").tokenValiditySeconds(3600);
         //@formatter:on
   }
