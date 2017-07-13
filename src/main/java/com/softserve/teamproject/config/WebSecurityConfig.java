@@ -22,12 +22,27 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired
   private UserDetailsServiceImpl userDetailsService;
-  @Autowired
   private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-  @Autowired
   private CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
+
+  @Autowired
+  public void setUserDetailsService(
+      UserDetailsServiceImpl userDetailsService) {
+    this.userDetailsService = userDetailsService;
+  }
+
+  @Autowired
+  public void setRestAuthenticationEntryPoint(
+      RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
+    this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+  }
+
+  @Autowired
+  public void setSuccessHandler(
+      CustomSavedRequestAwareAuthenticationSuccessHandler successHandler) {
+    this.successHandler = successHandler;
+  }
 
   /**
    * Method provides configuration with request authorization and granting permissions to users.
