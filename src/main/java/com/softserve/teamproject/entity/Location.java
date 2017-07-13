@@ -96,11 +96,30 @@ public class Location {
   }
 
   @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Location other = (Location) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
+  }
+
+  @Override
   public String toString() {
     return "Location{"
         + "id=" + id
         + ", name='" + name + '\''
-        + ", country=" + country
         + ", groups=" + groups
         + ", users=" + users
         + ", coordinator=" + coordinator

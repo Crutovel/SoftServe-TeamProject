@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -52,11 +53,30 @@ public class Role {
   }
 
   @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
+    }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Role other = (Role) otherObject;
+    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
+  }
+
+  @Override
   public String toString() {
     return "Role{"
         + "id=" + id
         + ", name='" + name + '\''
-        + ", roleCategory=" + roleCategory
         + '}';
   }
 }
