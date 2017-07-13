@@ -21,6 +21,9 @@ To read from the database, use special read-only user ```user_ro``` with the pas
 1. Run the jar from target: ```java -jar target/team-project-dp115-*.jar```
 1. Application is accessible at http://localhost:8080/
 
+#### Authorization
+For authorization you must send POST HTTP request at http://localhost:8080/login with credentials of some user in body. Credentials: username - OlegShvets, password - ghd22df. Choose type form-data and set credentials into key and value.
+
 ## Environment setup
 
 ### Code style in Idea
