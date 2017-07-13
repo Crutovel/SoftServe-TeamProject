@@ -2,14 +2,17 @@ package com.softserve.teamproject.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "educational_group")
@@ -43,6 +46,10 @@ public class Group {
   @ManyToOne
   @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
   private Specialization specialization;
+
+
+  @ManyToMany(mappedBy = "groups")
+  private Set<User> students = new HashSet<User>();
 
   public Group() {
   }
@@ -109,6 +116,14 @@ public class Group {
 
   public void setSpecialization(Specialization specialization) {
     this.specialization = specialization;
+  }
+
+  public Set<User> getStudents() {
+    return students;
+  }
+
+  public void setStudents(Set<User> students) {
+    this.students = students;
   }
 
   @Override
