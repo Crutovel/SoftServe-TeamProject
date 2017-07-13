@@ -69,7 +69,6 @@ public class Country {
     }
     Country other = (Country) otherObject;
     return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-//        && Objects.equals(locations, other.locations);
   }
 
   @Override

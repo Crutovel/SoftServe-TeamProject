@@ -187,13 +187,6 @@ public class User {
       return false;
     }
     User other = (User) otherObject;
-//    return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName)
-//        && Objects.equals(lastName, other.lastName) && Objects.equals(role, other.role)
-//        && Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(nickName, other.nickName)
-//        && Objects.equals(password, other.password) && Objects.equals(selfInfo, other.selfInfo)
-//        && Arrays.equals(image, other.image) && Objects.equals(location, other.location)
-//        && Objects.equals(emails, other.emails) && Objects.equals(phones, other.phones)
-//        && Objects.equals(contactLinks, other.contactLinks);
     return Objects.equals(id, other.id) && Objects.equals(nickName, other.nickName);
   }
 
@@ -214,7 +207,6 @@ public class User {
         + ", password='" + password + '\''
         + ", selfInfo='" + selfInfo + '\''
         + ", image=" + Arrays.toString(image)
-//        + ", location=" + location
         + ", emails=" + emails
         + ", phones=" + phones
         + ", contactLinks=" + contactLinks

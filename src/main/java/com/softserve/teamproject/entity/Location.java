@@ -107,8 +107,6 @@ public class Location {
     }
     Location other = (Location) otherObject;
     return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-//        && Objects.equals(country, other.country) && Objects.equals(coordinator, other.coordinator);
-//        && Objects.equals(groups, other.groups) && Objects.equals(users, other.users);
   }
 
   @Override
@@ -121,7 +119,6 @@ public class Location {
     return "Location{"
         + "id=" + id
         + ", name='" + name + '\''
-//        + ", country=" + country
         + ", groups=" + groups
         + ", users=" + users
         + ", coordinator=" + coordinator

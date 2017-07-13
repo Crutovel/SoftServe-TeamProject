@@ -65,7 +65,6 @@ public class Role {
     }
     Role other = (Role) otherObject;
     return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-    //  && Objects.equals(roleCategory, other.roleCategory);
   }
 
   @Override
@@ -78,7 +77,6 @@ public class Role {
     return "Role{"
         + "id=" + id
         + ", name='" + name + '\''
-        // + ", roleCategory=" + roleCategory
         + '}';
   }
 }

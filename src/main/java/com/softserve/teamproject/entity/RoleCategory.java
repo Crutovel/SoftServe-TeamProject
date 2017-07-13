@@ -72,7 +72,6 @@ public class RoleCategory {
     }
     RoleCategory other = (RoleCategory) otherObject;
     return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-    //&& Objects.equals(roles, other.roles);
   }
 
   @Override
