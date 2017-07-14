@@ -18,4 +18,4 @@ Example: `username=OlegShvets, password=ghd22df`
 
 **Success Response:** Code: 200
 
-**Error Response :** Code: 401 Unauthorized
+**Error Response :** Code: 401 Unauthorized, 405 Method Not Allowed

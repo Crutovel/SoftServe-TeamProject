@@ -12,4 +12,4 @@
 
 **Success Response:** Code: 200
 
-**Error Response :** Code: 405 Method Not Allowed
+**Error Response :** -

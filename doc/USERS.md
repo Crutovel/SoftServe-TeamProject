@@ -202,4 +202,4 @@
         }
     }
 
-**Error Response :** Code: 401 Unauthorized, 404 Not Found
+**Error Response :** Code: 401 Unauthorized
