@@ -1,4 +1,4 @@
-# API Documentation for Users End Point
+# API Documentation for /Users End Point
 
 ## Show all users
 
@@ -202,3 +202,4 @@
         }
     }
 
+**Error Response :** Code: 401 Unauthorized
