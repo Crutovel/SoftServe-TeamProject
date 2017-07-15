@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller for teacher's manipulations with the groups
+ */
 @RestController
 public class TeacherGroupsController {
 
@@ -20,6 +23,10 @@ public class TeacherGroupsController {
     this.groupsActions = groupsActions;
   }
 
+  /**
+   * The method displays all the groups of the current authorized teacher. If a user with another
+   * role is trying to access this method, 403 "forbidden" will be displayed.
+   */
   @RequestMapping(value = "/teacher/groups", method = RequestMethod.GET)
   @ResponseBody
   public List<Group> getTeachersGroups(Principal principal) {
