@@ -37,18 +37,12 @@ public class User {
   @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
   private Role role;
 
-  @Column(name = "date_of_birth")
-  private LocalDate dateOfBirth;
-
   @NaturalId
   @Column(name = "nick_name")
   private String nickName;
 
   @Column(name = "password_hash_code")
   private String password;
-
-  @Column(name = "self_info")
-  private String selfInfo;
 
   @Lob
   @Column(name = "image")
@@ -57,15 +51,6 @@ public class User {
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
   private Location location;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  private Set<Email> emails;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  private Set<Phone> phones;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  private Set<ContactLink> contactLinks;
 
   public User() {
   }
@@ -102,13 +87,6 @@ public class User {
     this.role = role;
   }
 
-  public LocalDate getDateOfBirth() {
-    return dateOfBirth;
-  }
-
-  public void setDateOfBirth(LocalDate dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
-  }
 
   public String getNickName() {
     return nickName;
@@ -127,14 +105,6 @@ public class User {
     this.password = password;
   }
 
-  public String getSelfInfo() {
-    return selfInfo;
-  }
-
-  public void setSelfInfo(String selfInfo) {
-    this.selfInfo = selfInfo;
-  }
-
   public byte[] getImage() {
     return image;
   }
@@ -149,30 +119,6 @@ public class User {
 
   public void setLocation(Location location) {
     this.location = location;
-  }
-
-  public Set<Email> getEmails() {
-    return emails;
-  }
-
-  public void setEmails(Set<Email> emails) {
-    this.emails = emails;
-  }
-
-  public Set<Phone> getPhones() {
-    return phones;
-  }
-
-  public void setPhones(Set<Phone> phones) {
-    this.phones = phones;
-  }
-
-  public Set<ContactLink> getContactLinks() {
-    return contactLinks;
-  }
-
-  public void setContactLinks(Set<ContactLink> contactLinks) {
-    this.contactLinks = contactLinks;
   }
 
   @Override
@@ -202,14 +148,9 @@ public class User {
         + ", firstName='" + firstName + '\''
         + ", lastName='" + lastName + '\''
         + ", role=" + role
-        + ", dateOfBirth=" + dateOfBirth
         + ", nickName='" + nickName + '\''
         + ", password='" + password + '\''
-        + ", selfInfo='" + selfInfo + '\''
         + ", image=" + Arrays.toString(image)
-        + ", emails=" + emails
-        + ", phones=" + phones
-        + ", contactLinks=" + contactLinks
         + '}';
   }
 }

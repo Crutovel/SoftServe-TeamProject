@@ -27,10 +27,6 @@ public class Location {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
-  private Country country;
-
   @OneToOne
   @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
   private User coordinator;
@@ -58,14 +54,6 @@ public class Location {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Country getCountry() {
-    return country;
-  }
-
-  public void setCountry(Country country) {
-    this.country = country;
   }
 
   @JsonIgnore
