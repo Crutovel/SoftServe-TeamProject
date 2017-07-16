@@ -1,3 +1,4 @@
+use caesar;
 insert into role_category (`name`) values ('watcher');
 insert into role_category (`name`) values ('itacademy');
 insert into role_category (`name`) values ('tes');
