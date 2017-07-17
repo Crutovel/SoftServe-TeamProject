@@ -1,5 +1,7 @@
 package com.softserve.teamproject.service.impl;
 
+import static com.softserve.teamproject.repository.expression.UserExpressions.getByNickName;
+
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.UserProfileService;
