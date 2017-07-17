@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * The controller provides methods for teacher's interaction with the groups.
  */
 @RestController
-public class TeacherGroupsController {
+public class GroupController {
 
   private TeacherGroupsManipulationService groupsActions;
 

@@ -16,7 +16,7 @@ public interface TeacherGroupsManipulationService {
    * @param teachersName String value, name of the teacher
    * @return List<Group>: List of Groups of this authenticated teacher
    */
-  @PreAuthorize("hasAuthority('teacher')")
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   List<Group> getAllGroupsOfTheTeacher(String teachersName);
 
 }
