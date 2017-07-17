@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controller for teacher's manipulations with the groups
+ * The controller provides methods for teacher's interaction with the groups.
  */
 @RestController
 public class TeacherGroupsController {

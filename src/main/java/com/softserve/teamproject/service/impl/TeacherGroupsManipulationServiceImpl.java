@@ -7,6 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * The class is an implementation of TeacherGroupsManipulationService interface; it provides the
+ * methods needed to specify the actions that a teacher can perform with the groups.
+ */
 @Service
 public class TeacherGroupsManipulationServiceImpl implements TeacherGroupsManipulationService {
 
