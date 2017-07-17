@@ -19,7 +19,7 @@ public class GroupServiceImpl implements GroupService {
     this.groupRep = groupRep;
   }
 
-  public Iterable getGroupsByLocationIds(Integer[] locationIds) {
+  public List<Group> getGroupsByLocationIds(Integer[] locationIds) {
     return groupRep.getGroupsByLocationIds(locationIds);
   }
 

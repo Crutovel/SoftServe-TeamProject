@@ -19,5 +19,4 @@ public class GroupRepositoryImpl extends QueryDslRepositorySupport implements
     return from(QGroup.group).where(getByLocationIds(locations)).fetch();
   }
 
-
 }

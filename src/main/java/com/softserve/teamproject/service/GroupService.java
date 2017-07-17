@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 public interface GroupService {
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable getGroupsByLocationIds(Integer[] locations);
+  List<Group> getGroupsByLocationIds(Integer[] locations);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   List<Group> getAllGroups();

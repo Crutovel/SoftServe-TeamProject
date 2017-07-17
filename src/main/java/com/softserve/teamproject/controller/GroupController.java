@@ -32,7 +32,7 @@ public class GroupController {
    */
   @RequestMapping(value = "/groups/{locationIds}", method = RequestMethod.GET)
   @ResponseBody
-  public Iterable getGroupsByLocations(@PathVariable("locationIds") String[] locationIds) {
+  public List<Group> getGroupsByLocations(@PathVariable("locationIds") String[] locationIds) {
 
     Integer[] array = Arrays.stream(locationIds).mapToInt(Integer::parseInt).boxed()
         .toArray(Integer[]::new);
