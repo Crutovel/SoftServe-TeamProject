@@ -32,7 +32,6 @@ public class UserProfileController {
    * @return user info of authorized user
    */
   @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
-  @ResponseBody
   public User getUserProfile(Principal principal) {
     return userProfileService.getUserProfile(principal.getName());
   }
@@ -43,7 +42,6 @@ public class UserProfileController {
    * @return groups in user location
    */
   @RequestMapping(value = "/user/location/groups", method = RequestMethod.GET)
-  @ResponseBody
   public Set<Group> getGroupsFromUserLocation(Principal principal) {
     return userProfileService.getGroupsFromUserLocation(principal.getName());
   }

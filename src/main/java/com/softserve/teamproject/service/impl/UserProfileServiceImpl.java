@@ -33,8 +33,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 
   @Override
   public Set<Group> getGroupsFromUserLocation(String principalName) {
-    User currentUser=userRepository.getUserByNickName(principalName);
-    Location userLocation=locationRepository.findOne(currentUser.getLocation().getId());
+    User currentUser = userRepository.getUserByNickName(principalName);
+    Location userLocation = locationRepository.findOne(currentUser.getLocation().getId());
     return userLocation.getGroups();
   }
 }
