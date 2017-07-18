@@ -30,7 +30,6 @@ public class UserProfileController {
    * @return user info of authorized user
    */
   @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
-  @ResponseBody
   public User getUserProfile(Principal principal) {
     return userProfileService.getUserProfile(principal.getName());
   }
