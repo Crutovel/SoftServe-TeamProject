@@ -39,7 +39,7 @@
 
 **Method :** GET
 
-**URL Params :** Required: `{locationIds}`(type: integer), example: `2`
+**URL Params :** Required: `{locationIds}`(type: integer), example: `/locations/2/groups`
 
 **Data Params :** -
 
