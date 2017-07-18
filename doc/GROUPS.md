@@ -19,7 +19,7 @@
             "teacher": {
                 "id": 1,
                 "firstName": "Oleg",
-                "lastName": "Shcets",
+                "lastName": "Shvets",
                 "role": {
                     "id": 3,
                     "name": "teacher",
@@ -249,7 +249,7 @@
             "teacher": {
                 "id": 1,
                 "firstName": "Oleg",
-                "lastName": "Shcets",
+                "lastName": "Shvets",
                 "role": {
                     "id": 3,
                     "name": "teacher",
