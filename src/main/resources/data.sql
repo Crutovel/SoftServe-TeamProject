@@ -50,7 +50,7 @@ insert into `educational_group` (`name`,teacher_id,location_id,start_date,finish
 insert into expert (edu_group_id, expert_name) values (1, 'Sergey');
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lev','Bukhanets',2,'Myst1c','sdfhs332w',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Kholod',2,'DimaKh','sdasdfdew',1);
-insert into student_group (group_id,user_id) values (1,4);
-insert into student_group (group_id,user_id) values (1,5);
+insert into group_teacher (teacher_id,group_id) values (1,1);
+-- insert into group_teacher (group_id,user_id) values (1,5);
 update location SET coordinator_id = 2 WHERE name='Dnipro';
 update location SET coordinator_id = 3 WHERE name='Sofia';

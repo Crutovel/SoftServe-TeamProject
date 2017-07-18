@@ -26,9 +26,10 @@ public class Group {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
-  private User teacher;
+  @ManyToMany
+  @JoinTable(name = "group_teacher", joinColumns = { @JoinColumn(name = "group_id")},
+  inverseJoinColumns = { @JoinColumn(name = "teacher_id")})
+  private Set<User> teachers;
 
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
@@ -77,14 +78,6 @@ public class Group {
     this.name = name;
   }
 
-  public User getTeacher() {
-    return teacher;
-  }
-
-  public void setTeacher(User teacher) {
-    this.teacher = teacher;
-  }
-
   public Location getLocation() {
     return location;
   }
@@ -121,10 +114,18 @@ public class Group {
     return specialization;
   }
 
-//  public void setSpecialization(Specialization specialization) {
-//    this.specialization = specialization;
-//  }
-//
+  public void setSpecialization(Specialization specialization) {
+    this.specialization = specialization;
+  }
+
+  public Set<User> getTeachers() {
+    return teachers;
+  }
+
+  public void setTeachers(Set<User> teachers) {
+    this.teachers = teachers;
+  }
+
   public Set<String> getExperts() {
     return experts;
   }
@@ -166,7 +167,7 @@ public class Group {
     return "Group{"
         + "id=" + id
         + ", name='" + name + '\''
-        + ", teacher=" + teacher
+        + ", teachers=" + teachers
         + ", location=" + location
         + ", startDate=" + startDate
         + ", finishDate=" + finishDate

@@ -82,7 +82,6 @@ public class User {
     this.role = role;
   }
 
-
   public String getNickName() {
     return nickName;
   }

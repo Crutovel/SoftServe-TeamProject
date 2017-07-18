@@ -164,7 +164,7 @@ CREATE TABLE `group_teacher` (
   INDEX `fk_group_teacher_user1_idx` (`teacher_id` ASC),
   CONSTRAINT `fk_group_teacher_education_group1`
     FOREIGN KEY (`group_id`)
-    REFERENCES `education_group` (`id`),
+    REFERENCES `educational_group` (`id`),
   CONSTRAINT `fk_group_teacher_user1`
     FOREIGN KEY (`teacher_id`)
     REFERENCES `user` (`id`))
