@@ -41,7 +41,7 @@ public class GroupController {
    * @throws EntityNotFoundException with the message "Not found" if no groups of this teacher were
    * found.
    */
-  @RequestMapping(value = "/teacher/groups", method = RequestMethod.GET)
+  @RequestMapping(value = "/groups/mygroups", method = RequestMethod.GET)
   @ResponseBody
   public List<Group> getTeachersGroups(Principal principal) {
     List<Group> myGroups = groupsActions.getAllGroupsOfTheTeacher(principal.getName());
