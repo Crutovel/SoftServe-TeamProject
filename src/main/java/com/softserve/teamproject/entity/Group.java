@@ -129,7 +129,7 @@ public class Group {
     return experts;
   }
 
-  public void setExpert(Set<String> experts) {
+  public void setExperts(Set<String> experts) {
     this.experts = experts;
   }
 
