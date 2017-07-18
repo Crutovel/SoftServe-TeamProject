@@ -11,4 +11,7 @@ public interface GroupService {
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   List<Group> getAllGroups();
+
+  @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
+  boolean addGroup(Group group, String userName);
 }

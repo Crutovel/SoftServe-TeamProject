@@ -6,6 +6,10 @@ import java.security.Principal;
 import com.softserve.teamproject.service.GroupService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,6 +48,26 @@ public class GroupController {
   @RequestMapping(value = "/groups", method = RequestMethod.GET)
   public List<Group> getAllGroups() {
     return groupService.getAllGroups();
+  }
+
+  /**
+   * Creates new group based on request body parameters.
+   * If a current authorized user is coordinator, the group location must equal coordinator location.
+   * If a current authorized user is administrator, the group location can be anyone.
+   * For other roles creating group is unavailable.
+   *
+   * @param group new group
+   * @param principal current authorized user
+   * @return the result - OK or BAD_REQUEST
+   */
+  @PostMapping(value = "/groups/add")
+  public ResponseEntity addGroup(@RequestBody Group group, Principal principal) {
+    String userName = principal.getName();
+    if (groupService.addGroup(group, userName)) {
+      return new ResponseEntity(HttpStatus.OK);
+    }
+
+    return new ResponseEntity(HttpStatus.BAD_REQUEST);
   }
 }
 
