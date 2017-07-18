@@ -13,7 +13,6 @@ CREATE TABLE `role_category` (
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `role`
 -- -----------------------------------------------------
@@ -121,21 +120,27 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `education_group`
 -- -----------------------------------------------------
-
 DROP TABLE IF EXISTS `education_group`;
-CREATE TABLE `education_group` (
+DROP TABLE IF EXISTS `educational_group`;
+CREATE TABLE `educational_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
   `location_id` INT NOT NULL,
   `start_date` DATE NOT NULL,
   `finish_date` DATE NOT NULL,
   `status_id` INT NOT NULL,
   `specialization_id` INT NOT NULL,
+  `budget_owner` enum('SOFTSERVE','OPENGROUP') NOT NULL,
   PRIMARY KEY (`id`),
+  INDEX `fk_group_user1_idx` (`teacher_id` ASC),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
   INDEX `fk_group_location1_idx` (`location_id` ASC),
   INDEX `fk_group_spetialization1_idx` (`specialization_id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  CONSTRAINT `fk_group_user1`
+    FOREIGN KEY (`teacher_id`)
+    REFERENCES `user` (`id`) ,
   CONSTRAINT `fk_edu_group_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `status` (`id`),
@@ -169,11 +174,11 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `expert` ;
 CREATE TABLE `expert` (
   `edu_group_id` INT NOT NULL,
-  `full_name` VARCHAR(100) NOT NULL,
+  `expert_name` VARCHAR(100) NOT NULL,
   INDEX `fk_expert_education_group1_idx` (`edu_group_id` ASC),
   CONSTRAINT `fk_expert_education_group1`
     FOREIGN KEY (`edu_group_id`)
-    REFERENCES `education_group` (`id`))
+    REFERENCES `educational_group` (`id`))
 ENGINE = InnoDB;
 
 

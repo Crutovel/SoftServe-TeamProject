@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.softserve.teamproject.entity.enums.BudgetOwner;
+import java.util.Set;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -47,10 +49,14 @@ public class Group {
   private Specialization specialization;
 
   @ElementCollection
-  @CollectionTable(name="expert",
-          joinColumns=@JoinColumn(name="edu_group_id")
+  @CollectionTable(name = "expert",
+          joinColumns = @JoinColumn(name = "edu_group_id")
   )
-  private List<String> expert;
+  @Column(name = "expert_name")
+  private Set<String> experts;
+
+  @Enumerated(EnumType.STRING)
+  private BudgetOwner budgetOwner;
 
   public Group() {
   }
@@ -115,8 +121,24 @@ public class Group {
     return specialization;
   }
 
-  public void setSpecialization(Specialization specialization) {
-    this.specialization = specialization;
+//  public void setSpecialization(Specialization specialization) {
+//    this.specialization = specialization;
+//  }
+//
+  public Set<String> getExperts() {
+    return experts;
+  }
+
+  public void setExpert(Set<String> experts) {
+    this.experts = experts;
+  }
+
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
   }
 
   @Override
@@ -131,15 +153,12 @@ public class Group {
       return false;
     }
     Group other = (Group) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(teacher, other.teacher) && Objects.equals(location, other.location)
-        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
-        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
+    return Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, teacher, location, startDate, finishDate, status, specialization);
+    return Objects.hash(name);
   }
 
   @Override

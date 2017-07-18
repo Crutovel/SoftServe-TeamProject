@@ -64,13 +64,12 @@ public class Status {
       return false;
     }
     Status other = (Status) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(statusCategory, other.statusCategory);
+    return Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, statusCategory);
+    return Objects.hash(name);
   }
 
   @Override

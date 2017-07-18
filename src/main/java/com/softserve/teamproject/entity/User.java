@@ -2,11 +2,8 @@ package com.softserve.teamproject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
 
@@ -37,7 +33,6 @@ public class User {
   @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
   private Role role;
 
-  @NaturalId
   @Column(name = "nick_name")
   private String nickName;
 
@@ -133,12 +128,12 @@ public class User {
       return false;
     }
     User other = (User) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(nickName, other.nickName);
+    return Objects.equals(nickName, other.nickName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nickName);
+    return Objects.hash(nickName);
   }
 
   @Override

@@ -71,12 +71,12 @@ public class RoleCategory {
       return false;
     }
     RoleCategory other = (RoleCategory) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+    return Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(name);
   }
 
   @Override
