@@ -27,10 +27,6 @@ public class Location {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "country_id", referencedColumnName = "id", nullable = false)
-  private Country country;
-
   @OneToOne
   @JoinColumn(name = "coordinator_id", referencedColumnName = "id")
   private User coordinator;
@@ -58,14 +54,6 @@ public class Location {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Country getCountry() {
-    return country;
-  }
-
-  public void setCountry(Country country) {
-    this.country = country;
   }
 
   @JsonIgnore
@@ -107,12 +95,12 @@ public class Location {
       return false;
     }
     Location other = (Location) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+    return Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(name);
   }
 
   @Override

@@ -1,6 +1,10 @@
 package com.softserve.teamproject.entity;
 
+import com.softserve.teamproject.entity.enums.BudgetOwner;
+import java.util.Set;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,9 +26,10 @@ public class Group {
   @Column(name = "name")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
-  private User teacher;
+  @ManyToMany
+  @JoinTable(name = "group_teacher", joinColumns = { @JoinColumn(name = "group_id")},
+  inverseJoinColumns = { @JoinColumn(name = "teacher_id")})
+  private Set<User> teachers;
 
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
@@ -44,6 +49,16 @@ public class Group {
   @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
   private Specialization specialization;
 
+  @ElementCollection
+  @CollectionTable(name = "expert",
+          joinColumns = @JoinColumn(name = "edu_group_id")
+  )
+  @Column(name = "expert_name")
+  private Set<String> experts;
+
+  @Enumerated(EnumType.STRING)
+  private BudgetOwner budgetOwner;
+
   public Group() {
   }
 
@@ -61,14 +76,6 @@ public class Group {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public User getTeacher() {
-    return teacher;
-  }
-
-  public void setTeacher(User teacher) {
-    this.teacher = teacher;
   }
 
   public Location getLocation() {
@@ -111,6 +118,30 @@ public class Group {
     this.specialization = specialization;
   }
 
+  public Set<User> getTeachers() {
+    return teachers;
+  }
+
+  public void setTeachers(Set<User> teachers) {
+    this.teachers = teachers;
+  }
+
+  public Set<String> getExperts() {
+    return experts;
+  }
+
+  public void setExperts(Set<String> experts) {
+    this.experts = experts;
+  }
+
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
+  }
+
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -123,15 +154,12 @@ public class Group {
       return false;
     }
     Group other = (Group) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(teacher, other.teacher) && Objects.equals(location, other.location)
-        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
-        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
+    return Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, teacher, location, startDate, finishDate, status, specialization);
+    return Objects.hash(name);
   }
 
   @Override
@@ -139,7 +167,7 @@ public class Group {
     return "Group{"
         + "id=" + id
         + ", name='" + name + '\''
-        + ", teacher=" + teacher
+        + ", teachers=" + teachers
         + ", location=" + location
         + ", startDate=" + startDate
         + ", finishDate=" + finishDate
