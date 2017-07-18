@@ -14,4 +14,7 @@ public interface GroupService {
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
   boolean addGroup(Group group, String userName);
+
+  @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
+  boolean deleteGroup(int groupId, String userName);
 }

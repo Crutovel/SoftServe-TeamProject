@@ -54,4 +54,16 @@ public class GroupServiceImpl implements GroupService {
     }
     return (groupRep.save(group) != null);
   }
+
+  @Override
+  public boolean deleteGroup(int groupId, String userName) {
+    User user = userRepository.getUserByNickName(userName);
+    Group group = groupRep.getOne(groupId);
+    if (user.getRole().getName().equals("coordinator")
+        && !user.getLocation().equals(group.getLocation())) {
+      return false;
+    }
+    groupRep.delete(group);
+    return true;
+  }
 }

@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,13 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupController {
 
   private TeacherGroupsManipulationService groupsActions;
+  private GroupService groupService;
 
   @Autowired
   public void setTeacherGroupsManipulationService(TeacherGroupsManipulationService groupsActions) {
     this.groupsActions = groupsActions;
   }
-
-  private GroupService groupService;
 
   @Autowired
   public void setGroupService(GroupService groupService) {
@@ -51,10 +52,10 @@ public class GroupController {
   }
 
   /**
-   * Creates new group based on request body parameters.
-   * If a current authorized user is coordinator, the group location must equal coordinator location.
-   * If a current authorized user is administrator, the group location can be anyone.
-   * For other roles creating group is unavailable.
+   * Creates new group based on request body parameters. If a current authorized user is
+   * coordinator, the group location must equal coordinator location. If a current authorized user
+   * is administrator, the group location can be anyone. For other roles creating of group is
+   * unavailable.
    *
    * @param group new group
    * @param principal current authorized user
@@ -64,6 +65,26 @@ public class GroupController {
   public ResponseEntity addGroup(@RequestBody Group group, Principal principal) {
     String userName = principal.getName();
     if (groupService.addGroup(group, userName)) {
+      return new ResponseEntity(HttpStatus.OK);
+    }
+
+    return new ResponseEntity(HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * Deletes group with given id. If a current authorized user is
+   * coordinator, the group location must equal coordinator location. If a current authorized user
+   * is administrator, the group location can be anyone. For other roles deleting of group is
+   * unavailable.
+   *
+   * @param groupId given group id
+   * @param principal current authorized user
+   * @return the result - OK or BAD_REQUEST
+   */
+  @DeleteMapping(value = "/groups/delete/{id}")
+  public ResponseEntity deleteGroup(@PathVariable("id") int groupId, Principal principal) {
+    String userName = principal.getName();
+    if (groupService.deleteGroup(groupId, userName)) {
       return new ResponseEntity(HttpStatus.OK);
     }
 
