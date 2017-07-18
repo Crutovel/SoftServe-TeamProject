@@ -49,10 +49,15 @@ insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Dmytro','Petin',4,'2017-02-02','DmytroPetin','fgdfg24sd','coordinator in Dnipro',1);
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Lucas','Lukichich',4,'2017-03-03','LukasLukichich','fjgf24sd','coordinator in Sofia',2);
 insert into `educational_group` (`name`,teacher_id,location_id,start_date,finish_date,status_id,specialization_id) values ('DP-115',1,1,'2017-04-29','2017-08-18',4,7);
+insert into `educational_group` (`name`,teacher_id,location_id,start_date,finish_date,status_id,specialization_id) values ('SF-115',3,2,'2017-04-29','2017-08-18',4,2);
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Lev','Bukhanets',2,'2017-04-04','Myst1c','sdfhs332w','student Lev',1);
 insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Dmytro','Kholod',2,'2017-05-05','DimaKh','sdasdfdew','student Dima',1);
 insert into student_group (group_id,user_id) values (1,4);
 insert into student_group (group_id,user_id) values (1,5);
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Vasya','Zabuldugov',2,'2017-06-04','buldog','1dw23s332w','student Vasya',2);
+insert into user (first_name,last_name,role_id,date_of_birth,nick_name,password_hash_code,self_info,location_id) values ('Gena','Sepulkin',2,'2017-07-05','sepul','412sdfdew','student Gena',2);
+insert into student_group (group_id,user_id) values (2,6);
+insert into student_group (group_id,user_id) values (2,7);
 insert into email (`value`,is_it_primary,user_id) values ('olshvets@gmail.com',true,1);
 insert into email (`value`,is_it_primary,user_id) values ('dimapetin@gmail.com',true,2);
 insert into email (`value`,is_it_primary,user_id) values ('idontafraidrussia@mail.ru',false,2);

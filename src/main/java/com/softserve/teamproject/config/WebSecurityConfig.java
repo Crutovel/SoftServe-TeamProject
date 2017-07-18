@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private UserDetailsServiceImpl userDetailsService;
