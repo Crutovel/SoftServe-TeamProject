@@ -2,17 +2,21 @@ package com.softserve.teamproject.entity;
 
 import com.softserve.teamproject.entity.enums.BudgetOwner;
 import com.softserve.teamproject.validation.StringConstraintInSet;
-import com.softserve.teamproject.validation.UniqueGroup;
-import java.util.Set;
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -29,7 +33,6 @@ public class Group {
   private int id;
 
   @Column(name = "name", unique = true)
-  @UniqueGroup
   @Size(min=4, max=20)
   @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;
