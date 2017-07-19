@@ -22,7 +22,7 @@ public class TeacherGroupsManipulationServiceImpl implements TeacherGroupsManipu
   }
 
   @Override
-  public List<Group> getAllGroupsOfTheTeacher(String teachersName) {
-    return groupRepository.getAllGroupsOfTheTeacher(teachersName);
+   public List<Group> getAllGroupsOfTheTeacher(String teachersName) {
+    return groupRepository.findByTeachers_NickName(teachersName);
   }
 }

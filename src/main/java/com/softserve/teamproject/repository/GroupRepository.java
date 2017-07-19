@@ -1,21 +1,17 @@
 package com.softserve.teamproject.repository;
 
 import com.softserve.teamproject.entity.Group;
-import java.util.List;
 import com.softserve.teamproject.repository.custom.GroupRepositoryCustom;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
-import org.springframework.data.repository.query.Param;
 
 public interface GroupRepository extends JpaRepository<Group, Integer>,
     QueryDslPredicateExecutor, GroupRepositoryCustom {
 
   /**
-   * The method uses JPQl customized query in the annotation to retrieve all the users of the
+   * The method uses property expression feature of the Spring Data JPA to retrieve all the groups of the
    * particular teacher from the database.
    */
-  @Query("SELECT g FROM Group g JOIN g.teachers t WHERE t.nickName = LOWER(:teachersName)")
-  List<Group> getAllGroupsOfTheTeacher(@Param("teachersName") String teachersName);
-
+  List<Group> findByTeachers_NickName(String teachersName);
 }
