@@ -6,9 +6,12 @@
 
   <groupId>com.softserve</groupId>
   <artifactId>team-project-dp115</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
-
+  <scm>
+    <developerConnection>scm:git:git://github.com/Crutovel/SoftServe-TeamProject
+    </developerConnection>
+  </scm>
   <name>team-project-dp115</name>
   <description>DP-115 Team project</description>
 
@@ -84,9 +87,9 @@
       <version>${querydsl.version}</version>
     </dependency>
     <dependency>
-    <groupId>com.googlecode.json-simple</groupId>
-    <artifactId>json-simple</artifactId>
-    <version>1.1.1</version>
+      <groupId>com.googlecode.json-simple</groupId>
+      <artifactId>json-simple</artifactId>
+      <version>1.1.1</version>
     </dependency>
   </dependencies>
 
@@ -95,6 +98,11 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
       </plugin>
       <!-- Config: QueryDSL Plugin -->
       <plugin>
