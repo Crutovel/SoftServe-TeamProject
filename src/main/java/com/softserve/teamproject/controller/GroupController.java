@@ -71,18 +71,13 @@ public class GroupController {
    * is administrator, the group location can be anyone. For other roles creating of group is
    * unavailable.
    *
-   * @param group new group
+   * @param group new group from JSON
    * @param principal current authorized user
-   * @return the result - OK or BAD_REQUEST
    */
   @PostMapping(value = "/groups/add")
-  public ResponseEntity addGroup(@RequestBody Group group, Principal principal) {
+  public void addGroup(@RequestBody Group group, Principal principal) {
     String userName = principal.getName();
-    if (groupService.addGroup(group, userName)) {
-      return new ResponseEntity(HttpStatus.OK);
-    }
-
-    return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    groupService.addGroup(group, userName);
   }
 
   /**
@@ -93,16 +88,11 @@ public class GroupController {
    *
    * @param groupId given group id
    * @param principal current authorized user
-   * @return the result - OK or BAD_REQUEST
    */
   @DeleteMapping(value = "/groups/delete/{id}")
-  public ResponseEntity deleteGroup(@PathVariable("id") int groupId, Principal principal) {
+  public void deleteGroup(@PathVariable("id") int groupId, Principal principal) {
     String userName = principal.getName();
-    if (groupService.deleteGroup(groupId, userName)) {
-      return new ResponseEntity(HttpStatus.OK);
-    }
-
-    return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    groupService.deleteGroup(groupId, userName);
   }
 }
 

@@ -2,6 +2,7 @@ package com.softserve.teamproject.service;
 
 import com.softserve.teamproject.entity.Group;
 import java.util.List;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface GroupService {
@@ -13,8 +14,8 @@ public interface GroupService {
   List<Group> getAllGroups();
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
-  boolean addGroup(Group group, String userName);
+  void addGroup(Group group, String userName) throws AccessDeniedException;
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
-  boolean deleteGroup(int groupId, String userName);
+  void deleteGroup(int groupId, String userName) throws AccessDeniedException;
 }
