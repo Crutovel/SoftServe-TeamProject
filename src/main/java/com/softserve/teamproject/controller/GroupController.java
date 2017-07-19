@@ -63,36 +63,5 @@ public class GroupController {
   @RequestMapping(value = "/groups", method = RequestMethod.GET)
   public List<Group> getAllGroups() {
     return groupService.getAllGroups();
-  }
-
-  /**
-   * Creates new group based on request body parameters. If a current authorized user is
-   * coordinator, the group location must equal coordinator location. If a current authorized user
-   * is administrator, the group location can be anyone. For other roles creating of group is
-   * unavailable.
-   *
-   * @param group new group from JSON
-   * @param principal current authorized user
-   */
-  @PostMapping(value = "/groups/add")
-  public void addGroup(@RequestBody Group group, Principal principal) {
-    String userName = principal.getName();
-    groupService.addGroup(group, userName);
-  }
-
-  /**
-   * Deletes group with given id. If a current authorized user is
-   * coordinator, the group location must equal coordinator location. If a current authorized user
-   * is administrator, the group location can be anyone. For other roles deleting of group is
-   * unavailable.
-   *
-   * @param groupId given group id
-   * @param principal current authorized user
-   */
-  @DeleteMapping(value = "/groups/delete/{id}")
-  public void deleteGroup(@PathVariable("id") int groupId, Principal principal) {
-    String userName = principal.getName();
-    groupService.deleteGroup(groupId, userName);
-  }
-}
+  } 
 
