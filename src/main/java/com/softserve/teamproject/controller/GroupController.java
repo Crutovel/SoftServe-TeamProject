@@ -70,9 +70,6 @@ public class GroupController {
 
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
-    if (id <= 0) {
-      throw new ValidationException();
-    }
     groupService.deleteGroup(id, principal.getName());
   }
 }
