@@ -24,8 +24,6 @@ public class GroupController {
 
   private TeacherGroupsManipulationService groupsActions;
   private GroupService groupService;
-  @Autowired
-  private LocationRepository repository;
 
   @Autowired
   public void setTeacherGroupsManipulationService(TeacherGroupsManipulationService groupsActions) {
