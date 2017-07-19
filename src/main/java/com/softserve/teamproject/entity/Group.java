@@ -1,10 +1,11 @@
 package com.softserve.teamproject.entity;
 
 import com.softserve.teamproject.entity.enums.BudgetOwner;
+import com.softserve.teamproject.validation.StringConstraintInSet;
+import com.softserve.teamproject.validation.UniqueGroup;
 import java.util.Set;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "educational_group")
@@ -23,7 +28,10 @@ public class Group {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @Column(name = "name")
+  @Column(name = "name", unique = true)
+  @UniqueGroup
+  @Size(min=4, max=20)
+  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;
 
   @ManyToMany
@@ -33,12 +41,15 @@ public class Group {
 
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  @NotNull
   private Location location;
 
   @Column(name = "start_date", columnDefinition = "DATE")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   private LocalDate startDate;
 
   @Column(name = "finish_date", columnDefinition = "DATE")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   private LocalDate finishDate;
 
   @ManyToOne
@@ -47,6 +58,7 @@ public class Group {
 
   @ManyToOne
   @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
+  @NotNull
   private Specialization specialization;
 
   @ElementCollection
@@ -54,6 +66,7 @@ public class Group {
           joinColumns = @JoinColumn(name = "edu_group_id")
   )
   @Column(name = "expert_name")
+  @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
   private Set<String> experts;
 
   @Enumerated(EnumType.STRING)
@@ -162,17 +175,17 @@ public class Group {
     return Objects.hash(name);
   }
 
-  @Override
-  public String toString() {
-    return "Group{"
-        + "id=" + id
-        + ", name='" + name + '\''
-        + ", teachers=" + teachers
-        + ", location=" + location
-        + ", startDate=" + startDate
-        + ", finishDate=" + finishDate
-        + ", status=" + status
-        + ", specialization=" + specialization
-        + '}';
-  }
+    @Override
+    public String toString() {
+      return "Group{"
+          + "id=" + id
+          + ", name='" + name + '\''
+          + ", teachers=" + teachers
+          + ", location=" + location.getName()
+          + ", startDate=" + startDate
+          + ", finishDate=" + finishDate
+          + ", status=" + status
+          + ", specialization=" + specialization
+          + '}';
+    }
 }

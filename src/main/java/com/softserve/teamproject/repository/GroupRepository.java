@@ -18,4 +18,5 @@ public interface GroupRepository extends JpaRepository<Group, Integer>,
   @Query("SELECT g FROM Group g JOIN g.teachers t WHERE t.nickName = LOWER(:teachersName)")
   List<Group> getAllGroupsOfTheTeacher(@Param("teachersName") String teachersName);
 
+  Group findByName(String name);
 }
