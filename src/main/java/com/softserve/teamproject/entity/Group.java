@@ -1,5 +1,10 @@
 package com.softserve.teamproject.entity;
 
+import com.softserve.teamproject.entity.enums.BudgetOwner;
+import com.softserve.teamproject.validation.StringConstraintInSet;
+import com.softserve.teamproject.validation.UniqueGroup;
+import java.util.Set;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -10,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "educational_group")
@@ -19,21 +28,28 @@ public class Group {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @Column(name = "name")
+  @Column(name = "name", unique = true)
+  @UniqueGroup
+  @Size(min=4, max=20)
+  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
-  private User teacher;
+  @ManyToMany
+  @JoinTable(name = "group_teacher", joinColumns = { @JoinColumn(name = "group_id")},
+  inverseJoinColumns = { @JoinColumn(name = "teacher_id")})
+  private Set<User> teachers;
 
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  @NotNull
   private Location location;
 
   @Column(name = "start_date", columnDefinition = "DATE")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   private LocalDate startDate;
 
   @Column(name = "finish_date", columnDefinition = "DATE")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   private LocalDate finishDate;
 
   @ManyToOne
@@ -42,7 +58,19 @@ public class Group {
 
   @ManyToOne
   @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
+  @NotNull
   private Specialization specialization;
+
+  @ElementCollection
+  @CollectionTable(name = "expert",
+          joinColumns = @JoinColumn(name = "edu_group_id")
+  )
+  @Column(name = "expert_name")
+  @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
+  private Set<String> experts;
+
+  @Enumerated(EnumType.STRING)
+  private BudgetOwner budgetOwner;
 
   public Group() {
   }
@@ -61,14 +89,6 @@ public class Group {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public User getTeacher() {
-    return teacher;
-  }
-
-  public void setTeacher(User teacher) {
-    this.teacher = teacher;
   }
 
   public Location getLocation() {
@@ -111,6 +131,30 @@ public class Group {
     this.specialization = specialization;
   }
 
+  public Set<User> getTeachers() {
+    return teachers;
+  }
+
+  public void setTeachers(Set<User> teachers) {
+    this.teachers = teachers;
+  }
+
+  public Set<String> getExperts() {
+    return experts;
+  }
+
+  public void setExperts(Set<String> experts) {
+    this.experts = experts;
+  }
+
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
+  }
+
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -123,28 +167,25 @@ public class Group {
       return false;
     }
     Group other = (Group) otherObject;
-    return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-        && Objects.equals(teacher, other.teacher) && Objects.equals(location, other.location)
-        && Objects.equals(startDate, other.startDate) && Objects.equals(finishDate, other.finishDate)
-        && Objects.equals(status, other.status) && Objects.equals(specialization, other.specialization);
+    return Objects.equals(name, other.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, teacher, location, startDate, finishDate, status, specialization);
+    return Objects.hash(name);
   }
 
-  @Override
-  public String toString() {
-    return "Group{"
-        + "id=" + id
-        + ", name='" + name + '\''
-        + ", teacher=" + teacher
-        + ", location=" + location
-        + ", startDate=" + startDate
-        + ", finishDate=" + finishDate
-        + ", status=" + status
-        + ", specialization=" + specialization
-        + '}';
-  }
+    @Override
+    public String toString() {
+      return "Group{"
+          + "id=" + id
+          + ", name='" + name + '\''
+          + ", teachers=" + teachers
+          + ", location=" + location.getName()
+          + ", startDate=" + startDate
+          + ", finishDate=" + finishDate
+          + ", status=" + status
+          + ", specialization=" + specialization
+          + '}';
+    }
 }
