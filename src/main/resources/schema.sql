@@ -125,7 +125,6 @@ DROP TABLE IF EXISTS `educational_group`;
 CREATE TABLE `educational_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `teacher_id` int(11) NOT NULL,
   `location_id` INT NOT NULL,
   `start_date` DATE NOT NULL,
   `finish_date` DATE NOT NULL,
@@ -133,14 +132,10 @@ CREATE TABLE `educational_group` (
   `specialization_id` INT NOT NULL,
   `budget_owner` enum('SOFTSERVE','OPENGROUP') NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_group_user1_idx` (`teacher_id` ASC),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
   INDEX `fk_group_location1_idx` (`location_id` ASC),
   INDEX `fk_group_spetialization1_idx` (`specialization_id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
-  CONSTRAINT `fk_group_user1`
-    FOREIGN KEY (`teacher_id`)
-    REFERENCES `user` (`id`) ,
   CONSTRAINT `fk_edu_group_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `status` (`id`),
