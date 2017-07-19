@@ -76,25 +76,10 @@ public class GroupServiceImpl implements GroupService {
     if (user.getRole().getName().equals("coordinator")
         && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't add group in alien location");
-    }
+    }    
 
-    Set<User> teachers = group.getTeachers()
-        .stream()
-        .map(User::getId)
-        .map(id -> userRepository.getOne(id))
-        .collect(Collectors.toSet());
-
-    Status status = statusRepository.getStatusByName("planned");
-
-    Location location = locationRepository.getOne(group.getLocation().getId());
-
-    Specialization specialization = specializationRepository
-        .getOne(group.getSpecialization().getId());
-
-    group.setTeachers(teachers);
+    Status status = statusRepository.getStatusByName("planned");    
     group.setStatus(status);
-    group.setLocation(location);
-    group.setSpecialization(specialization);
 
     groupRep.save(group);
   }
