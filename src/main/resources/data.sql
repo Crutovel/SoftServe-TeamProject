@@ -43,10 +43,10 @@ insert into specialization (`name`) values ('ua_test_automation_boot_camp_for_mo
 insert into specialization (`name`) values ('ua_software_ingeneering_with_testing');
 insert into location (`name`,coordinator_id) values ('Dnipro',NULL);
 insert into location (`name`,coordinator_id) values ('Sofia', NULL);
-insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','Shcets',3,'OlegShvets','ghd22df',1);
+insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','Shvets',3,'OlegShvets','ghd22df',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Petin',4,'DmytroPetin','fgdfg24sd',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lucas','Lukichich',4,'LukasLukichich','fjgf24sd',2);
-insert into `educational_group` (`name`,teacher_id,location_id,start_date,finish_date,status_id,specialization_id,budget_owner) values ('DP-115',1,1,'2017-04-29','2017-08-18',4,7,'SOFTSERVE');
+insert into `educational_group` (`name`,location_id,start_date,finish_date,status_id,specialization_id,budget_owner) values ('DP-115',1,'2017-04-29','2017-08-18',4,7,'SOFTSERVE');
 insert into expert (edu_group_id, expert_name) values (1, 'Sergey');
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lev','Bukhanets',2,'Myst1c','sdfhs332w',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Kholod',2,'DimaKh','sdasdfdew',1);
