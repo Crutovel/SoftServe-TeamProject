@@ -45,7 +45,6 @@ public class GroupController {
    * found.
    */
   @RequestMapping(value = "/groups/mygroups", method = RequestMethod.GET)
-  @ResponseBody
   public List<Group> getTeachersGroups(Principal principal) {
     List<Group> myGroups = groupsActions.getAllGroupsOfTheTeacher(principal.getName());
     if (myGroups.size() == 0) {
@@ -61,7 +60,6 @@ public class GroupController {
    */
   @RequestMapping(value = "/groups", method = RequestMethod.GET)
   public List<Group> getAllGroups() {
-    List<Group> groups = getAllGroups();
     return groupService.getAllGroups();
   }
   
