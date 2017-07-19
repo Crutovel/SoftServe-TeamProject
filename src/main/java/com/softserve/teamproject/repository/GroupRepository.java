@@ -15,7 +15,7 @@ public interface GroupRepository extends JpaRepository<Group, Integer>,
    * The method uses JPQl customized query in the annotation to retrieve all the users of the
    * particular teacher from the database.
    */
-  @Query("SELECT g FROM Group g JOIN g.teacher t WHERE t.nickName = LOWER(:teachersName)")
+  @Query("SELECT g FROM Group g JOIN g.teachers t WHERE t.nickName = LOWER(:teachersName)")
   List<Group> getAllGroupsOfTheTeacher(@Param("teachersName") String teachersName);
 
 }
