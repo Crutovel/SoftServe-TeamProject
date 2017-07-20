@@ -17,22 +17,27 @@
     - [Success response](#show-one-user-success-response)
     - [Error response](#show-one-user-error-response)
 
-<a name="show-all-users"></a>
-## Show all users
 
-### URL : <a name="show-all-users-url"></a>
+## <a name="show-all-users">Show all users</a>
+
+<a name="show-all-users-url"></a>
+### URL :
 /users
 
-### Method : <a name="show-all-users-method"></a>
+<a name="show-all-users-method"></a>
+### Method :
 GET
 
-### URL Params : <a name="show-all-users-url-params"></a>
+<a name="show-all-users-url-params"></a>
+### URL Params :
 None
 
-### Data Params : <a name="show-all-users-data-params"></a>
+<a name="show-all-users-data-params"></a>
+### Data Params :
 None
 
-### Success Response: <a name="show-all-success-response"></a>
+<a name="show-all-success-response"></a>
+### Success Response:
 **Code:** 200 OK
 
 **Content:** 
@@ -147,17 +152,21 @@ None
         }
     }
 
-### Error Response : <a name="show-all-users-error-response"></a>
+<a name="show-all-users-error-response"></a>
+### Error Response :
 **Code:** 401 Unauthorized
 
 **Content:** None
 
-## Show one user <a name="show-one-user"></a>
+<a name="show-one-user"></a>
+## Show one user
 
-### URL : <a name="show-one-user-url"></a>
+<a name="show-one-user-url"></a>
+### URL :
 /users
 
-### Method : <a name="show-one-user-method"></a>
+<a name="show-one-user-method"></a>
+### Method : 
 GET
 
 ### URL Params : <a name="show-one-user-url-params"></a>
