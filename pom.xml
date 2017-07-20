@@ -9,7 +9,7 @@
   <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <scm>
-    <developerConnection>scm:git:git://github.com/Crutovel/SoftServe-TeamProject
+    <developerConnection>scm:git:https://github.com/Crutovel/SoftServe-TeamProject
     </developerConnection>
   </scm>
   <name>team-project-dp115</name>
