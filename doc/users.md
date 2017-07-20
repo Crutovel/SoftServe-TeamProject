@@ -1,16 +1,40 @@
-# API Documentation for /Users End Point
+# API Documentation for End Point "/users"
 
-## Show all users
+## Table of Content
 
-**URL :** /users
+- [Show all users](#show-all-users)
+    - [URL](#show-all-users-url)
+    - [Method](#show-all-users-method)
+    - [URL params](#show-all-users-url-params)
+    - [Data params](#show-all-users-method-data-params)
+    - [Success response](#show-all-users-method-success-response)
+    - [Error response](#show-all-users-method-error-response)
+- [Show one user](#show-one-user)
+    - [URL](#show-one-users-url)
+    - [Method](#show-one-users-method)
+    - [URL params](#show-one-users-url-params)
+    - [Data params](#show-one-users-method-data-params)
+    - [Success response](#show-one-users-method-success-response)
+    - [Error response](#show-one-users-method-error-response)
 
-**Method :** GET
+## Show all users <a name="show-all-users"></a>
 
-**URL Params :** -
+### URL : <a name="show-all-users-url"></a>
+/users
 
-**Data Params :** -
+### Method : <a name="show-all-users-method"></a>
+GET
 
-**Success Response:** Code: 200, Content: 
+### URL Params : <a name="show-all-users-url-params"></a>
+None
+
+### Data Params : <a name="show-all-users-data-params"></a>
+None
+
+### Success Response: <a name="show-all-success-response"></a>
+**Code:** 200 OK
+
+**Content:** 
 
     {
         "_embedded": {
@@ -122,19 +146,29 @@
         }
     }
 
-**Error Response :** Code: 401 Unauthorized
+### Error Response : <a name="show-all-users-error-response"></a>
+**Code:** 401 Unauthorized
 
-## Show one user
+**Content:** None
 
-**URL :** /users
+## Show one user <a name="show-one-user"></a>
 
-**Method :** GET
+### URL : <a name="show-one-users-url"></a>
+/users
 
-**URL Params :** Required: `id=[integer]`, example: `id=2`
+### Method : <a name="show-one-users-method"></a>
+GET
 
-**Data Params :** -
+### URL Params : <a name="show-one-users-url-params"></a>
+**Required:** `id=[integer]`. Example: `id=2`
 
-**Success Response:** Code: 200, Content:
+### Data Params : <a name="show-one-users-data-params"></a>
+None
+
+### Success Response: <a name="show-one-success-response"></a>
+**Code:** 200 OK
+
+**Content:**
 
     {
         "_embedded": {
@@ -202,4 +236,7 @@
         }
     }
 
-**Error Response :** Code: 401 Unauthorized
+### Error Response : <a name="show-one-users-error-response"></a>
+**Code:** 401 Unauthorized
+
+**Content:** None
