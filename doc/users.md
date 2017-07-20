@@ -1,14 +1,15 @@
 # API Documentation for End Point "/users"
 
+<a name="table-of-content"></a>
 ## Table of Content
 
 - [Show all users](#show-all-users)
     - [URL](#show-all-users-url)
     - [Method](#show-all-users-method)
     - [URL params](#show-all-users-url-params)
-    - [Data params](#show-all-users-method-data-params)
-    - [Success response](#show-all-users-method-success-response)
-    - [Error response](#show-all-users-method-error-response)
+    - [Data params](#show-all-users-data-params)
+    - [Success response](#show-all-users-success-response)
+    - [Error response](#show-all-users-error-response)
 - [Show one user](#show-one-user)
     - [URL](#show-one-user-url)
     - [Method](#show-one-user-method)
@@ -20,6 +21,7 @@
 
 <a name="show-all-users"></a>
 ## Show all users
+[Table of content](#table-of-content)
 
 <a name="show-all-users-url"></a>
 ### URL :
