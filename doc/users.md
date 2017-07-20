@@ -10,14 +10,15 @@
     - [Success response](#show-all-users-method-success-response)
     - [Error response](#show-all-users-method-error-response)
 - [Show one user](#show-one-user)
-    - [URL](#show-one-users-url)
-    - [Method](#show-one-users-method)
-    - [URL params](#show-one-users-url-params)
-    - [Data params](#show-one-users-method-data-params)
-    - [Success response](#show-one-users-method-success-response)
-    - [Error response](#show-one-users-method-error-response)
+    - [URL](#show-one-user-url)
+    - [Method](#show-one-user-method)
+    - [URL params](#show-one-user-url-params)
+    - [Data params](#show-one-user-data-params)
+    - [Success response](#show-one-user-success-response)
+    - [Error response](#show-one-user-error-response)
 
-## Show all users <a name="show-all-users"></a>
+<a name="show-all-users"></a>
+## Show all users
 
 ### URL : <a name="show-all-users-url"></a>
 /users
@@ -153,19 +154,19 @@ None
 
 ## Show one user <a name="show-one-user"></a>
 
-### URL : <a name="show-one-users-url"></a>
+### URL : <a name="show-one-user-url"></a>
 /users
 
-### Method : <a name="show-one-users-method"></a>
+### Method : <a name="show-one-user-method"></a>
 GET
 
-### URL Params : <a name="show-one-users-url-params"></a>
+### URL Params : <a name="show-one-user-url-params"></a>
 **Required:** `id=[integer]`. Example: `id=2`
 
-### Data Params : <a name="show-one-users-data-params"></a>
+### Data Params : <a name="show-one-user-data-params"></a>
 None
 
-### Success Response: <a name="show-one-success-response"></a>
+### Success Response: <a name="show-one-user-success-response"></a>
 **Code:** 200 OK
 
 **Content:**
@@ -236,7 +237,7 @@ None
         }
     }
 
-### Error Response : <a name="show-one-users-error-response"></a>
+### Error Response : <a name="show-one-user-error-response"></a>
 **Code:** 401 Unauthorized
 
 **Content:** None
