@@ -18,7 +18,8 @@
     - [Error response](#show-one-user-error-response)
 
 
-## <a name="show-all-users">Show all users</a>
+<a name="show-all-users"></a>
+## Show all users
 
 <a name="show-all-users-url"></a>
 ### URL :
@@ -169,13 +170,16 @@ None
 ### Method : 
 GET
 
-### URL Params : <a name="show-one-user-url-params"></a>
+<a name="show-one-user-url-params"></a>
+### URL Params :
 **Required:** `id=[integer]`. Example: `id=2`
 
-### Data Params : <a name="show-one-user-data-params"></a>
+<a name="show-one-user-data-params"></a>
+### Data Params :
 None
 
-### Success Response: <a name="show-one-user-success-response"></a>
+<a name="show-one-user-success-response"></a>
+### Success Response:
 **Code:** 200 OK
 
 **Content:**
@@ -246,7 +250,8 @@ None
         }
     }
 
-### Error Response : <a name="show-one-user-error-response"></a>
+<a name="show-one-user-error-response"></a>
+### Error Response :
 **Code:** 401 Unauthorized
 
 **Content:** None
