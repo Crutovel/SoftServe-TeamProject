@@ -18,10 +18,8 @@
     - [Success response](#show-one-user-success-response)
     - [Error response](#show-one-user-error-response)
 
-
 <a name="show-all-users"></a>
 ## Show all users
-[Table of content](#table-of-content)
 
 <a name="show-all-users-url"></a>
 ### URL :
@@ -161,9 +159,10 @@ None
 
 **Content:** None
 
+[Table of content](#table-of-content)
+
 <a name="show-one-user"></a>
 ## Show one user
-[Table of content](#table-of-content)
 
 <a name="show-one-user-url"></a>
 ### URL :
