@@ -39,7 +39,7 @@ None
 ### Data Params :
 None
 
-<a name="show-all-success-response"></a>
+<a name="show-all-users-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
 
@@ -163,6 +163,7 @@ None
 
 <a name="show-one-user"></a>
 ## Show one user
+[Table of content](#table-of-content)
 
 <a name="show-one-user-url"></a>
 ### URL :
@@ -257,3 +258,5 @@ None
 **Code:** 401 Unauthorized
 
 **Content:** None
+
+[Table of content](#table-of-content)
