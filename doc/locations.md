@@ -1,4 +1,4 @@
-# API Documentation for End Point /locations
+# API Documentation for End Point "/locations"
 
 <a name="table-of-content"></a>
 ## Table of Content
