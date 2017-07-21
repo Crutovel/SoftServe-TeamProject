@@ -3,35 +3,35 @@
 <a name="table-of-content"></a>
 ## Table of Content
 
-- [Retrieve information about current user after success login](#information-about-current-user)
-    - [URL](#information-about-current-user-url)
-    - [Method](#information-about-current-user-method)
-    - [URL Params](#information-about-current-user-url-params)
-    - [Data Params](#information-about-current-user-data-params)
-    - [Success Response](#information-about-current-user-success-response)
-    - [Field "image"](#information-about-current-user-field-image)
-    - [Error Response](#information-about-current-user-error-response)
+- [Retrieve information about current user after success login](#userprofile)
+    - [URL](#userprofile-url)
+    - [Method](#userprofile-method)
+    - [URL Params](#userprofile-url-params)
+    - [Data Params](#userprofile-data-params)
+    - [Success Response](#userprofile-success-response)
+    - [Field "image"](#userprofile-field-image)
+    - [Error Response](#userprofile-error-response)
 
-<a name="information-about-current-user"></a>
+<a name="userprofile"></a>
 ## Retrieve information about current user after success login
 
-<a name="information-about-current-user-url"></a>
+<a name="userprofile-url"></a>
 ### URL :
 /user/profile
 
-<a name="information-about-current-user-method"></a>
+<a name="userprofile-method"></a>
 ### Method :
 GET
 
-<a name="information-about-current-user-url-params"></a>
+<a name="userprofile-url-params"></a>
 ### URL Params :
 None
 
-<a name="information-about-current-user-data-params"></a>
+<a name="userprofile-data-params"></a>
 ### Data Params :
 None
 
-<a name="information-about-current-user-success-response"></a>
+<a name="userprofile-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
 
@@ -95,15 +95,14 @@ None
         ]
     }
 
-<a name="information-about-current-user-field-image"></a>
+<a name="userprofile-field-image"></a>
 ### Field "image" :
 Represent byte array of image as string encoded using the Base64 encoding scheme. 
 
-<a name="information-about-current-user-error-response"></a>
+<a name="userprofile-error-response"></a>
 ### Error Response :
 **Code:** 401 Unauthorized
 
-**Content:**
+**Content:**None
 
 [Table of content](#table-of-content)
-

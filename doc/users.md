@@ -3,41 +3,41 @@
 <a name="table-of-content"></a>
 ## Table of Content
 
-- [Show all users](#show-all-users)
-    - [URL](#show-all-users-url)
-    - [Method](#show-all-users-method)
-    - [URL params](#show-all-users-url-params)
-    - [Data params](#show-all-users-data-params)
-    - [Success response](#show-all-users-success-response)
-    - [Error response](#show-all-users-error-response)
-- [Show one user](#show-one-user)
-    - [URL](#show-one-user-url)
-    - [Method](#show-one-user-method)
-    - [URL params](#show-one-user-url-params)
-    - [Data params](#show-one-user-data-params)
-    - [Success response](#show-one-user-success-response)
-    - [Error response](#show-one-user-error-response)
+- [Show all users](#all-users)
+    - [URL](#all-users-url)
+    - [Method](#all-users-method)
+    - [URL params](#all-users-url-params)
+    - [Data params](#all-users-data-params)
+    - [Success response](#all-users-success-response)
+    - [Error response](#all-users-error-response)
+- [Show one user](#one-user)
+    - [URL](#one-user-url)
+    - [Method](#one-user-method)
+    - [URL params](#one-user-url-params)
+    - [Data params](#one-user-data-params)
+    - [Success response](#one-user-success-response)
+    - [Error response](#one-user-error-response)
 
-<a name="show-all-users"></a>
+<a name="all-users"></a>
 ## Show all users
 
-<a name="show-all-users-url"></a>
+<a name="all-users-url"></a>
 ### URL :
 /users
 
-<a name="show-all-users-method"></a>
+<a name="all-users-method"></a>
 ### Method :
 GET
 
-<a name="show-all-users-url-params"></a>
+<a name="all-users-url-params"></a>
 ### URL Params :
 None
 
-<a name="show-all-users-data-params"></a>
+<a name="all-users-data-params"></a>
 ### Data Params :
 None
 
-<a name="show-all-users-success-response"></a>
+<a name="all-users-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
 
@@ -153,7 +153,7 @@ None
         }
     }
 
-<a name="show-all-users-error-response"></a>
+<a name="all-users-error-response"></a>
 ### Error Response :
 **Code:** 401 Unauthorized
 
@@ -161,18 +161,18 @@ None
 
 [Table of content](#table-of-content)
 
-<a name="show-one-user"></a>
+<a name="one-user"></a>
 ## Show one user
 
-<a name="show-one-user-url"></a>
+<a name="one-user-url"></a>
 ### URL :
 /users
 
-<a name="show-one-user-method"></a>
+<a name="one-user-method"></a>
 ### Method : 
 GET
 
-<a name="show-one-user-url-params"></a>
+<a name="one-user-url-params"></a>
 ### URL Params :
 **Required:**
 
@@ -182,11 +182,11 @@ Example:
 
 `id=2`
 
-<a name="show-one-user-data-params"></a>
+<a name="one-user-data-params"></a>
 ### Data Params :
 None
 
-<a name="show-one-user-success-response"></a>
+<a name="one-user-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
 
@@ -258,7 +258,7 @@ None
         }
     }
 
-<a name="show-one-user-error-response"></a>
+<a name="one-user-error-response"></a>
 ### Error Response :
 **Code:** 401 Unauthorized
 
