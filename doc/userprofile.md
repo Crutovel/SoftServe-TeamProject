@@ -1,16 +1,41 @@
-# API Documentation for UserProfile End Point
+# API Documentation for End Point "/user/profile"
 
+<a name="table-of-content"></a>
+## Table of Content
+
+- [Retrieve information about current user after success login](#information-about-current-user)
+    - [URL](#information-about-current-user-url)
+    - [Method](#information-about-current-user-method)
+    - [URL Params](#information-about-current-user-url-params)
+    - [Data Params](#information-about-current-user-data-params)
+    - [Success Response](#information-about-current-user-success-response)
+    - [Field "image"](#information-about-current-user-field-image)
+    - [Error Response](#information-about-current-user-error-response)
+
+<a name="information-about-current-user"></a>
 ## Retrieve information about current user after success login
 
-**URL :** /user/profile
+<a name="information-about-current-user-url"></a>
+### URL :
+/user/profile
 
-**Method :** GET
+<a name="information-about-current-user-method"></a>
+### Method :
+GET
 
-**URL Params :** -
+<a name="information-about-current-user-url-params"></a>
+### URL Params :
+None
 
-**Data Params :** -
+<a name="information-about-current-user-data-params"></a>
+### Data Params :
+None
 
-**Success Response:** Code: 200, Content: 
+<a name="information-about-current-user-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:** 
 
     {
         "id": 1,
@@ -70,7 +95,15 @@
         ]
     }
 
-**Field "image" :** Represent byte array of image as string encoded using the Base64 encoding scheme. 
+<a name="information-about-current-user-field-image"></a>
+### Field "image" :
+Represent byte array of image as string encoded using the Base64 encoding scheme. 
 
-**Error Response :** Code: 401 Unauthorized
+<a name="information-about-current-user-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+[Table of content](#table-of-content)
 
