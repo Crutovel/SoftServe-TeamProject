@@ -174,7 +174,13 @@ GET
 
 <a name="show-one-user-url-params"></a>
 ### URL Params :
-**Required:** `id=[integer]`. Example: `id=2`
+**Required:**
+
+`id=[integer]`
+
+Example:
+
+`id=2`
 
 <a name="show-one-user-data-params"></a>
 ### Data Params :
