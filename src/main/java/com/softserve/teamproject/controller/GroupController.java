@@ -1,19 +1,15 @@
 package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
 import java.security.Principal;
 import java.util.List;
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,16 +37,10 @@ public class GroupController {
    *
    * @param principal of the Principal type.
    * @return list of groups of the authorized teacher.
-   * @throws EntityNotFoundException with the message "Not found" if no groups of this teacher were
-   * found.
    */
-  @RequestMapping(value = "/groups/mygroups", method = RequestMethod.GET)
+  @RequestMapping(value = "/groups/my", method = RequestMethod.GET)
   public List<Group> getTeachersGroups(Principal principal) {
-    List<Group> myGroups = groupsActions.getAllGroupsOfTheTeacher(principal.getName());
-    if (myGroups.size() == 0) {
-      throw new EntityNotFoundException();
-    }
-    return myGroups;
+    return groupsActions.getAllGroupsOfTheTeacher(principal.getName());
   }
 
   /**
