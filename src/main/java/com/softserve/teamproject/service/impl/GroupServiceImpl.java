@@ -1,22 +1,20 @@
 package com.softserve.teamproject.service.impl;
 
-import static com.softserve.teamproject.repository.expression.GroupExpressions.getByLocationIds;
-
+import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.Location;
-import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.entity.Location;
+import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
+import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
-import com.softserve.teamproject.repository.SpecializationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -28,7 +26,6 @@ public class GroupServiceImpl implements GroupService {
   private UserRepository userRepository;
   private StatusRepository statusRepository;
   private LocationRepository locationRepository;
-  private SpecializationRepository specializationRepository;
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRep) {
@@ -49,10 +46,6 @@ public class GroupServiceImpl implements GroupService {
   public void setLocationRepository(
       LocationRepository locationRepository) {
     this.locationRepository = locationRepository;
-  }
-
-  public List<Group> getGroupsByLocationIds(Integer[] locationIds) {
-    return groupRep.getGroupsByLocationIds(locationIds);
   }
 
   public List<Group> getAllGroups() {
@@ -76,19 +69,18 @@ public class GroupServiceImpl implements GroupService {
     if (user.getRole().getName().equals("coordinator")
         && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't add group in alien location");
-    }    
+    }
 
-    Status status = statusRepository.getStatusByName("planned");    
+    Status status = statusRepository.getStatusByName("planned");
     group.setStatus(status);
 
     groupRep.save(group);
   }
 
   /**
-   * Deletes group with given id. If a current authorized user is
-   * coordinator, the group location must equal coordinator location. If a current authorized user
-   * is administrator, the group location can be anyone. For other roles deleting of group is
-   * unavailable.
+   * Deletes group with given id. If a current authorized user is coordinator, the group location
+   * must equal coordinator location. If a current authorized user is administrator, the group
+   * location can be anyone. For other roles deleting of group is unavailable.
    *
    * @param groupId given group id
    * @param userName current authorized user
@@ -104,5 +96,23 @@ public class GroupServiceImpl implements GroupService {
     }
 
     groupRep.delete(group);
+  }
+
+  /**
+   * Returns groups with filter.
+   *
+   * @param filter contains filter values
+   * @return groups with filter
+   */
+  public Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter) {
+
+    if (filter.getLocations() != null) {
+      Iterable<Group> groups = groupRep.findAll(GroupExpressions.getByLocationIds(filter.getLocations()));
+      List<GroupResource> groupResources = new ArrayList<>();
+      groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
+      return groupResources;
+    }
+
+    return getAllGroupResources();
   }
 }

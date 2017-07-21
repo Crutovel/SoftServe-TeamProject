@@ -1,19 +1,18 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
 import java.security.Principal;
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -62,7 +61,7 @@ public class GroupController {
   public List<Group> getAllGroups() {
     return groupService.getAllGroups();
   }
-  
+
   @RequestMapping(value = "/groups", method = RequestMethod.POST)
   public void createGroup(@Valid Group group, Principal principal) {
     groupService.addGroup(group, principal.getName());
@@ -71,5 +70,17 @@ public class GroupController {
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
+  }
+
+  /**
+   * Get groups by filter
+   *
+   * @param requestFilter group dto
+   * @return groups info
+   */
+  @RequestMapping(value = "/groups/filter", method = RequestMethod.POST)
+  public Iterable getGroupsByFilter(@RequestBody GroupsFilter requestFilter) {
+
+    return groupService.getGroupsByFilter(requestFilter);
   }
 }

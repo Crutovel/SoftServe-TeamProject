@@ -33,25 +33,6 @@ public class LocationController {
   }
 
   /**
-   * Get groups by location ids
-   *
-   * @param locationIds array of location ids
-   * @return groups info
-   */
-  @RequestMapping(value = "/locations/{locationIds}/groups", method = RequestMethod.GET)
-  public List<Group> getGroupsByLocations(@PathVariable("locationIds") String[] locationIds) {
-
-    Integer[] array = Arrays.stream(locationIds).mapToInt(Integer::parseInt).boxed()
-        .toArray(Integer[]::new);
-
-    List<Group> result = groupService.getGroupsByLocationIds(array);
-    if (result.size() == 0) {
-      throw new EntityNotFoundException();
-    }
-    return result;
-  }
-
-  /**
    * Get locations info
    *
    * @return locations info
