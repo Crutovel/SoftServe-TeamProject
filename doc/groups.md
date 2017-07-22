@@ -31,7 +31,23 @@
     - [Data Params](#filter-groups-data-params)
     - [Success Response](#filter-groups-success-response)
     - [Error Response](#filter-groups-error-response)
-    
+- [Add group](#add-group)
+    - [URL](#add-group-url)
+    - [Method](#add-group-method)
+    - [URL Params](#add-group-url-params)
+    - [Data Params](#add-group-data-params)
+    - [Data Type](#add-group-data-type)
+    - [Success Response](#add-group-success-response)
+    - [Error Response](#add-group-error-response)
+- [Delete group](#delete-group)
+    - [URL](#delete-group-url)
+    - [Method](#delete-group-method)
+    - [URL Params](#delete-group-url-params)
+    - [Data Params](#delete-group-data-params)
+    - [Data Type](#delete-group-data-type)
+    - [Success Response](#delete-group-success-response)
+    - [Error Response](#delete-group-error-response)
+
 <a name="all-groups"></a>
 ## Show all groups
 
@@ -61,215 +77,88 @@ None
         {
             "id": 1,
             "name": "DP-115",
-            "teacher": {
-                "id": 1,
-                "firstName": "Oleg",
-                "lastName": "Shvets",
-                "role": {
-                    "id": 3,
-                    "name": "teacher",
-                    "roleCategory": {
-                        "id": 2,
-                        "name": "itacademy"
-                    }
-                },
-                "dateOfBirth": {
-                    "year": 2017,
-                    "month": "JANUARY",
-                    "dayOfMonth": 1,
-                    "dayOfWeek": "SUNDAY",
-                    "era": "CE",
-                    "dayOfYear": 1,
-                    "leapYear": false,
-                    "monthValue": 1,
-                    "chronology": {
-                        "id": "ISO",
-                        "calendarType": "iso8601"
-                    }
-                },
-                "nickName": "OlegShvets",
-                "selfInfo": "teacher in softServe. Dnipro",
-                "image": null,
-                "location": {
+            "teachers":
+            [
+                {
                     "id": 1,
-                    "name": "Dnipro",
-                    "country": {
-                        "id": 1,
-                        "name": "Ukraine"
-                    }
-                },
-                "emails": [
-                    {
-                        "id": 1,
-                        "value": "olshvets@gmail.com",
-                        "primary": true
-                    }
-                ],
-                "phones": [
-                    {
-                        "id": 1,
-                        "value": "+380-96-456-22-74"
-                    }
-                ],
-                "contactLinks": [
-                    {
-                        "id": 1,
-                        "value": "https://linkedin.com/OlegShvets"
-                    }
-                ]
-            },
-            "location": {
-                "id": 1,
-                "name": "Dnipro",
-                "country": {
-                    "id": 1,
-                    "name": "Ukraine"
-                }
-            },
-            "startDate": {
-                "year": 2017,
-                "month": "APRIL",
-                "dayOfMonth": 29,
-                "dayOfWeek": "SATURDAY",
-                "era": "CE",
-                "dayOfYear": 119,
-                "leapYear": false,
-                "monthValue": 4,
-                "chronology": {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
-            "finishDate": {
-                "year": 2017,
-                "month": "AUGUST",
-                "dayOfMonth": 18,
-                "dayOfWeek": "FRIDAY",
-                "era": "CE",
-                "dayOfYear": 230,
-                "leapYear": false,
-                "monthValue": 8,
-                "chronology": {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
-            "status": {
-                "id": 4,
-                "name": "in-process",
-                "statusCategory": {
-                    "id": 2,
-                    "name": "current"
-                }
-            },
-            "specialization": {
-                "id": 7,
-                "name": "JAVA"
-            }
-        },
-        {
-            "id": 2,
-            "name": "SF-115",
-            "teacher": {
-                "id": 3,
-                "firstName": "Lucas",
-                "lastName": "Lukichich",
-                "role": {
-                    "id": 4,
-                    "name": "coordinator",
-                    "roleCategory": {
-                        "id": 2,
-                        "name": "itacademy"
-                    }
-                },
-                "dateOfBirth": {
-                    "year": 2017,
-                    "month": "MARCH",
-                    "dayOfMonth": 3,
-                    "dayOfWeek": "FRIDAY",
-                    "era": "CE",
-                    "dayOfYear": 62,
-                    "leapYear": false,
-                    "monthValue": 3,
-                    "chronology": {
-                        "id": "ISO",
-                        "calendarType": "iso8601"
-                    }
-                },
-                "nickName": "LukasLukichich",
-                "selfInfo": "coordinator in Sofia",
-                "image": null,
-                "location": {
-                    "id": 2,
-                    "name": "Sofia",
-                    "country": {
-                        "id": 2,
-                        "name": "Hungary"
-                    }
-                },
-                "emails": [
-                    {
-                        "id": 4,
-                        "value": "lucalukis@gmail.com",
-                        "primary": true
-                    }
-                ],
-                "phones": [
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
                     {
                         "id": 3,
-                        "value": "+344-04-252-66-32"
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
                     }
-                ],
-                "contactLinks": []
-            },
-            "location": {
-                "id": 2,
-                "name": "Sofia",
-                "country": {
-                    "id": 2,
-                    "name": "Hungary"
                 }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
             },
-            "startDate": {
+            "startDate": 
+            {
                 "year": 2017,
                 "month": "APRIL",
+                "era": "CE",
                 "dayOfMonth": 29,
                 "dayOfWeek": "SATURDAY",
-                "era": "CE",
                 "dayOfYear": 119,
                 "leapYear": false,
                 "monthValue": 4,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "finishDate": {
+            "finishDate":
+            {
                 "year": 2017,
                 "month": "AUGUST",
+                "era": "CE",
                 "dayOfMonth": 18,
                 "dayOfWeek": "FRIDAY",
-                "era": "CE",
                 "dayOfYear": 230,
                 "leapYear": false,
                 "monthValue": 8,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "status": {
+            "status":
+            {
                 "id": 4,
                 "name": "in-process",
-                "statusCategory": {
+                "statusCategory":
+                {
                     "id": 2,
                     "name": "current"
                 }
             },
-            "specialization": {
-                "id": 2,
-                "name": "js_core"
-            }
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
+                "Sergey"
+            ],
+            "budgetOwner": "SOFTSERVE"
         }
     ]
 
@@ -277,7 +166,15 @@ None
 ### Error Response :
 **Code:** 401 Unauthorized
 
-**Content:** None
+**Content:**
+
+    {
+        "timestamp": 1500673874234,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups/"
+    }
 
 [Table of content](#table-of-content)
 
@@ -303,125 +200,119 @@ None
 <a name="teacher-groups-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
+
 **Content:**
 
     [
         {
             "id": 1,
             "name": "DP-115",
-            "teacher": {
-                "id": 1,
-                "firstName": "Oleg",
-                "lastName": "Shvets",
-                "role": {
-                    "id": 3,
-                    "name": "teacher",
-                    "roleCategory": {
-                        "id": 2,
-                        "name": "itacademy"
-                    }
-                },
-                "dateOfBirth": {
-                    "year": 2017,
-                    "month": "JANUARY",
-                    "dayOfMonth": 1,
-                    "dayOfWeek": "SUNDAY",
-                    "era": "CE",
-                    "dayOfYear": 1,
-                    "leapYear": false,
-                    "monthValue": 1,
-                    "chronology": {
-                        "id": "ISO",
-                        "calendarType": "iso8601"
-                    }
-                },
-                "nickName": "OlegShvets",
-                "selfInfo": "teacher in softServe. Dnipro",
-                "image": null,
-                "location": {
+            "teachers":
+            [
+                {
                     "id": 1,
-                    "name": "Dnipro",
-                    "country": {
-                        "id": 1,
-                        "name": "Ukraine"
-                    }
-                },
-                "emails": [
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
+                    {
+                        "id": 3,
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
                     {
                         "id": 1,
-                        "value": "olshvets@gmail.com",
-                        "primary": true
+                        "name": "Dnipro"
                     }
-                ],
-                "phones": [
-                    {
-                        "id": 1,
-                        "value": "+380-96-456-22-74"
-                    }
-                ],
-                "contactLinks": [
-                    {
-                        "id": 1,
-                        "value": "https://linkedin.com/OlegShvets"
-                    }
-                ]
-            },
-            "location": {
-                "id": 1,
-                "name": "Dnipro",
-                "country": {
-                    "id": 1,
-                    "name": "Ukraine"
                 }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
             },
-            "startDate": {
+            "startDate": 
+            {
                 "year": 2017,
                 "month": "APRIL",
+                "era": "CE",
                 "dayOfMonth": 29,
                 "dayOfWeek": "SATURDAY",
-                "era": "CE",
                 "dayOfYear": 119,
                 "leapYear": false,
                 "monthValue": 4,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "finishDate": {
+            "finishDate":
+            {
                 "year": 2017,
                 "month": "AUGUST",
+                "era": "CE",
                 "dayOfMonth": 18,
                 "dayOfWeek": "FRIDAY",
-                "era": "CE",
                 "dayOfYear": 230,
                 "leapYear": false,
                 "monthValue": 8,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "status": {
+            "status":
+            {
                 "id": 4,
                 "name": "in-process",
-                "statusCategory": {
+                "statusCategory":
+                {
                     "id": 2,
                     "name": "current"
                 }
             },
-            "specialization": {
+            "specialization":
+            {
                 "id": 7,
                 "name": "JAVA"
-            }
+            },
+            "experts":
+            [
+                "Sergey"
+            ],
+            "budgetOwner": "SOFTSERVE"
         }
     ]
 
 <a name="teacher-groups-error-response"></a>
 ### Error Response :
-**Code:** 401 Unauthorized, 404 Not Found
+**Code:** 401 Unauthorized
  
-**Content:** None
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups/my"
+    }
+
+**Code:** 404 Not Found
+
+**Content:**
+
+    {
+        "message": "Not Found"
+    }
 
 [Table of content](#table-of-content)
 
@@ -452,116 +343,114 @@ None
 
     [
         {
-            "id": 2,
-            "name": "SF-115",
-            "teacher": {
-                "id": 3,
-                "firstName": "Lucas",
-                "lastName": "Lukichich",
-                "role": {
-                    "id": 4,
-                    "name": "coordinator",
-                    "roleCategory": {
-                        "id": 2,
-                        "name": "itacademy"
-                    }
-                },
-                "dateOfBirth": {
-                    "year": 2017,
-                    "month": "MARCH",
-                    "dayOfMonth": 3,
-                    "dayOfWeek": "FRIDAY",
-                    "era": "CE",
-                    "dayOfYear": 62,
-                    "leapYear": false,
-                    "monthValue": 3,
-                    "chronology": {
-                        "id": "ISO",
-                        "calendarType": "iso8601"
-                    }
-                },
-                "nickName": "LukasLukichich",
-                "selfInfo": "coordinator in Sofia",
-                "image": null,
-                "location": {
-                    "id": 2,
-                    "name": "Sofia",
-                    "country": {
-                        "id": 2,
-                        "name": "Hungary"
-                    }
-                },
-                "emails": [
-                    {
-                        "id": 4,
-                        "value": "lucalukis@gmail.com",
-                        "primary": true
-                    }
-                ],
-                "phones": [
+            "id": 1,
+            "name": "DP-115",
+            "teachers":
+            [
+                {
+                    "id": 1,
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
                     {
                         "id": 3,
-                        "value": "+344-04-252-66-32"
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
                     }
-                ],
-                "contactLinks": []
-            },
-            "location": {
-                "id": 2,
-                "name": "Sofia",
-                "country": {
-                    "id": 2,
-                    "name": "Hungary"
                 }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
             },
-            "startDate": {
+            "startDate": 
+            {
                 "year": 2017,
                 "month": "APRIL",
+                "era": "CE",
                 "dayOfMonth": 29,
                 "dayOfWeek": "SATURDAY",
-                "era": "CE",
                 "dayOfYear": 119,
                 "leapYear": false,
                 "monthValue": 4,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "finishDate": {
+            "finishDate":
+            {
                 "year": 2017,
                 "month": "AUGUST",
+                "era": "CE",
                 "dayOfMonth": 18,
                 "dayOfWeek": "FRIDAY",
-                "era": "CE",
                 "dayOfYear": 230,
                 "leapYear": false,
                 "monthValue": 8,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "status": {
+            "status":
+            {
                 "id": 4,
                 "name": "in-process",
-                "statusCategory": {
+                "statusCategory":
+                {
                     "id": 2,
                     "name": "current"
                 }
             },
-            "specialization": {
-                "id": 2,
-                "name": "js_core"
-            }
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
+                "Sergey"
+            ],
+            "budgetOwner": "SOFTSERVE"
         }
     ]
 
 <a name="current-user-location-groups-error-response"></a>
 ### Error Response :
-**Code:** 401 Unauthorized, 404 Not Found
+**Code:** 401 Unauthorized
 
-**Content:** None
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups/mylocation"
+    }
+
+**Code:** 404 Not Found   
+
+**Content:**
+
+    {
+        "message":"Not Found"
+    }
 
 [Table of content](#table-of-content)
 
@@ -578,13 +467,9 @@ GET
 
 <a name="filter-groups-url-params"></a>
 ### URL Params :
-**Required:**
-
-`location=[integer]`
+**Required:** `location=[integer]`
  
-Example:
- 
-`location=2`
+Example: `location=2`
 
 <a name="filter-groups-data-params"></a>
 ### Data Params :
@@ -598,115 +483,257 @@ None
 
     [
         {
-            "id": 2,
-            "name": "SF-115",
-            "teacher": {
-                "id": 3,
-                "firstName": "Lucas",
-                "lastName": "Lukichich",
-                "role": {
-                    "id": 4,
-                    "name": "coordinator",
-                    "roleCategory": {
-                        "id": 2,
-                        "name": "itacademy"
-                    }
-                },
-                "dateOfBirth": {
-                    "year": 2017,
-                    "month": "MARCH",
-                    "dayOfMonth": 3,
-                    "dayOfWeek": "FRIDAY",
-                    "era": "CE",
-                    "dayOfYear": 62,
-                    "leapYear": false,
-                    "monthValue": 3,
-                    "chronology": {
-                        "id": "ISO",
-                        "calendarType": "iso8601"
-                    }
-                },
-                "nickName": "LukasLukichich",
-                "selfInfo": "coordinator in Sofia",
-                "image": null,
-                "location": {
-                    "id": 2,
-                    "name": "Sofia",
-                    "country": {
-                        "id": 2,
-                        "name": "Hungary"
-                    }
-                },
-                "emails": [
-                    {
-                        "id": 4,
-                        "value": "lucalukis@gmail.com",
-                        "primary": true
-                    }
-                ],
-                "phones": [
+            "id": 1,
+            "name": "DP-115",
+            "teachers":
+            [
+                {
+                    "id": 1,
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
                     {
                         "id": 3,
-                        "value": "+344-04-252-66-32"
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
                     }
-                ],
-                "contactLinks": []
-            },
-            "location": {
-                "id": 2,
-                "name": "Sofia",
-                "country": {
-                    "id": 2,
-                    "name": "Hungary"
                 }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
             },
-            "startDate": {
+            "startDate": 
+            {
                 "year": 2017,
                 "month": "APRIL",
+                "era": "CE",
                 "dayOfMonth": 29,
                 "dayOfWeek": "SATURDAY",
-                "era": "CE",
                 "dayOfYear": 119,
                 "leapYear": false,
                 "monthValue": 4,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "finishDate": {
+            "finishDate":
+            {
                 "year": 2017,
                 "month": "AUGUST",
+                "era": "CE",
                 "dayOfMonth": 18,
                 "dayOfWeek": "FRIDAY",
-                "era": "CE",
                 "dayOfYear": 230,
                 "leapYear": false,
                 "monthValue": 8,
-                "chronology": {
+                "chronology":
+                {
                     "id": "ISO",
                     "calendarType": "iso8601"
                 }
             },
-            "status": {
+            "status":
+            {
                 "id": 4,
                 "name": "in-process",
-                "statusCategory": {
+                "statusCategory":
+                {
                     "id": 2,
                     "name": "current"
                 }
             },
-            "specialization": {
-                "id": 2,
-                "name": "js_core"
-            }
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
+                "Sergey"
+            ],
+            "budgetOwner": "SOFTSERVE"
         }
     ]
 
 <a name="filter-groups-error-response"></a>
 ### Error Response :
-**Code:** 401 Unauthorized, 404 Not Found
+**Code:** 404 Not Found
+
+**Content:**
+
+    {
+        "message": "Not Found"
+    }
+
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups/filter"
+    }
+
+[Table of content](#table-of-content)
+
+<a name="add-group"></a>
+## Add group
+
+<a name="add-group-url"></a>
+### URL :
+/groups/
+
+<a name="add-group-method"></a>
+### Method :
+POST
+
+<a name="add-group-url-params"></a>
+### URL Params :
+None
+
+<a name="add-group-data-params"></a>
+### Data Params :
+**Required:**
+
+`name=[string]`
+
+`expert=[array of string]`
+
+`location=[integer]`
+
+`specialization=[integer]`
+
+`budgetOwner=[string]`
+
+`startDate=[date]`
+
+`finishDate=[date]`
+
+`teachers=[array of integer]`
+
+Example:
+
+`name=DP-115q`
+
+`expert=sergey, andrey`
+
+`location=1`
+
+`specialization=1`
+
+`budgetOwner=SOFTSERVE`
+
+`startDate=05/10/2015`
+
+`finishDate=06/11/2016`
+
+`teachers=1,2`
+
+<a name="add-group-success-response"></a>
+### Success Response:
+**Code:** 200 OK
 
 **Content:** None
 
+<a name="add-group-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups"
+    }
+
+**Code:** 400 Bad Request
+
+**Content:** None
+
+**Code:** 403 Forbidden
+
+**Content:**
+
+    {
+        "message": "Access Denied"
+    }
+    
+[Table of content](#table-of-content)
+
+<a name="delete-group"></a>
+## Delete group
+
+<a name="delete-group-url"></a>
+### URL :
+/groups/{id}
+
+<a name="delete-group-method"></a>
+### Method :
+DELETE
+
+<a name="delete-group-url-params"></a>
+### URL Params :
+None
+
+<a name="delete-group-data-params"></a>
+### Data Params :
+None
+
+<a name="delete-group-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:** None
+
+<a name="delete-group-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups/1"
+    }
+
+**Code:** 404 Not Found
+
+**Content:**
+
+    {
+        "message": "Not Found"
+    }
+
+**Code:** 403 Forbidden
+
+**Content:**
+
+    {
+        "message": "Access Denied"
+    }
+    
 [Table of content](#table-of-content)

@@ -33,24 +33,17 @@ None
 <a name="all-locations-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
+
 **Content:** 
 
     [
         {
             "id": 1,
-            "name": "Dnipro",
-            "country": {
-                "id": 1,
-                "name": "Ukraine"
-            }
+            "name": "Dnipro"
         },
         {
             "id": 2,
-            "name": "Sofia",
-            "country": {
-                "id": 2,
-                "name": "Hungary"
-            }
+            "name": "Sofia"
         }
     ]
 
@@ -58,6 +51,14 @@ None
 ### Error Response :
 **Code:** 401 Unauthorized
 
-**Content:** None
+**Content:**
+
+    {
+        "timestamp": 1500673384031,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/locations"
+    }
 
 [Table of content](#table-of-content)

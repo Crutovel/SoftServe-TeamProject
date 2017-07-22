@@ -38,61 +38,26 @@ None
 **Content:** 
 
     {
-        "id": 1,
-        "firstName": "name",
-        "lastName": "LastName",
-        "role": {
-            "id": 3,
-            "name": "teacher",
-            "roleCategory": {
+        "id": 3,
+        "firstName": "Lucas",
+        "lastName": "Lukichich",
+        "role": 
+        {
+            "id": 4,
+            "name": "coordinator",
+            "roleCategory": 
+            {
                 "id": 2,
                 "name": "itacademy"
             }
         },
-        "dateOfBirth": {
-            "year": 2017,
-            "month": "JANUARY",
-            "era": "CE",
-            "dayOfMonth": 1,
-            "dayOfWeek": "SUNDAY",
-            "dayOfYear": 1,
-            "leapYear": false,
-            "monthValue": 1,
-            "chronology": {
-                "id": "ISO",
-                "calendarType": "iso8601"
-            }
-        },
-        "nickName": "UserNickName",
-        "selfInfo": "teacher in softServe. Dnipro",
+        "nickName": "LukasLukichich",
         "image": imageInBase64EncodingString,
-        "location": {
-            "id": 1,
-            "name": "Dnipro",
-            "country": {
-                "id": 1,
-                "name": "Ukraine"
-            }
-        },
-        "emails": [
-            {
-                "id": 1,
-                "value": "user@gmail.com",
-                "primary": true
-            }
-        ],
-        "phones": [
-            {
-                "id": 1,
-                "value": "+380-12-456-22-74"
-            }
-        ],
-        "contactLinks": [
-            {
-                "id": 1,
-                "value": "https://linkedin.com/User"
-            }
-        ]
+        "location":
+        {
+            "id": 2,
+            "name": "Sofia"
+        }
     }
 
 <a name="userprofile-field-image"></a>
@@ -103,6 +68,14 @@ Represent byte array of image as string encoded using the Base64 encoding scheme
 ### Error Response :
 **Code:** 401 Unauthorized
 
-**Content:**None
+**Content:**
+
+    {
+        "timestamp": 1500671438015,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/user/profile"
+    }
 
 [Table of content](#table-of-content)

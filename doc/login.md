@@ -29,13 +29,9 @@ None
 
 <a name="login-data-params"></a>
 ### Data Params :
-**Required:**
+**Required:** `username=[String], password=[String]`
 
-`username=[String], password=[String]`
-
-Example:
-
-`username=OlegShvets, password=ghd22df`
+Example: `username=OlegShvets, password=ghd22df`
 
 <a name="login-data-type"></a>
 ### Data type :
@@ -45,12 +41,28 @@ form-data
 ### Success Response :
 **Code:** 200 OK
 
-**Content:**
+**Content:** None
 
 <a name="login-error-response"></a>
 ### Error Response :
-**Code:** 401 Unauthorized, 405 Method Not Allowed
+**Code:** 401 Unauthorized
 
-**Content:**None
+**Content:**
+
+    {
+        "timestamp": 1500670297968,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Authentication Failed: Bad credentials",
+        "path": "/login"
+    }
+
+**Code:** 405 Method Not Allowed
+
+**Content:**
+
+    {
+        "message": "Request method 'GET' not supported"
+    }
 
 [Table of content](#table-of-content)
