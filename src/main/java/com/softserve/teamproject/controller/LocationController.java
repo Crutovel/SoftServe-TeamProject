@@ -38,7 +38,7 @@ public class LocationController {
    * @param locationIds array of location ids
    * @return groups info
    */
-  @RequestMapping(value = "/locations/{locationIds}/groups", method = RequestMethod.GET)
+  @RequestMapping(value = "/groups/filter?location={locationIds}", method = RequestMethod.GET)
   public List<Group> getGroupsByLocations(@PathVariable("locationIds") String[] locationIds) {
 
     Integer[] array = Arrays.stream(locationIds).mapToInt(Integer::parseInt).boxed()
