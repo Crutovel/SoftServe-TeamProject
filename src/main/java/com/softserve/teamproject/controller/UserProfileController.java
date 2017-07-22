@@ -40,7 +40,7 @@ public class UserProfileController {
    * @param principal authorized user
    * @return groups in user location
    */
-  @RequestMapping(value = "/groups/locations/my", method = RequestMethod.GET)
+  @RequestMapping(value = "/groups/mylocation", method = RequestMethod.GET)
   public Set<Group> getGroupsFromUserLocation(Principal principal) {
     return userProfileService.getGroupsFromUserLocation(principal.getName());
   }
