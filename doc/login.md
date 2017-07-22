@@ -29,13 +29,23 @@ None
 
 <a name="login-data-params"></a>
 ### Data Params :
-**Required:** `username=[String], password=[String]`
+**Required:**
+    
+    {
+        "username": [String],
+         "password": [String]
+    }
 
-Example: `username=OlegShvets, password=ghd22df`
+Example:
+
+    {
+        "username": "OlegShvets",
+        "password": "ghd22df"
+    }
 
 <a name="login-data-type"></a>
 ### Data type :
-form-data
+application/json
 
 <a name="login-success-response"></a>
 ### Success Response :
@@ -57,12 +67,12 @@ form-data
         "path": "/login"
     }
 
-**Code:** 405 Method Not Allowed
+**Code:** 404 Not Found
 
 **Content:**
 
     {
-        "message": "Request method 'GET' not supported"
+            "message": "Not Found"
     }
 
 [Table of content](#table-of-content)
