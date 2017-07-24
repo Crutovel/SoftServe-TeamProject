@@ -33,7 +33,7 @@ None
     
     {
         "username": [String],
-         "password": [String]
+        "password": [String]
     }
 
 Example:
