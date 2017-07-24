@@ -55,7 +55,7 @@ public class GroupController {
   }
 
   /**
-   * Method creates a group received in body in json format. Note: teh date format accepted:
+   * Method creates a group received in body in json format. Note: the date format accepted:
    * "yyyy-MM-dd"
    *
    * @param group in json format, which is automatically transformed into the object of the Group
