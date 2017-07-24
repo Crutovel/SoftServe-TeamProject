@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,14 +53,28 @@ public class GroupController {
   public List<Group> getAllGroups() {
     return groupService.getAllGroups();
   }
-  
+
+  /**
+   * Method creates a group received in body in json format. Note: the date format accepted:
+   * "yyyy-MM-dd"
+   *
+   * @param group in json format, which is automatically transformed into the object of the Group
+   * type
+   * @param principal to get the name of the authenticated user
+   */
   @RequestMapping(value = "/groups", method = RequestMethod.POST)
-  public void createGroup(@Valid Group group, Principal principal) {
+  public void createGroup(@RequestBody @Valid Group group, Principal principal) {
     groupService.addGroup(group, principal.getName());
   }
 
+  /**
+   * Methods deletes the group by id.
+   * @param id is received as a path variable
+   * @param principal helps to identify the authenticated user
+   */
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
   }
+
 }
