@@ -17,7 +17,6 @@ ENGINE = InnoDB;
 -- Table `role`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `role` ;
-
 CREATE TABLE `role` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -54,7 +53,6 @@ ENGINE = InnoDB;
 -- Table `user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `user` ;
-
 CREATE TABLE `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(45) NOT NULL,
@@ -130,7 +128,7 @@ CREATE TABLE `educational_group` (
   `finish_date` DATE NOT NULL,
   `status_id` INT NOT NULL,
   `specialization_id` INT NOT NULL,
-  `budget_owner` enum('SOFTSERVE','OPENGROUP') NOT NULL,
+  `budget_owner_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
   INDEX `fk_group_location1_idx` (`location_id` ASC),
@@ -144,7 +142,10 @@ CREATE TABLE `educational_group` (
     REFERENCES `location` (`id`),
   CONSTRAINT `fk_edu_group_specialization1`
     FOREIGN KEY (`specialization_id`)
-    REFERENCES `specialization` (`id`))
+    REFERENCES `specialization` (`id`),
+  CONSTRAINT `fk_edu_group_budget_owner1`
+    FOREIGN KEY (`budget_owner_id`)
+    REFERENCES `budget_owner` (`id`))
 ENGINE = InnoDB;
 
 
@@ -176,6 +177,68 @@ CREATE TABLE `expert` (
     REFERENCES `educational_group` (`id`))
 ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `budget_owner`;
+CREATE TABLE `budget_owner` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `event_type`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `event_type` ;
+CREATE TABLE `event_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `room`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `room` ;
+CREATE TABLE `room` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `number` VARCHAR(45) NOT NULL,
+  `id_location` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_room_location1_idx` (`id_location` ASC),
+  CONSTRAINT `fk_room_location1`
+    FOREIGN KEY (`id_location`)
+    REFERENCES `location` (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Ceasar`.`event`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `event` ;
+CREATE TABLE `event` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `datetime` TIMESTAMP NOT NULL,
+  `duration` INT NOT NULL,
+  `id_group` INT NOT NULL,
+  `id_event_type` INT NOT NULL,
+  `id_room` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `datetime_UNIQUE` (`datetime` ASC),
+  INDEX `fk_event_event_type1_idx` (`id_event_type` ASC),
+  INDEX `fk_event_room1_idx` (`id_room` ASC),
+  INDEX `fk_event_educational_group1_idx` (`id_group` ASC),
+  CONSTRAINT `fk_event_event_type1`
+    FOREIGN KEY (`id_event_type`)
+    REFERENCES `event_type` (`id`),
+  CONSTRAINT `fk_event_room1`
+    FOREIGN KEY (`id_room`)
+    REFERENCES `room` (`id`),
+  CONSTRAINT `fk_event_educational_group1`
+    FOREIGN KEY (`id_group`)
+    REFERENCES `educational_group` (`id`))
+ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

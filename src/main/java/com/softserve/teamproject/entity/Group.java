@@ -1,6 +1,5 @@
 package com.softserve.teamproject.entity;
 
-import com.softserve.teamproject.entity.enums.BudgetOwner;
 import com.softserve.teamproject.validation.StringConstraintInSet;
 import com.softserve.teamproject.validation.UniqueGroup;
 import java.util.Set;
@@ -69,8 +68,9 @@ public class Group {
   @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
   private Set<String> experts;
 
-  @Enumerated(EnumType.STRING)
-  private BudgetOwner budgetOwner;
+  @ManyToOne
+  @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
+  private int budgetOwnerId;
 
   public Group() {
   }
@@ -147,14 +147,6 @@ public class Group {
     this.experts = experts;
   }
 
-  public BudgetOwner getBudgetOwner() {
-    return budgetOwner;
-  }
-
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
-    this.budgetOwner = budgetOwner;
-  }
-
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -188,4 +180,12 @@ public class Group {
           + ", specialization=" + specialization
           + '}';
     }
+
+  public int getBudgetOwnerId() {
+    return budgetOwnerId;
+  }
+
+  public void setBudgetOwnerId(int budgetOwnerId) {
+    this.budgetOwnerId = budgetOwnerId;
+  }
 }
