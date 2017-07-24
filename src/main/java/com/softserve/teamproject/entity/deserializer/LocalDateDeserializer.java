@@ -9,6 +9,10 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Class provides the implementation of the deserialization method to describe how extactly the json
+ * date is going to be deserialized and parsed.
+ */
 public class LocalDateDeserializer extends JsonDeserializer<LocalDate> {
 
   @Override

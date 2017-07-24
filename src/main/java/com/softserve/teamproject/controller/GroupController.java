@@ -67,8 +67,14 @@ public class GroupController {
     groupService.addGroup(group, principal.getName());
   }
 
+  /**
+   * Methods deletes the group by id.
+   * @param id is received as a path variable
+   * @param principal helps to identify the authenticated user
+   */
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
   }
+
 }
