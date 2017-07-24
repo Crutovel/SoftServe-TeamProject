@@ -70,7 +70,7 @@ public class Group {
 
   @ManyToOne
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
-  private int budgetOwnerId;
+  private BudgetOwner budgetOwner;
 
   public Group() {
   }
@@ -181,11 +181,11 @@ public class Group {
           + '}';
     }
 
-  public int getBudgetOwnerId() {
-    return budgetOwnerId;
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
   }
 
-  public void setBudgetOwnerId(int budgetOwnerId) {
-    this.budgetOwnerId = budgetOwnerId;
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
   }
 }
