@@ -204,11 +204,11 @@ DROP TABLE IF EXISTS `room` ;
 CREATE TABLE `room` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `number` VARCHAR(45) NOT NULL,
-  `id_location` INT NOT NULL,
+  `location_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_room_location1_idx` (`id_location` ASC),
+  INDEX `fk_room_location1_idx` (`location_id` ASC),
   CONSTRAINT `fk_room_location1`
-    FOREIGN KEY (`id_location`)
+    FOREIGN KEY (`location_id`)
     REFERENCES `location` (`id`))
 ENGINE = InnoDB;
 
@@ -221,22 +221,22 @@ CREATE TABLE `event` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `datetime` TIMESTAMP NOT NULL,
   `duration` INT NOT NULL,
-  `id_group` INT NOT NULL,
-  `id_event_type` INT NOT NULL,
-  `id_room` INT NOT NULL,
+  `group_id` INT NOT NULL,
+  `event_type_id` INT NOT NULL,
+  `room_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `datetime_UNIQUE` (`datetime` ASC),
-  INDEX `fk_event_event_type1_idx` (`id_event_type` ASC),
-  INDEX `fk_event_room1_idx` (`id_room` ASC),
-  INDEX `fk_event_educational_group1_idx` (`id_group` ASC),
+  INDEX `fk_event_event_type1_idx` (`event_type_id` ASC),
+  INDEX `fk_event_room1_idx` (`room_id` ASC),
+  INDEX `fk_event_educational_group1_idx` (`group_id` ASC),
   CONSTRAINT `fk_event_event_type1`
-    FOREIGN KEY (`id_event_type`)
+    FOREIGN KEY (`event_type_id`)
     REFERENCES `event_type` (`id`),
   CONSTRAINT `fk_event_room1`
-    FOREIGN KEY (`id_room`)
+    FOREIGN KEY (`room_id`)
     REFERENCES `room` (`id`),
   CONSTRAINT `fk_event_educational_group1`
-    FOREIGN KEY (`id_group`)
+    FOREIGN KEY (`group_id`)
     REFERENCES `educational_group` (`id`))
 ENGINE = InnoDB;
 

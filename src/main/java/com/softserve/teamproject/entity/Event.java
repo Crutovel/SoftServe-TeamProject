@@ -28,16 +28,16 @@ public class Event {
     private int duration;
 
     @ManyToOne
-    @JoinColumn(name = "id_group", referencedColumnName = "id", nullable = false)
-    private int idGroup;
+    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+    private Group group;
 
     @ManyToOne
-    @JoinColumn(name = "id_event_type", referencedColumnName = "id", nullable = false)
-    private int idEventType;
+    @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
+    private EventType eventType;
 
     @ManyToOne
-    @JoinColumn(name = "id_room", referencedColumnName = "id", nullable = false)
-    private int idRoom;
+    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
+    private Room Room;
 
     public Event() {};
 
@@ -65,27 +65,27 @@ public class Event {
         this.duration = duration;
     }
 
-    public int getIdGroup() {
-        return idGroup;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setIdGroup(int idGroup) {
-        this.idGroup = idGroup;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    public int getIdEventType() {
-        return idEventType;
+    public EventType getEventType() {
+        return eventType;
     }
 
-    public void setIdEventType(int idEventType) {
-        this.idEventType = idEventType;
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
     }
 
-    public int getIdRoom() {
-        return idRoom;
+    public com.softserve.teamproject.entity.Room getRoom() {
+        return Room;
     }
 
-    public void setIdRoom(int idRoom) {
-        this.idRoom = idRoom;
+    public void setRoom(com.softserve.teamproject.entity.Room room) {
+        Room = room;
     }
 }

@@ -21,8 +21,8 @@ public class Room {
     private String number;
 
     @ManyToOne
-    @JoinColumn(name = "id_location", referencedColumnName = "id", nullable = false)
-    private int idLocation;
+    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+    private Location location;
 
     public Room() {};
 
@@ -42,11 +42,11 @@ public class Room {
         this.number = number;
     }
 
-    public int getIdLocation() {
-        return idLocation;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setIdLocation(int idLocation) {
-        this.idLocation = idLocation;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
