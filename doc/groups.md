@@ -493,55 +493,55 @@ None
 **Required:**
 
     {
-	      "name": [String],
-	      "experts": [Array of string],
-	      "location":
-	      {	
-	          "id": [Integer]
-	      },
-	      "specialization":
-	      {
-		        "id": [Integer]
-	      },	
+        "name": [String],
+        "experts": [Array of string],
+        "location":
+        {	
+            "id": [Integer]
+        },
+        "specialization":
+        {
+            "id": [Integer]
+        },	
         "budgetOwner": [String],
-	      "startDate": [String],
-	      "finishDate": [String],	
+        "startDate": [String],
+        "finishDate": [String],	
         "teachers":
-	      [
-		        {
-			      "id": [Integer]
-		        },		
+        [
             {
-			      "id": [Integer]
-		        }
-	      ]
+                "id": [Integer]
+            },		
+            {
+                "id": [Integer]
+            }
+        ]
     }
 
 Example:
 
     {
-	      "name": "DP-115x",
-	      "experts": ["sergey", "andrey"],
-	      "location":
-	      {
-      	    "id": 1
-	      },
-	      "specialization":
-	      {
-		        "id": 1
-	      },	
+        "name": "DP-115x",
+        "experts": ["sergey", "andrey"],
+        "location":
+        {
+            "id": 1
+        },
+        "specialization":
+        {
+            "id": 1
+        },	
         "budgetOwner": "SOFTSERVE",
-	      "startDate": "2017-07-01",
-	      "finishDate": "2017-09-01",
+        "startDate": "2017-07-01",
+        "finishDate": "2017-09-01",
         "teachers":
-	      [
-		        {
-			          "id": 1
-		        },
+        [
             {
-			          "id": 2
-		        }
-	      ]
+                "id": 1
+            },
+            {
+                "id": 2
+            }
+        ]
     }
 
 <a name="add-group-data-type"></a>
