@@ -120,7 +120,8 @@ public class GroupServiceImpl implements GroupService {
    * @throws AccessDeniedException if current authorized user has't access to update group
    */
   @Override
-  public void updateGroup(Group group, Status currentStatus, String userName) throws AccessDeniedException {
+  public void updateGroup(Group group, Status currentStatus, String userName)
+      throws AccessDeniedException {
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("teacher")) {
@@ -143,6 +144,7 @@ public class GroupServiceImpl implements GroupService {
 
   /**
    * Gets group by id.
+   *
    * @param id is id of a group
    * @return group with the current id
    */

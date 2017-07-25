@@ -9,7 +9,6 @@ import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
 import com.softserve.teamproject.entity.enums.BudgetOwner;
 import com.softserve.teamproject.validation.StringConstraintInSet;
-import com.softserve.teamproject.validation.UniqueGroup;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
@@ -41,7 +40,6 @@ public class Group {
   private int id;
 
   @Column(name = "name", unique = true)
- // @UniqueGroup
   @Size(min = 4, max = 20)
   @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;
