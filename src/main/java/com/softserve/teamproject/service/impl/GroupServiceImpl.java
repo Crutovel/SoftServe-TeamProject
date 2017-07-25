@@ -76,9 +76,9 @@ public class GroupServiceImpl implements GroupService {
     if (user.getRole().getName().equals("coordinator")
         && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't add group in alien location");
-    }    
+    }
 
-    Status status = statusRepository.getStatusByName("planned");    
+    Status status = statusRepository.getStatusByName("planned");
     group.setStatus(status);
 
     groupRep.save(group);
@@ -104,5 +104,50 @@ public class GroupServiceImpl implements GroupService {
     }
 
     groupRep.delete(group);
+  }
+
+  /**
+   * Updates group.
+   * If the user's role - teacher, the group must have this teacher who must be
+   * at the same location as group, and group status must be < graduated.
+   * If the user's role - coordinator, he must be at the same location as group.
+   * If the user's role - administrator,  the group location can be anyone.
+   * For other roles updating groups is unavailable.
+   *
+   * @param group is a current group
+   * @param currentStatus is a status of group which will be updated
+   * @param userName is a nickname of current authorized user
+   * @throws AccessDeniedException if current authorized user has't access to update group
+   */
+  @Override
+  public void updateGroup(Group group, Status currentStatus, String userName) throws AccessDeniedException {
+    User user = userRepository.getUserByNickName(userName);
+
+    if (user.getRole().getName().equals("teacher")) {
+      if (group.getTeachers().contains(user) && !user.getLocation().equals(group.getLocation())) {
+        throw new AccessDeniedException("Teacher can't edit group in alien location");
+      } else if (!group.getTeachers().contains(user)) {
+        throw new AccessDeniedException("Teacher can't edit group which doesn't assigned to him.");
+      } else if (group.getTeachers().contains(user)
+          && user.getLocation().equals(group.getLocation()) && currentStatus
+          .getName().equalsIgnoreCase("graduated")) {
+        throw new AccessDeniedException("Teacher can't edit group which is graduated.");
+      }
+    } else if (user.getRole().getName().equals("coordinator")
+        && !user.getLocation().equals(group.getLocation())) {
+      throw new AccessDeniedException("Coordinator can't edit group in alien location");
+    }
+
+    groupRep.save(group);
+  }
+
+  /**
+   * Gets group by id.
+   * @param id is id of a group
+   * @return group with the current id
+   */
+  @Override
+  public Group getGroupById(Integer id) {
+    return groupRep.findOne(id);
   }
 }

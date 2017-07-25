@@ -42,14 +42,14 @@ public class Group {
 
   @Column(name = "name", unique = true)
   @UniqueGroup
-  @Size(min=4, max=20)
+  @Size(min = 4, max = 20)
   @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;
 
   @ManyToMany
-  @JoinTable(name = "group_teacher", joinColumns = { @JoinColumn(name = "group_id")},
-  inverseJoinColumns = { @JoinColumn(name = "teacher_id")})
-  @JsonDeserialize(using= UserDeserializer.class)
+  @JoinTable(name = "group_teacher", joinColumns = {@JoinColumn(name = "group_id")},
+      inverseJoinColumns = {@JoinColumn(name = "teacher_id")})
+  @JsonDeserialize(using = UserDeserializer.class)
   private Set<User> teachers;
 
   @ManyToOne
@@ -72,7 +72,7 @@ public class Group {
 
   @ManyToOne
   @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
-  @JsonDeserialize(using= StatusDeserializer.class)
+  @JsonDeserialize(using = StatusDeserializer.class)
   private Status status;
 
   @ManyToOne
@@ -82,10 +82,10 @@ public class Group {
 
   @ElementCollection
   @CollectionTable(name = "expert",
-          joinColumns = @JoinColumn(name = "edu_group_id")
+      joinColumns = @JoinColumn(name = "edu_group_id")
   )
   @Column(name = "expert_name")
-  @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
+  @StringConstraintInSet(min = 5, max = 25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
   private Set<String> experts;
 
   @Enumerated(EnumType.STRING)
@@ -194,17 +194,17 @@ public class Group {
     return Objects.hash(name);
   }
 
-    @Override
-    public String toString() {
-      return "Group{"
-          + "id=" + id
-          + ", name='" + name + '\''
-          + ", teachers=" + teachers
-          + ", location=" + location.getName()
-          + ", startDate=" + startDate
-          + ", finishDate=" + finishDate
-          + ", status=" + status
-          + ", specialization=" + specialization
-          + '}';
-    }
+  @Override
+  public String toString() {
+    return "Group{"
+        + "id=" + id
+        + ", name='" + name + '\''
+        + ", teachers=" + teachers
+        + ", location=" + location.getName()
+        + ", startDate=" + startDate
+        + ", finishDate=" + finishDate
+        + ", status=" + status
+        + ", specialization=" + specialization
+        + '}';
+  }
 }
