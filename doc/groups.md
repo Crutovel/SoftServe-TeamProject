@@ -44,7 +44,6 @@
     - [Method](#delete-group-method)
     - [URL Params](#delete-group-url-params)
     - [Data Params](#delete-group-data-params)
-    - [Data Type](#delete-group-data-type)
     - [Success Response](#delete-group-success-response)
     - [Error Response](#delete-group-error-response)
 
@@ -107,38 +106,8 @@ None
                 "id": 1,
                 "name": "Dnipro"
             },
-            "startDate": 
-            {
-                "year": 2017,
-                "month": "APRIL",
-                "era": "CE",
-                "dayOfMonth": 29,
-                "dayOfWeek": "SATURDAY",
-                "dayOfYear": 119,
-                "leapYear": false,
-                "monthValue": 4,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
-            "finishDate":
-            {
-                "year": 2017,
-                "month": "AUGUST",
-                "era": "CE",
-                "dayOfMonth": 18,
-                "dayOfWeek": "FRIDAY",
-                "dayOfYear": 230,
-                "leapYear": false,
-                "monthValue": 8,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
+            "startDate": "2017-04-29",
+            "finishDate": "2017-08-18",
             "status":
             {
                 "id": 4,
@@ -237,38 +206,8 @@ None
                 "id": 1,
                 "name": "Dnipro"
             },
-            "startDate": 
-            {
-                "year": 2017,
-                "month": "APRIL",
-                "era": "CE",
-                "dayOfMonth": 29,
-                "dayOfWeek": "SATURDAY",
-                "dayOfYear": 119,
-                "leapYear": false,
-                "monthValue": 4,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
-            "finishDate":
-            {
-                "year": 2017,
-                "month": "AUGUST",
-                "era": "CE",
-                "dayOfMonth": 18,
-                "dayOfWeek": "FRIDAY",
-                "dayOfYear": 230,
-                "leapYear": false,
-                "monthValue": 8,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
+            "startDate": "2017-04-29",
+            "finishDate": "2017-08-18",
             "status":
             {
                 "id": 4,
@@ -375,38 +314,8 @@ None
                 "id": 1,
                 "name": "Dnipro"
             },
-            "startDate": 
-            {
-                "year": 2017,
-                "month": "APRIL",
-                "era": "CE",
-                "dayOfMonth": 29,
-                "dayOfWeek": "SATURDAY",
-                "dayOfYear": 119,
-                "leapYear": false,
-                "monthValue": 4,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
-            "finishDate":
-            {
-                "year": 2017,
-                "month": "AUGUST",
-                "era": "CE",
-                "dayOfMonth": 18,
-                "dayOfWeek": "FRIDAY",
-                "dayOfYear": 230,
-                "leapYear": false,
-                "monthValue": 8,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
+            "startDate": "2017-04-29",
+            "finishDate": "2017-08-18",
             "status":
             {
                 "id": 4,
@@ -515,38 +424,8 @@ None
                 "id": 1,
                 "name": "Dnipro"
             },
-            "startDate": 
-            {
-                "year": 2017,
-                "month": "APRIL",
-                "era": "CE",
-                "dayOfMonth": 29,
-                "dayOfWeek": "SATURDAY",
-                "dayOfYear": 119,
-                "leapYear": false,
-                "monthValue": 4,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
-            "finishDate":
-            {
-                "year": 2017,
-                "month": "AUGUST",
-                "era": "CE",
-                "dayOfMonth": 18,
-                "dayOfWeek": "FRIDAY",
-                "dayOfYear": 230,
-                "leapYear": false,
-                "monthValue": 8,
-                "chronology":
-                {
-                    "id": "ISO",
-                    "calendarType": "iso8601"
-                }
-            },
+            "startDate": "2017-04-29",
+            "finishDate": "2017-08-18",
             "status":
             {
                 "id": 4,
@@ -613,39 +492,61 @@ None
 ### Data Params :
 **Required:**
 
-`name=[string]`
-
-`expert=[array of string]`
-
-`location=[integer]`
-
-`specialization=[integer]`
-
-`budgetOwner=[string]`
-
-`startDate=[date]`
-
-`finishDate=[date]`
-
-`teachers=[array of integer]`
+    {
+	      "name": [String],
+	      "experts": [Array of string],
+	      "location":
+	      {	
+	          "id": [Integer]
+	      },
+	      "specialization":
+	      {
+		        "id": [Integer]
+	      },	
+        "budgetOwner": [String],
+	      "startDate": [String],
+	      "finishDate": [String],	
+        "teachers":
+	      [
+		        {
+			      "id": [Integer]
+		        },		
+            {
+			      "id": [Integer]
+		        }
+	      ]
+    }
 
 Example:
 
-`name=DP-115q`
+    {
+	      "name": "DP-115x",
+	      "experts": ["sergey", "andrey"],
+	      "location":
+	      {
+      	    "id": 1
+	      },
+	      "specialization":
+	      {
+		        "id": 1
+	      },	
+        "budgetOwner": "SOFTSERVE",
+	      "startDate": "2017-07-01",
+	      "finishDate": "2017-09-01",
+        "teachers":
+	      [
+		        {
+			          "id": 1
+		        },
+            {
+			          "id": 2
+		        }
+	      ]
+    }
 
-`expert=sergey, andrey`
-
-`location=1`
-
-`specialization=1`
-
-`budgetOwner=SOFTSERVE`
-
-`startDate=05/10/2015`
-
-`finishDate=06/11/2016`
-
-`teachers=1,2`
+<a name="add-group-data-type"></a>
+### Data type :
+application/json
 
 <a name="add-group-success-response"></a>
 ### Success Response:
