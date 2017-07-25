@@ -86,7 +86,7 @@ public class GroupController {
    * @param principal is an authenticated user
    */
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.PUT)
-  public void editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
+  public void editGroup(@RequestBody @Valid Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
     groupService.updateGroup(group, currentStatus, principal.getName());

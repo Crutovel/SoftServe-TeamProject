@@ -41,7 +41,7 @@ public class Group {
   private int id;
 
   @Column(name = "name", unique = true)
-  @UniqueGroup
+ // @UniqueGroup
   @Size(min = 4, max = 20)
   @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;

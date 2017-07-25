@@ -3,8 +3,6 @@ package com.softserve.teamproject.service.impl;
 import static com.softserve.teamproject.repository.expression.GroupExpressions.getByLocationIds;
 
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.Location;
-import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.GroupRepository;
@@ -13,10 +11,8 @@ import com.softserve.teamproject.repository.SpecializationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.GroupService;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -71,6 +67,10 @@ public class GroupServiceImpl implements GroupService {
    */
   @Override
   public void addGroup(Group group, String userName) throws AccessDeniedException {
+    if (!isValid(group)) {
+      throw new ValidationException("This group already exists");
+    }
+
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("coordinator")
@@ -149,5 +149,11 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public Group getGroupById(Integer id) {
     return groupRep.findOne(id);
+  }
+
+  @Override
+  public boolean isValid(Group group) {
+    Group existed = groupRep.findByName(group.getName());
+    return existed == null;
   }
 }
