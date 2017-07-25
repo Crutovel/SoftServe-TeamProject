@@ -7,13 +7,17 @@ import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
+import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.repository.SpecializationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.GroupService;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,6 +33,13 @@ public class GroupServiceImpl implements GroupService {
   private StatusRepository statusRepository;
   private LocationRepository locationRepository;
   private SpecializationRepository specializationRepository;
+  private GroupResourceAssembler groupResourceAssembler;
+
+  @Autowired
+  public void setGroupResourceAssembler(
+    GroupResourceAssembler groupResourceAssembler) {
+    this.groupResourceAssembler = groupResourceAssembler;
+  }
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRep) {
@@ -47,7 +58,7 @@ public class GroupServiceImpl implements GroupService {
 
   @Autowired
   public void setLocationRepository(
-      LocationRepository locationRepository) {
+    LocationRepository locationRepository) {
     this.locationRepository = locationRepository;
   }
 
@@ -57,6 +68,14 @@ public class GroupServiceImpl implements GroupService {
 
   public List<Group> getAllGroups() {
     return groupRep.findAll();
+  }
+
+  @Override
+  public List<GroupResource> getAllGroupResources() {
+    List<Group> groups = groupRep.findAll();
+    List<GroupResource> groupResources = new ArrayList<>();
+    groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
+    return groupResources;
   }
 
   /**
@@ -74,11 +93,11 @@ public class GroupServiceImpl implements GroupService {
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("coordinator")
-        && !user.getLocation().equals(group.getLocation())) {
+      && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't add group in alien location");
-    }    
+    }
 
-    Status status = statusRepository.getStatusByName("planned");    
+    Status status = statusRepository.getStatusByName("planned");
     group.setStatus(status);
 
     groupRep.save(group);
@@ -99,10 +118,21 @@ public class GroupServiceImpl implements GroupService {
     Group group = groupRep.getOne(groupId);
 
     if (user.getRole().getName().equals("coordinator")
-        && !user.getLocation().equals(group.getLocation())) {
+      && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't delete group in alien location");
     }
 
     groupRep.delete(group);
+  }
+
+  @Override
+  public Set<GroupResource> getGroupResourcesFromUserLocation(String principalName) {
+    User currentUser = userRepository.getUserByNickName(principalName);
+    Location userLocation = locationRepository.findOne(currentUser.getLocation().getId());
+    Set<Group> groups = userLocation.getGroups();
+    Set<GroupResource> groupResources = new HashSet<>();
+    groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
+    return groupResources;
+
   }
 }

@@ -34,14 +34,4 @@ public class UserProfileController {
   public User getUserProfile(Principal principal) {
     return userProfileService.getUserProfile(principal.getName());
   }
-
-  /**
-   * Get groups from the authenticated user location
-   * @param principal authorized user
-   * @return groups in user location
-   */
-  @RequestMapping(value = "/groups/mylocation", method = RequestMethod.GET)
-  public Set<Group> getGroupsFromUserLocation(Principal principal) {
-    return userProfileService.getGroupsFromUserLocation(principal.getName());
-  }
 }
