@@ -8,10 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "event")
@@ -22,7 +19,6 @@ public class Event {
     private int id;
 
     @Column(name = "datetime")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime dateTime;
 
     @Column(name = "duration")
@@ -74,11 +70,11 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public com.softserve.teamproject.entity.Room getRoom() {
+    public Room getRoom() {
         return Room;
     }
 
-    public void setRoom(com.softserve.teamproject.entity.Room room) {
+    public void setRoom(Room room) {
         Room = room;
     }
 
