@@ -469,7 +469,7 @@ GET
 ### URL Params :
 **Required:** `location=[integer]`
  
-Example: `location=2`
+Example: `location=1`
 
 <a name="filter-groups-data-params"></a>
 ### Data Params :
