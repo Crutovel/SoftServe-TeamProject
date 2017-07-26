@@ -2,6 +2,7 @@ package com.softserve.teamproject.service;
 
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
+import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,13 @@ public interface GroupService {
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
   void deleteGroup(int groupId, String userName) throws AccessDeniedException;
 
+  @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
+  void updateGroup(Group group, Status currentStatus, String userName) throws AccessDeniedException;
+
+  @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
+  Group getGroupById(Integer id);
+
+  boolean isValid(Group group);
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
 
   Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter);

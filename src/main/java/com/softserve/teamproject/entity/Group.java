@@ -8,7 +8,6 @@ import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
 import com.softserve.teamproject.validation.StringConstraintInSet;
-import com.softserve.teamproject.validation.UniqueGroup;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
@@ -38,15 +37,14 @@ public class Group {
   private int id;
 
   @Column(name = "name", unique = true)
-  @UniqueGroup
-  @Size(min=4, max=20)
+  @Size(min = 4, max = 20)
   @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
   private String name;
 
   @ManyToMany
-  @JoinTable(name = "group_teacher", joinColumns = { @JoinColumn(name = "group_id")},
-  inverseJoinColumns = { @JoinColumn(name = "teacher_id")})
-  @JsonDeserialize(using= UserDeserializer.class)
+  @JoinTable(name = "group_teacher", joinColumns = {@JoinColumn(name = "group_id")},
+      inverseJoinColumns = {@JoinColumn(name = "teacher_id")})
+  @JsonDeserialize(using = UserDeserializer.class)
   private Set<User> teachers;
 
   @ManyToOne
@@ -69,7 +67,7 @@ public class Group {
 
   @ManyToOne
   @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
-  @JsonDeserialize(using= StatusDeserializer.class)
+  @JsonDeserialize(using = StatusDeserializer.class)
   private Status status;
 
   @ManyToOne
@@ -79,10 +77,10 @@ public class Group {
 
   @ElementCollection
   @CollectionTable(name = "expert",
-          joinColumns = @JoinColumn(name = "edu_group_id")
+      joinColumns = @JoinColumn(name = "edu_group_id")
   )
   @Column(name = "expert_name")
-  @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
+  @StringConstraintInSet(min = 5, max = 25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
   private Set<String> experts;
 
   @ManyToOne
