@@ -1,10 +1,8 @@
 package com.softserve.teamproject.controller;
 
-import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.service.UserProfileService;
 import java.security.Principal;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,15 +31,5 @@ public class UserProfileController {
   @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
   public User getUserProfile(Principal principal) {
     return userProfileService.getUserProfile(principal.getName());
-  }
-
-  /**
-   * Get groups from user location
-   * @param principal authorized user
-   * @return groups in user location
-   */
-  @RequestMapping(value = "/user/location/groups", method = RequestMethod.GET)
-  public Set<Group> getGroupsFromUserLocation(Principal principal) {
-    return userProfileService.getGroupsFromUserLocation(principal.getName());
   }
 }

@@ -2,11 +2,12 @@ package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
+import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
 import java.security.Principal;
 import java.util.List;
-import javax.persistence.EntityNotFoundException;
+import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,16 +41,21 @@ public class GroupController {
    *
    * @param principal of the Principal type.
    * @return list of groups of the authorized teacher.
-   * @throws EntityNotFoundException with the message "Not found" if no groups of this teacher were
-   * found.
    */
-  @RequestMapping(value = "/groups/mygroups", method = RequestMethod.GET)
-  public List<Group> getTeachersGroups(Principal principal) {
-    List<Group> myGroups = groupsActions.getAllGroupsOfTheTeacher(principal.getName());
-    if (myGroups.size() == 0) {
-      throw new EntityNotFoundException();
-    }
-    return myGroups;
+  @RequestMapping(value = "/groups/my", method = RequestMethod.GET)
+  public List<GroupResource> getTeachersGroups(Principal principal) {
+    return groupsActions.getAllGroupResourcesOfTheTeacher(principal.getName());
+  }
+
+  /**
+   * Get groups from the authenticated user location
+   *
+   * @param principal authorized user
+   * @return groups in user location
+   */
+  @RequestMapping(value = "/groups/mylocation", method = RequestMethod.GET)
+  public Set<GroupResource> getGroupsFromUserLocation(Principal principal) {
+    return groupService.getGroupResourcesFromUserLocation(principal.getName());
   }
 
   /**
@@ -58,15 +64,29 @@ public class GroupController {
    * @return list of all the existing groups.
    */
   @RequestMapping(value = "/groups", method = RequestMethod.GET)
-  public List<Group> getAllGroups() {
-    return groupService.getAllGroups();
+  public List<GroupResource> getAllGroups() {
+    return groupService.getAllGroupResources();
   }
 
+  /**
+   * Method creates a group received in body in json format. Note: the date format accepted:
+   * "yyyy-MM-dd"
+   *
+   * @param group in json format, which is automatically transformed into the object of the Group
+   * type
+   * @param principal to get the name of the authenticated user
+   */
   @RequestMapping(value = "/groups", method = RequestMethod.POST)
-  public void createGroup(@Valid Group group, Principal principal) {
+  public void createGroup(@RequestBody @Valid Group group, Principal principal) {
     groupService.addGroup(group, principal.getName());
   }
 
+  /**
+   * Methods deletes the group by id.
+   *
+   * @param id is received as a path variable
+   * @param principal helps to identify the authenticated user
+   */
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());

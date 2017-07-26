@@ -1,4 +1,4 @@
-package com.softserve.teamproject.controller;
+package com.softserve.teamproject.controller.authentication;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

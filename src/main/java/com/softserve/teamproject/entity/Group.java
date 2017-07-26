@@ -1,18 +1,27 @@
 package com.softserve.teamproject.entity;
 
-import com.softserve.teamproject.entity.enums.BudgetOwner;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
+import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
+import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
+import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
+import com.softserve.teamproject.entity.deserializer.UserDeserializer;
 import com.softserve.teamproject.validation.StringConstraintInSet;
 import com.softserve.teamproject.validation.UniqueGroup;
-import java.util.Set;
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -37,23 +46,30 @@ public class Group {
   @ManyToMany
   @JoinTable(name = "group_teacher", joinColumns = { @JoinColumn(name = "group_id")},
   inverseJoinColumns = { @JoinColumn(name = "teacher_id")})
+  @JsonDeserialize(using= UserDeserializer.class)
   private Set<User> teachers;
 
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
   @NotNull
+  @JsonDeserialize(using = LocationDeserializer.class)
   private Location location;
 
   @Column(name = "start_date", columnDefinition = "DATE")
   @DateTimeFormat(pattern = "dd/MM/yyyy")
+  @JsonDeserialize(using = LocalDateDeserializer.class)
+  @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate startDate;
 
   @Column(name = "finish_date", columnDefinition = "DATE")
   @DateTimeFormat(pattern = "dd/MM/yyyy")
+  @JsonDeserialize(using = LocalDateDeserializer.class)
+  @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate finishDate;
 
   @ManyToOne
   @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using= StatusDeserializer.class)
   private Status status;
 
   @ManyToOne
@@ -69,7 +85,8 @@ public class Group {
   @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
   private Set<String> experts;
 
-  @Enumerated(EnumType.STRING)
+  @ManyToOne
+  @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
   public Group() {
@@ -147,14 +164,6 @@ public class Group {
     this.experts = experts;
   }
 
-  public BudgetOwner getBudgetOwner() {
-    return budgetOwner;
-  }
-
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
-    this.budgetOwner = budgetOwner;
-  }
-
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -188,4 +197,12 @@ public class Group {
           + ", specialization=" + specialization
           + '}';
     }
+
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
+  }
 }

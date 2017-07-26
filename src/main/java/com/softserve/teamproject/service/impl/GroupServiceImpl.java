@@ -13,8 +13,10 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,13 @@ public class GroupServiceImpl implements GroupService {
   private UserRepository userRepository;
   private StatusRepository statusRepository;
   private LocationRepository locationRepository;
+  private GroupResourceAssembler groupResourceAssembler;
+
+  @Autowired
+  public void setGroupResourceAssembler(
+      GroupResourceAssembler groupResourceAssembler) {
+    this.groupResourceAssembler = groupResourceAssembler;
+  }
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRep) {
@@ -50,6 +59,14 @@ public class GroupServiceImpl implements GroupService {
 
   public List<Group> getAllGroups() {
     return groupRep.findAll();
+  }
+
+  @Override
+  public List<GroupResource> getAllGroupResources() {
+    List<Group> groups = groupRep.findAll();
+    List<GroupResource> groupResources = new ArrayList<>();
+    groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
+    return groupResources;
   }
 
   /**
@@ -107,12 +124,24 @@ public class GroupServiceImpl implements GroupService {
   public Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter) {
 
     if (filter.getLocations() != null) {
-      Iterable<Group> groups = groupRep.findAll(GroupExpressions.getByLocationIds(filter.getLocations()));
+      Iterable<Group> groups = groupRep
+          .findAll(GroupExpressions.getByLocationIds(filter.getLocations()));
       List<GroupResource> groupResources = new ArrayList<>();
       groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
       return groupResources;
     }
 
     return getAllGroupResources();
+  }
+
+  @Override
+  public Set<GroupResource> getGroupResourcesFromUserLocation(String principalName) {
+    User currentUser = userRepository.getUserByNickName(principalName);
+    Location userLocation = locationRepository.findOne(currentUser.getLocation().getId());
+    Set<Group> groups = userLocation.getGroups();
+    Set<GroupResource> groupResources = new HashSet<>();
+    groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
+    return groupResources;
+
   }
 }

@@ -1,7 +1,8 @@
 package com.softserve.teamproject.config;
 
-import com.softserve.teamproject.controller.CustomSavedRequestAwareAuthenticationSuccessHandler;
-import com.softserve.teamproject.controller.RestAuthenticationEntryPoint;
+import com.softserve.teamproject.controller.authentication.CustomSavedRequestAwareAuthenticationSuccessHandler;
+import com.softserve.teamproject.controller.authentication.JsonUsernamePasswordAuthenticationFilter;
+import com.softserve.teamproject.controller.authentication.RestAuthenticationEntryPoint;
 import com.softserve.teamproject.service.impl.UserDetailsServiceImpl;
 import javax.naming.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 /**
@@ -27,7 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private UserDetailsServiceImpl userDetailsService;
   private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-  private CustomSavedRequestAwareAuthenticationSuccessHandler successHandler;
 
   @Autowired
   public void setUserDetailsService(
@@ -39,12 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public void setRestAuthenticationEntryPoint(
       RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
     this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
-  }
-
-  @Autowired
-  public void setSuccessHandler(
-      CustomSavedRequestAwareAuthenticationSuccessHandler successHandler) {
-    this.successHandler = successHandler;
   }
 
   /**
@@ -61,17 +54,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
         .authorizeRequests()
             .antMatchers("/**").authenticated().and()
-        .formLogin()
-            .loginPage("/login").permitAll()
-            .successHandler(successHandler)
-            .usernameParameter("username")
-            .passwordParameter("password")
-            .failureHandler(new SimpleUrlAuthenticationFailureHandler()).and()
+        .addFilter(authenticationFilter())
         .logout()
             .logoutUrl("/logout")
             .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()).and()
         .rememberMe().key("token").tokenValiditySeconds(3600);
         //@formatter:on
+  }
+
+
+  @Bean
+  public JsonUsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {
+    JsonUsernamePasswordAuthenticationFilter filter = new JsonUsernamePasswordAuthenticationFilter();
+    filter.setAuthenticationManager(authenticationManager());
+    return filter;
   }
 
   @Override
