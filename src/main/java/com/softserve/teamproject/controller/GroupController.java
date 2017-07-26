@@ -4,7 +4,6 @@ import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
-import com.softserve.teamproject.service.UserProfileService;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
@@ -91,5 +90,4 @@ public class GroupController {
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
   }
-
 }

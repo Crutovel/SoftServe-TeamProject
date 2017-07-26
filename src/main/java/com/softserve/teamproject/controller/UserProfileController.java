@@ -1,10 +1,8 @@
 package com.softserve.teamproject.controller;
 
-import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.service.UserProfileService;
 import java.security.Principal;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

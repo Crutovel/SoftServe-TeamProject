@@ -1,8 +1,6 @@
 package com.softserve.teamproject.entity.resource;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
 import com.softserve.teamproject.entity.enums.BudgetOwner;
 import java.time.LocalDate;
@@ -24,12 +22,10 @@ public class GroupResource extends ResourceSupport {
   private String name;
 
   @DateTimeFormat(pattern = "dd/MM/yyyy")
-  @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate startDate;
 
   @DateTimeFormat(pattern = "dd/MM/yyyy")
-  @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate finishDate;
 

@@ -1,10 +1,7 @@
 package com.softserve.teamproject.service.impl;
 
-import static com.softserve.teamproject.repository.expression.GroupExpressions.getByLocationIds;
-
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
-import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
@@ -16,11 +13,9 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.GroupService;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
