@@ -192,6 +192,7 @@ DROP TABLE IF EXISTS `event_type` ;
 CREATE TABLE `event_type` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `is_key_date` BOOLEAN DEFAULT FALSE,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
@@ -225,7 +226,6 @@ CREATE TABLE `event` (
   `event_type_id` INT NOT NULL,
   `room_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `datetime_UNIQUE` (`datetime` ASC),
   INDEX `fk_event_event_type1_idx` (`event_type_id` ASC),
   INDEX `fk_event_room1_idx` (`room_id` ASC),
   INDEX `fk_event_educational_group1_idx` (`group_id` ASC),

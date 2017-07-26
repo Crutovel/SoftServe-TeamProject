@@ -18,6 +18,17 @@ public class EventType {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "is_key_date")
+    private boolean isKeyDate;
+
+    public boolean isKeyDate() {
+        return isKeyDate;
+    }
+
+    public void setKeyDate(boolean keyDate) {
+        isKeyDate = keyDate;
+    }
+
     public int getId() {
         return id;
     }
