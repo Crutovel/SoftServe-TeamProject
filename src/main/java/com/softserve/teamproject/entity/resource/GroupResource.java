@@ -21,11 +21,9 @@ public class GroupResource extends ResourceSupport {
 
   private String name;
 
-  @DateTimeFormat(pattern = "dd/MM/yyyy")
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate startDate;
 
-  @DateTimeFormat(pattern = "dd/MM/yyyy")
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate finishDate;
 
