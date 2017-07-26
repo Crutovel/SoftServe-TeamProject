@@ -1,11 +1,14 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Status;
+import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,8 +44,19 @@ public class GroupController {
    * @return list of groups of the authorized teacher.
    */
   @RequestMapping(value = "/groups/my", method = RequestMethod.GET)
-  public List<Group> getTeachersGroups(Principal principal) {
-    return groupsActions.getAllGroupsOfTheTeacher(principal.getName());
+  public List<GroupResource> getTeachersGroups(Principal principal) {
+    return groupsActions.getAllGroupResourcesOfTheTeacher(principal.getName());
+  }
+
+  /**
+   * Get groups from the authenticated user location
+   *
+   * @param principal authorized user
+   * @return groups in user location
+   */
+  @RequestMapping(value = "/groups/mylocation", method = RequestMethod.GET)
+  public Set<GroupResource> getGroupsFromUserLocation(Principal principal) {
+    return groupService.getGroupResourcesFromUserLocation(principal.getName());
   }
 
   /**
@@ -51,8 +65,8 @@ public class GroupController {
    * @return list of all the existing groups.
    */
   @RequestMapping(value = "/groups", method = RequestMethod.GET)
-  public List<Group> getAllGroups() {
-    return groupService.getAllGroups();
+  public List<GroupResource> getAllGroups() {
+    return groupService.getAllGroupResources();
   }
 
   /**
@@ -90,5 +104,14 @@ public class GroupController {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
     groupService.updateGroup(group, currentStatus, principal.getName());
+  }
+   * Get groups by filter
+   *
+   * @param requestFilter group dto
+   * @return groups info
+   */
+  @RequestMapping(value = "/groups/filter", method = RequestMethod.POST)
+  public Iterable getGroupsByFilter(@RequestBody GroupsFilter requestFilter) {
+    return groupService.getGroupsByFilter(requestFilter);
   }
 }

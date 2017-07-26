@@ -15,11 +15,4 @@ public interface UserProfileService {
    * @return user from database by his nickname
    */
   User getUserProfile(String principalName);
-
-  /**
-   * Retrieve from database all groups in current user location
-   * @param principalName user nick name
-   * @return list of groups in current user location
-   */
-  Set<Group> getGroupsFromUserLocation(String principalName);
 }

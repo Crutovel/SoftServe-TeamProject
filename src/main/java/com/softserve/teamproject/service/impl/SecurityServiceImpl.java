@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * The class impements SecurityService interface and provides methods to find the logged-in user
+ * The class implements SecurityService interface and provides methods to find the logged-in user
  * name and auto log in a user after the registration.
  */
 public class SecurityServiceImpl implements SecurityService {
