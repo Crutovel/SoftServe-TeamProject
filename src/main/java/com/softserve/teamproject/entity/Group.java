@@ -7,7 +7,6 @@ import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
 import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
-import com.softserve.teamproject.entity.enums.BudgetOwner;
 import com.softserve.teamproject.validation.StringConstraintInSet;
 import com.softserve.teamproject.validation.UniqueGroup;
 import java.time.LocalDate;
@@ -17,8 +16,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -88,7 +85,8 @@ public class Group {
   @StringConstraintInSet(min=5, max=25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
   private Set<String> experts;
 
-  @Enumerated(EnumType.STRING)
+  @ManyToOne
+  @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
   public Group() {
@@ -166,14 +164,6 @@ public class Group {
     this.experts = experts;
   }
 
-  public BudgetOwner getBudgetOwner() {
-    return budgetOwner;
-  }
-
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
-    this.budgetOwner = budgetOwner;
-  }
-
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -207,4 +197,12 @@ public class Group {
           + ", specialization=" + specialization
           + '}';
     }
+
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
+  }
 }
