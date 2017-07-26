@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.util.List;
@@ -8,9 +9,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface GroupService {
-
-  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  List<Group> getGroupsByLocationIds(Integer[] locations);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   List<Group> getAllGroups();
@@ -23,6 +21,10 @@ public interface GroupService {
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
   void deleteGroup(int groupId, String userName) throws AccessDeniedException;
+
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
+
+  Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter);
 
   /**
    * Retrieve from database all groups in current user location

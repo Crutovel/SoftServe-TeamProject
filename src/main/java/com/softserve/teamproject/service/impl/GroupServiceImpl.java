@@ -1,16 +1,17 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
-import com.softserve.teamproject.repository.SpecializationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,12 +28,11 @@ public class GroupServiceImpl implements GroupService {
   private UserRepository userRepository;
   private StatusRepository statusRepository;
   private LocationRepository locationRepository;
-  private SpecializationRepository specializationRepository;
   private GroupResourceAssembler groupResourceAssembler;
 
   @Autowired
   public void setGroupResourceAssembler(
-    GroupResourceAssembler groupResourceAssembler) {
+      GroupResourceAssembler groupResourceAssembler) {
     this.groupResourceAssembler = groupResourceAssembler;
   }
 
@@ -53,12 +53,8 @@ public class GroupServiceImpl implements GroupService {
 
   @Autowired
   public void setLocationRepository(
-    LocationRepository locationRepository) {
+      LocationRepository locationRepository) {
     this.locationRepository = locationRepository;
-  }
-
-  public List<Group> getGroupsByLocationIds(Integer[] locationIds) {
-    return groupRep.getGroupsByLocationIds(locationIds);
   }
 
   public List<Group> getAllGroups() {
@@ -88,7 +84,7 @@ public class GroupServiceImpl implements GroupService {
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("coordinator")
-      && !user.getLocation().equals(group.getLocation())) {
+        && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't add group in alien location");
     }
 
@@ -99,10 +95,9 @@ public class GroupServiceImpl implements GroupService {
   }
 
   /**
-   * Deletes group with given id. If a current authorized user is
-   * coordinator, the group location must equal coordinator location. If a current authorized user
-   * is administrator, the group location can be anyone. For other roles deleting of group is
-   * unavailable.
+   * Deletes group with given id. If a current authorized user is coordinator, the group location
+   * must equal coordinator location. If a current authorized user is administrator, the group
+   * location can be anyone. For other roles deleting of group is unavailable.
    *
    * @param groupId given group id
    * @param userName current authorized user
@@ -113,11 +108,30 @@ public class GroupServiceImpl implements GroupService {
     Group group = groupRep.getOne(groupId);
 
     if (user.getRole().getName().equals("coordinator")
-      && !user.getLocation().equals(group.getLocation())) {
+        && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't delete group in alien location");
     }
 
     groupRep.delete(group);
+  }
+
+  /**
+   * Returns groups with filter.
+   *
+   * @param filter contains filter values
+   * @return groups with filter
+   */
+  public Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter) {
+
+    if (filter.getLocations() != null) {
+      Iterable<Group> groups = groupRep
+          .findAll(GroupExpressions.getByLocationIds(filter.getLocations()));
+      List<GroupResource> groupResources = new ArrayList<>();
+      groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
+      return groupResources;
+    }
+
+    return getAllGroupResources();
   }
 
   @Override

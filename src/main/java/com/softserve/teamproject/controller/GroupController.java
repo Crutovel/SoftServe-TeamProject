@@ -1,5 +1,6 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
@@ -89,5 +90,17 @@ public class GroupController {
   @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
+  }
+
+  /**
+   * Get groups by filter
+   *
+   * @param requestFilter group dto
+   * @return groups info
+   */
+  @RequestMapping(value = "/groups/filter", method = RequestMethod.POST)
+  public Iterable getGroupsByFilter(@RequestBody GroupsFilter requestFilter) {
+
+    return groupService.getGroupsByFilter(requestFilter);
   }
 }
