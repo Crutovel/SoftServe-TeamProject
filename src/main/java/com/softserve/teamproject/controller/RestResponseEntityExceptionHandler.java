@@ -34,6 +34,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     return body;
   }
 
+  @ExceptionHandler({IllegalArgumentException.class})
+  public ResponseEntity<Object> handleIllegalArgumentException(final Exception ex,
+      final WebRequest request) {
+    return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST);
+  }
+
   @ExceptionHandler({AccessDeniedException.class})
   public ResponseEntity<Object> handleAccessDeniedException(final Exception ex,
       final WebRequest request) {
@@ -69,4 +76,5 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     return handleExceptionInternal(ex, createResponseBody(ex.getMessage()), headers,
         status, request);
   }
+
 }
