@@ -2,6 +2,7 @@ package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
+import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
@@ -93,6 +94,17 @@ public class GroupController {
   }
 
   /**
+   * Method edits current group according to the new values.
+   * @param group which is being updated
+   * @param id of group which will be updated (for getting a previous group status)
+   * @param principal is an authenticated user
+   */
+  @RequestMapping(value = "/groups/{id}", method = RequestMethod.PUT)
+  public void editGroup(@RequestBody @Valid Group group, @PathVariable Integer id, Principal principal) {
+    group.setId(id);
+    Status currentStatus = groupService.getGroupById(id).getStatus();
+    groupService.updateGroup(group, currentStatus, principal.getName());
+  }
    * Get groups by filter
    *
    * @param requestFilter group dto
@@ -100,7 +112,6 @@ public class GroupController {
    */
   @RequestMapping(value = "/groups/filter", method = RequestMethod.POST)
   public Iterable getGroupsByFilter(@RequestBody GroupsFilter requestFilter) {
-
     return groupService.getGroupsByFilter(requestFilter);
   }
 }

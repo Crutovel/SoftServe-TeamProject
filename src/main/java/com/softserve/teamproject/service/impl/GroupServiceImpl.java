@@ -13,9 +13,10 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
+import java.util.List;
+import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -81,6 +82,10 @@ public class GroupServiceImpl implements GroupService {
    */
   @Override
   public void addGroup(Group group, String userName) throws AccessDeniedException {
+    if (!isValid(group)) {
+      throw new ValidationException("This group already exists");
+    }
+
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("coordinator")
@@ -116,6 +121,59 @@ public class GroupServiceImpl implements GroupService {
   }
 
   /**
+   * Updates group.
+   * If the user's role - teacher, the group must have this teacher who must be
+   * at the same location as group, and group status must be < graduated.
+   * If the user's role - coordinator, he must be at the same location as group.
+   * If the user's role - administrator,  the group location can be anyone.
+   * For other roles updating groups is unavailable.
+   *
+   * @param group is a current group
+   * @param currentStatus is a status of group which will be updated
+   * @param userName is a nickname of current authorized user
+   * @throws AccessDeniedException if current authorized user has't access to update group
+   */
+  @Override
+  public void updateGroup(Group group, Status currentStatus, String userName)
+      throws AccessDeniedException {
+    User user = userRepository.getUserByNickName(userName);
+
+    if (user.getRole().getName().equals("teacher")) {
+      if (group.getTeachers().contains(user) && !user.getLocation().equals(group.getLocation())) {
+        throw new AccessDeniedException("Teacher can't edit group in alien location");
+      } else if (!group.getTeachers().contains(user)) {
+        throw new AccessDeniedException("Teacher can't edit group which doesn't assigned to him.");
+      } else if (group.getTeachers().contains(user)
+          && user.getLocation().equals(group.getLocation()) && currentStatus
+          .getName().equalsIgnoreCase("graduated")) {
+        throw new AccessDeniedException("Teacher can't edit group which is graduated.");
+      }
+    } else if (user.getRole().getName().equals("coordinator")
+        && !user.getLocation().equals(group.getLocation())) {
+      throw new AccessDeniedException("Coordinator can't edit group in alien location");
+    }
+
+    groupRep.save(group);
+  }
+
+  /**
+   * Gets group by id.
+   *
+   * @param id is id of a group
+   * @return group with the current id
+   */
+  @Override
+  public Group getGroupById(Integer id) {
+    return groupRep.findOne(id);
+  }
+
+  @Override
+  public boolean isValid(Group group) {
+    Group existed = groupRep.findByName(group.getName());
+    return existed == null;
+  }
+  
+  /**
    * Returns groups with filter.
    *
    * @param filter contains filter values
@@ -142,6 +200,5 @@ public class GroupServiceImpl implements GroupService {
     Set<GroupResource> groupResources = new HashSet<>();
     groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
     return groupResources;
-
   }
 }

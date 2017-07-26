@@ -2,7 +2,7 @@ package com.softserve.teamproject.controller;
 
 import java.util.Set;
 import javax.persistence.EntityNotFoundException;
-import javax.xml.bind.ValidationException;
+import javax.validation.ValidationException;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -54,7 +54,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   protected ResponseEntity<Object> handleValidationException(
       final RuntimeException ex, final WebRequest request) {
     return handleExceptionInternal(
-        ex, createResponseBody(MSG_BAD_REQUEST), new HttpHeaders(),HttpStatus.BAD_REQUEST, request);
+        ex, createResponseBody(MSG_BAD_REQUEST + ": " + ex.getMessage()), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST, request);
   }
 
   @Override
@@ -62,7 +63,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
       HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status,
       WebRequest request) {
     Set<HttpMethod> supportedMethods = ex.getSupportedHttpMethods();
-    if(!CollectionUtils.isEmpty(supportedMethods)) {
+    if (!CollectionUtils.isEmpty(supportedMethods)) {
       headers.setAllow(supportedMethods);
     }
     return handleExceptionInternal(ex, createResponseBody(ex.getMessage()), headers,
