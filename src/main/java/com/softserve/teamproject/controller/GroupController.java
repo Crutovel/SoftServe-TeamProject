@@ -105,7 +105,8 @@ public class GroupController {
     Status currentStatus = groupService.getGroupById(id).getStatus();
     groupService.updateGroup(group, currentStatus, principal.getName());
   }
-   * Get groups by filter
+
+  /* Get groups by filter
    *
    * @param requestFilter group dto
    * @return groups info
