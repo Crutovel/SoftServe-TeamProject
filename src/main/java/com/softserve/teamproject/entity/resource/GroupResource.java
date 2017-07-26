@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
