@@ -2,11 +2,8 @@ package com.softserve.teamproject.entity.resource;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
-import com.softserve.teamproject.entity.enums.BudgetOwner;
 import java.time.LocalDate;
 import java.util.Set;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +23,6 @@ public class GroupResource extends ResourceSupport {
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate finishDate;
 
-  @Enumerated(EnumType.STRING)
-  private BudgetOwner budgetOwner;
-
   private Set<String> experts;
 
   public Set<String> getExperts() {
@@ -37,14 +31,6 @@ public class GroupResource extends ResourceSupport {
 
   public void setExperts(Set<String> experts) {
     this.experts = experts;
-  }
-
-  public BudgetOwner getBudgetOwner() {
-    return budgetOwner;
-  }
-
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
-    this.budgetOwner = budgetOwner;
   }
 
   public int getGroupId() {

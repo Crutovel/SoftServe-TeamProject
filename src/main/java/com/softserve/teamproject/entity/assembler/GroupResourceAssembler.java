@@ -1,6 +1,7 @@
 package com.softserve.teamproject.entity.assembler;
 
 import com.softserve.teamproject.controller.GroupController;
+import com.softserve.teamproject.entity.BudgetOwner;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Specialization;
@@ -36,6 +37,7 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
     initResourceFields(groupResource, group);
     addSelfLinkToResource(groupResource, group);
     addEntityFieldLinkToResource(groupResource, group.getLocation().getId(), Location.class);
+    addEntityFieldLinkToResource(groupResource, group.getBudgetOwner().getId(), BudgetOwner.class);
     addCollectionFieldLinkToResource(groupResource, group, "teachers");
     addEntityFieldLinkToResource(groupResource, group.getStatus().getId(), Status.class);
     addEntityFieldLinkToResource(groupResource, group.getStatus().getId(), Specialization.class);
@@ -67,7 +69,6 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
     groupResource.setName(group.getName());
     groupResource.setStartDate(group.getStartDate());
     groupResource.setFinishDate(group.getFinishDate());
-    groupResource.setBudgetOwner(group.getBudgetOwner());
     groupResource.setExperts(group.getExperts());
   }
 }
