@@ -1,5 +1,8 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
+import com.softserve.teamproject.entity.deserializer.LocalDateTimeDeserializer;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +22,7 @@ public class Event {
     private int id;
 
     @Column(name = "datetime")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime dateTime;
 
     @Column(name = "duration")
@@ -26,6 +30,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+    @JsonDeserialize(using = GroupDeserializer.class)
     private Group group;
 
     @ManyToOne

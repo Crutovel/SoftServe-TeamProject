@@ -1,9 +1,13 @@
 package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.dto.EventsFilter;
+import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
+import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.ScheduleService;
+import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,9 +24,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScheduleController {
 
   private ScheduleService scheduleService;
+  private GroupService groupService;
+  private ScheduleService getScheduleService;
 
   @Autowired
   public void setScheduleService(ScheduleService scheduleService) {
+    this.scheduleService = scheduleService;
+  }
+
+  @Autowired
+  public void setGroupService(GroupService groupService) {
+    this.groupService = groupService;
+  }
+
+  @Autowired
+  public void setGetScheduleService(ScheduleService scheduleService) {
     this.scheduleService = scheduleService;
   }
 
@@ -103,5 +119,19 @@ public class ScheduleController {
   public EventResource getEvent(@PathVariable Integer id) {
     return scheduleService.getEvent(id);
   }
+
+  /**
+   * Method allows to create a schedule (add all events from the list) for the group with the
+   * specified id.
+   *
+   * @param events list of events in JSON format
+   * @param id id of the selected group as a url parameter
+   */
+  @RequestMapping(value = "/events/groups/{id}", method = RequestMethod.POST)
+  public void addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+      Principal principal) {
+    scheduleService.addSchedule(events, id, principal);
+  }
+
 
 }
