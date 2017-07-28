@@ -40,7 +40,7 @@ insert into specialization (`name`) values ('quality_control_for_cloud_computing
 insert into specialization (`name`) values ('angular_boot_camp');
 insert into specialization (`name`) values ('ua_go_boot_camp');
 insert into specialization (`name`) values ('ua_test_automation_boot_camp_for_mobile_with_python');
-insert into specialization (`name`) values ('ua_software_ingeneering_with_testing');
+insert into specialization (`name`) values ('ua_software_engineering_with_testing');
 insert into location (`name`,coordinator_id) values ('Dnipro',NULL);
 insert into location (`name`,coordinator_id) values ('Sofia', NULL);
 insert into location (`name`) values ('Lviv');
@@ -122,8 +122,6 @@ insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values 
 insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,6,2,8);
 insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-28 10:00:00',120,6,4,6);
 insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-29 12:30:00',90,6,5,7);
-update location SET coordinator_id = 2 WHERE name='Dnipro';
-update location SET coordinator_id = 3 WHERE name='Sofia';
 update location set coordinator_id = 2 where `name` = 'Dnipro';
 update location set coordinator_id = 3 where `name` = 'Sofia';
 update location set coordinator_id = 6 where `name` = 'Lviv';
