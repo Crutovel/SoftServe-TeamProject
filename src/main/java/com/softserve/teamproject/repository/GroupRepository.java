@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 public interface GroupRepository extends JpaRepository<Group, Integer>,
-    QueryDslPredicateExecutor, GroupRepositoryCustom {
+    QueryDslPredicateExecutor<Group>, GroupRepositoryCustom {
 
   /**
    * The method uses property expression feature of the Spring Data JPA to retrieve all the groups of the

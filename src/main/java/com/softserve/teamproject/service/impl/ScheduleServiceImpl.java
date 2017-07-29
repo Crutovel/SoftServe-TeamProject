@@ -74,33 +74,33 @@ public class ScheduleServiceImpl implements ScheduleService {
     } else {
       return null;
     }
-      return getEventsByGroupId(groupId, start, end);
-    }
+    return getEventsByGroupId(groupId, start, end);
+  }
 
-    public Iterable<EventResource> getEventsByGroupId (Integer groupId, LocalDate start,
-        LocalDate end){
-      if (start == null && end == null) {
-        return getLastWeekEvents(groupId);
-      }
-      if (start == null || end == null) {
-        throw new IllegalArgumentException("Bad request");
-      }
-      return convertToResource(eventRepository.getEventsByGroupId(
-          groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
+  public Iterable<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
+      LocalDate end) {
+    if (start == null && end == null) {
+      return getLastWeekEvents(groupId);
     }
+    if (start == null || end == null) {
+      throw new IllegalArgumentException("Bad request");
+    }
+    return convertToResource(eventRepository.getEventsByGroupId(
+        groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
+  }
 
-    public Iterable<EventResource> getEventsByFilter (
-        Integer[]groupId, LocalDate start, LocalDate end){
-      if (start == null || end == null) {
-        throw new IllegalArgumentException("Dates must be specified");
-      }
-      return convertToResource(eventRepository.getEventsByGroupId(
-          groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
+  public Iterable<EventResource> getEventsByFilter(
+      Integer[] groupId, LocalDate start, LocalDate end) {
+    if (start == null || end == null) {
+      throw new IllegalArgumentException("Dates must be specified");
     }
+    return convertToResource(eventRepository.getEventsByGroupId(
+        groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
+  }
 
-    public Iterable<EventResource> getKeyEventsByFilter (Integer[]groupId){
-      return convertToResource(eventRepository.getKeyEventsByGroupId(groupId));
-    }
+  public Iterable<EventResource> getKeyEventsByFilter(Integer[] groupId) {
+    return convertToResource(eventRepository.getKeyEventsByGroupId(groupId));
+  }
 
   public EventResource getEvent(Integer id) {
     return eventResourceAssembler.toResource(eventRepository.findOne(id));
