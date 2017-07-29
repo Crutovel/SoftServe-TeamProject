@@ -116,8 +116,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     return eventResourceAssembler.toResource(eventRepository.findOne(id));
   }
 
-  @Override
-  public void addEvent(Event event, Principal principal) throws AccessDeniedException {
+  private void addSingleEvent(Event event, Principal principal) throws AccessDeniedException {
     User user = userRepository.getUserByNickName(principal.getName());
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
       throw new AccessDeniedException(
@@ -132,10 +131,41 @@ public class ScheduleServiceImpl implements ScheduleService {
     Group group = groupRepository.findOne(groupId);
     for (Event event : events) {
       event.setGroup(group);
-      addEvent(event, principal);
+      addSingleEvent(event, principal);
     }
   }
 
+  private void updateSingleEvent(Event event, Principal principal) throws AccessDeniedException {
+    User user = userRepository.getUserByNickName(principal.getName());
+    if (!event.getGroup().getLocation().equals(user.getLocation())) {
+      throw new AccessDeniedException(
+          ": The coordinators can edit the schedule only in their location");
+    } else {
+      Event eventToUpdate = eventRepository.findOne(event.getId());
+      if(!(event.getDateTime()==null)){
+        eventToUpdate.setDateTime(event.getDateTime());
+      }
+      if(!(event.getDuration()==0)){
+        eventToUpdate.setDuration(event.getDuration());
+      }
+      if(!(event.getEventType()==null)){
+        eventToUpdate.setEventType(event.getEventType());
+      }
+      if(!(event.getRoom()==null)){
+        eventToUpdate.setRoom(event.getRoom());
+      }
+      eventRepository.save(eventToUpdate);
+    }
+  }
+
+  @Override
+  public void updateSchedule(List<Event> events, Integer groupId, Principal principal) throws AccessDeniedException {
+    Group group = groupRepository.findOne(groupId);
+    for (Event event : events) {
+      event.setGroup(group);
+      updateSingleEvent(event, principal);
+    }
+  }
 
   private Iterable<EventResource> convertToResource(Iterable<Event> events) {
     List<EventResource> eventResources = new ArrayList<>();

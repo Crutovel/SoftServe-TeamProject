@@ -133,5 +133,18 @@ public class ScheduleController {
     scheduleService.addSchedule(events, id, principal);
   }
 
+  /**
+   * Method allows to edit a schedule (edit all events from the list) for the group with the
+   * specified id.
+   *
+   * @param events list of events in JSON format
+   * @param id id of the selected group as a url parameter
+   */
+  @RequestMapping(value = "/events/groups/{id}", method = RequestMethod.PUT)
+  public void editSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+      Principal principal) {
+    scheduleService.updateSchedule(events, id, principal);
+  }
+
 
 }

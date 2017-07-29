@@ -172,7 +172,7 @@ public class GroupServiceImpl implements GroupService {
     Group existed = groupRep.findByName(group.getName());
     return existed == null;
   }
-  
+
   /**
    * Returns groups with filter.
    *
