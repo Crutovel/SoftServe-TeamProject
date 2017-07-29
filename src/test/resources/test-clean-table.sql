@@ -1,0 +1,13 @@
+DELETE FROM role_category;
+DELETE FROM role;
+DELETE FROM status_category;
+DELETE FROM status;
+DELETE FROM specialization;
+DELETE FROM location;
+DELETE FROM budget_owner;
+DELETE FROM group_teacher;
+DELETE FROM user;
+DELETE FROM educational_group;
+DELETE FROM expert;
+DELETE FROM room;
+DELETE FROM event;

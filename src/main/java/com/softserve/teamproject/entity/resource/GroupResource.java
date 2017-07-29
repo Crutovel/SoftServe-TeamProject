@@ -3,6 +3,7 @@ package com.softserve.teamproject.entity.resource;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
@@ -63,5 +64,25 @@ public class GroupResource extends ResourceSupport {
 
   public void setFinishDate(LocalDate finishDate) {
     this.finishDate = finishDate;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (getClass() != o.getClass()) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
+    GroupResource that = (GroupResource) o;
+    return Objects.equals(name, that.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), name);
   }
 }
