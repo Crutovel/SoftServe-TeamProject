@@ -3,8 +3,7 @@ package com.softserve.teamproject.controller;
 import com.softserve.teamproject.entity.resource.StudentResource;
 import com.softserve.teamproject.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +26,7 @@ public class StudentController {
    * @param groupId is received as a request param
    * @return students info by groupId or just all students
    */
-  @RequestMapping(value = "/students", method = RequestMethod.GET)
+  @GetMapping(value = "/students")
   public Iterable<StudentResource> getStudents(
       @RequestParam(value = "groupid", required = false) Integer groupId) {
     if (groupId != null) {

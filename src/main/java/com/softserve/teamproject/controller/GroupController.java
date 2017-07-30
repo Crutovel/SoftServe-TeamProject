@@ -11,10 +11,12 @@ import java.util.List;
 import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,7 +45,7 @@ public class GroupController {
    * @param principal of the Principal type.
    * @return list of groups of the authorized teacher.
    */
-  @RequestMapping(value = "/groups/my", method = RequestMethod.GET)
+  @GetMapping(value = "/groups/my")
   public List<GroupResource> getTeachersGroups(Principal principal) {
     return groupsActions.getAllGroupResourcesOfTheTeacher(principal.getName());
   }
@@ -54,7 +56,7 @@ public class GroupController {
    * @param principal authorized user
    * @return groups in user location
    */
-  @RequestMapping(value = "/groups/mylocation", method = RequestMethod.GET)
+  @GetMapping(value = "/groups/mylocation")
   public Set<GroupResource> getGroupsFromUserLocation(Principal principal) {
     return groupService.getGroupResourcesFromUserLocation(principal.getName());
   }
@@ -64,7 +66,7 @@ public class GroupController {
    *
    * @return list of all the existing groups.
    */
-  @RequestMapping(value = "/groups", method = RequestMethod.GET)
+  @GetMapping(value = "/groups")
   public List<GroupResource> getAllGroups() {
     return groupService.getAllGroupResources();
   }
@@ -77,7 +79,7 @@ public class GroupController {
    * type
    * @param principal to get the name of the authenticated user
    */
-  @RequestMapping(value = "/groups", method = RequestMethod.POST)
+  @PostMapping(value = "/groups")
   public void createGroup(@RequestBody @Valid Group group, Principal principal) {
     groupService.addGroup(group, principal.getName());
   }
@@ -88,7 +90,7 @@ public class GroupController {
    * @param id is received as a path variable
    * @param principal helps to identify the authenticated user
    */
-  @RequestMapping(value = "/groups/{id}", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "/groups/{id}")
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
   }
@@ -99,7 +101,7 @@ public class GroupController {
    * @param id of group which will be updated (for getting a previous group status)
    * @param principal is an authenticated user
    */
-  @RequestMapping(value = "/groups/{id}", method = RequestMethod.PUT)
+  @PutMapping(value = "/groups/{id}")
   public void editGroup(@RequestBody @Valid Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
@@ -111,7 +113,7 @@ public class GroupController {
    * @param requestFilter group dto
    * @return groups info
    */
-  @RequestMapping(value = "/groups/filter", method = RequestMethod.POST)
+  @PostMapping(value = "/groups/filter")
   public Iterable getGroupsByFilter(@RequestBody GroupsFilter requestFilter) {
     return groupService.getGroupsByFilter(requestFilter);
   }

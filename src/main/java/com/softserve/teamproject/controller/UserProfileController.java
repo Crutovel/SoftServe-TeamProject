@@ -4,8 +4,7 @@ import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.service.UserProfileService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,7 +27,7 @@ public class UserProfileController {
    * @param principal authorized user
    * @return user info of authorized user
    */
-  @RequestMapping(value = "/user/profile", method = RequestMethod.GET)
+  @GetMapping(value = "/user/profile")
   public User getUserProfile(Principal principal) {
     return userProfileService.getUserProfile(principal.getName());
   }
