@@ -109,7 +109,8 @@ public class GroupController {
     groupService.updateGroup(group, currentStatus, principal.getName());
   }
 
-  /* Get groups by filter
+  /**
+   * Get groups by filter.
    *
    * @param requestFilter group dto
    * @return groups info
