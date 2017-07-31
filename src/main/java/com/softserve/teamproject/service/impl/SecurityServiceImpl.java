@@ -3,8 +3,7 @@ package com.softserve.teamproject.service.impl;
 import com.softserve.teamproject.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication
-    .UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,8 +21,7 @@ public class SecurityServiceImpl implements SecurityService {
   private UserDetailsService userDetailsService;
 
   /**
-   * Method returns a name of the logged in user. We can use it to say hello
-   * to the user.
+   * Method returns a name of the logged in user. We can use it to say hello to the user.
    *
    * @return String userName
    */
@@ -46,8 +44,7 @@ public class SecurityServiceImpl implements SecurityService {
    */
   @Override
   public void autoLogin(String username, String password) {
-    UserDetails userDetails = userDetailsService.loadUserByUsername
-        (username);
+    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
     UsernamePasswordAuthenticationToken authenticationToken =
         new UsernamePasswordAuthenticationToken(userDetails,
             password, userDetails.getAuthorities());
@@ -55,8 +52,7 @@ public class SecurityServiceImpl implements SecurityService {
     authenticationManager.authenticate(authenticationToken);
 
     if (authenticationToken.isAuthenticated()) {
-      SecurityContextHolder.getContext().setAuthentication
-          (authenticationToken);
+      SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
   }
 

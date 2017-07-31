@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,30 +12,54 @@ import javax.persistence.Table;
 @Table(name = "budget_owner")
 public class BudgetOwner {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    public BudgetOwner() {
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
     }
-
-
-    public String getName() {
-        return name;
+    if (otherObject == null) {
+      return false;
     }
-
-    public void setName(String name) {
-        this.name = name;
+    if (getClass() != otherObject.getClass()) {
+      return false;
     }
+    BudgetOwner other = (BudgetOwner) otherObject;
+    return Objects.equals(name, other.name);
+  }
 
-    public int getId() {
-        return id;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  @Override
+  public String toString() {
+    return "BudgetOwner{"
+        + "id=" + id
+        + ", name='" + name + '\''
+        + '}';
+  }
 }

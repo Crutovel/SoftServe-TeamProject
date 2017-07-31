@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.ResourceSupport;
 
+/**
+ * Use for represent Student object in http response in HATEOAS style.
+ */
 public class EventResource extends ResourceSupport {
 
   private int eventId;

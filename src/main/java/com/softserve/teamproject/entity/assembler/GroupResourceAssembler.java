@@ -14,12 +14,12 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 /**
- * Use for mapping Group object to GroupResource one and add links to this object
+ * Use for mapping Group object to GroupResource one and add links to this object.
  */
 @Component
 public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, GroupResource> {
 
-  RepositoryEntityLinks repositoryEntityLinks;
+  private RepositoryEntityLinks repositoryEntityLinks;
 
   public GroupResourceAssembler() {
     super(GroupController.class, GroupResource.class);
@@ -27,7 +27,7 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
 
   @Autowired
   public void setRepositoryEntityLinks(
-    RepositoryEntityLinks repositoryEntityLinks) {
+      RepositoryEntityLinks repositoryEntityLinks) {
     this.repositoryEntityLinks = repositoryEntityLinks;
   }
 
@@ -45,23 +45,23 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
   }
 
   private void addCollectionFieldLinkToResource(GroupResource groupResource, Group group,
-    String relationName) {
+      String relationName) {
     Link collectionLink = repositoryEntityLinks.linkForSingleResource(Group.class, group.getId())
-      .slash(relationName).withRel(relationName);
+        .slash(relationName).withRel(relationName);
     groupResource.add(collectionLink);
   }
 
   private void addEntityFieldLinkToResource(GroupResource groupResource, int fieldId, Class clazz) {
     Link entityLink = repositoryEntityLinks
-      .linkToSingleResource(clazz, fieldId);
+        .linkToSingleResource(clazz, fieldId);
     groupResource.add(entityLink);
   }
 
   private void addSelfLinkToResource(GroupResource groupResource, Group group) {
     Link groupLink = repositoryEntityLinks.linkToSingleResource(Group.class, group.getId());
     Link selfLink = new Link(groupLink.getHref(), Link.REL_SELF);
-    groupResource.add(groupLink);
     groupResource.add(selfLink);
+    groupResource.add(groupLink);
   }
 
   private void initResourceFields(GroupResource groupResource, Group group) {

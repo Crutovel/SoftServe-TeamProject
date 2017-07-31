@@ -87,9 +87,6 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
-  public Group() {
-  }
-
   public int getId() {
     return id;
   }
@@ -162,6 +159,14 @@ public class Group {
     this.experts = experts;
   }
 
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
+  }
+
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -182,25 +187,18 @@ public class Group {
     return Objects.hash(name);
   }
 
-    @Override
-    public String toString() {
-      return "Group{"
-          + "id=" + id
-          + ", name='" + name + '\''
-          + ", teachers=" + teachers
-          + ", location=" + location.getName()
-          + ", startDate=" + startDate
-          + ", finishDate=" + finishDate
-          + ", status=" + status
-          + ", specialization=" + specialization
-          + '}';
-    }
-
-  public BudgetOwner getBudgetOwner() {
-    return budgetOwner;
-  }
-
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
-    this.budgetOwner = budgetOwner;
+  @Override
+  public String toString() {
+    return "Group{"
+        + "id=" + id
+        + ", name='" + name + '\''
+        + ", teachers=" + teachers
+        + ", location=" + location.getName()
+        + ", startDate=" + startDate
+        + ", finishDate=" + finishDate
+        + ", status=" + status.getName()
+        + ", specialization=" + specialization.getName()
+        + ", budgetOwner=" + budgetOwner.getName()
+        + '}';
   }
 }

@@ -1,7 +1,6 @@
 package com.softserve.teamproject.entity.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -17,18 +16,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDeserializer extends JsonDeserializer<Set<User>> {
 
+  private UserRepository userRepository;
+
   @Autowired
-  UserRepository userRepository;
+  public void setUserRepository(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   @Override
   public Set<User> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException, JsonProcessingException {
-    Set<User> users=new HashSet<>();
+      throws IOException {
+    Set<User> users = new HashSet<>();
     ObjectCodec oc = jsonParser.getCodec();
     JsonNode node = oc.readTree(jsonParser);
     if (node.isArray()) {
       for (final JsonNode objNode : node) {
-        User user=userRepository.findOne(objNode.get("id").asInt());
+        User user = userRepository.findOne(objNode.get("id").asInt());
         users.add(user);
       }
     }
