@@ -87,9 +87,6 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
-  public Group() {
-  }
-
   public int getId() {
     return id;
   }

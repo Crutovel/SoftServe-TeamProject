@@ -1,7 +1,10 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.EventResponseWrapper;
+import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public interface ScheduleService {
@@ -26,4 +29,7 @@ public interface ScheduleService {
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   EventResource getEvent(Integer id);
+
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
+  EventResponseWrapper addKeyDates(List<Event> events, Integer id);
 }

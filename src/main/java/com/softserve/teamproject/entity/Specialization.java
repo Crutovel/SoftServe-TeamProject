@@ -1,11 +1,13 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +21,17 @@ public class Specialization {
   @Column(name = "name")
   private String name;
 
-  public Specialization() {
+  @ManyToOne
+  @JsonIgnore
+  private Strategy strategy;
+
+
+  public Strategy getStrategy() {
+    return strategy;
+  }
+
+  public void setStrategy(Strategy strategy) {
+    this.strategy = strategy;
   }
 
   public int getId() {

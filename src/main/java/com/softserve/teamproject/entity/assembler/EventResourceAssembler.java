@@ -13,7 +13,7 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 @Component
-public class EventResourceAssembler  extends ResourceAssemblerSupport<Event, EventResource>{
+public class EventResourceAssembler extends ResourceAssemblerSupport<Event, EventResource> {
 
   RepositoryEntityLinks repositoryEntityLinks;
 
@@ -35,8 +35,9 @@ public class EventResourceAssembler  extends ResourceAssemblerSupport<Event, Eve
 
     addEntityFieldLinkToResource(eventResource, event.getGroup().getId(), Group.class);
     addEntityFieldLinkToResource(eventResource, event.getEventType().getId(), EventType.class);
-    addEntityFieldLinkToResource(eventResource, event.getRoom().getId(), Room.class);
-
+    if (event.getRoom() != null) {
+      addEntityFieldLinkToResource(eventResource, event.getRoom().getId(), Room.class);
+    }
     return eventResource;
   }
 

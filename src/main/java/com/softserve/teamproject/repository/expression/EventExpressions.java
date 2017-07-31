@@ -21,4 +21,8 @@ public class EventExpressions {
   public static BooleanExpression getEventBetweenDates(LocalDateTime start,LocalDateTime finish) {
     return QEvent.event.dateTime.between(start,finish);
   }
+
+  public static BooleanExpression eventByEventTypeId(Integer id) {
+    return QEvent.event.eventType.id.eq(id);
+  }
 }

@@ -1,9 +1,13 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
+import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.service.ScheduleService;
+import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -102,6 +106,12 @@ public class ScheduleController {
   @RequestMapping(value = "/events/{id}", method = RequestMethod.GET)
   public EventResource getEvent(@PathVariable Integer id) {
     return scheduleService.getEvent(id);
+  }
+
+  @RequestMapping(value = "/events/demo", method = RequestMethod.POST)
+  public EventResponseWrapper addKeyDates(@RequestBody List<Event> events,
+      @RequestParam("groupId") Integer groupId, Principal principal) {
+    return scheduleService.addKeyDates(events, groupId);
   }
 
 }
