@@ -102,7 +102,7 @@ public class GroupController {
    * @param principal is an authenticated user
    */
   @PutMapping(value = "/groups/{id}")
-  public void editGroup(@RequestBody @Valid Group group, @PathVariable Integer id, Principal principal) {
+  public void editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
     groupService.fieldsCheck(group);
