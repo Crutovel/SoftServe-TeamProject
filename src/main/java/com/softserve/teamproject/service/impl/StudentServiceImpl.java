@@ -47,9 +47,9 @@ public class StudentServiceImpl implements StudentService {
     return convertToResource(studentRepository.findAll());
   }
 
-  private Iterable<StudentResource> convertToResource(Iterable<Student> events) {
+  private Iterable<StudentResource> convertToResource(Iterable<Student> students) {
     List<StudentResource> studentResources = new ArrayList<>();
-    events.forEach(event -> studentResources.add(studentResourceAssembler.toResource(event)));
+    students.forEach(student -> studentResources.add(studentResourceAssembler.toResource(student)));
     return studentResources;
   }
 }

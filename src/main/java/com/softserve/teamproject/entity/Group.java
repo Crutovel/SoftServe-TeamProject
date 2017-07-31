@@ -196,9 +196,9 @@ public class Group {
         + ", location=" + location.getName()
         + ", startDate=" + startDate
         + ", finishDate=" + finishDate
-        + ", status=" + status
-        + ", specialization=" + specialization
-        + ", budgetOwner=" + budgetOwner
+        + ", status=" + status.getName()
+        + ", specialization=" + specialization.getName()
+        + ", budgetOwner=" + budgetOwner.getName()
         + '}';
   }
 }

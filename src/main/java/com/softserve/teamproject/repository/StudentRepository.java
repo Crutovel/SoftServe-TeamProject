@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
 public interface StudentRepository extends JpaRepository<Student, Integer>,
-    QueryDslPredicateExecutor, StudentRepositoryCustom {
+    QueryDslPredicateExecutor<Student>, StudentRepositoryCustom {
 
 }
