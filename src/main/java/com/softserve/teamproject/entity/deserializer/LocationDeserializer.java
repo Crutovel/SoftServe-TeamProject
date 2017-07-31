@@ -1,8 +1,6 @@
 package com.softserve.teamproject.entity.deserializer;
 
-
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -16,15 +14,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocationDeserializer extends JsonDeserializer<Location> {
 
+  private LocationRepository locationRepository;
+
   @Autowired
-  LocationRepository locationRepository;
+  public void setLocationRepository(
+      LocationRepository locationRepository) {
+    this.locationRepository = locationRepository;
+  }
 
   @Override
   public Location deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException, JsonProcessingException {
+      throws IOException {
     ObjectCodec oc = jsonParser.getCodec();
     JsonNode node = oc.readTree(jsonParser);
-    Location location=locationRepository.findOne(node.get("id").asInt());
-    return location;
+    return locationRepository.findOne(node.get("id").asInt());
   }
 }

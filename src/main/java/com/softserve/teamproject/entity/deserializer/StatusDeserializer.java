@@ -1,7 +1,6 @@
 package com.softserve.teamproject.entity.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -15,15 +14,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class StatusDeserializer extends JsonDeserializer<Status> {
 
+  private StatusRepository statusRepository;
+
   @Autowired
-  StatusRepository statusRepository;
+  public void setStatusRepository(StatusRepository statusRepository) {
+    this.statusRepository = statusRepository;
+  }
 
   @Override
   public Status deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-      throws IOException, JsonProcessingException {
+      throws IOException {
     ObjectCodec oc = jsonParser.getCodec();
     JsonNode node = oc.readTree(jsonParser);
-    Status status=statusRepository.findOne(node.get("id").asInt());
-    return status;
+    return statusRepository.findOne(node.get("id").asInt());
   }
 }

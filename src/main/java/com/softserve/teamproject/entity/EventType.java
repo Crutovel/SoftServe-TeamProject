@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,39 +12,66 @@ import javax.persistence.Table;
 @Table(name = "event_type")
 public class EventType {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "is_key_date")
-    private boolean isKeyDate;
+  @Column(name = "is_key_date")
+  private boolean isKeyDate;
 
-    public boolean isKeyDate() {
-        return isKeyDate;
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public boolean isKeyDate() {
+    return isKeyDate;
+  }
+
+  public void setKeyDate(boolean keyDate) {
+    isKeyDate = keyDate;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
     }
-
-    public void setKeyDate(boolean keyDate) {
-        isKeyDate = keyDate;
+    if (otherObject == null) {
+      return false;
     }
-
-    public int getId() {
-        return id;
+    if (getClass() != otherObject.getClass()) {
+      return false;
     }
+    EventType other = (EventType) otherObject;
+    return Objects.equals(name, other.name);
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
+  }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public EventType() {};
+  @Override
+  public String toString() {
+    return "EventType{"
+        + "id=" + id
+        + ", name='" + name + '\''
+        + ", isKeyDate='" + isKeyDate + '\''
+        + '}';
+  }
 }

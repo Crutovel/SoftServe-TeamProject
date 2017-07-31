@@ -2,9 +2,9 @@ package com.softserve.teamproject.service.impl;
 
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
+import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
-import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
@@ -19,7 +19,9 @@ import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -125,12 +127,10 @@ public class GroupServiceImpl implements GroupService {
   }
 
   /**
-   * Updates group.
-   * If the user's role - teacher, the group must have this teacher who must be
-   * at the same location as group, and group status must be < graduated.
-   * If the user's role - coordinator, he must be at the same location as group.
-   * If the user's role - administrator,  the group location can be anyone.
-   * For other roles updating groups is unavailable.
+   * Updates group. If the user's role - teacher, the group must have this teacher who must be at
+   * the same location as group, and group status must be < graduated. If the user's role -
+   * coordinator, he must be at the same location as group. If the user's role - administrator,  the
+   * group location can be anyone. For other roles updating groups is unavailable.
    *
    * @param group is a current group
    * @param currentStatus is a status of group which will be updated
@@ -194,7 +194,7 @@ public class GroupServiceImpl implements GroupService {
     Group existed = groupRep.findByName(group.getName());
     return existed == null;
   }
-  
+
   /**
    * Returns groups with filter.
    *

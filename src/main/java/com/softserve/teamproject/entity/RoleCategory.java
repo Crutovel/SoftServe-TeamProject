@@ -31,9 +31,6 @@ public class RoleCategory {
   @OneToMany(mappedBy = "roleCategory", cascade = CascadeType.ALL)
   private Set<Role> roles;
 
-  public RoleCategory() {
-  }
-
   public int getId() {
     return id;
   }
