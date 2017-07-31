@@ -218,8 +218,8 @@ public class GroupServiceImpl implements GroupService {
    */
   @Override
   public boolean isValidGroupName(Group group) {
-    for (Group group1 : groupRep.findAll()) {
-      if (group1.getName().equals(group.getName()) && group1.getId() != group.getId()) {
+    for (Group currentGroup : groupRep.findAll()) {
+      if (currentGroup.getName().equals(group.getName()) && currentGroup.getId() != group.getId()) {
         return false;
       }
     }
