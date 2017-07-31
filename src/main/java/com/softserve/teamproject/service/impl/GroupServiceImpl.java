@@ -13,7 +13,9 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
+import java.lang.reflect.Field;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,8 +23,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 public class GroupServiceImpl implements GroupService {
 
   private GroupRepository groupRep;
@@ -136,6 +140,7 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public void updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
+//    fieldsCheck(group);
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("teacher")) {
@@ -154,6 +159,23 @@ public class GroupServiceImpl implements GroupService {
     }
 
     groupRep.save(group);
+  }
+
+  public void fieldsCheck(Group group) {
+    Group existedGroup = getGroupById(group.getId());
+    Class<?> groupClass = group.getClass();
+    for (Field field : groupClass.getDeclaredFields()) {
+      field.setAccessible(true);
+      try {
+        if (field.get(group) == null) {
+          Field existedField = existedGroup.getClass().getDeclaredField(field.getName());
+          existedField.setAccessible(true);
+            field.set(group, existedField.get(existedGroup));
+          }
+      } catch (IllegalAccessException | NoSuchFieldException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   /**

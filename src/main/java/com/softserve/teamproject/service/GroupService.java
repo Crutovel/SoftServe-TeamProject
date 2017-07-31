@@ -6,6 +6,7 @@ import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.util.List;
 import java.util.Set;
+import javax.validation.Valid;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -24,7 +25,9 @@ public interface GroupService {
   void deleteGroup(int groupId, String userName) throws AccessDeniedException;
 
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
-  void updateGroup(Group group, Status currentStatus, String userName) throws AccessDeniedException;
+  void updateGroup(@Valid Group group, Status currentStatus, String userName) throws AccessDeniedException;
+
+  void fieldsCheck(Group group);
 
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
   Group getGroupById(Integer id);
