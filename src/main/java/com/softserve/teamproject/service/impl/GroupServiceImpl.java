@@ -137,7 +137,10 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public void updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
-//    fieldsCheck(group);
+    if (!isValidGroupName(group)) {
+      throw new ValidationException("Group with this name already exists.");
+    }
+
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("teacher")) {
@@ -158,6 +161,13 @@ public class GroupServiceImpl implements GroupService {
     groupRep.save(group);
   }
 
+  /**
+   * Checks if all fields of updated group exist. If some field is not exists, we copy required
+   * fields from an old group using reflection.
+   *
+   * @param group is a group we want to update.
+   */
+  @Override
   public void fieldsCheck(Group group) {
     Group existedGroup = getGroupById(group.getId());
     Class<?> groupClass = group.getClass();
@@ -167,8 +177,8 @@ public class GroupServiceImpl implements GroupService {
         if (field.get(group) == null) {
           Field existedField = existedGroup.getClass().getDeclaredField(field.getName());
           existedField.setAccessible(true);
-            field.set(group, existedField.get(existedGroup));
-          }
+          field.set(group, existedField.get(existedGroup));
+        }
       } catch (IllegalAccessException | NoSuchFieldException e) {
         e.printStackTrace();
       }
@@ -186,10 +196,34 @@ public class GroupServiceImpl implements GroupService {
     return groupRep.findOne(id);
   }
 
+  /**
+   * Checks if group is valid. If group already exists, group is not valid. Method is used by
+   * addGroup method.
+   *
+   * @param group is a group we want to add.
+   * @return true if group is valid, or false if group is not valid.
+   */
   @Override
   public boolean isValid(Group group) {
     Group existed = groupRep.findByName(group.getName());
     return existed == null;
+  }
+
+  /**
+   * Checks if group's name is valid. Name is valid if the other groups don't have the same name.
+   * Method is used by updateGroup method.
+   *
+   * @param group is a group we want to update.
+   * @return true if group's name is valid, or false if group's name is not valid.
+   */
+  @Override
+  public boolean isValidGroupName(Group group) {
+    for (Group group1 : groupRep.findAll()) {
+      if (group1.getName().equals(group.getName()) && group1.getId() != group.getId()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
