@@ -110,6 +110,17 @@ public class GroupController {
   }
 
   /**
+   * Gets group by id.
+   *
+   * @param id is id of a group we want to find.
+   * @return group with entered id.
+   */
+  @GetMapping(value = "/groups/{id}")
+  public Group getGroupById(@PathVariable Integer id) {
+    return groupService.getGroupById(id);
+  }
+
+  /**
    * Get groups by filter.
    *
    * @param requestFilter group dto
