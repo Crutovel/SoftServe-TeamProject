@@ -62,12 +62,18 @@ public class GroupServiceImpl implements GroupService {
   }
 
   public List<Group> getAllGroups() {
-    return groupRep.findAll();
+    List<Group> undeletedGroups = new ArrayList<>();
+    for (Group group : groupRep.findAll()) {
+      if (!group.isDeleted()) {
+        undeletedGroups.add(group);
+      }
+    }
+    return undeletedGroups;
   }
 
   @Override
   public List<GroupResource> getAllGroupResources() {
-    List<Group> groups = groupRep.findAll();
+    List<Group> groups = getAllGroups();
     List<GroupResource> groupResources = new ArrayList<>();
     groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
     return groupResources;
@@ -120,7 +126,12 @@ public class GroupServiceImpl implements GroupService {
       throw new AccessDeniedException("Coordinator can't delete group in alien location");
     }
 
-    groupRep.delete(group);
+    if (!group.getStatus().getName().equalsIgnoreCase("planned")) {
+      group.setDeleted(true);
+      groupRep.save(group);
+    } else {
+      groupRep.delete(group);
+    }
   }
 
   /**

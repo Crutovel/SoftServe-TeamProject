@@ -87,6 +87,9 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
+  @Column(name = "is_deleted")
+  private boolean isDeleted;
+
   public int getId() {
     return id;
   }
@@ -165,6 +168,14 @@ public class Group {
 
   public void setBudgetOwner(BudgetOwner budgetOwner) {
     this.budgetOwner = budgetOwner;
+  }
+
+  public boolean isDeleted() {
+    return isDeleted;
+  }
+
+  public void setDeleted(boolean deleted) {
+    isDeleted = deleted;
   }
 
   @Override
