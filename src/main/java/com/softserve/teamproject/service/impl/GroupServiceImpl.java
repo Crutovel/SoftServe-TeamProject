@@ -13,7 +13,9 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
+import java.lang.reflect.Field;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -137,9 +139,9 @@ public class GroupServiceImpl implements GroupService {
   public void updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
     User user = userRepository.getUserByNickName(userName);
-
     if (user.getRole().getName().equals("teacher")) {
-      if (group.getTeachers().contains(user) && !user.getLocation().equals(group.getLocation())) {
+      if (group.getTeachers().contains(user) && !user.getLocation()
+          .equals(group.getLocation())) {
         throw new AccessDeniedException("Teacher can't edit group in alien location");
       } else if (!group.getTeachers().contains(user)) {
         throw new AccessDeniedException("Teacher can't edit group which doesn't assigned to him.");
@@ -152,7 +154,6 @@ public class GroupServiceImpl implements GroupService {
         && !user.getLocation().equals(group.getLocation())) {
       throw new AccessDeniedException("Coordinator can't edit group in alien location");
     }
-
     groupRep.save(group);
   }
 
@@ -172,7 +173,7 @@ public class GroupServiceImpl implements GroupService {
     Group existed = groupRep.findByName(group.getName());
     return existed == null;
   }
-  
+
   /**
    * Returns groups with filter.
    *

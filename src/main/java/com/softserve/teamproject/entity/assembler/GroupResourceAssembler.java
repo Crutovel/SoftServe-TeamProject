@@ -27,7 +27,7 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
 
   @Autowired
   public void setRepositoryEntityLinks(
-    RepositoryEntityLinks repositoryEntityLinks) {
+      RepositoryEntityLinks repositoryEntityLinks) {
     this.repositoryEntityLinks = repositoryEntityLinks;
   }
 
@@ -49,15 +49,15 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
   }
 
   private void addCollectionFieldLinkToResource(GroupResource groupResource, Group group,
-    String relationName) {
+      String relationName) {
     Link collectionLink = repositoryEntityLinks.linkForSingleResource(Group.class, group.getId())
-      .slash(relationName).withRel(relationName);
+        .slash(relationName).withRel(relationName);
     groupResource.add(collectionLink);
   }
 
   private void addEntityFieldLinkToResource(GroupResource groupResource, int fieldId, Class clazz) {
     Link entityLink = repositoryEntityLinks
-      .linkToSingleResource(clazz, fieldId);
+        .linkToSingleResource(clazz, fieldId);
     groupResource.add(entityLink);
   }
 

@@ -30,8 +30,8 @@ public interface GroupService {
   Group getGroupById(Integer id);
 
   boolean isValid(Group group);
-  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
 
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter);
 
   /**

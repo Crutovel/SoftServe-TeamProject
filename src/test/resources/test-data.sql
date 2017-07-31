@@ -47,11 +47,14 @@ insert into specialization (`name`) values ('ua_software_ingeneering_with_testin
 
 insert into location (`name`,coordinator_id) values ('Dnipro',NULL);
 insert into location (`name`,coordinator_id) values ('Sofia', NULL);
+insert into location (`name`,coordinator_id) values ('Odessa', NULL);
 
 insert into budget_owner (`name`) values ('SOFTSERVE');
 insert into budget_owner (`name`) values ('OPEN GROUP');
 
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','Shvets',3,'OlegShvets','ghd22df',1);
+insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','NoGroups',3,'NogroupsUser','ghd22df',1);
+insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','NoShvets',3,'NoOlegShvets','ghd22df',3);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Petin',4,'DmytroPetin','fgdfg24sd',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lucas','Lukichich',4,'LukasLukichich','fjgf24sd',2);
 
@@ -66,7 +69,6 @@ insert into user (first_name,last_name,role_id,nick_name,password_hash_code,loca
 insert into group_teacher (teacher_id,group_id) values (1,1);
 insert into group_teacher (teacher_id,group_id) values (1,2);
 
-DELETE FROM event_type;
 insert into event_type (`name`,`is_key_date`) values ('demo',TRUE);
 insert into event_type (`name`) values ('lesson');
 
