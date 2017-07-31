@@ -90,7 +90,7 @@ public class GroupServiceImpl implements GroupService {
    * @throws AccessDeniedException if current authorized user has't access to add group
    */
   @Override
-  public void addGroup(Group group, String userName) throws AccessDeniedException {
+  public GroupResource addGroup(Group group, String userName) throws AccessDeniedException {
     if (!isValid(group)) {
       throw new ValidationException("This group already exists");
     }
@@ -106,6 +106,8 @@ public class GroupServiceImpl implements GroupService {
     group.setStatus(status);
 
     groupRep.save(group);
+
+    return groupResourceAssembler.toResource(group);
   }
 
   /**
@@ -146,7 +148,7 @@ public class GroupServiceImpl implements GroupService {
    * @throws AccessDeniedException if current authorized user has't access to update group
    */
   @Override
-  public void updateGroup(Group group, Status currentStatus, String userName)
+  public GroupResource updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
     if (!isValidGroupName(group)) {
       throw new ValidationException("Group with this name already exists.");
@@ -170,6 +172,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     groupRep.save(group);
+
+    return groupResourceAssembler.toResource(group);
   }
 
   /**

@@ -19,13 +19,13 @@ public interface GroupService {
   List<GroupResource> getAllGroupResources();
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
-  void addGroup(Group group, String userName) throws AccessDeniedException;
+  GroupResource addGroup(Group group, String userName) throws AccessDeniedException;
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
   void deleteGroup(int groupId, String userName) throws AccessDeniedException;
 
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
-  void updateGroup(@Valid Group group, Status currentStatus, String userName) throws AccessDeniedException;
+  GroupResource updateGroup(@Valid Group group, Status currentStatus, String userName) throws AccessDeniedException;
 
   void fieldsCheck(Group group);
 

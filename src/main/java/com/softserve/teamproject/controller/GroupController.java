@@ -80,8 +80,8 @@ public class GroupController {
    * @param principal to get the name of the authenticated user
    */
   @PostMapping(value = "/groups")
-  public void createGroup(@RequestBody @Valid Group group, Principal principal) {
-    groupService.addGroup(group, principal.getName());
+  public GroupResource createGroup(@RequestBody @Valid Group group, Principal principal) {
+    return groupService.addGroup(group, principal.getName());
   }
 
   /**
@@ -102,11 +102,11 @@ public class GroupController {
    * @param principal is an authenticated user
    */
   @PutMapping(value = "/groups/{id}")
-  public void editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
+  public GroupResource editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
     groupService.fieldsCheck(group);
-    groupService.updateGroup(group, currentStatus, principal.getName());
+    return groupService.updateGroup(group, currentStatus, principal.getName());
   }
 
   /**
