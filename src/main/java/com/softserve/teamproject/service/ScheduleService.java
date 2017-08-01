@@ -5,6 +5,7 @@ import com.softserve.teamproject.entity.resource.EventResource;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import javax.xml.bind.ValidationException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -33,9 +34,9 @@ public interface ScheduleService {
 
   @PreAuthorize("hasAuthority('coordinator')")
   void addSchedule(List<Event> events, Integer groupId, Principal principal)
-      throws AccessDeniedException;
+      throws AccessDeniedException, ValidationException;
 
   @PreAuthorize("hasAuthority('coordinator')")
   void updateSchedule(List<Event> events, Integer groupId, Principal principal)
-      throws AccessDeniedException;
+      throws AccessDeniedException, ValidationException;
 }

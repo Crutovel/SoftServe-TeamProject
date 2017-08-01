@@ -12,6 +12,7 @@ import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.custom.EventRepositoryCustom;
 import com.softserve.teamproject.service.ScheduleService;
+import com.softserve.teamproject.validation.SimpleEventValidator;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
@@ -19,6 +20,7 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,12 @@ public class ScheduleServiceImpl implements ScheduleService {
   private EventRepository eventRepository;
   private GroupRepository groupRepository;
   private UserRepository userRepository;
+  private SimpleEventValidator eventValidator;
+
+  @Autowired
+  public void setEventValidator(SimpleEventValidator eventValidator){
+    this.eventValidator=eventValidator;
+  }
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -116,18 +124,21 @@ public class ScheduleServiceImpl implements ScheduleService {
     return eventResourceAssembler.toResource(eventRepository.findOne(id));
   }
 
-  private void addSingleEvent(Event event, Principal principal) throws AccessDeniedException {
+  private void addSingleEvent(Event event, Principal principal)
+      throws AccessDeniedException, ValidationException {
     User user = userRepository.getUserByNickName(principal.getName());
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
       throw new AccessDeniedException(
           ": The coordinators can create the schedule only in their location");
     } else {
+      eventValidator.isEventValid(event);
       eventRepository.save(event);
     }
   }
 
   @Override
-  public void addSchedule(List<Event> events, Integer groupId, Principal principal) throws AccessDeniedException {
+  public void addSchedule(List<Event> events, Integer groupId, Principal principal)
+      throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
     for (Event event : events) {
       event.setGroup(group);
@@ -135,12 +146,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
   }
 
-  private void updateSingleEvent(Event event, Principal principal) throws AccessDeniedException {
+  private void updateSingleEvent(Event event, Principal principal)
+      throws AccessDeniedException, ValidationException {
     User user = userRepository.getUserByNickName(principal.getName());
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
       throw new AccessDeniedException(
           ": The coordinators can edit the schedule only in their location");
     } else {
+      if(event.getId()==0){
+        throw new ValidationException("Please specify the event you are going to change.");
+      }
       Event eventToUpdate = eventRepository.findOne(event.getId());
       if(!(event.getDateTime()==null)){
         eventToUpdate.setDateTime(event.getDateTime());
@@ -154,12 +169,14 @@ public class ScheduleServiceImpl implements ScheduleService {
       if(!(event.getRoom()==null)){
         eventToUpdate.setRoom(event.getRoom());
       }
+      eventValidator.isEventValid(event);
       eventRepository.save(eventToUpdate);
     }
   }
 
   @Override
-  public void updateSchedule(List<Event> events, Integer groupId, Principal principal) throws AccessDeniedException {
+  public void updateSchedule(List<Event> events, Integer groupId, Principal principal)
+      throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
     for (Event event : events) {
       event.setGroup(group);
