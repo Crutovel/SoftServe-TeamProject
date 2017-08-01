@@ -16,4 +16,5 @@ public interface GroupRepository extends JpaRepository<Group, Integer>,
   List<Group> findByTeachers_NickName(String teachersName);
 
   Group findByName(String name);
+
 }

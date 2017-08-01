@@ -61,14 +61,9 @@ public class GroupServiceImpl implements GroupService {
     this.locationRepository = locationRepository;
   }
 
+  @Override
   public List<Group> getAllGroups() {
-    List<Group> undeletedGroups = new ArrayList<>();
-    for (Group group : groupRep.findAll()) {
-      if (!group.isDeleted()) {
-        undeletedGroups.add(group);
-      }
-    }
-    return undeletedGroups;
+    return groupRep.getUndeletedGroups();
   }
 
   @Override
