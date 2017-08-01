@@ -2,28 +2,25 @@ package com.softserve.teamproject.service;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.booleanThat;
 import static org.mockito.Mockito.doNothing;
 
+import com.softserve.teamproject.TestData;
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.Status;
+import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
+import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.service.impl.GroupServiceImpl;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import javax.transaction.Transactional;
-import javax.validation.constraints.AssertTrue;
+import javax.validation.ValidationException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -32,17 +29,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @ActiveProfiles("test")
 public class GroupServiceImplTest {
 
@@ -58,6 +52,8 @@ public class GroupServiceImplTest {
   private GroupServiceImpl groupService;
   @Autowired
   private GroupRepository groupRepository;
+  @Autowired
+  private LocationRepository locationRepository;
 
   @Before
   public void setup() {
@@ -66,27 +62,194 @@ public class GroupServiceImplTest {
     groupService.setGroupResourceAssembler(groupResourceAssembler);
   }
 
+  @TestGroup
+  @WithUserDetails(TEACHER_WITHOUT_GROUPS)
   @Test
-  public void isValid_Stub() {
-//    @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-//    List<Group> getAllGroups();
-//
-//    @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-//    List<GroupResource> getAllGroupResources();
-//
-//    @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
-//    void addGroup(Group group, String userName) throws AccessDeniedException;
-//
-//    @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
-//    void deleteGroup(int groupId, String userName) throws AccessDeniedException;
-//
-//    @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
-//    void updateGroup(Group group, Status currentStatus, String userName) throws AccessDeniedException;
-//
-//    @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
-//    Group getGroupById(Integer id);
-//    Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter);
-    fail();
+  public void getGroupById_notExistGroupId_ReturnNull() {
+    //Arrange
+    final int GROUP_ID = 28;
+    //Act
+    Group group = groupService.getGroupById(GROUP_ID);
+    //Assert
+    assertNull(group);
+  }
+
+  @TestGroup
+  @WithUserDetails(TEACHER_WITHOUT_GROUPS)
+  @Test
+  public void getGroupById_existGroupId_ReturnGroup() {
+    //Arrange
+    final int GROUP_ID = 1;
+    final String EXPECTED_GROUP_NAME="DP-115";
+    //Act
+    Group group = groupService.getGroupById(GROUP_ID);
+    //Assert
+    assertEquals(EXPECTED_GROUP_NAME, group.getName());
+  }
+
+  @TestGroup
+  @WithUserDetails(TEACHER_WITHOUT_GROUPS)
+  @Test
+  public void getAllGroupResources_teacher_returnAllGroupResources() {
+    //Arrange
+    final int EXPECTED_GROUP_COUNT = 3;
+    //Act
+    List<GroupResource> list = groupService.getAllGroupResources();
+    //Assert
+    assertEquals(EXPECTED_GROUP_COUNT, list.size());
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void deleteGroup_CoordinatorHisLocation_DeleteGroup() {
+    //Arrange
+    final int DELETED_GROUP_ID = 1;
+    //Act
+    groupService.deleteGroup(DELETED_GROUP_ID, COORDINATOR);
+    Group deleted = groupRepository.findOne(DELETED_GROUP_ID);
+    //Assert
+    assertNull(deleted);
+  }
+
+  @WithUserDetails(COORDINATOR_OTHER_LOCATION)
+  @TestGroup
+  @Test(expected = AccessDeniedException.class)
+  public void deleteGroup_CoordinatorOtherLocation_ExceptionThrown() {
+    //Act
+    groupService.deleteGroup(1, COORDINATOR_OTHER_LOCATION);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void getGroupsByFilter_twoLocationExist_ReturnGroups() {
+    //Arrange
+    final int EXPECTED_SIZE = 3;
+    Integer[] groupLocations = new Integer[]{1, 2};
+    GroupsFilter filter = new GroupsFilter() {{
+      setLocations(groupLocations);
+    }};
+
+    //Act
+    Iterable<GroupResource> groups = groupService.getGroupsByFilter(filter);
+    final int RESULT_SIZE = (int) groups.spliterator().getExactSizeIfKnown();
+
+    //Assert
+    assertEquals(EXPECTED_SIZE, RESULT_SIZE);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void getGroupsByFilter_oneLocationExist_ReturnGroups() {
+    //Arrange
+    final int EXPECTED_SIZE = 2;
+    Integer[] groupLocations = new Integer[]{1};
+    GroupsFilter filter = new GroupsFilter() {{
+      setLocations(groupLocations);
+    }};
+
+    //Act
+    Iterable<GroupResource> groups = groupService.getGroupsByFilter(filter);
+    final int RESULT_SIZE = (int) groups.spliterator().getExactSizeIfKnown();
+
+    //Assert
+    assertEquals(EXPECTED_SIZE, RESULT_SIZE);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void getGroupsByFilter_threeLocationOneNotExist_() {
+    //Arrange
+    final int EXPECTED_SIZE = 3;
+    Integer[] groupLocations = new Integer[]{1, 2, 5};
+    GroupsFilter filter = new GroupsFilter() {{
+      setLocations(groupLocations);
+    }};
+
+    //Act
+    Iterable<GroupResource> groups = groupService.getGroupsByFilter(filter);
+    final int RESULT_SIZE = (int) groups.spliterator().getExactSizeIfKnown();
+
+    //Assert
+    assertEquals(EXPECTED_SIZE, RESULT_SIZE);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void addGroup_CoordinatorNewName_GroupAdd() {
+    //Arrange
+    final String NEW_GROUP_NAME = "DP-NEW";
+    Group newGroup = TestData.getGroup(NEW_GROUP_NAME);
+    Location location = locationRepository.findOne(newGroup.getLocation().getId());
+    newGroup.setLocation(location);
+
+    //Act
+    groupService.addGroup(newGroup, COORDINATOR);
+    Group addedGroup = groupRepository.findByName(NEW_GROUP_NAME);
+
+    //Assert
+    assertEquals(NEW_GROUP_NAME, addedGroup.getName());
+  }
+
+  @WithUserDetails(COORDINATOR_OTHER_LOCATION)
+  @TestGroup
+  @Test(expected = AccessDeniedException.class)
+  public void addGroup_CoordinatorOtherLocation_ExceptionThrown() {
+    //Arrange
+    final String NEW_GROUP_NAME = "DP-NEW";
+    Group newGroup = TestData.getGroup(NEW_GROUP_NAME);
+    Location location = locationRepository.findOne(newGroup.getLocation().getId());
+    newGroup.setLocation(location);
+
+    //Act
+    groupService.addGroup(newGroup, COORDINATOR_OTHER_LOCATION);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test(expected = ValidationException.class)
+  public void addGroup_existName_ExceptionThrown() {
+    final String NEW_GROUP_NAME = "DP-115";
+    Group newGroup = TestData.getGroup(NEW_GROUP_NAME);
+
+    //Act
+    groupService.addGroup(newGroup, COORDINATOR);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void updateGroup_CoordinatorGroupGraduated_EditGroup() {
+    //Arrange
+    final int SET_SIZE = 2;
+    Group edited = groupRepository.findByName("DP-116");
+    edited.setExperts(new LinkedHashSet<String>() {{
+      add("Sergey");
+      add("Anton");
+    }});
+
+    //Act
+    groupService.updateGroup(edited, edited.getStatus(), COORDINATOR);
+    Group updated = groupRepository.findByName("DP-116");
+
+    //Assert
+    assertTrue(updated.getExperts().containsAll(edited.getExperts()));
+    assertEquals(SET_SIZE, updated.getExperts().size());
+  }
+
+  @WithUserDetails(TEACHER_WITH_GROUPS)
+  @TestGroup
+  @Test(expected = AccessDeniedException.class)
+  public void updateGroup_TeacherGroupGraduated_ExceptionThrown() {
+    //Arrange
+    Group edited = groupRepository.findByName("DP-116");
+
+    //Act
+    groupService.updateGroup(edited, edited.getStatus(), COORDINATOR_OTHER_LOCATION);
   }
 
   @WithUserDetails(COORDINATOR_OTHER_LOCATION)
@@ -114,8 +277,8 @@ public class GroupServiceImplTest {
     Group updated = groupRepository.findOne(edited.getId());
 
     //Assert
-    assertEquals(edited.getName(),updated.getName());
-    assertEquals(edited.getExperts(),updated.getExperts());
+    assertEquals(edited.getName(), updated.getName());
+    assertEquals(edited.getExperts(), updated.getExperts());
   }
 
   @TestGroup
@@ -143,8 +306,8 @@ public class GroupServiceImplTest {
     Group updated = groupRepository.findOne(edited.getId());
 
     //Assert
-    assertEquals(edited.getName(),updated.getName());
-    assertEquals(edited.getExperts(),updated.getExperts());
+    assertEquals(edited.getName(), updated.getName());
+    assertEquals(edited.getExperts(), updated.getExperts());
   }
 
   @TestGroup
