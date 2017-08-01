@@ -62,13 +62,8 @@ public class GroupServiceImpl implements GroupService {
   }
 
   @Override
-  public List<Group> getAllGroups() {
-    return groupRep.getUndeletedGroups();
-  }
-
-  @Override
   public List<GroupResource> getAllGroupResources() {
-    List<Group> groups = getAllGroups();
+    List<Group> groups = groupRep.getUndeletedGroups();
     List<GroupResource> groupResources = new ArrayList<>();
     groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
     return groupResources;
