@@ -128,7 +128,7 @@ CREATE TABLE `educational_group` (
   `status_id` INT NOT NULL,
   `specialization_id` INT NOT NULL,
   `budget_owner_id` INT NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
   INDEX `fk_group_location1_idx` (`location_id` ASC),
