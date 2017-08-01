@@ -212,6 +212,17 @@ public class GroupServiceImpl implements GroupService {
   }
 
   /**
+   * Gets group resource by group id.
+   *
+   * @param id is id of a group
+   * @return group resource with the current group id.
+   */
+  @Override
+  public GroupResource getGroupResourceById(Integer id) {
+    return groupResourceAssembler.toResource(groupRep.findOne(id));
+  }
+
+  /**
    * Checks if group is valid. If group already exists, group is not valid. Method is used by
    * addGroup method.
    *
