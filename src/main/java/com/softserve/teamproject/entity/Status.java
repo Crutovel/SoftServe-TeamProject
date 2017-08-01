@@ -25,9 +25,6 @@ public class Status {
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
   private StatusCategory statusCategory;
 
-  public Status() {
-  }
-
   public int getId() {
     return id;
   }

@@ -8,4 +8,8 @@ public class GroupExpressions {
   public static BooleanExpression getByLocationIds(Integer[] locations) {
     return QGroup.group.location.id.in(locations);
   }
+
+  public static BooleanExpression getUndeleted() {
+    return QGroup.group.isDeleted.isFalse();
+  }
 }

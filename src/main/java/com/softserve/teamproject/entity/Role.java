@@ -25,9 +25,6 @@ public class Role {
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
   private RoleCategory roleCategory;
 
-  public Role() {
-  }
-
   public int getId() {
     return id;
   }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateTimeDeserializer;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-    private Room Room;
+    private Room room;
 
     public Event() {};
 
@@ -75,19 +76,52 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public Room getRoom() {
-        return Room;
-    }
+  public Room getRoom() {
+    return room;
+  }
 
-    public void setRoom(Room room) {
-        Room = room;
-    }
+  public void setRoom(Room room) {
+    this.room = room;
+  }
 
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+  public void setDateTime(LocalDateTime dateTime) {
+    this.dateTime = dateTime;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
     }
+    if (otherObject == null) {
+      return false;
+    }
+    if (getClass() != otherObject.getClass()) {
+      return false;
+    }
+    Event other = (Event) otherObject;
+    return Objects.equals(dateTime, other.dateTime) && Objects.equals(group, other.group)
+        && Objects.equals(eventType, other.eventType);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(dateTime, group, eventType);
+  }
+
+  @Override
+  public String toString() {
+    return "Group{"
+        + "id=" + id
+        + ", dateTime='" + dateTime + '\''
+        + ", duration='" + duration + '\''
+        + ", group='" + group.getName() + '\''
+        + ", eventType='" + eventType.getName() + '\''
+        + ", room='" + room.getNumber() + '\''
+        + '}';
+  }
 }

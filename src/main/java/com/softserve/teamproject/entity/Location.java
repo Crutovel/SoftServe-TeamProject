@@ -37,9 +37,6 @@ public class Location {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
   private Set<User> users;
 
-  public Location() {
-  }
-
   public int getId() {
     return id;
   }
