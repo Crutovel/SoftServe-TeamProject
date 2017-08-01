@@ -5,6 +5,7 @@ import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Room;
 import com.softserve.teamproject.repository.EventTypeRepository;
 import com.softserve.teamproject.repository.RoomRepository;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class SimpleEventValidator {
   private EventTypeRepository eventTypeRepository;
 
   @Autowired
-  public void setEventTypeRepository(EventTypeRepository eventTypeRepository){
-    this.eventTypeRepository=eventTypeRepository;
+  public void setEventTypeRepository(EventTypeRepository eventTypeRepository) {
+    this.eventTypeRepository = eventTypeRepository;
   }
 
   @Autowired
@@ -37,10 +38,22 @@ public class SimpleEventValidator {
    * @throws ValidationException if one of the conditions is violated
    */
   public void isEventValid(Event event) throws ValidationException {
+    Class<?> eventClass = event.getClass();
+    for (Field field : eventClass.getDeclaredFields()) {
+      field.setAccessible(true);
+      try {
+        if (field.get(event) == null) {
+          throw new ValidationException(
+              "Please, provide all the information in fields to create an event.");
+        }
+      } catch (IllegalAccessException e) {
+        e.printStackTrace();
+      }
+    }
     if (!doesRoomExist(event.getRoom())) {
       throw new ValidationException("The room doesn't exist");
     }
-    if (!isEventDateValid(event.getDateTime())) {
+    if (isEventDateValid(event.getDateTime())) {
       throw new ValidationException("You cannot set the event time retroactively.");
     }
   }
@@ -65,7 +78,7 @@ public class SimpleEventValidator {
     }
   }
 
-  private boolean isEventTypeValid( EventType eventType) {
+  private boolean isEventTypeValid(EventType eventType) {
     if (eventTypeRepository.findOne(eventType.getId()) == null) {
       return false;
     } else {

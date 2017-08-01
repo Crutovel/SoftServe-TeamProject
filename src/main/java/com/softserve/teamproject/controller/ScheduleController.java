@@ -3,7 +3,6 @@ package com.softserve.teamproject.controller;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
-import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.ScheduleService;
 import java.security.Principal;
 import java.time.LocalDate;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,17 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScheduleController {
 
   private ScheduleService scheduleService;
-  private GroupService groupService;
-  private ScheduleService getScheduleService;
 
   @Autowired
   public void setScheduleService(ScheduleService scheduleService) {
     this.scheduleService = scheduleService;
-  }
-
-  @Autowired
-  public void setGroupService(GroupService groupService) {
-    this.groupService = groupService;
   }
 
   @Autowired
