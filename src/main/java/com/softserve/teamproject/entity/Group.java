@@ -87,7 +87,7 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
-  @Column(name = "is_deleted")
+  @Column(name = "is_deleted", columnDefinition = "boolean default false")
   private boolean isDeleted;
 
   public int getId() {
@@ -200,11 +200,11 @@ public class Group {
 
     @Override
     public String toString() {
-      String locationString = location != null ? location.getName() : null;return "Group{"
+      return "Group{"
           + "id=" + id
           + ", name='" + name + '\''
           + ", teachers=" + teachers
-          + ", location=" + locationString
+          + ", location=" + location.getName()
           + ", startDate=" + startDate
           + ", finishDate=" + finishDate
           + ", status=" + status.getName()

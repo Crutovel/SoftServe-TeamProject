@@ -53,7 +53,8 @@ public class TeacherGroupsManipulationServiceImplTest {
     final int EXPECTED_LIST_SIZE = 2;
     //Act
     List<GroupResource> list = teacherService.getAllGroupResourcesOfTheTeacher(TEACHER_WITH_GROUPS);
-    List<String> result_names=list.stream().map(GroupResource::getName).collect(Collectors.toList());
+    List<String> result_names = list.stream().map(GroupResource::getName)
+        .collect(Collectors.toList());
     //Assert
     assertEquals(EXPECTED_LIST_SIZE, list.size());
     assertTrue(EXPECTED_NAMES.containsAll(result_names));

@@ -58,9 +58,10 @@ insert into user (first_name,last_name,role_id,nick_name,password_hash_code,loca
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Petin',4,'DmytroPetin','fgdfg24sd',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lucas','Lukichich',4,'LukasLukichich','fjgf24sd',2);
 
-insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('DP-115',1,'2017-04-29', '2017-08-18',4,7,1);
+insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('DP-115',1,'2017-04-29', '2017-08-18',1,7,1);
 insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('DP-116',1,'2017-04-29', '2017-08-18',6,6,1);
 insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('SO-115',2,'2017-04-29', '2017-08-18',4,7,1);
+insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id,is_deleted) values ('DP-1115',1,'2017-04-29', '2017-08-18',6,7,1,TRUE);
 
 insert into expert (edu_group_id, expert_name) values (1, 'Sergey');
 

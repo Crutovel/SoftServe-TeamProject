@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.EntityManager;
 import javax.validation.ValidationException;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
@@ -54,6 +54,8 @@ public class GroupServiceImplTest {
   private GroupRepository groupRepository;
   @Autowired
   private LocationRepository locationRepository;
+  @Autowired
+  private EntityManager entityManager;
 
   @Before
   public void setup() {
@@ -77,10 +79,49 @@ public class GroupServiceImplTest {
   @TestGroup
   @WithUserDetails(TEACHER_WITHOUT_GROUPS)
   @Test
+  public void getGroupResourceById_notExistGroupId_ReturnNull() {
+    //Arrange
+    final int GROUP_ID = 28;
+    //Act
+    GroupResource group = groupService.getGroupResourceById(GROUP_ID);
+    //Assert
+    assertNull(group);
+  }
+
+  @TestGroup
+  @Test
+  public void fieldsCheck() {
+    //Arrange
+    final String EXPECTED_NAME = "DP-115";
+    Group group = groupRepository.findOne(1);
+    entityManager.detach(group);
+    group.setName(null);
+    //Act
+    groupService.fieldsCheck(group);
+    //Assert
+    assertEquals(EXPECTED_NAME, group.getName());
+  }
+
+  @TestGroup
+  @WithUserDetails(TEACHER_WITHOUT_GROUPS)
+  @Test
   public void getGroupById_existGroupId_ReturnGroup() {
     //Arrange
     final int GROUP_ID = 1;
-    final String EXPECTED_GROUP_NAME="DP-115";
+    final String EXPECTED_GROUP_NAME = "DP-115";
+    //Act
+    Group group = groupService.getGroupById(GROUP_ID);
+    //Assert
+    assertEquals(EXPECTED_GROUP_NAME, group.getName());
+  }
+
+  @TestGroup
+  @WithUserDetails(TEACHER_WITHOUT_GROUPS)
+  @Test
+  public void getGroupResourceById_existGroupId_ReturnGroup() {
+    //Arrange
+    final int GROUP_ID = 1;
+    final String EXPECTED_GROUP_NAME = "DP-115";
     //Act
     Group group = groupService.getGroupById(GROUP_ID);
     //Assert
@@ -102,7 +143,7 @@ public class GroupServiceImplTest {
   @WithUserDetails(COORDINATOR)
   @TestGroup
   @Test
-  public void deleteGroup_CoordinatorHisLocation_DeleteGroup() {
+  public void deleteGroup_CoordinatorHisLocationPlannedGroup_DeleteGroup() {
     //Arrange
     final int DELETED_GROUP_ID = 1;
     //Act
@@ -110,6 +151,21 @@ public class GroupServiceImplTest {
     Group deleted = groupRepository.findOne(DELETED_GROUP_ID);
     //Assert
     assertNull(deleted);
+  }
+
+  @WithUserDetails(COORDINATOR)
+  @TestGroup
+  @Test
+  public void deleteGroup_CoordinatorHisLocationInProcessGroup_DeleteGroup() {
+    //Arrange
+    final int DELETED_GROUP_ID = 2;
+    final String DELETED_GROUP_NAME = "DP-116";
+    //Act
+    groupService.deleteGroup(DELETED_GROUP_ID, COORDINATOR);
+    Group deleted = groupRepository.findOne(DELETED_GROUP_ID);
+    //Assert
+    assertEquals(DELETED_GROUP_NAME, deleted.getName());
+    assertTrue(deleted.isDeleted());
   }
 
   @WithUserDetails(COORDINATOR_OTHER_LOCATION)
@@ -125,7 +181,7 @@ public class GroupServiceImplTest {
   @Test
   public void getGroupsByFilter_twoLocationExist_ReturnGroups() {
     //Arrange
-    final int EXPECTED_SIZE = 3;
+    final int EXPECTED_SIZE = 4;
     Integer[] groupLocations = new Integer[]{1, 2};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
@@ -144,7 +200,7 @@ public class GroupServiceImplTest {
   @Test
   public void getGroupsByFilter_oneLocationExist_ReturnGroups() {
     //Arrange
-    final int EXPECTED_SIZE = 2;
+    final int EXPECTED_SIZE = 3;
     Integer[] groupLocations = new Integer[]{1};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
@@ -161,9 +217,9 @@ public class GroupServiceImplTest {
   @WithUserDetails(COORDINATOR)
   @TestGroup
   @Test
-  public void getGroupsByFilter_threeLocationOneNotExist_() {
+  public void getGroupsByFilter_threeLocationOneNotExist_ReturnGroups() {
     //Arrange
-    final int EXPECTED_SIZE = 3;
+    final int EXPECTED_SIZE = 4;
     Integer[] groupLocations = new Integer[]{1, 2, 5};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
@@ -183,16 +239,19 @@ public class GroupServiceImplTest {
   public void addGroup_CoordinatorNewName_GroupAdd() {
     //Arrange
     final String NEW_GROUP_NAME = "DP-NEW";
+    final String NEW_GROUP_STATUS = "planned";
     Group newGroup = TestData.getGroup(NEW_GROUP_NAME);
     Location location = locationRepository.findOne(newGroup.getLocation().getId());
     newGroup.setLocation(location);
 
     //Act
-    groupService.addGroup(newGroup, COORDINATOR);
+    GroupResource addedGroupResource = groupService.addGroup(newGroup, COORDINATOR);
     Group addedGroup = groupRepository.findByName(NEW_GROUP_NAME);
 
     //Assert
     assertEquals(NEW_GROUP_NAME, addedGroup.getName());
+    assertEquals(NEW_GROUP_NAME, addedGroupResource.getName());
+    assertEquals(NEW_GROUP_STATUS, addedGroup.getStatus().getName());
   }
 
   @WithUserDetails(COORDINATOR_OTHER_LOCATION)
@@ -227,18 +286,22 @@ public class GroupServiceImplTest {
     //Arrange
     final int SET_SIZE = 2;
     Group edited = groupRepository.findByName("DP-116");
+    entityManager.detach(edited);
     edited.setExperts(new LinkedHashSet<String>() {{
       add("Sergey");
       add("Anton");
     }});
+    entityManager.detach(edited);
 
     //Act
-    groupService.updateGroup(edited, edited.getStatus(), COORDINATOR);
+    GroupResource updatedResource = groupService
+        .updateGroup(edited, edited.getStatus(), COORDINATOR);
     Group updated = groupRepository.findByName("DP-116");
 
     //Assert
     assertTrue(updated.getExperts().containsAll(edited.getExperts()));
     assertEquals(SET_SIZE, updated.getExperts().size());
+    assertEquals(edited.getName(), updatedResource.getName());
   }
 
   @WithUserDetails(TEACHER_WITH_GROUPS)
@@ -247,6 +310,7 @@ public class GroupServiceImplTest {
   public void updateGroup_TeacherGroupGraduated_ExceptionThrown() {
     //Arrange
     Group edited = groupRepository.findByName("DP-116");
+    entityManager.detach(edited);
 
     //Act
     groupService.updateGroup(edited, edited.getStatus(), COORDINATOR_OTHER_LOCATION);
@@ -258,6 +322,7 @@ public class GroupServiceImplTest {
   public void updateGroup_CoordinatorOtherLocation_ExceptionThrown() {
     //Arrange
     Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
+    entityManager.detach(edited);
 
     //Act
     groupService.updateGroup(edited, edited.getStatus(), COORDINATOR_OTHER_LOCATION);
@@ -269,16 +334,32 @@ public class GroupServiceImplTest {
   public void updateGroup_CoordinatorWithoutGroup_EditGroup() {
     //Arrange
     Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
+    entityManager.detach(edited);
 
     //Act
-    edited.setName("NEW_EDITED_GROUP");
+    edited.setName("NEW-EDITED-GROUP");
     edited.setExperts(new HashSet<>());
-    groupService.updateGroup(edited, edited.getStatus(), COORDINATOR);
+    GroupResource updatedResource = groupService
+        .updateGroup(edited, edited.getStatus(), COORDINATOR);
     Group updated = groupRepository.findOne(edited.getId());
 
     //Assert
     assertEquals(edited.getName(), updated.getName());
     assertEquals(edited.getExperts(), updated.getExperts());
+    assertEquals(edited.getName(), updatedResource.getName());
+  }
+
+  @TestGroup
+  @WithUserDetails(COORDINATOR)
+  @Test(expected = ValidationException.class)
+  public void updateGroup_CoordinatorWithoutGroupEditNameExistValue_ExceptionThrown() {
+    //Arrange
+    Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
+    entityManager.detach(edited);
+
+    //Act
+    edited.setName("DP-116");
+    groupService.updateGroup(edited, edited.getStatus(), COORDINATOR);
   }
 
   @TestGroup
@@ -295,19 +376,32 @@ public class GroupServiceImplTest {
   @TestGroup
   @WithUserDetails(TEACHER_WITH_GROUPS)
   @Test
-  public void updateGroup_TeacherWithGroupEditNameAndExperts_EditGroup() {
+  public void updateGroup_TeacherWithGroupEditNewNameAndCleanExperts_EditGroup() {
     //Arrange
     Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
-
     //Act
-    edited.setName("EDITED_GROUP");
-    edited.setExperts(null);
-    groupService.updateGroup(edited, edited.getStatus(), TEACHER_WITH_GROUPS);
+    edited.setName("EDITED-GROUP");
+    edited.setExperts(new HashSet<String>());
+    GroupResource updatedResource = groupService
+        .updateGroup(edited, edited.getStatus(), TEACHER_WITH_GROUPS);
     Group updated = groupRepository.findOne(edited.getId());
-
     //Assert
     assertEquals(edited.getName(), updated.getName());
     assertEquals(edited.getExperts(), updated.getExperts());
+    assertEquals(edited.getName(), updatedResource.getName());
+  }
+
+  @TestGroup
+  @WithUserDetails(TEACHER_WITH_GROUPS)
+  @Test(expected = ValidationException.class)
+  public void updateGroup_TeacherWithGroupEditNewNameNotValidValue_ExceptionThrown() {
+    //Arrange
+    Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
+    entityManager.detach(edited);
+
+    //Act
+    edited.setName("EDITED_GROUP");
+    groupService.updateGroup(edited, edited.getStatus(), TEACHER_WITH_GROUPS);
   }
 
   @TestGroup
