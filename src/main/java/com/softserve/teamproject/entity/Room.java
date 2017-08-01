@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,40 +14,68 @@ import javax.persistence.Table;
 @Table(name = "room")
 public class Room {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-    @Column(name = "number")
-    private String number;
+  @Column(name = "number")
+  private String number;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-    private Location location;
+  @ManyToOne
+  @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
+  private Location location;
 
-    public Room() {};
+  public int getId() {
+    return id;
+  }
 
-    public int getId() {
-        return id;
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getNumber() {
+    return number;
+  }
+
+  public void setNumber(String number) {
+    this.number = number;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public void setLocation(Location location) {
+    this.location = location;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    if (otherObject == null) {
+      return false;
     }
-
-    public String getNumber() {
-        return number;
+    if (getClass() != otherObject.getClass()) {
+      return false;
     }
+    Room other = (Room) otherObject;
+    return Objects.equals(number, other.number) && Objects
+        .equals(location, other.location);
+  }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(number);
+  }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+  @Override
+  public String toString() {
+    return "BudgetOwner{"
+        + "id=" + id
+        + ", number='" + number + '\''
+        + ", location='" + location.getName() + '\''
+        + '}';
+  }
 }

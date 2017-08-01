@@ -19,9 +19,6 @@ public class StatusCategory {
   @Column(name = "name")
   private String name;
 
-  public StatusCategory() {
-  }
-
   public int getId() {
     return id;
   }

@@ -87,8 +87,8 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
-  public Group() {
-  }
+  @Column(name = "is_deleted")
+  private boolean isDeleted;
 
   public int getId() {
     return id;
@@ -162,6 +162,22 @@ public class Group {
     this.experts = experts;
   }
 
+  public BudgetOwner getBudgetOwner() {
+    return budgetOwner;
+  }
+
+  public void setBudgetOwner(BudgetOwner budgetOwner) {
+    this.budgetOwner = budgetOwner;
+  }
+
+  public boolean isDeleted() {
+    return isDeleted;
+  }
+
+  public void setDeleted(boolean deleted) {
+    isDeleted = deleted;
+  }
+
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -182,26 +198,18 @@ public class Group {
     return Objects.hash(name);
   }
 
-  @Override
-  public String toString() {
-    String locationString = location != null ? location.getName() : null;
-    return "Group{"
-        + "id=" + id
-        + ", name='" + name + '\''
-        + ", teachers=" + teachers
-        + ", location=" + locationString
-        + ", startDate=" + startDate
-        + ", finishDate=" + finishDate
-        + ", status=" + status
-        + ", specialization=" + specialization
+    @Override
+    public String toString() {
+      String locationString = location != null ? location.getName() : null;return "Group{"
+          + "id=" + id
+          + ", name='" + name + '\''
+          + ", teachers=" + teachers
+          + ", location=" + locationString
+          + ", startDate=" + startDate
+          + ", finishDate=" + finishDate
+          + ", status=" + status.getName()
+          + ", specialization=" + specialization.getName()
+          + ", budgetOwner=" + budgetOwner.getName()
         + '}';
-  }
-
-  public BudgetOwner getBudgetOwner() {
-    return budgetOwner;
-  }
-
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
-    this.budgetOwner = budgetOwner;
   }
 }

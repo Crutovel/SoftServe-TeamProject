@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "specialization")
-public class Specialization {
+@Table(name = "english_level")
+public class EnglishLevel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,9 @@ public class Specialization {
 
   @Column(name = "name")
   private String name;
+
+  @Column(name = "level")
+  private int level;
 
   public int getId() {
     return id;
@@ -35,6 +38,14 @@ public class Specialization {
     this.name = name;
   }
 
+  public int getLevel() {
+    return level;
+  }
+
+  public void setLevel(int level) {
+    this.level = level;
+  }
+
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -46,7 +57,7 @@ public class Specialization {
     if (getClass() != otherObject.getClass()) {
       return false;
     }
-    Specialization other = (Specialization) otherObject;
+    EnglishLevel other = (EnglishLevel) otherObject;
     return Objects.equals(name, other.name);
   }
 
@@ -57,9 +68,10 @@ public class Specialization {
 
   @Override
   public String toString() {
-    return "Specialization{"
+    return "EnglishLevel{"
         + "id=" + id
         + ", name='" + name + '\''
+        + ", level='" + level + '\''
         + '}';
   }
 }

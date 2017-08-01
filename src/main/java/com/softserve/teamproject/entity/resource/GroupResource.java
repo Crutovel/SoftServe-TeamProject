@@ -9,7 +9,7 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
 /**
- * Use for represent Group object in http response in HATEOAS style
+ * Use for represent Group object in http response in HATEOAS style.
  */
 @Component
 public class GroupResource extends ResourceSupport {

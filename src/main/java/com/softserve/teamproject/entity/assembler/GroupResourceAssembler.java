@@ -14,12 +14,12 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 /**
- * Use for mapping Group object to GroupResource one and add links to this object
+ * Use for mapping Group object to GroupResource one and add links to this object.
  */
 @Component
 public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, GroupResource> {
 
-  RepositoryEntityLinks repositoryEntityLinks;
+  private RepositoryEntityLinks repositoryEntityLinks;
 
   public GroupResourceAssembler() {
     super(GroupController.class, GroupResource.class);
@@ -64,8 +64,8 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
   private void addSelfLinkToResource(GroupResource groupResource, Group group) {
     Link groupLink = repositoryEntityLinks.linkToSingleResource(Group.class, group.getId());
     Link selfLink = new Link(groupLink.getHref(), Link.REL_SELF);
-    groupResource.add(groupLink);
     groupResource.add(selfLink);
+    groupResource.add(groupLink);
   }
 
   private void initResourceFields(GroupResource groupResource, Group group) {

@@ -1,7 +1,5 @@
 package com.softserve.teamproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -13,11 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "student")
+public class Student {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,23 +26,17 @@ public class User {
   @Column(name = "last_name")
   private String lastName;
 
-  @ManyToOne
-  @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-  private Role role;
-
-  @Column(name = "nick_name")
-  private String nickName;
-
-  @Column(name = "password_hash_code")
-  private String password;
-
   @Lob
   @Column(name = "image")
   private byte[] image;
 
   @ManyToOne
-  @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
-  private Location location;
+  @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+  private Group group;
+
+  @ManyToOne
+  @JoinColumn(name = "english_level_id", referencedColumnName = "id", nullable = false)
+  private EnglishLevel englishLevel;
 
   public int getId() {
     return id;
@@ -71,31 +62,6 @@ public class User {
     this.lastName = lastName;
   }
 
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
-  public String getNickName() {
-    return nickName;
-  }
-
-  public void setNickName(String nickName) {
-    this.nickName = nickName;
-  }
-
-  @JsonIgnore
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public byte[] getImage() {
     return image;
   }
@@ -104,12 +70,20 @@ public class User {
     this.image = image;
   }
 
-  public Location getLocation() {
-    return location;
+  public Group getGroup() {
+    return group;
   }
 
-  public void setLocation(Location location) {
-    this.location = location;
+  public void setGroup(Group group) {
+    this.group = group;
+  }
+
+  public EnglishLevel getEnglishLevel() {
+    return englishLevel;
+  }
+
+  public void setEnglishLevel(EnglishLevel englishLevel) {
+    this.englishLevel = englishLevel;
   }
 
   @Override
@@ -123,13 +97,15 @@ public class User {
     if (getClass() != otherObject.getClass()) {
       return false;
     }
-    User other = (User) otherObject;
-    return Objects.equals(nickName, other.nickName);
+    Student other = (Student) otherObject;
+    return Objects.equals(firstName, other.getFirstName()) && Objects
+        .equals(lastName, other.getLastName()) && Objects
+        .equals(group, other.group);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nickName);
+    return Objects.hash(firstName, lastName, group.getId());
   }
 
   @Override
@@ -138,10 +114,9 @@ public class User {
         + "id=" + id
         + ", firstName='" + firstName + '\''
         + ", lastName='" + lastName + '\''
-        + ", role=" + role
-        + ", nickName='" + nickName + '\''
-        + ", password='" + password + '\''
         + ", image=" + Arrays.toString(image)
+        + ", group='" + group.getName() + '\''
+        + ", englishLevel='" + englishLevel.getName() + '\''
         + '}';
   }
 }

@@ -118,7 +118,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `education_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `education_group`;
 DROP TABLE IF EXISTS `educational_group`;
 CREATE TABLE `educational_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -129,6 +128,7 @@ CREATE TABLE `educational_group` (
   `status_id` INT NOT NULL,
   `specialization_id` INT NOT NULL,
   `budget_owner_id` INT NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
   INDEX `fk_group_location1_idx` (`location_id` ASC),
@@ -156,9 +156,9 @@ DROP TABLE IF EXISTS `group_teacher` ;
 CREATE TABLE `group_teacher` (
   `teacher_id` INT NOT NULL,
   `group_id` INT NOT NULL,
-  INDEX `fk_group_teacher_education_group1_idx` (`group_id` ASC),
+  INDEX `fk_group_teacher_educational_group1_idx` (`group_id` ASC),
   INDEX `fk_group_teacher_user1_idx` (`teacher_id` ASC),
-  CONSTRAINT `fk_group_teacher_education_group1`
+  CONSTRAINT `fk_group_teacher_educational_group1`
     FOREIGN KEY (`group_id`)
     REFERENCES `educational_group` (`id`),
   CONSTRAINT `fk_group_teacher_user1`
@@ -167,6 +167,9 @@ CREATE TABLE `group_teacher` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `expert`
+-- -----------------------------------------------------
 DROP TABLE IF EXISTS `expert` ;
 CREATE TABLE `expert` (
   `edu_group_id` INT NOT NULL,
@@ -177,6 +180,9 @@ CREATE TABLE `expert` (
     REFERENCES `educational_group` (`id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `budget_owner`
+-- -----------------------------------------------------
 DROP TABLE IF EXISTS `budget_owner`;
 CREATE TABLE `budget_owner` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -239,6 +245,45 @@ CREATE TABLE `event` (
     FOREIGN KEY (`group_id`)
     REFERENCES `educational_group` (`id`))
 ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `student`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `student` ;
+CREATE TABLE `student` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `image` LONGBLOB NULL,
+  `group_id` INT NOT NULL,
+  `english_level_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_student_educational_group1_idx` (`group_id` ASC),
+  INDEX `fk_student_english_level1_idx` (`group_id` ASC),
+  CONSTRAINT `fk_student_educational_group1`
+      FOREIGN KEY (`group_id`)
+      REFERENCES `educational_group` (`id`),
+  CONSTRAINT `fk_student_english_level1`
+      FOREIGN KEY (`english_level_id`)
+      REFERENCES `english_level` (`id`))
+
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `english_level`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `english_level` ;
+CREATE TABLE `english_level` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `level` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  UNIQUE INDEX `level_UNIQUE` (`level` ASC))
+ENGINE = InnoDB;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

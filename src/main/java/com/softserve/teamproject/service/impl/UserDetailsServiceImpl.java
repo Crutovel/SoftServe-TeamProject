@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
- * The class implements UserDetailsService interface and overrides it's method loadUserByUsername
+ * The class implements UserDetailsService interface and overrides it's method loadUserByUsername.
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
