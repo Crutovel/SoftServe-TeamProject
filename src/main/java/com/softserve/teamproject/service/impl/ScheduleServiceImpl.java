@@ -15,6 +15,7 @@ import com.softserve.teamproject.service.ScheduleService;
 import com.softserve.teamproject.validation.SimpleEventValidator;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -32,10 +33,18 @@ public class ScheduleServiceImpl implements ScheduleService {
   private GroupRepository groupRepository;
   private UserRepository userRepository;
   private SimpleEventValidator eventValidator;
+  private EventResourceAssembler eventResourceAssembler;
+
 
   @Autowired
-  public void setEventValidator(SimpleEventValidator eventValidator){
-    this.eventValidator=eventValidator;
+  public void setEventResourceAssembler(
+      EventResourceAssembler eventResourceAssembler) {
+    this.eventResourceAssembler = eventResourceAssembler;
+  }
+
+  @Autowired
+  public void setEventValidator(SimpleEventValidator eventValidator) {
+    this.eventValidator = eventValidator;
   }
 
   @Autowired
@@ -55,14 +64,6 @@ public class ScheduleServiceImpl implements ScheduleService {
   @Autowired
   public void setEventRepository(EventRepository eventRepository) {
     this.eventRepository = eventRepository;
-  }
-
-  private EventResourceAssembler eventResourceAssembler;
-
-  @Autowired
-  public void setEventResourceAssembler(
-      EventResourceAssembler eventResourceAssembler) {
-    this.eventResourceAssembler = eventResourceAssembler;
   }
 
   public Iterable<EventResource> getKeyEventsByGroupId(Integer groupId) {
@@ -137,51 +138,67 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   @Override
-  public void addSchedule(List<Event> events, Integer groupId, Principal principal)
+  public List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
+    List<EventResource> eventResourceList = new ArrayList<>();
     for (Event event : events) {
       event.setGroup(group);
       addSingleEvent(event, principal);
+      EventResource eventResource = eventResourceAssembler.toResource(event);
+      eventResourceList.add(eventResource);
     }
+    return eventResourceList;
   }
 
-  private void updateSingleEvent(Event event, Principal principal)
+  private Event updateSingleEvent(Event event, Principal principal)
       throws AccessDeniedException, ValidationException {
     User user = userRepository.getUserByNickName(principal.getName());
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
       throw new AccessDeniedException(
           ": The coordinators can edit the schedule only in their location");
     } else {
-      if(event.getId()==0){
+      if (event.getId() == 0) {
         throw new ValidationException("Please specify the event you are going to change.");
       }
-      Event eventToUpdate = eventRepository.findOne(event.getId());
-      if(!(event.getDateTime()==null)){
-        eventToUpdate.setDateTime(event.getDateTime());
-      }
-      if(!(event.getDuration()==0)){
-        eventToUpdate.setDuration(event.getDuration());
-      }
-      if(!(event.getEventType()==null)){
-        eventToUpdate.setEventType(event.getEventType());
-      }
-      if(!(event.getRoom()==null)){
-        eventToUpdate.setRoom(event.getRoom());
-      }
-      eventValidator.isEventValid(event);
+      Event eventToUpdate = checkEventFields(event);
       eventRepository.save(eventToUpdate);
+      return eventToUpdate;
     }
   }
 
+  private Event checkEventFields(Event event) {
+    Event eventToUpdate = eventRepository.findOne(event.getId());
+    LocalDateTime oldLocalDateTime = eventToUpdate.getDateTime();
+    if (!(event.getDateTime() == null)) {
+      eventToUpdate.setDateTime(event.getDateTime());
+    }
+    if (!(event.getDuration() == 0)) {
+      eventToUpdate.setDuration(event.getDuration());
+    }
+    if (!(event.getEventType() == null)) {
+      eventToUpdate.setEventType(event.getEventType());
+    }
+    if (!(event.getRoom() == null)) {
+      eventToUpdate.setRoom(event.getRoom());
+    }
+    eventValidator.isEventUpdateValid(eventToUpdate, oldLocalDateTime);
+    return eventToUpdate;
+  }
+
   @Override
-  public void updateSchedule(List<Event> events, Integer groupId, Principal principal)
+  public List<EventResource> updateSchedule(List<Event> events, Integer groupId,
+      Principal principal)
       throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
+    List<EventResource> eventResourceList = new ArrayList<>();
     for (Event event : events) {
       event.setGroup(group);
-      updateSingleEvent(event, principal);
+      event = updateSingleEvent(event, principal);
+      EventResource eventResource = eventResourceAssembler.toResource(event);
+      eventResourceList.add(eventResource);
     }
+    return eventResourceList;
   }
 
   private Iterable<EventResource> convertToResource(Iterable<Event> events) {

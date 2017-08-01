@@ -129,9 +129,9 @@ public class ScheduleController {
    * @param id id of the selected group as a url parameter
    */
   @RequestMapping(value = "/events/groups/{id}", method = RequestMethod.POST)
-  public void addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+  public List<EventResource> addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
       Principal principal) throws ValidationException {
-    scheduleService.addSchedule(events, id, principal);
+    return scheduleService.addSchedule(events, id, principal);
   }
 
   /**
@@ -142,9 +142,9 @@ public class ScheduleController {
    * @param id id of the selected group as a url parameter
    */
   @RequestMapping(value = "/events/groups/{id}", method = RequestMethod.PUT)
-  public void editSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+  public List<EventResource> editSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
       Principal principal) throws ValidationException {
-    scheduleService.updateSchedule(events, id, principal);
+    return scheduleService.updateSchedule(events, id, principal);
   }
 
 

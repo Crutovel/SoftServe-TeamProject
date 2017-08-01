@@ -33,10 +33,10 @@ public interface ScheduleService {
   EventResource getEvent(Integer id);
 
   @PreAuthorize("hasAuthority('coordinator')")
-  void addSchedule(List<Event> events, Integer groupId, Principal principal)
+  List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException;
 
   @PreAuthorize("hasAuthority('coordinator')")
-  void updateSchedule(List<Event> events, Integer groupId, Principal principal)
+  List<EventResource> updateSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException;
 }
