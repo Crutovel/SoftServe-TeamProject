@@ -51,7 +51,7 @@ public class GroupController {
   }
 
   /**
-   * Get groups from the authenticated user location
+   * Gets groups from the authenticated user location.
    *
    * @param principal authorized user
    * @return groups in user location
@@ -76,12 +76,12 @@ public class GroupController {
    * "yyyy-MM-dd"
    *
    * @param group in json format, which is automatically transformed into the object of the Group
-   * type
    * @param principal to get the name of the authenticated user
+   * @return group(group resource) which has been created
    */
   @PostMapping(value = "/groups")
-  public void createGroup(@RequestBody @Valid Group group, Principal principal) {
-    groupService.addGroup(group, principal.getName());
+  public GroupResource createGroup(@RequestBody @Valid Group group, Principal principal) {
+    return groupService.addGroup(group, principal.getName());
   }
 
   /**
@@ -97,18 +97,33 @@ public class GroupController {
 
   /**
    * Method edits current group according to the new values.
+   *
    * @param group which is being updated
    * @param id of group which will be updated (for getting a previous group status)
    * @param principal is an authenticated user
+   * @return group which has been edited
    */
   @PutMapping(value = "/groups/{id}")
-  public void editGroup(@RequestBody @Valid Group group, @PathVariable Integer id, Principal principal) {
+  public GroupResource editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
-    groupService.updateGroup(group, currentStatus, principal.getName());
+    groupService.fieldsCheck(group);
+    return groupService.updateGroup(group, currentStatus, principal.getName());
   }
 
-  /* Get groups by filter
+  /**
+   * Gets group by id.
+   *
+   * @param id is id of a group we want to find.
+   * @return group resource with entered id.
+   */
+  @GetMapping(value = "/groups/{id}")
+  public GroupResource getGroupById(@PathVariable Integer id) {
+    return groupService.getGroupResourceById(id);
+  }
+
+  /**
+   * Get groups by filter.
    *
    * @param requestFilter group dto
    * @return groups info

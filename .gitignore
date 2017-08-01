@@ -11,6 +11,11 @@
 ## ignoring target file
 target/
 
+pom.xml.next
+pom.xml.releaseBackup
+pom.xml.tag
+release.properties
+
 # CMake
 cmake-build-debug/
 
