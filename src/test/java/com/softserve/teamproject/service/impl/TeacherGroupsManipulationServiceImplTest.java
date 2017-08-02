@@ -7,7 +7,6 @@ import static org.mockito.Mockito.doNothing;
 
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
-import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.service.TestGroup;
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +33,6 @@ public class TeacherGroupsManipulationServiceImplTest {
   private GroupResourceAssembler groupResourceAssembler;
   @Autowired
   private TeacherGroupsManipulationServiceImpl teacherService;
-  @Autowired
-  private GroupRepository groupRepository;
 
   @Before
   public void setup() {
@@ -47,14 +44,16 @@ public class TeacherGroupsManipulationServiceImplTest {
   @WithUserDetails(COORDINATOR)
   @TestGroup
   @Test
-  public void getAllGroupResourcesOfTheTeacher_correctTeacherName_ReturnGroupResources() {
+  public void getAllGroupResourcesOfTheTeacher_correctTeacherName_returnGroupResources() {
     //Arrange
     final List<String> EXPECTED_NAMES = Arrays.asList("DP-115", "DP-116");
     final int EXPECTED_LIST_SIZE = 2;
+
     //Act
     List<GroupResource> list = teacherService.getAllGroupResourcesOfTheTeacher(TEACHER_WITH_GROUPS);
     List<String> result_names = list.stream().map(GroupResource::getName)
         .collect(Collectors.toList());
+
     //Assert
     assertEquals(EXPECTED_LIST_SIZE, list.size());
     assertTrue(EXPECTED_NAMES.containsAll(result_names));
@@ -63,12 +62,14 @@ public class TeacherGroupsManipulationServiceImplTest {
   @WithUserDetails(COORDINATOR)
   @TestGroup
   @Test
-  public void getAllGroupResourcesOfTheTeacher_incorrectTeacherName_ReturnZero() {
+  public void getAllGroupResourcesOfTheTeacher_incorrectTeacherName_returnZero() {
     //Arrange
     final String INCORRECT_NAME = "Vasya";
     final int EXPECTED_LIST_SIZE = 0;
+
     //Act
     List<GroupResource> list = teacherService.getAllGroupResourcesOfTheTeacher(INCORRECT_NAME);
+
     //Assert
     assertEquals(EXPECTED_LIST_SIZE, list.size());
   }
