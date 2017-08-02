@@ -2,7 +2,6 @@ package com.softserve.teamproject.entity;
 
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -13,7 +12,7 @@ public class Strategy {
   @Id
   @GeneratedValue
   private int id;
-  @OneToMany(mappedBy = "strategy",fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "strategy")
   private List<Template> templates;
   @OneToMany(mappedBy = "strategy")
   private List<Specialization> specializations;
