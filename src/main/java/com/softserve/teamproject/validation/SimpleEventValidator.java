@@ -53,6 +53,9 @@ public class SimpleEventValidator {
     if (!doesRoomExist(event.getRoom())) {
       throw new ValidationException("The room doesn't exist");
     }
+    if (!isEventTypeValid(event.getEventType())) {
+      throw new ValidationException("The event type doesn't exist");
+    }
     if (!isEventDateValid(event.getDateTime())) {
       throw new ValidationException("You cannot set the event time retroactively.");
     }
@@ -72,42 +75,21 @@ public class SimpleEventValidator {
     if (!doesRoomExist(event.getRoom())) {
       throw new ValidationException("The room doesn't exist.");
     }
-    if (!isEventUpdateDateValid(oldDate, event.getDateTime())) {
-      throw new ValidationException("You cannot set the event time retroactively.");
-    }
   }
 
   private boolean doesRoomExist(Room room) {
-    if (roomRepository.findOne(room.getId()) == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(roomRepository.findOne(room.getId()) == null);
   }
 
+
   private boolean isEventTypeValid(EventType eventType) {
-    if (eventTypeRepository.findOne(eventType.getId()) == null) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(eventTypeRepository.findOne(eventType.getId()) == null);
   }
 
   private boolean isEventDateValid(LocalDateTime dateTime) {
     LocalDateTime currentTime = LocalDateTime.now();
-    if (dateTime.isBefore(currentTime)) {
-      return false;
-    }
-    return true;
+    return !(dateTime.isBefore(currentTime));
   }
-
-  private boolean isEventUpdateDateValid(LocalDateTime oldDateTime, LocalDateTime newDateTime) {
-    if (newDateTime.isBefore(oldDateTime)) {
-      return false;
-    }
-    return true;
-  }
-
-
 }
+
 
