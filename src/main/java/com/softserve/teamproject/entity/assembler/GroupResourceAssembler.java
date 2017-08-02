@@ -47,7 +47,6 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
     addEntityFieldLinkToResource(groupResource, group.getStatus().getId(), Status.class);
     addEntityFieldLinkToResource(groupResource, group.getSpecialization().getId(),
         Specialization.class);
-    return groupResource;
   }
 
   private void addCollectionFieldLinkToResource(GroupResource groupResource, Group group,
