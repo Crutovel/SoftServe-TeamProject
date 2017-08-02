@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -62,6 +63,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //@formatter:on
   }
 
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web
+        .ignoring()
+        .antMatchers("/swagger-ui.html", "/webjars/**", "/swagger-resources/**",
+            "/v2/api-docs", "/configuration/ui", "/configuration/security");
+  }
 
   @Bean
   public JsonUsernamePasswordAuthenticationFilter authenticationFilter() throws Exception {

@@ -22,7 +22,18 @@ To read from the database, use special read-only user ```user_ro``` with the pas
 1. Application is accessible at http://localhost:8080/
 
 #### Authorization
-For authorization you must send POST HTTP request at http://localhost:8080/login with credentials of some user in body. Credentials: username - OlegShvets, password - ghd22df. Choose type form-data and set credentials into key and value.
+For authorization you must send POST HTTP request at http://localhost:8080/login with
+credentials of some user in body in JSON format (see [login documentation](doc/login.md)).
+ 
+Credentials for teacher: username - OlegShvets, password - ghd22df.
+
+Credentials for coordinator: username - DmytroPetin, password - fgdfg24sd.
+
+Authorization data save in cookies.
+
+Example:
+
+`JSESSIONID` - `060D88F80A5601C3A765539BDDD651D0`
 
 ## Environment setup
 
@@ -45,3 +56,10 @@ choose an option "CheckStyle-IDEA", install and restart your Idea
 1. Download a file: https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
 1. And finally, in the Idea go to: Settings/Other Settings/Checkstyle/Configuration File,
 add the file "google_checks.xml" and choose it to be a configuration file.
+
+## Documentation
+
+The documentation is available [here](doc/README.md).
+
+To view the automatically generated REST API documentation after the application starts,
+you need to go at http://localhost:8080/swagger-ui.html in browser.
