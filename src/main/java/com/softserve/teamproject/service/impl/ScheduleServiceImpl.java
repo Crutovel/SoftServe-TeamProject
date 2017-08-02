@@ -21,6 +21,7 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -137,18 +138,28 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
   }
 
+  private void validateEvent(Event event, Principal principal)
+      throws AccessDeniedException, ValidationException {
+    User user = userRepository.getUserByNickName(principal.getName());
+    if (!event.getGroup().getLocation().equals(user.getLocation())) {
+      throw new AccessDeniedException(
+          ": The coordinators can create the schedule only in their location");
+    } else {
+      eventValidator.isEventValid(event);
+    }
+  }
+
   @Override
   public List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
-    List<EventResource> eventResourceList = new ArrayList<>();
     for (Event event : events) {
       event.setGroup(group);
-      addSingleEvent(event, principal);
-      EventResource eventResource = eventResourceAssembler.toResource(event);
-      eventResourceList.add(eventResource);
+      validateEvent(event, principal);
     }
-    return eventResourceList;
+    eventRepository.save(events);
+    return events.stream().map(eventResourceAssembler::toResource).collect(
+        Collectors.toList());
   }
 
   private Event updateSingleEvent(Event event, Principal principal)
@@ -169,6 +180,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 
   private Event checkEventFields(Event event) {
     Event eventToUpdate = eventRepository.findOne(event.getId());
+    if (eventToUpdate == null) {
+      throw new ValidationException("The event doesn't exist.");
+    }
     LocalDateTime oldLocalDateTime = eventToUpdate.getDateTime();
     if (!(event.getDateTime() == null)) {
       eventToUpdate.setDateTime(event.getDateTime());
