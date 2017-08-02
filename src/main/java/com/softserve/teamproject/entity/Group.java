@@ -27,6 +27,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -38,8 +39,8 @@ public class Group {
   private int id;
 
   @Column(name = "name", unique = true)
-  @Size(min = 4, max = 20)
-  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
+  @Size(min = 4, max = 20, message = "Wrong size")
+  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+", message = "Wrong pattern")
   private String name;
 
   @ManyToMany
