@@ -53,7 +53,7 @@ public class SimpleEventValidator {
     if (!doesRoomExist(event.getRoom())) {
       throw new ValidationException("The room doesn't exist");
     }
-    if (isEventDateValid(event.getDateTime())) {
+    if (!isEventDateValid(event.getDateTime())) {
       throw new ValidationException("You cannot set the event time retroactively.");
     }
   }
