@@ -1,5 +1,6 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
@@ -115,6 +116,12 @@ public class ScheduleController {
     return scheduleService.getEvent(id);
   }
 
+  @RequestMapping(value = "/events/demo", method = RequestMethod.POST)
+  public EventResponseWrapper addKeyDates(@RequestBody List<Event> events,
+      @RequestParam("groupId") Integer groupId, Principal principal) {
+    return scheduleService.addKeyDates(events, groupId);
+  }
+
   /**
    * Method allows to create a schedule (add all events from the list) for the group with the
    * specified id.
@@ -140,6 +147,5 @@ public class ScheduleController {
       Principal principal) throws ValidationException {
     return scheduleService.updateSchedule(events, id, principal);
   }
-
 
 }

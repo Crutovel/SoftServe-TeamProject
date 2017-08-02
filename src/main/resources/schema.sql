@@ -103,6 +103,14 @@ CREATE TABLE `status` (
     REFERENCES `status_category` (`id`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `strategy`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `strategy` ;
+CREATE TABLE `strategy` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `specialization`
@@ -111,8 +119,13 @@ DROP TABLE IF EXISTS `specialization`;
 CREATE TABLE `specialization` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
+  `strategy_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
+  INDEX `fk_specialization_strategy_idx` (`strategy_id` ASC),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC),
+  CONSTRAINT `fk_specialization_strategy`
+    FOREIGN KEY (`strategy_id`)
+    REFERENCES `strategy` (`id`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -132,7 +145,7 @@ CREATE TABLE `educational_group` (
   PRIMARY KEY (`id`),
   INDEX `fk_group_status1_idx` (`status_id` ASC),
   INDEX `fk_group_location1_idx` (`location_id` ASC),
-  INDEX `fk_group_spetialization1_idx` (`specialization_id` ASC),
+  INDEX `fk_group_specialization1_idx` (`specialization_id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   CONSTRAINT `fk_edu_group_status1`
     FOREIGN KEY (`status_id`)
@@ -230,7 +243,7 @@ CREATE TABLE `event` (
   `duration` INT NOT NULL,
   `group_id` INT NOT NULL,
   `event_type_id` INT NOT NULL,
-  `room_id` INT NOT NULL,
+  `room_id` INT DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_event_event_type1_idx` (`event_type_id` ASC),
   INDEX `fk_event_room1_idx` (`room_id` ASC),
@@ -244,6 +257,26 @@ CREATE TABLE `event` (
   CONSTRAINT `fk_event_educational_group1`
     FOREIGN KEY (`group_id`)
     REFERENCES `educational_group` (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `template`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `template` ;
+CREATE TABLE `template` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `event_type_id` INT NOT NULL,
+  `strategy_id` INT NULL,
+  `duration` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_template_strategy_idx` (`strategy_id` ASC),
+  INDEX `fk_template_event_type_idx` (`event_type_id` ASC),
+  CONSTRAINT `fk_template_strategy`
+    FOREIGN KEY (`strategy_id`)
+    REFERENCES `strategy`(`id`),
+  CONSTRAINT `fk_template_event_type`
+    FOREIGN KEY (`event_type_id`)
+    REFERENCES `event_type` (`id`))
 ENGINE = InnoDB;
 
 

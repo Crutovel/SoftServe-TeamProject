@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import java.security.Principal;
@@ -31,6 +32,9 @@ public interface ScheduleService {
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   EventResource getEvent(Integer id);
+
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
+  EventResponseWrapper addKeyDates(List<Event> events, Integer id);
 
   @PreAuthorize("hasAuthority('coordinator')")
   List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)

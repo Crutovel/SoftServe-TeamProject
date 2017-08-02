@@ -1,5 +1,6 @@
 package com.softserve.teamproject.repository.custom;
 
+import static com.softserve.teamproject.repository.expression.EventExpressions.eventByEventTypeId;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventBetweenDates;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventByGroupId;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
@@ -44,4 +45,10 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
     return from(QEvent.event)
         .where(getEventByGroupId(groupId).and(getEventBetweenDates(start, finish))).fetch();
   }
+
+  public Event getEventByEventTypeId(Integer eventTypeId,Integer groupId) {
+    return from(QEvent.event)
+        .where(eventByEventTypeId(eventTypeId).and(getEventByGroupId(groupId))).fetchOne();
+  }
+
 }
