@@ -23,13 +23,17 @@ To read from the database, use special read-only user ```user_ro``` with the pas
 
 #### Authorization
 For authorization you must send POST HTTP request at http://localhost:8080/login with
-credentials of some user in body in JSON format.
+credentials of some user in body in JSON format (see [login.md](doc/login.md)).
  
 Credentials for teacher: username - OlegShvets, password - ghd22df.
 
 Credentials for coordinator: username - DmytroPetin, password - fgdfg24sd.
 
 Authorization data save in cookies.
+
+Example:
+
+`JSESSIONID` - `060D88F80A5601C3A765539BDDD651D0`
 
 ## Environment setup
 
