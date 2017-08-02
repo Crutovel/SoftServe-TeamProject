@@ -213,8 +213,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     return eventResourceList;
   }
 
-  public EventResponseWrapper addKeyDates(List<Event> events, Integer id) {
-    Group group = groupRepository.findOne(id);
+  /**
+   * Add or update key date to specified group
+   *
+   * @param events list of key dates to add or update
+   * @param groupId id of group to update
+   * @return <code>EventResponseWrapper</code> that contains info about successful updating and
+   * invalid events
+   */
+  public EventResponseWrapper addKeyDates(List<Event> events, Integer groupId) {
+    Group group = groupRepository.findOne(groupId);
     if (group == null) {
       throw new IllegalArgumentException("Group doesn't exist");
     }

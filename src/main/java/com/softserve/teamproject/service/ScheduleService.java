@@ -35,7 +35,7 @@ public interface ScheduleService {
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   EventResponseWrapper addKeyDates(List<Event> events, Integer id);
-  
+
   @PreAuthorize("hasAuthority('coordinator')")
   List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException;

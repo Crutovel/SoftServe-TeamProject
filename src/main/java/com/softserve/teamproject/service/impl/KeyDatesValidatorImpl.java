@@ -16,13 +16,22 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Class made to generate valid key dates according to generation strategy and validate incoming
+ * events
+ */
 @Service
 public class KeyDatesValidatorImpl implements KeyDatesValidator {
 
   @Autowired
   TemplateRepository templateRepository;
 
-
+  /**
+   * Generate dates, which are pointing to demo week
+   *
+   * @param group the group to generate dates for
+   * @return map that contains EventType as key and generated LocalDate as value
+   */
   public Map<EventType, LocalDate> generateDates(Group group) {
     Map<EventType, LocalDate> keyDates = new HashMap<>();
     if (group.getStartDate() == null) {
@@ -43,6 +52,13 @@ public class KeyDatesValidatorImpl implements KeyDatesValidator {
     return keyDates;
   }
 
+  /**
+   * Validates input event according to <code>validDates</code> parameter
+   *
+   * @param event event to validate
+   * @param validDates map with valid dates for group we want to add key event to.
+   * @throws IllegalArgumentException if event type is incorrect or date is invalid
+   */
   public void validateKeyDate(Event event, Map<EventType, LocalDate> validDates) {
     TemporalField temporalField = WeekFields.of(Locale.US).dayOfWeek();
     if (event.getEventType() == null || !validDates.containsKey(event.getEventType())) {
