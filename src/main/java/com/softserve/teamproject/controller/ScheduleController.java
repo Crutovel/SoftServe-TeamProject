@@ -7,7 +7,7 @@ import com.softserve.teamproject.service.ScheduleService;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
-import javax.xml.bind.ValidationException;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;

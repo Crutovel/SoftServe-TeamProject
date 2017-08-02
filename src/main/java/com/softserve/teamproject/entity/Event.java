@@ -18,63 +18,61 @@ import javax.persistence.Table;
 @Table(name = "event")
 public class Event {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-    @Column(name = "datetime")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dateTime;
+  @Column(name = "datetime")
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime dateTime;
 
-    @Column(name = "duration")
-    private int duration;
+  @Column(name = "duration")
+  private int duration;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
-    @JsonDeserialize(using = GroupDeserializer.class)
-    private Group group;
+  @ManyToOne
+  @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = GroupDeserializer.class)
+  private Group group;
 
-    @ManyToOne
-    @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
-    private EventType eventType;
+  @ManyToOne
+  @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
+  private EventType eventType;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-    private Room room;
+  @ManyToOne
+  @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
+  private Room room;
 
-    public Event() {};
+  public int getId() {
+    return id;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getDuration() {
+    return duration;
+  }
 
-    public int getDuration() {
-        return duration;
-    }
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+  public Group getGroup() {
+    return group;
+  }
 
-    public Group getGroup() {
-        return group;
-    }
+  public void setGroup(Group group) {
+    this.group = group;
+  }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
+  public EventType getEventType() {
+    return eventType;
+  }
 
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
+  public void setEventType(EventType eventType) {
+    this.eventType = eventType;
+  }
 
   public Room getRoom() {
     return room;
@@ -84,9 +82,9 @@ public class Event {
     this.room = room;
   }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
+  public LocalDateTime getDateTime() {
+    return dateTime;
+  }
 
   public void setDateTime(LocalDateTime dateTime) {
     this.dateTime = dateTime;

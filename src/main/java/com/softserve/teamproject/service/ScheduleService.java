@@ -5,7 +5,7 @@ import com.softserve.teamproject.entity.resource.EventResource;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
-import javax.xml.bind.ValidationException;
+import javax.validation.ValidationException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 

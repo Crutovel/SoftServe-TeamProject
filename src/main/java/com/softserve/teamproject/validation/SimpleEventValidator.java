@@ -32,7 +32,7 @@ public class SimpleEventValidator {
 
   /**
    * Method checks whether the room with the specified id exists and whether the time for the event
-   * is valid.
+   * is valid and whether all the fields are present to create a valid event.
    *
    * @param event of the Event type
    * @throws ValidationException if one of the conditions is violated
@@ -58,6 +58,13 @@ public class SimpleEventValidator {
     }
   }
 
+  /**
+   * Method checks whether the fields are valid and whether the update date is not before the date
+   * set for this event.
+   *
+   * @param event of the Event type
+   * @param oldDate which is used to check whether the update date is not before the set date.
+   */
   public void isEventUpdateValid(Event event, LocalDateTime oldDate) throws ValidationException {
     if (!isEventTypeValid(event.getEventType())) {
       throw new ValidationException("The event type doesn't exist.");
