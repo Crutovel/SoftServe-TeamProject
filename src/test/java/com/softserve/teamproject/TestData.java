@@ -47,6 +47,9 @@ public abstract class TestData {
       setId(1);
       setName("SOFTSERVE");
     }});
+    group.setExperts(new LinkedHashSet<String>(){{
+      add("Sergey");
+    }});
     return group;
   }
 }

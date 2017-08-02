@@ -9,10 +9,13 @@ import com.softserve.teamproject.TestData;
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
+import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
+import com.softserve.teamproject.repository.StatusRepository;
+import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.impl.GroupServiceImpl;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,7 +23,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
+import javax.transaction.Transactional;
 import javax.validation.ValidationException;
+import org.hibernate.FlushMode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,6 +62,10 @@ public class GroupServiceImplTest {
   private LocationRepository locationRepository;
   @Autowired
   private EntityManager entityManager;
+  @Autowired
+  private StatusRepository statusRepository;
+  @Autowired
+  private UserRepository userRepository;
 
   @Before
   public void setup() {
@@ -272,9 +282,9 @@ public class GroupServiceImplTest {
   @TestGroup
   @Test(expected = ValidationException.class)
   public void addGroup_existName_ExceptionThrown() {
+    //Arrange
     final String NEW_GROUP_NAME = "DP-115";
     Group newGroup = TestData.getGroup(NEW_GROUP_NAME);
-
     //Act
     groupService.addGroup(newGroup, COORDINATOR);
   }
@@ -286,7 +296,6 @@ public class GroupServiceImplTest {
     //Arrange
     final int SET_SIZE = 2;
     Group edited = groupRepository.findByName("DP-116");
-    entityManager.detach(edited);
     edited.setExperts(new LinkedHashSet<String>() {{
       add("Sergey");
       add("Anton");
@@ -378,10 +387,14 @@ public class GroupServiceImplTest {
   @Test
   public void updateGroup_TeacherWithGroupEditNewNameAndCleanExperts_EditGroup() {
     //Arrange
-    Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
+    Group edited = TestData.getGroup("EDITED-GROUP");
+    edited.setId(1);
+    edited.setTeachers(new LinkedHashSet<User>() {{
+      add(userRepository.getUserByNickName(TEACHER_WITH_GROUPS));
+    }});
+    edited.setStatus(statusRepository.getStatusByName("in-process"));
+    edited.setLocation(locationRepository.findOne(1));
     //Act
-    edited.setName("EDITED-GROUP");
-    edited.setExperts(new HashSet<String>());
     GroupResource updatedResource = groupService
         .updateGroup(edited, edited.getStatus(), TEACHER_WITH_GROUPS);
     Group updated = groupRepository.findOne(edited.getId());
@@ -397,7 +410,6 @@ public class GroupServiceImplTest {
   public void updateGroup_TeacherWithGroupEditNewNameNotValidValue_ExceptionThrown() {
     //Arrange
     Group edited = groupRepository.findByTeachers_NickName(TEACHER_WITH_GROUPS).get(0);
-    entityManager.detach(edited);
 
     //Act
     edited.setName("EDITED_GROUP");
