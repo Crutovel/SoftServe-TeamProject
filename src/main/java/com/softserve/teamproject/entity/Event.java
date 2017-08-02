@@ -1,5 +1,9 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.softserve.teamproject.entity.deserializer.EventTypeDeserializer;
+import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
+import com.softserve.teamproject.entity.deserializer.LocalDateTimeDeserializer;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -20,22 +24,25 @@ public class Event {
   private int id;
 
   @Column(name = "datetime")
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   private LocalDateTime dateTime;
 
   @Column(name = "duration")
   private int duration;
 
   @ManyToOne
+  @JoinColumn(name = "room_id", referencedColumnName = "id")
+  private Room room;
+
+  @ManyToOne
   @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = GroupDeserializer.class)
   private Group group;
 
   @ManyToOne
   @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = EventTypeDeserializer.class)
   private EventType eventType;
-
-  @ManyToOne
-  @JoinColumn(name = "room_id", referencedColumnName = "id", nullable = false)
-  private Room room;
 
   public int getId() {
     return id;
@@ -108,13 +115,12 @@ public class Event {
 
   @Override
   public String toString() {
-    return "Group{"
+    return "Event{"
         + "id=" + id
         + ", dateTime='" + dateTime + '\''
         + ", duration='" + duration + '\''
         + ", group='" + group.getName() + '\''
         + ", eventType='" + eventType.getName() + '\''
-        + ", room='" + room.getNumber() + '\''
         + '}';
   }
 }

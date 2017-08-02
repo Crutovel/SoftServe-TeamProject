@@ -1,7 +1,11 @@
 package com.softserve.teamproject.controller;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpHeaders;
@@ -37,15 +41,15 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   @ExceptionHandler({IllegalArgumentException.class})
   public ResponseEntity<Object> handleIllegalArgumentException(final Exception ex,
       final WebRequest request) {
-    return new ResponseEntity<>(ex.getMessage(), new HttpHeaders(),
+    return new ResponseEntity<>(createResponseBody(ex.getMessage()), new HttpHeaders(),
         HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler({AccessDeniedException.class})
   public ResponseEntity<Object> handleAccessDeniedException(final Exception ex,
       final WebRequest request) {
-
-    return new ResponseEntity<>(createResponseBody(MSG_ACCESS_DENIED), new HttpHeaders(),
+    String customMessage = MSG_ACCESS_DENIED + ": " + ex.getMessage();
+    return new ResponseEntity<>(createResponseBody(customMessage), new HttpHeaders(),
         HttpStatus.FORBIDDEN);
   }
 
@@ -62,6 +66,21 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
       final RuntimeException ex, final WebRequest request) {
     return handleExceptionInternal(
         ex, createResponseBody(MSG_BAD_REQUEST + ": " + ex.getMessage()), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST, request);
+  }
+
+  @ExceptionHandler(value = {ConstraintViolationException.class})
+  protected ResponseEntity<Object> handleConstraintViolationException(
+      final ConstraintViolationException ex, final WebRequest request) {
+    Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+
+    Set<String> messages = new HashSet<>(constraintViolations.size());
+    messages.addAll(constraintViolations.stream()
+        .map(constraintViolation -> String.format("Value '%s' is incorrect - %s",
+            constraintViolation.getInvalidValue(), constraintViolation.getMessage()))
+        .collect(Collectors.toList()));
+    return handleExceptionInternal(
+        ex, createResponseBody(MSG_BAD_REQUEST + ": " + messages), new HttpHeaders(),
         HttpStatus.BAD_REQUEST, request);
   }
 

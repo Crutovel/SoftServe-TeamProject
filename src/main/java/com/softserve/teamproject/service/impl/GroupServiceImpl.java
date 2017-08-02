@@ -13,16 +13,19 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
+import java.lang.reflect.Field;
+import java.util.List;
+import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 public class GroupServiceImpl implements GroupService {
 
   private GroupRepository groupRep;
@@ -58,13 +61,9 @@ public class GroupServiceImpl implements GroupService {
     this.locationRepository = locationRepository;
   }
 
-  public List<Group> getAllGroups() {
-    return groupRep.findAll();
-  }
-
   @Override
   public List<GroupResource> getAllGroupResources() {
-    List<Group> groups = groupRep.findAll();
+    List<Group> groups = groupRep.getUndeletedGroups();
     List<GroupResource> groupResources = new ArrayList<>();
     groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
     return groupResources;
@@ -81,7 +80,7 @@ public class GroupServiceImpl implements GroupService {
    * @throws AccessDeniedException if current authorized user has't access to add group
    */
   @Override
-  public void addGroup(Group group, String userName) throws AccessDeniedException {
+  public GroupResource addGroup(Group group, String userName) throws AccessDeniedException {
     if (!isValid(group)) {
       throw new ValidationException("This group already exists");
     }
@@ -97,6 +96,8 @@ public class GroupServiceImpl implements GroupService {
     group.setStatus(status);
 
     groupRep.save(group);
+
+    return groupResourceAssembler.toResource(group);
   }
 
   /**
@@ -117,7 +118,12 @@ public class GroupServiceImpl implements GroupService {
       throw new AccessDeniedException("Coordinator can't delete group in alien location");
     }
 
-    groupRep.delete(group);
+    if (!group.getStatus().getName().equalsIgnoreCase("planned")) {
+      group.setDeleted(true);
+      groupRep.save(group);
+    } else {
+      groupRep.delete(group);
+    }
   }
 
   /**
@@ -132,8 +138,12 @@ public class GroupServiceImpl implements GroupService {
    * @throws AccessDeniedException if current authorized user has't access to update group
    */
   @Override
-  public void updateGroup(Group group, Status currentStatus, String userName)
+  public GroupResource updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
+    if (!isValidGroupName(group)) {
+      throw new ValidationException("Group with this name already exists.");
+    }
+
     User user = userRepository.getUserByNickName(userName);
 
     if (user.getRole().getName().equals("teacher")) {
@@ -152,6 +162,32 @@ public class GroupServiceImpl implements GroupService {
     }
 
     groupRep.save(group);
+
+    return groupResourceAssembler.toResource(group);
+  }
+
+  /**
+   * Checks if all fields of updated group exist. If some field is not exists, we copy required
+   * fields from an old group using reflection.
+   *
+   * @param group is a group we want to update.
+   */
+  @Override
+  public void fieldsCheck(Group group) {
+    Group existedGroup = getGroupById(group.getId());
+    Class<?> groupClass = group.getClass();
+    for (Field field : groupClass.getDeclaredFields()) {
+      field.setAccessible(true);
+      try {
+        if (field.get(group) == null) {
+          Field existedField = existedGroup.getClass().getDeclaredField(field.getName());
+          existedField.setAccessible(true);
+          field.set(group, existedField.get(existedGroup));
+        }
+      } catch (IllegalAccessException | NoSuchFieldException e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   /**
@@ -165,10 +201,51 @@ public class GroupServiceImpl implements GroupService {
     return groupRep.findOne(id);
   }
 
+  /**
+   * Gets group resource by group id.
+   *
+   * @param id is id of a group
+   * @return group resource with the current group id.
+   */
+  @Override
+  public GroupResource getGroupResourceById(Integer id) {
+    Group group = groupRep.findOne(id);
+    if (group == null) {
+      return null;
+    }
+    return groupResourceAssembler.toResource(group);
+  }
+
+  /**
+   * Checks if group is valid. If group already exists, group is not valid. Method is used by
+   * addGroup method.
+   *
+   * @param group is a group we want to add.
+   * @return true if group is valid, or false if group is not valid.
+   */
   @Override
   public boolean isValid(Group group) {
     Group existed = groupRep.findByName(group.getName());
     return existed == null;
+  }
+
+  /**
+   * Checks if group's name is valid. Name is valid if the other groups don't have the same name.
+   * Method is used by updateGroup method.
+   *
+   * @param group is a group we want to update.
+   * @return true if group's name is valid, or false if group's name is not valid.
+   */
+  @Override
+  public boolean isValidGroupName(Group group) {
+    Group currentGroup = groupRep.findByName(group.getName());
+    if (currentGroup == null) {
+      return true;
+    }
+    if (currentGroup.getName().equals(group.getName()) && currentGroup.getId() != group.getId()) {
+      return false;
+    }
+    return true;
   }
 
   /**

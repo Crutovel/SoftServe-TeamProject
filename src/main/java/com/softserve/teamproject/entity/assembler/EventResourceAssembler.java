@@ -38,8 +38,9 @@ public class EventResourceAssembler extends ResourceAssemblerSupport<Event, Even
 
     addEntityFieldLinkToResource(eventResource, event.getGroup().getId(), Group.class);
     addEntityFieldLinkToResource(eventResource, event.getEventType().getId(), EventType.class);
-    addEntityFieldLinkToResource(eventResource, event.getRoom().getId(), Room.class);
-
+    if (event.getRoom() != null) {
+      addEntityFieldLinkToResource(eventResource, event.getRoom().getId(), Room.class);
+    }
     return eventResource;
   }
 

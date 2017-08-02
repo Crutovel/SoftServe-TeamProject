@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
 import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
+import com.softserve.teamproject.entity.deserializer.SpecializationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
 import com.softserve.teamproject.validation.StringConstraintInSet;
@@ -38,8 +39,8 @@ public class Group {
   private int id;
 
   @Column(name = "name", unique = true)
-  @Size(min = 4, max = 20)
-  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+")
+  @Size(min = 4, max = 20, message = "Wrong size")
+  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}[0-9]-/]+", message = "Wrong pattern")
   private String name;
 
   @ManyToMany
@@ -74,6 +75,7 @@ public class Group {
   @ManyToOne
   @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
   @NotNull
+  @JsonDeserialize(using = SpecializationDeserializer.class)
   private Specialization specialization;
 
   @ElementCollection
@@ -87,6 +89,9 @@ public class Group {
   @ManyToOne
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
+
+  @Column(name = "is_deleted", columnDefinition = "boolean default false")
+  private boolean isDeleted;
 
   public int getId() {
     return id;
@@ -166,6 +171,14 @@ public class Group {
 
   public void setBudgetOwner(BudgetOwner budgetOwner) {
     this.budgetOwner = budgetOwner;
+  }
+
+  public boolean isDeleted() {
+    return isDeleted;
+  }
+
+  public void setDeleted(boolean deleted) {
+    isDeleted = deleted;
   }
 
   @Override
