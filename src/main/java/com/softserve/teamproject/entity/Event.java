@@ -41,6 +41,7 @@ public class Event {
 
   @ManyToOne
   @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = EventTypeDeserializer.class)
   private EventType eventType;
 
   public int getId() {
@@ -114,7 +115,7 @@ public class Event {
 
   @Override
   public String toString() {
-    return "Group{"
+    return "Event{"
         + "id=" + id
         + ", dateTime='" + dateTime + '\''
         + ", duration='" + duration + '\''
