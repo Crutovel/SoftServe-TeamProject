@@ -45,3 +45,10 @@ choose an option "CheckStyle-IDEA", install and restart your Idea
 1. Download a file: https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
 1. And finally, in the Idea go to: Settings/Other Settings/Checkstyle/Configuration File,
 add the file "google_checks.xml" and choose it to be a configuration file.
+
+##Documentation
+
+The documentation is available [here](doc/README.md).
+
+To view the automatically generated REST API documentation after the application starts,
+you need to go at http://localhost:8080/swagger-ui.html in browser.
