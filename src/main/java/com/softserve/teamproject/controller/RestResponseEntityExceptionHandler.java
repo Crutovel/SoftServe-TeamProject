@@ -48,7 +48,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   @ExceptionHandler({AccessDeniedException.class})
   public ResponseEntity<Object> handleAccessDeniedException(final Exception ex,
       final WebRequest request) {
-    String customMessage = MSG_ACCESS_DENIED + ex.getMessage();
+    String customMessage = MSG_ACCESS_DENIED + ": " + ex.getMessage();
     return new ResponseEntity<>(createResponseBody(customMessage), new HttpHeaders(),
         HttpStatus.FORBIDDEN);
   }
