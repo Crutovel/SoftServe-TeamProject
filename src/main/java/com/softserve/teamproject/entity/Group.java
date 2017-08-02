@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
 import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
+import com.softserve.teamproject.entity.deserializer.SpecializationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
 import com.softserve.teamproject.validation.StringConstraintInSet;
@@ -73,6 +74,7 @@ public class Group {
   @ManyToOne
   @JoinColumn(name = "specialization_id", referencedColumnName = "id", nullable = false)
   @NotNull
+  @JsonDeserialize(using = SpecializationDeserializer.class)
   private Specialization specialization;
 
   @ElementCollection
@@ -87,7 +89,7 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
-  @Column(name = "is_deleted")
+  @Column(name = "is_deleted", columnDefinition = "boolean default false")
   private boolean isDeleted;
 
   public int getId() {
