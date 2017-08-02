@@ -23,7 +23,7 @@ To read from the database, use special read-only user ```user_ro``` with the pas
 
 #### Authorization
 For authorization you must send POST HTTP request at http://localhost:8080/login with
-credentials of some user in body in JSON format (see [login.md](doc/login.md)).
+credentials of some user in body in JSON format (see [login documentation](doc/login.md)).
  
 Credentials for teacher: username - OlegShvets, password - ghd22df.
 
