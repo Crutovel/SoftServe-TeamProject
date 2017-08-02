@@ -35,6 +35,11 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
   public GroupResource toResource(Group group) {
     GroupResource groupResource = instantiateResource(group);
     initResourceFields(groupResource, group);
+    initLinks(groupResource, group);
+    return groupResource;
+  }
+
+  public void initLinks(GroupResource groupResource, Group group) {
     addSelfLinkToResource(groupResource, group);
     addEntityFieldLinkToResource(groupResource, group.getLocation().getId(), Location.class);
     addEntityFieldLinkToResource(groupResource, group.getBudgetOwner().getId(), BudgetOwner.class);

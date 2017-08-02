@@ -209,7 +209,11 @@ public class GroupServiceImpl implements GroupService {
    */
   @Override
   public GroupResource getGroupResourceById(Integer id) {
-    return groupResourceAssembler.toResource(groupRep.findOne(id));
+    Group group = groupRep.findOne(id);
+    if (group == null) {
+      return null;
+    }
+    return groupResourceAssembler.toResource(group);
   }
 
   /**
@@ -234,10 +238,12 @@ public class GroupServiceImpl implements GroupService {
    */
   @Override
   public boolean isValidGroupName(Group group) {
-    for (Group currentGroup : groupRep.findAll()) {
-      if (currentGroup.getName().equals(group.getName()) && currentGroup.getId() != group.getId()) {
-        return false;
-      }
+    Group currentGroup = groupRep.findByName(group.getName());
+    if (currentGroup == null) {
+      return true;
+    }
+    if (currentGroup.getName().equals(group.getName()) && currentGroup.getId() != group.getId()) {
+      return false;
     }
     return true;
   }
