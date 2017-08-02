@@ -4,7 +4,7 @@ This is documentation for project API. It includes description of
 application endpoints that are current available. There are:
 
 - [login](login.md) and [logout](logout.md) endpoints
-- resource for accessing [users.md](users.md) - entities that
+- resource for accessing [users](users.md) - entities that
 represent users of application
 - resource for accessing [current user information](userprofile.md) - data of authorized user
 - resource for accessing [groups](groupds.md) - 
