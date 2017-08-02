@@ -5,6 +5,7 @@ import com.softserve.teamproject.entity.deserializer.EventTypeDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateTimeDeserializer;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,89 +19,107 @@ import javax.persistence.Table;
 @Table(name = "event")
 public class Event {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
-    @Column(name = "datetime")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime dateTime;
+  @Column(name = "datetime")
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime dateTime;
 
-    @Column(name = "duration")
-    private int duration;
+  @Column(name = "duration")
+  private int duration;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
-    @JsonDeserialize(using = GroupDeserializer.class)
-    private Group group;
+  @ManyToOne
+  @JoinColumn(name = "room_id", referencedColumnName = "id")
+  private Room room;
 
-    @ManyToOne
-    @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
-    @JsonDeserialize(using = EventTypeDeserializer.class)
-    private EventType eventType;
+  @ManyToOne
+  @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = GroupDeserializer.class)
+  private Group group;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", referencedColumnName = "id")
-    private Room Room;
+  @ManyToOne
+  @JoinColumn(name = "event_type_id", referencedColumnName = "id", nullable = false)
+  private EventType eventType;
 
-    public Event() {};
+  public int getId() {
+    return id;
+  }
 
-    public int getId() {
-        return id;
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getDuration() {
+    return duration;
+  }
+
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
+
+  public Group getGroup() {
+    return group;
+  }
+
+  public void setGroup(Group group) {
+    this.group = group;
+  }
+
+  public EventType getEventType() {
+    return eventType;
+  }
+
+  public void setEventType(EventType eventType) {
+    this.eventType = eventType;
+  }
+
+  public Room getRoom() {
+    return room;
+  }
+
+  public void setRoom(Room room) {
+    this.room = room;
+  }
+
+  public LocalDateTime getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(LocalDateTime dateTime) {
+    this.dateTime = dateTime;
+  }
+
+  @Override
+  public boolean equals(Object otherObject) {
+    if (this == otherObject) {
+      return true;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    if (otherObject == null) {
+      return false;
     }
-
-    public int getDuration() {
-        return duration;
+    if (getClass() != otherObject.getClass()) {
+      return false;
     }
+    Event other = (Event) otherObject;
+    return Objects.equals(dateTime, other.dateTime) && Objects.equals(group, other.group)
+        && Objects.equals(eventType, other.eventType);
+  }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(dateTime, group, eventType);
+  }
 
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
-
-    public Room getRoom() {
-        return Room;
-    }
-
-    public void setRoom(Room room) {
-        Room = room;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Event{" +
-            "id=" + id +
-            ", dateTime=" + dateTime +
-            ", duration=" + duration +
-            ", group=" + group.getName() +
-            ", eventType=" + eventType.getName() +
-            '}';
-    }
+  @Override
+  public String toString() {
+    return "Group{"
+        + "id=" + id
+        + ", dateTime='" + dateTime + '\''
+        + ", duration='" + duration + '\''
+        + ", group='" + group.getName() + '\''
+        + ", eventType='" + eventType.getName() + '\''
+        + '}';
+  }
 }

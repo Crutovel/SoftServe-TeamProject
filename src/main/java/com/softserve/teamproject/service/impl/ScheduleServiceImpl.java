@@ -6,14 +6,19 @@ import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Group;
+import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.GroupRepository;
+import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.custom.EventRepositoryCustom;
 import com.softserve.teamproject.service.KeyDatesValidator;
 import com.softserve.teamproject.service.ScheduleService;
+import com.softserve.teamproject.validation.SimpleEventValidator;
+import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -21,7 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +37,26 @@ public class ScheduleServiceImpl implements ScheduleService {
   private EventRepository eventRepository;
   private GroupRepository groupRepository;
   private KeyDatesValidator keyDatesValidator;
+  private UserRepository userRepository;
+  private SimpleEventValidator eventValidator;
+  private EventResourceAssembler eventResourceAssembler;
+
+
+  @Autowired
+  public void setEventResourceAssembler(
+      EventResourceAssembler eventResourceAssembler) {
+    this.eventResourceAssembler = eventResourceAssembler;
+  }
+
+  @Autowired
+  public void setEventValidator(SimpleEventValidator eventValidator) {
+    this.eventValidator = eventValidator;
+  }
+
+  @Autowired
+  public void setUserRepository(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRepository) {
@@ -49,14 +76,6 @@ public class ScheduleServiceImpl implements ScheduleService {
   @Autowired
   public void setEventRepository(EventRepository eventRepository) {
     this.eventRepository = eventRepository;
-  }
-
-  private EventResourceAssembler eventResourceAssembler;
-
-  @Autowired
-  public void setEventResourceAssembler(
-      EventResourceAssembler eventResourceAssembler) {
-    this.eventResourceAssembler = eventResourceAssembler;
   }
 
   public Iterable<EventResource> getKeyEventsByGroupId(Integer groupId) {
@@ -116,6 +135,82 @@ public class ScheduleServiceImpl implements ScheduleService {
 
   public EventResource getEvent(Integer id) {
     return eventResourceAssembler.toResource(eventRepository.findOne(id));
+  }
+
+  private void addSingleEvent(Event event, Principal principal)
+      throws AccessDeniedException, ValidationException {
+    User user = userRepository.getUserByNickName(principal.getName());
+    if (!event.getGroup().getLocation().equals(user.getLocation())) {
+      throw new AccessDeniedException(
+          ": The coordinators can create the schedule only in their location");
+    } else {
+      eventValidator.isEventValid(event);
+      eventRepository.save(event);
+    }
+  }
+
+  @Override
+  public List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
+      throws AccessDeniedException, ValidationException {
+    Group group = groupRepository.findOne(groupId);
+    List<EventResource> eventResourceList = new ArrayList<>();
+    for (Event event : events) {
+      event.setGroup(group);
+      addSingleEvent(event, principal);
+      EventResource eventResource = eventResourceAssembler.toResource(event);
+      eventResourceList.add(eventResource);
+    }
+    return eventResourceList;
+  }
+
+  private Event updateSingleEvent(Event event, Principal principal)
+      throws AccessDeniedException, ValidationException {
+    User user = userRepository.getUserByNickName(principal.getName());
+    if (!event.getGroup().getLocation().equals(user.getLocation())) {
+      throw new AccessDeniedException(
+          ": The coordinators can edit the schedule only in their location");
+    } else {
+      if (event.getId() == 0) {
+        throw new ValidationException("Please specify the event you are going to change.");
+      }
+      Event eventToUpdate = checkEventFields(event);
+      eventRepository.save(eventToUpdate);
+      return eventToUpdate;
+    }
+  }
+
+  private Event checkEventFields(Event event) {
+    Event eventToUpdate = eventRepository.findOne(event.getId());
+    LocalDateTime oldLocalDateTime = eventToUpdate.getDateTime();
+    if (!(event.getDateTime() == null)) {
+      eventToUpdate.setDateTime(event.getDateTime());
+    }
+    if (!(event.getDuration() == 0)) {
+      eventToUpdate.setDuration(event.getDuration());
+    }
+    if (!(event.getEventType() == null)) {
+      eventToUpdate.setEventType(event.getEventType());
+    }
+    if (!(event.getRoom() == null)) {
+      eventToUpdate.setRoom(event.getRoom());
+    }
+    eventValidator.isEventUpdateValid(eventToUpdate, oldLocalDateTime);
+    return eventToUpdate;
+  }
+
+  @Override
+  public List<EventResource> updateSchedule(List<Event> events, Integer groupId,
+      Principal principal)
+      throws AccessDeniedException, ValidationException {
+    Group group = groupRepository.findOne(groupId);
+    List<EventResource> eventResourceList = new ArrayList<>();
+    for (Event event : events) {
+      event.setGroup(group);
+      event = updateSingleEvent(event, principal);
+      EventResource eventResource = eventResourceAssembler.toResource(event);
+      eventResourceList.add(eventResource);
+    }
+    return eventResourceList;
   }
 
   public EventResponseWrapper addKeyDates(List<Event> events, Integer id) {

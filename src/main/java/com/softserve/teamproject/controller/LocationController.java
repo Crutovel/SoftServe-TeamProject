@@ -5,8 +5,7 @@ import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.LocationService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,12 +27,12 @@ public class LocationController {
     this.locationService = locationService;
   }
 
-   /**
-   * Get locations info
+  /**
+   * Get locations info.
    *
    * @return locations info
    */
-  @RequestMapping(value = "/locations", method = RequestMethod.GET)
+  @GetMapping(value = "/locations")
   public List<Location> getAllLocations() {
     return locationService.getAllLocations();
   }

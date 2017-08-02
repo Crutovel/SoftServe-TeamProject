@@ -12,10 +12,13 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+/**
+ * Use for mapping Event object to EventResource one and add links to this object.
+ */
 @Component
 public class EventResourceAssembler extends ResourceAssemblerSupport<Event, EventResource> {
 
-  RepositoryEntityLinks repositoryEntityLinks;
+  private RepositoryEntityLinks repositoryEntityLinks;
 
   @Autowired
   public void setRepositoryEntityLinks(
@@ -57,8 +60,8 @@ public class EventResourceAssembler extends ResourceAssemblerSupport<Event, Even
   private void addSelfLinkToResource(EventResource eventResource, Event event) {
     Link eventLink = repositoryEntityLinks.linkToSingleResource(Event.class, event.getId());
     Link selfLink = new Link(eventLink.getHref(), Link.REL_SELF);
-    eventResource.add(eventLink);
     eventResource.add(selfLink);
+    eventResource.add(eventLink);
   }
 
   private void initResourceFields(EventResource eventResource, Event event) {
