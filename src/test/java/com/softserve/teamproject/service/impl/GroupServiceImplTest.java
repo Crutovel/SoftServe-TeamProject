@@ -1,4 +1,4 @@
-package com.softserve.teamproject.service;
+package com.softserve.teamproject.service.impl;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -16,17 +16,14 @@ import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
-import com.softserve.teamproject.service.impl.GroupServiceImpl;
+import com.softserve.teamproject.service.TestGroup;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
-import javax.transaction.Transactional;
 import javax.validation.ValidationException;
-import org.hibernate.FlushMode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

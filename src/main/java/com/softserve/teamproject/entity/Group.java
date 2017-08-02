@@ -198,18 +198,18 @@ public class Group {
     return Objects.hash(name);
   }
 
-    @Override
-    public String toString() {
-      return "Group{"
-          + "id=" + id
-          + ", name='" + name + '\''
-          + ", teachers=" + teachers
-          + ", location=" + location.getName()
-          + ", startDate=" + startDate
-          + ", finishDate=" + finishDate
-          + ", status=" + status.getName()
-          + ", specialization=" + specialization.getName()
-          + ", budgetOwner=" + budgetOwner.getName()
+  @Override
+  public String toString() {
+    return "Group{"
+        + "id=" + id
+        + ", name='" + name + '\''
+        + ", teachers=" + teachers
+        + ", location=" + location.getName()
+        + ", startDate=" + startDate
+        + ", finishDate=" + finishDate
+        + ", status=" + status.getName()
+        + ", specialization=" + specialization.getName()
+        + ", budgetOwner=" + budgetOwner.getName()
         + '}';
   }
 }

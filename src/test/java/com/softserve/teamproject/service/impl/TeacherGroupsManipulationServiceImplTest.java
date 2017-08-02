@@ -1,4 +1,4 @@
-package com.softserve.teamproject.service;
+package com.softserve.teamproject.service.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,7 @@ import static org.mockito.Mockito.doNothing;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.repository.GroupRepository;
-import com.softserve.teamproject.service.impl.TeacherGroupsManipulationServiceImpl;
+import com.softserve.teamproject.service.TestGroup;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
