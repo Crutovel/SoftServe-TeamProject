@@ -1,8 +1,11 @@
 package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.dto.EventsFilter;
+import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.service.ScheduleService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Controller that used for handle events.
  */
 @RestController
+@Api(value = "scheduleController", description = "Operations with events")
 public class ScheduleController {
 
   private ScheduleService scheduleService;
@@ -34,7 +38,9 @@ public class ScheduleController {
    * @param end date is received as a request param
    * @return events info by groupId and datetime interval [start,end] or just all events
    */
-  @GetMapping(value = "/events")
+  @GetMapping(value = "/events", produces = "application/json")
+  @ApiOperation(value = "Get events for given group and dates interval", response = Event.class,
+      responseContainer = "List")
   public Iterable<EventResource> getEvents(
       @RequestParam(value = "groupid", required = false) Integer groupId,
       @RequestParam(value = "start", required = false)
@@ -54,7 +60,9 @@ public class ScheduleController {
    * @param requestFilter dto object in json format, need for filter.
    * @return events info by array of group ids and datetime interval [start,end]
    */
-  @PostMapping(value = "/events/filter")
+  @PostMapping(value = "/events/filter", produces = "application/json")
+  @ApiOperation(value = "Get events for given array of group and dates interval",
+      response = Event.class, responseContainer = "List")
   public Iterable<EventResource> getEventsByFilter(@RequestBody EventsFilter requestFilter) {
     if (requestFilter.getGroups() != null) {
       return scheduleService
@@ -70,7 +78,9 @@ public class ScheduleController {
    * @param groupId is received as a request param
    * @return key events info by groupId or just all key events
    */
-  @GetMapping(value = "/keyevents")
+  @GetMapping(value = "/keyevents", produces = "application/json")
+  @ApiOperation(value = "Get key events for given group", response = Event.class,
+      responseContainer = "List")
   public Iterable<EventResource> getKeyEvents(
       @RequestParam(value = "groupid", required = false) Integer groupId) {
     if (groupId != null) {
@@ -85,7 +95,9 @@ public class ScheduleController {
    * @param requestFilter dto object in json format, need for filter.
    * @return key events info by array of group ids
    */
-  @PostMapping(value = "/keyevents/filter")
+  @PostMapping(value = "/keyevents/filter", produces = "application/json")
+  @ApiOperation(value = "Get key events for given array of group", response = Event.class,
+      responseContainer = "List")
   public Iterable<EventResource> getKeyEventsByFilter(@RequestBody EventsFilter requestFilter) {
     if (requestFilter.getGroups() != null) {
       return scheduleService.getKeyEventsByFilter(requestFilter.getGroups());
@@ -99,7 +111,8 @@ public class ScheduleController {
    * @param id is received as a path variable
    * @return event info
    */
-  @GetMapping(value = "/events/{id}")
+  @GetMapping(value = "/events/{id}", produces = "application/json")
+  @ApiOperation(value = "Get event by id", response = Event.class)
   public EventResource getEvent(@PathVariable Integer id) {
     return scheduleService.getEvent(id);
   }

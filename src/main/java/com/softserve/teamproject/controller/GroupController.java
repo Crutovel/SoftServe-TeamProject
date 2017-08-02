@@ -6,6 +6,8 @@ import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * The controller provides methods for the interaction with the groups.
  */
 @RestController
+@Api(value = "groupController", description = "Operations with groups")
 public class GroupController {
 
   private TeacherGroupsManipulationService groupsActions;
@@ -45,7 +48,8 @@ public class GroupController {
    * @param principal of the Principal type.
    * @return list of groups of the authorized teacher.
    */
-  @GetMapping(value = "/groups/my")
+  @GetMapping(value = "/groups/my", produces = "application/json")
+  @ApiOperation(value = "Get all groups of the authorized teacher")
   public List<GroupResource> getTeachersGroups(Principal principal) {
     return groupsActions.getAllGroupResourcesOfTheTeacher(principal.getName());
   }
@@ -56,7 +60,8 @@ public class GroupController {
    * @param principal authorized user
    * @return groups in user location
    */
-  @GetMapping(value = "/groups/mylocation")
+  @GetMapping(value = "/groups/mylocation", produces = "application/json")
+  @ApiOperation(value = "Get all groups of the authorized user location")
   public Set<GroupResource> getGroupsFromUserLocation(Principal principal) {
     return groupService.getGroupResourcesFromUserLocation(principal.getName());
   }
@@ -66,7 +71,8 @@ public class GroupController {
    *
    * @return list of all the existing groups.
    */
-  @GetMapping(value = "/groups")
+  @GetMapping(value = "/groups", produces = "application/json")
+  @ApiOperation(value = "Get all groups")
   public List<GroupResource> getAllGroups() {
     return groupService.getAllGroupResources();
   }
@@ -79,7 +85,8 @@ public class GroupController {
    * type
    * @param principal to get the name of the authenticated user
    */
-  @PostMapping(value = "/groups")
+  @PostMapping(value = "/groups", produces = "application/json")
+  @ApiOperation(value = "Add new group")
   public void createGroup(@RequestBody @Valid Group group, Principal principal) {
     groupService.addGroup(group, principal.getName());
   }
@@ -90,7 +97,8 @@ public class GroupController {
    * @param id is received as a path variable
    * @param principal helps to identify the authenticated user
    */
-  @DeleteMapping(value = "/groups/{id}")
+  @DeleteMapping(value = "/groups/{id}", produces = "application/json")
+  @ApiOperation(value = "Delete group")
   public void deleteGroup(@PathVariable Integer id, Principal principal) {
     groupService.deleteGroup(id, principal.getName());
   }
@@ -101,7 +109,8 @@ public class GroupController {
    * @param id of group which will be updated (for getting a previous group status)
    * @param principal is an authenticated user
    */
-  @PutMapping(value = "/groups/{id}")
+  @PutMapping(value = "/groups/{id}", produces = "application/json")
+  @ApiOperation(value = "Update group")
   public void editGroup(@RequestBody @Valid Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
@@ -113,7 +122,8 @@ public class GroupController {
    * @param requestFilter group dto
    * @return groups info
    */
-  @PostMapping(value = "/groups/filter")
+  @PostMapping(value = "/groups/filter", produces = "application/json")
+  @ApiOperation(value = "Get groups for given location")
   public Iterable getGroupsByFilter(@RequestBody GroupsFilter requestFilter) {
     return groupService.getGroupsByFilter(requestFilter);
   }

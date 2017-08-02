@@ -8,6 +8,7 @@ import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
 import com.softserve.teamproject.validation.StringConstraintInSet;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
