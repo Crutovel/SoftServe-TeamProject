@@ -1,11 +1,10 @@
-package com.softserve.teamproject.service.impl;
+package com.softserve.teamproject.validation;
 
-import com.softserve.teamproject.entity.Event;
+import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Template;
 import com.softserve.teamproject.repository.TemplateRepository;
-import com.softserve.teamproject.service.KeyDatesValidator;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
@@ -13,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +22,36 @@ import org.springframework.stereotype.Service;
  * events
  */
 @Service
-public class KeyDatesValidatorImpl implements KeyDatesValidator {
+public class KeyDatesValidator implements
+    ConstraintValidator<KeyDates, KeyDateDto> {
 
   @Autowired
-  TemplateRepository templateRepository;
+  private TemplateRepository templateRepository;
+  private Group group;
+
+  @Override
+  public void initialize(KeyDates constraintAnnotation) {
+  }
+
+  @Override
+  public boolean isValid(KeyDateDto value, ConstraintValidatorContext context) {
+    try {
+      validateKeyDate(value);
+      return true;
+    } catch (IllegalArgumentException e) {
+      setNewMessage(e.getMessage(), context);
+      return false;
+    }
+  }
+
+  private Map<EventType, LocalDate> validationTemplate = new HashMap<>();
 
   /**
    * Generate dates, which are pointing to demo week
    *
    * @param group the group to generate dates for
-   * @return map that contains EventType as key and generated LocalDate as value
    */
-  public Map<EventType, LocalDate> generateDates(Group group) {
-    Map<EventType, LocalDate> keyDates = new HashMap<>();
+  private void generateDates(Group group) {
     if (group.getStartDate() == null) {
       throw new IllegalArgumentException("Group start date must be specified");
     }
@@ -43,32 +61,43 @@ public class KeyDatesValidatorImpl implements KeyDatesValidator {
       LocalDate newDate = null;
       if (template.getDuration() == 0) {
         newDate = group.getFinishDate();
-      } else if (template.getDuration() > 0) {
+      } else
         newDate = startDate.plusDays(template.getDuration());
-      }
-      keyDates.put(template.getEventType(), newDate);
+
+      validationTemplate.put(template.getEventType(), newDate);
       startDate = newDate;
     }
-    return keyDates;
   }
 
   /**
    * Validates input event according to <code>validDates</code> parameter
    *
    * @param event event to validate
-   * @param validDates map with valid dates for group we want to add key event to.
    * @throws IllegalArgumentException if event type is incorrect or date is invalid
    */
-  public void validateKeyDate(Event event, Map<EventType, LocalDate> validDates) {
+  private void validateKeyDate(KeyDateDto event) {
+    updateTemplate(event);
     TemporalField temporalField = WeekFields.of(Locale.US).dayOfWeek();
-    if (event.getEventType() == null || !validDates.containsKey(event.getEventType())) {
+    if (event.getEventType() == null || !validationTemplate.containsKey(event.getEventType())) {
       throw new IllegalArgumentException("Incorrect Event Type");
     }
-    LocalDate startOfWeek = validDates.get(event.getEventType()).with(temporalField, 1);
+    LocalDate startOfWeek = validationTemplate.get(event.getEventType()).with(temporalField, 1);
     LocalDate endOfWeek = startOfWeek.with(temporalField, 7);
-    LocalDate eventDate = event.getDateTime().toLocalDate();
+    LocalDate eventDate = event.getDate();
     if (!(eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek))) {
       throw new IllegalArgumentException("Wrong date specified");
     }
+  }
+
+  private void updateTemplate(KeyDateDto event) {
+    if (group == null || !event.getGroup().equals(group)) {
+      group = event.getGroup();
+      generateDates(event.getGroup());
+    }
+  }
+
+  private void setNewMessage(String message, ConstraintValidatorContext context) {
+    context.disableDefaultConstraintViolation();
+    context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
   }
 }

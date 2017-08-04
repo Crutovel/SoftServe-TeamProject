@@ -1,6 +1,5 @@
 package com.softserve.teamproject.dto;
 
-import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.Map;
 public class EventResponseWrapper {
 
   List<EventResource> succeed;
-  Map<Event, String> invalid;
+  Map<KeyDateDto, String> invalid;
 
   public List<EventResource> getSucceed() {
     return succeed;
@@ -18,17 +17,17 @@ public class EventResponseWrapper {
     this.succeed = succeed;
   }
 
-  public Map<Event, String> getInvalid() {
+  public Map<KeyDateDto, String> getInvalid() {
     return invalid;
   }
 
-  public void setInvalid(Map<Event, String> invalid) {
+  public void setInvalid(Map<KeyDateDto, String> invalid) {
     this.invalid = invalid;
   }
 
   public EventResponseWrapper(
       List<EventResource> succeed,
-      Map<Event, String> invalid) {
+      Map<KeyDateDto, String> invalid) {
     this.succeed = succeed;
     this.invalid = invalid;
   }

@@ -1,6 +1,7 @@
 package com.softserve.teamproject.service;
 
 import com.softserve.teamproject.dto.EventResponseWrapper;
+import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import java.security.Principal;
@@ -9,6 +10,7 @@ import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 
 public interface ScheduleService {
 
@@ -34,7 +36,7 @@ public interface ScheduleService {
   EventResource getEvent(Integer id);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  EventResponseWrapper addKeyDates(List<Event> events, Integer id);
+  EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result);
 
   @PreAuthorize("hasAuthority('coordinator')")
   List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)

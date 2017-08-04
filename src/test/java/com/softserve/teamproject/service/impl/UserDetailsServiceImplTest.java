@@ -1,4 +1,4 @@
-package com.softserve.temproject.service;
+package com.softserve.teamproject.service.impl;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 import com.softserve.teamproject.entity.Role;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
-import com.softserve.teamproject.service.impl.UserDetailsServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

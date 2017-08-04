@@ -3,8 +3,8 @@ package com.softserve.teamproject.service.impl;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
 
 import com.softserve.teamproject.dto.EventResponseWrapper;
+import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.Event;
-import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
@@ -13,7 +13,6 @@ import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.custom.EventRepositoryCustom;
-import com.softserve.teamproject.service.KeyDatesValidator;
 import com.softserve.teamproject.service.ScheduleService;
 import com.softserve.teamproject.validation.SimpleEventValidator;
 import java.security.Principal;
@@ -31,13 +30,13 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
   private EventRepository eventRepository;
   private GroupRepository groupRepository;
-  private KeyDatesValidator keyDatesValidator;
   private UserRepository userRepository;
   private SimpleEventValidator eventValidator;
   private EventResourceAssembler eventResourceAssembler;
@@ -67,12 +66,6 @@ public class ScheduleServiceImpl implements ScheduleService {
   public EventRepositoryCustom getEventRepository() {
     return eventRepository;
   }
-
-  @Autowired
-  public void setKeyDatesValidator(KeyDatesValidator keyDatesValidator) {
-    this.keyDatesValidator = keyDatesValidator;
-  }
-
 
   @Autowired
   public void setEventRepository(EventRepository eventRepository) {
@@ -231,38 +224,37 @@ public class ScheduleServiceImpl implements ScheduleService {
    * Add or update key date to specified group
    *
    * @param events list of key dates to add or update
-   * @param groupId id of group to update
    * @return <code>EventResponseWrapper</code> that contains info about successful updating and
    * invalid events
    */
-  public EventResponseWrapper addKeyDates(List<Event> events, Integer groupId) {
-    Group group = groupRepository.findOne(groupId);
-    if (group == null) {
-      throw new IllegalArgumentException("Group doesn't exist");
-    }
-    Map<EventType, LocalDate> validDates = keyDatesValidator.generateDates(group);
-    List<EventResource> succeed = new ArrayList<>();
-    Map<Event, String> invalidEvents = new HashMap<>();
-    for (Event event : events) {
-      try {
-        event.setGroup(group);
-        keyDatesValidator.validateKeyDate(event, validDates);
-        Event existedEvent = eventRepository.getEventByEventTypeId(
-            event.getEventType().getId(), group.getId());
-        if (existedEvent != null) {
-          event.setId(existedEvent.getId());
-        }
-        eventRepository.save(event);
-        succeed.add(eventResourceAssembler.toResource(event));
 
-      } catch (IllegalArgumentException ex) {
-        invalidEvents.put(event, ex.getMessage());
-      }
-    }
-    return new EventResponseWrapper(succeed, invalidEvents);
+  public EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result) {
+    Map<KeyDateDto, String> invalidEvents = new HashMap<>();
+    result.getFieldErrors().forEach(error -> {
+      events.remove(KeyDateDto.class.cast(error.getRejectedValue()));
+      invalidEvents.put((KeyDateDto) error.getRejectedValue(), error.getDefaultMessage());
+    });
+
+    List<Event> savedEvents = saveKeyDates(events.stream().map(
+        KeyDateDto::toEntity).collect(Collectors.toList()));
+
+    return new EventResponseWrapper(convertToResource(savedEvents), invalidEvents);
   }
 
-  private Iterable<EventResource> convertToResource(Iterable<Event> events) {
+  private List<Event> saveKeyDates(List<Event> events) {
+    for (Event event : events) {
+      Event existedEvent = eventRepository.getEventByEventTypeId(
+          event.getEventType().getId(), event.getGroup().getId());
+      if (existedEvent != null) {
+        event.setId(existedEvent.getId());
+      }
+    }
+    eventRepository.save(events);
+    return eventRepository.findAll(
+        events.stream().map(Event::getId).collect(Collectors.toList()));
+  }
+
+  private List<EventResource> convertToResource(Iterable<Event> events) {
     List<EventResource> eventResources = new ArrayList<>();
     events.forEach(event -> eventResources.add(eventResourceAssembler.toResource(event)));
     return eventResources;
