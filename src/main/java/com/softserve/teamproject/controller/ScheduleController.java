@@ -148,16 +148,14 @@ public class ScheduleController {
   }
 
   /**
-   * Method allows to edit a schedule (edit all events from the list) for the group with the
-   * specified id.
+   * Method allows to edit a schedule (edit all events from the list).
    *
    * @param events list of events in JSON format
-   * @param id id of the selected group as a url parameter
    */
-  @RequestMapping(value = "/events/groups/{id}", method = RequestMethod.PUT)
-  public List<EventResource> editSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
-      Principal principal) throws ValidationException {
-    return scheduleService.updateSchedule(events, id, principal);
+  @RequestMapping(value = "/events", method = RequestMethod.PUT)
+  public List<EventResource> editSchedule(@RequestBody List<Event> events, Principal principal)
+      throws ValidationException {
+    return scheduleService.updateSchedule(events, principal);
   }
 
 }
