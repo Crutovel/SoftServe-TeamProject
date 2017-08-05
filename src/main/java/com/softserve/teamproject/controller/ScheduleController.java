@@ -16,9 +16,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -128,7 +127,8 @@ public class ScheduleController {
     return scheduleService.getEvent(id);
   }
 
-  @RequestMapping(value = "/events/demo", method = RequestMethod.POST)
+  @PostMapping(value = "/events/demo")
+  @ApiOperation(value = "Add key dates for the specified group")
   public EventResponseWrapper addKeyDates(@RequestBody List<Event> events,
       @RequestParam("groupId") Integer groupId, Principal principal) {
     return scheduleService.addKeyDates(events, groupId);
@@ -141,7 +141,9 @@ public class ScheduleController {
    * @param events list of events in JSON format
    * @param id id of the selected group as a url parameter
    */
-  @RequestMapping(value = "/events/groups/{id}", method = RequestMethod.POST)
+  @PostMapping(value = "/events/groups/{id}")
+  @ApiOperation(value = "Add schedule (list of events) for the selected group", response = Event.class,
+      responseContainer = "List")
   public List<EventResource> addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
       Principal principal) throws ValidationException {
     return scheduleService.addSchedule(events, id, principal);
@@ -152,7 +154,9 @@ public class ScheduleController {
    *
    * @param events list of events in JSON format
    */
-  @RequestMapping(value = "/events", method = RequestMethod.PUT)
+  @PutMapping(value = "/events")
+  @ApiOperation(value = "Edit schedule (list of events)", response = Event.class,
+      responseContainer = "List")
   public List<EventResource> editSchedule(@RequestBody List<Event> events, Principal principal)
       throws ValidationException {
     return scheduleService.updateSchedule(events, principal);
