@@ -1,5 +1,6 @@
 package com.softserve.teamproject.controller;
 
+import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -26,6 +28,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   private static final String MSG_NOT_FOUND = "Not Found";
   private static final String MSG_BAD_REQUEST = "Bad request";
   private static final String MSG_ACCESS_DENIED = "Access Denied";
+  private static final String MSG_WRONG_TYPE = "Wrong type of request parameter";
 
   public RestResponseEntityExceptionHandler() {
     super();
@@ -38,7 +41,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     return body;
   }
 
-  @ExceptionHandler({IllegalArgumentException.class})
+  @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
   public ResponseEntity<Object> handleIllegalArgumentException(final Exception ex,
       final WebRequest request) {
     return new ResponseEntity<>(createResponseBody(ex.getMessage()), new HttpHeaders(),
@@ -69,6 +72,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         HttpStatus.BAD_REQUEST, request);
   }
 
+  @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
+  protected ResponseEntity<Object> handleMethodArgumentTypeMismatchException(
+      final RuntimeException ex, final WebRequest request) {
+    return handleExceptionInternal(
+        ex, createResponseBody(MSG_WRONG_TYPE), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST, request);
+  }
+
   @ExceptionHandler(value = {ConstraintViolationException.class})
   protected ResponseEntity<Object> handleConstraintViolationException(
       final ConstraintViolationException ex, final WebRequest request) {
@@ -76,8 +87,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     Set<String> messages = new HashSet<>(constraintViolations.size());
     messages.addAll(constraintViolations.stream()
-        .map(constraintViolation -> String.format("Value '%s' is incorrect - %s",
-            constraintViolation.getInvalidValue(), constraintViolation.getMessage()))
+        .map(ConstraintViolation::getMessage)
         .collect(Collectors.toList()));
     return handleExceptionInternal(
         ex, createResponseBody(MSG_BAD_REQUEST + ": " + messages), new HttpHeaders(),

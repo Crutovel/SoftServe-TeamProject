@@ -16,4 +16,6 @@ public interface EventRepositoryCustom {
 
   Event getEventByEventTypeId(Integer eventTypeId, Integer groupId);
 
+  List<Event> getNotKeyEventsByGroupId(Integer groupId, LocalDateTime start,
+      LocalDateTime finish);
 }

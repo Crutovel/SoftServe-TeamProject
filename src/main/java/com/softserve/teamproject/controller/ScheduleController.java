@@ -1,18 +1,23 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.service.ScheduleService;
+import com.softserve.teamproject.validation.ValidCopyPasteSchedule;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.ValidationException;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller that used for handle events.
  */
+@Validated
 @RestController
 @Api(value = "scheduleController", description = "Operations with events")
 public class ScheduleController {
@@ -158,6 +164,22 @@ public class ScheduleController {
   public List<EventResource> editSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
       Principal principal) throws ValidationException {
     return scheduleService.updateSchedule(events, id, principal);
+  }
+
+  /**
+   * Method allows to copy paste a schedule for the group with the specified id.
+   *
+   * @param copyPasteSchedule wrapper for request info such as group id, copy date, paste date
+   * @param principal to get the name of the authenticated user
+   * @return copyPasteSchedule wrapper with group id, copy date, paste date and conflicts
+   */
+  @PostMapping("/events/copypaste")
+  @ValidCopyPasteSchedule
+  public CopyPasteScheduleWrapper copyPasteSchedule(
+      @RequestBody @Valid CopyPasteScheduleWrapper copyPasteSchedule,
+      @NotNull Principal principal) {
+    copyPasteSchedule.setConflicts(scheduleService.copyPasteSchedule(copyPasteSchedule));
+    return copyPasteSchedule;
   }
 
 }

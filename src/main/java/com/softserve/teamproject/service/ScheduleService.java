@@ -1,5 +1,7 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
+import com.softserve.teamproject.dto.EventDto;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
@@ -43,4 +45,7 @@ public interface ScheduleService {
   @PreAuthorize("hasAuthority('coordinator')")
   List<EventResource> updateSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException;
+
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
+  Iterable<EventDto> copyPasteSchedule(CopyPasteScheduleWrapper copyPasteSchedule);
 }

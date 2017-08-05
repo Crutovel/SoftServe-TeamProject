@@ -4,6 +4,7 @@ import static com.softserve.teamproject.repository.expression.EventExpressions.e
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventBetweenDates;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventByGroupId;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
+import static com.softserve.teamproject.repository.expression.EventExpressions.getNotKeyDates;
 
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.QEvent;
@@ -46,9 +47,16 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
         .where(getEventByGroupId(groupId).and(getEventBetweenDates(start, finish))).fetch();
   }
 
-  public Event getEventByEventTypeId(Integer eventTypeId,Integer groupId) {
+  public Event getEventByEventTypeId(Integer eventTypeId, Integer groupId) {
     return from(QEvent.event)
         .where(eventByEventTypeId(eventTypeId).and(getEventByGroupId(groupId))).fetchOne();
+  }
+
+  @Override
+  public List<Event> getNotKeyEventsByGroupId(Integer groupId, LocalDateTime start,
+      LocalDateTime finish) {
+    return from(QEvent.event).where(getNotKeyDates().and(getEventByGroupId(groupId)
+        .and(getEventBetweenDates(start, finish)))).fetch();
   }
 
 }
