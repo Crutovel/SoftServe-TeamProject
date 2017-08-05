@@ -14,6 +14,8 @@ public interface EventRepositoryCustom {
 
   List<Event> getEventsByGroupId(Integer groupId, LocalDateTime start, LocalDateTime finish);
 
+  List<Event> getEventsByTime(LocalDateTime start, LocalDateTime finish);
+
   Event getEventByEventTypeId(Integer eventTypeId, Integer groupId);
 
 }
