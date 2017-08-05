@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -17,6 +18,7 @@ import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.TestGroup;
+import com.softserve.teamproject.validation.GroupValidator;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -35,8 +37,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -63,6 +63,8 @@ public class GroupServiceImplTest {
   private StatusRepository statusRepository;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private GroupValidator groupValidator;
 
   @Before
   public void setup() {
@@ -107,7 +109,7 @@ public class GroupServiceImplTest {
     group.setName(null);
 
     //Act
-    groupService.fieldsCheck(group);
+    groupValidator.fieldsCheck(group);
 
     //Assert
     assertEquals(EXPECTED_NAME, group.getName());

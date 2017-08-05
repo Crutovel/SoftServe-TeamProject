@@ -1,4 +1,4 @@
-package com.softserve.teamproject.validation;
+package com.softserve.teamproject.validation.impl;
 
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.EventType;
@@ -8,6 +8,7 @@ import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.EventTypeRepository;
 import com.softserve.teamproject.repository.RoomRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.validation.EventValidator;
 import java.lang.reflect.Field;
 import java.security.Principal;
 import java.time.LocalDateTime;
