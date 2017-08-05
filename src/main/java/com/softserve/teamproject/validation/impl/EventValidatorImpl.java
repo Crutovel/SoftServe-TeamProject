@@ -64,6 +64,24 @@ public class EventValidatorImpl implements EventValidator {
       throw new AccessDeniedException(
           ": The coordinators can create the schedule only in their location");
     }
+    checkAllFields(event);
+    if (!isEventDateValid(event.getDateTime())) {
+      throw new ValidationException("You cannot set the event time retroactively.");
+    }
+    if (!isEventInFreeRoom(event)) {
+      throw new ValidationException(
+          "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
+              .getName() + " has already been taken for another event on " + DateTimeFormatter
+              .ofPattern("yyyy-MM-dd HH:mm").format(event.getDateTime()));
+    }
+  }
+
+  /**
+   * Method checks whether the income Event object has all the relevant fields.
+   *
+   * @param event to add to the database
+   */
+  public void checkAllFields(Event event) {
     Class<?> eventClass = event.getClass();
     for (Field field : eventClass.getDeclaredFields()) {
       field.setAccessible(true);
@@ -76,15 +94,6 @@ public class EventValidatorImpl implements EventValidator {
       } catch (IllegalAccessException e) {
         e.printStackTrace();
       }
-    }
-    if (!isEventDateValid(event.getDateTime())) {
-      throw new ValidationException("You cannot set the event time retroactively.");
-    }
-    if (!isEventInFreeRoom(event)) {
-      throw new ValidationException(
-          "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
-              .getName() + " has already been taken for another event on " + DateTimeFormatter
-              .ofPattern("yyyy-MM-dd HH:mm").format(event.getDateTime()));
     }
   }
 
