@@ -22,10 +22,8 @@
                 <constraints nullable="false"/>
             </column>
             <column name="start_date" type="date">
-                <constraints nullable="false"/>
             </column>
             <column name="finish_date" type="date">
-                <constraints nullable="false"/>
             </column>
             <column name="status_id" type="INT">
                 <constraints nullable="false"/>
@@ -259,34 +257,34 @@
         <addUniqueConstraint columnNames="level" constraintName="level_UNIQUE" tableName="english_level"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-20">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="budget_owner"/>
+        <addUniqueConstraint columnNames="name" constraintName="budget_owner_name_UNIQUE" tableName="budget_owner"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-21">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="educational_group"/>
+        <addUniqueConstraint columnNames="name" constraintName="group_name_UNIQUE1" tableName="educational_group"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-22">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="english_level"/>
+        <addUniqueConstraint columnNames="name" constraintName="english_level_name_UNIQUE" tableName="english_level"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-23">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="event_type"/>
+        <addUniqueConstraint columnNames="name" constraintName="event_type_name_UNIQUE" tableName="event_type"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-24">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="location"/>
+        <addUniqueConstraint columnNames="name" constraintName="location_name_UNIQUE" tableName="location"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-25">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="role"/>
+        <addUniqueConstraint columnNames="name" constraintName="role_name_UNIQUE" tableName="role"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-26">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="role_category"/>
+        <addUniqueConstraint columnNames="name" constraintName="role_category_name_UNIQUE" tableName="role_category"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-27">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="specialization"/>
+        <addUniqueConstraint columnNames="name" constraintName="specialization_name_UNIQUE" tableName="specialization"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-28">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="status"/>
+        <addUniqueConstraint columnNames="name" constraintName="status_name_UNIQUE" tableName="status"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-29">
-        <addUniqueConstraint columnNames="name" constraintName="name_UNIQUE" tableName="status_category"/>
+        <addUniqueConstraint columnNames="name" constraintName="status_category_name_UNIQUE" tableName="status_category"/>
     </changeSet>
     <changeSet author="tdk (generated)" id="1502179246877-30">
         <addUniqueConstraint columnNames="nick_name" constraintName="nick_name_UNIQUE" tableName="user"/>
