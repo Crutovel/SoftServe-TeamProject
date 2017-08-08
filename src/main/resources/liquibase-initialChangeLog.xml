@@ -36,7 +36,7 @@
             <column name="budget_owner_id" type="INT">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueBoolean="false" name="is_deleted" type="BIT">
+            <column defaultValueBoolean="false" name="is_deleted" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
         </createTable>
