@@ -4,7 +4,9 @@ import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Template;
-import com.softserve.teamproject.repository.TemplateRepository;
+import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.SecurityService;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
@@ -25,9 +27,19 @@ import org.springframework.stereotype.Service;
 public class KeyDatesValidator implements
     ConstraintValidator<KeyDates, KeyDateDto> {
 
-  @Autowired
-  private TemplateRepository templateRepository;
+  private UserRepository userRepository;
+  private SecurityService securityService;
   private Group group;
+
+  @Autowired
+  public void setUserRepository(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  @Autowired
+  public void setSecurityService(SecurityService securityService) {
+    this.securityService = securityService;
+  }
 
   @Override
   public void initialize(KeyDates constraintAnnotation) {
@@ -61,8 +73,9 @@ public class KeyDatesValidator implements
       LocalDate newDate = null;
       if (template.getDuration() == 0) {
         newDate = group.getFinishDate();
-      } else
+      } else {
         newDate = startDate.plusDays(template.getDuration());
+      }
 
       validationTemplate.put(template.getEventType(), newDate);
       startDate = newDate;
@@ -90,8 +103,12 @@ public class KeyDatesValidator implements
   }
 
   private void updateTemplate(KeyDateDto event) {
+    if (event.getGroup() == null) {
+      throw new IllegalArgumentException("Group is not specified");
+    }
     if (group == null || !event.getGroup().equals(group)) {
       group = event.getGroup();
+      checkAuth();
       generateDates(event.getGroup());
     }
   }
@@ -99,5 +116,15 @@ public class KeyDatesValidator implements
   private void setNewMessage(String message, ConstraintValidatorContext context) {
     context.disableDefaultConstraintViolation();
     context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
+  }
+
+  private void checkAuth() {
+    User currentUser = userRepository.getUserByNickName(securityService.findLoggedInUsername());
+    if ((currentUser.getRole().getName().equals("coordinator")
+        && currentUser.getLocation() != group.getLocation())
+        || (currentUser.getRole().getName().equals("teacher")
+        && !group.getTeachers().contains(currentUser))) {
+      throw new IllegalArgumentException("Access denied");
+    }
   }
 }

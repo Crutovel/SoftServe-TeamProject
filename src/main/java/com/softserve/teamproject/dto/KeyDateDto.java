@@ -9,20 +9,16 @@ import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.validation.KeyDates;
 import java.time.LocalDate;
-import javax.validation.constraints.NotNull;
 
 @KeyDates
 public class KeyDateDto {
 
   private Integer id;
   @JsonDeserialize(using = GroupDeserializer.class)
-  @NotNull
   private Group group;
   @JsonDeserialize(using = EventTypeDeserializer.class)
-  @NotNull
   private EventType eventType;
   @JsonDeserialize(using = LocalDateDeserializer.class)
-  @NotNull
   private LocalDate date;
 
   public Integer getId() {
@@ -58,14 +54,14 @@ public class KeyDateDto {
   }
 
   public Event toEntity() {
-    return new Event(id, date.atTime(0,0), 0, null, group, eventType);
+    return new Event(id, date.atTime(0, 0), 0, null, group, eventType);
   }
+
 
   @Override
   public String toString() {
     return "{" +
-        "id:" + id +
-        ", group:" + group.getName() +
+        "group:" + (group != null ? group.getName() : null) +
         ", eventType:" + eventType.getName() +
         ", date:" + date +
         '}';
