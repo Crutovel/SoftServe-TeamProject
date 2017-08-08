@@ -57,18 +57,17 @@ public class EventValidatorImpl implements EventValidator {
    * @param event of the Event type
    * @throws ValidationException if one of the conditions is violated
    */
-  public void isEventValid(Event event, Principal principal)
+  public void isEventValid(Event event, Principal principal, InvalidField invalidField)
       throws AccessDeniedException, ValidationException {
     User user = userRepository.getUserByNickName(principal.getName());
-    if (!event.getGroup().getLocation().equals(user.getLocation())) {
-      throw new AccessDeniedException(
-          ": The coordinators can create the schedule only in their location");
-    }
-    checkAllFields(event);
+    checkLocationPermission(event, user, invalidField);
+    checkAllFields(event, invalidField);
     if (!isEventDateValid(event.getDateTime())) {
+      invalidField.setName("dateTime = "+event.getDateTime());
       throw new ValidationException("You cannot set the event time retroactively.");
     }
     if (!isEventInFreeRoom(event)) {
+      invalidField.setName("room id=" + event.getRoom().getId());
       throw new ValidationException(
           "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
               .getName() + " has already been taken for another event on " + DateTimeFormatter
@@ -77,16 +76,31 @@ public class EventValidatorImpl implements EventValidator {
   }
 
   /**
+   * Method checks whether the coordinator tries to make changes in schedule for his location.
+   * @param event to be changed or added
+   * @param user - a coordinator
+   */
+  public void checkLocationPermission(Event event, User user, InvalidField invalidField) {
+    if (!event.getGroup().getLocation().equals(user.getLocation())) {
+      invalidField.setName("location");
+      throw new AccessDeniedException(
+          ": The coordinators can create the schedule only in their location");
+    }
+  }
+
+
+  /**
    * Method checks whether the income Event object has all the relevant fields.
    *
    * @param event to add to the database
    */
-  public void checkAllFields(Event event) {
+  public void checkAllFields(Event event, InvalidField invalidField) {
     Class<?> eventClass = event.getClass();
     for (Field field : eventClass.getDeclaredFields()) {
       field.setAccessible(true);
       try {
         if (field.get(event) == null) {
+          invalidField.setName(field.getName());
           throw new ValidationException(
               "Please, provide the relevant information for the field -" + field.getName()
                   + "- to create an event.");
@@ -103,22 +117,27 @@ public class EventValidatorImpl implements EventValidator {
    *
    * @param event of the Event type
    */
-  public void isEventUpdateValid(Event event, Principal principal) throws ValidationException {
+  public void isEventUpdateValid(Event event, Principal principal, InvalidField invalidField) throws ValidationException {
     User user = userRepository.getUserByNickName(principal.getName());
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
+      invalidField.setName("location");
       throw new AccessDeniedException(
           ": The coordinators can create the schedule only in their location");
     }
     if (event.getId() == 0) {
+      invalidField.setName("eventId");
       throw new ValidationException("Please specify the event you are going to change.");
     }
     if (!isEventTypeValid(event.getEventType())) {
+      invalidField.setName("eventType");
       throw new ValidationException("The event type doesn't exist.");
     }
     if (!doesRoomExist(event.getRoom())) {
+      invalidField.setName("room id=" + event.getRoom().getId());
       throw new ValidationException("The room doesn't exist.");
     }
     if (!isUpdateEventInFreeRoom(event)) {
+      invalidField.setName("room id=" + event.getRoom().getId());
       throw new ValidationException(
           "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
               .getName() + " has already been taken for another event on " + DateTimeFormatter

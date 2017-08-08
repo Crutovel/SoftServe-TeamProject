@@ -1,5 +1,6 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.entity.Event;
@@ -144,7 +145,7 @@ public class ScheduleController {
   @PostMapping(value = "/events/groups/{id}")
   @ApiOperation(value = "Add schedule (list of events) for the selected group", response = Event.class,
       responseContainer = "List")
-  public List<EventResource> addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+  public ScheduleResponseWrapper addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
       Principal principal) throws ValidationException {
     return scheduleService.addSchedule(events, id, principal);
   }
@@ -157,7 +158,7 @@ public class ScheduleController {
   @PutMapping(value = "/events")
   @ApiOperation(value = "Edit schedule (list of events)", response = Event.class,
       responseContainer = "List")
-  public List<EventResource> editSchedule(@RequestBody List<Event> events, Principal principal)
+  public ScheduleResponseWrapper editSchedule(@RequestBody List<Event> events, Principal principal)
       throws ValidationException {
     return scheduleService.updateSchedule(events, principal);
   }

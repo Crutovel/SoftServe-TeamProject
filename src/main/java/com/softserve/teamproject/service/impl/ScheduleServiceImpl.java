@@ -2,6 +2,7 @@ package com.softserve.teamproject.service.impl;
 
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
 
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.EventType;
@@ -13,12 +14,14 @@ import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.service.KeyDatesValidator;
 import com.softserve.teamproject.service.ScheduleService;
 import com.softserve.teamproject.validation.EventValidator;
+import com.softserve.teamproject.validation.impl.InvalidField;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -136,16 +139,36 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @throws ValidationException when the  information is incorrect
    */
   @Override
-  public List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
+  public ScheduleResponseWrapper addSchedule(List<Event> events, Integer groupId,
+      Principal principal)
       throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
-    for (Event event : events) {
-      event.setGroup(group);
-      eventValidator.isEventValid(event, principal);
-    }
+    HashMap<String, String> invalidEvents = new HashMap<>();
+    List<Event> eventsToRemove = new ArrayList<>();
+    processAllEventsBeforeAdd(events, invalidEvents, eventsToRemove, group, principal);
+    events.removeAll(eventsToRemove);
     eventRepository.save(events);
-    return events.stream().map(eventResourceAssembler::toResource).collect(
-        Collectors.toList());
+
+    return new ScheduleResponseWrapper(
+        events.stream().map(eventResourceAssembler::toResource).collect(Collectors.toList()),
+        invalidEvents);
+  }
+
+  private void processAllEventsBeforeAdd(List<Event> events, HashMap<String, String> invalidEvents,
+      List<Event> eventsToRemove, Group group, Principal principal) {
+    Event event = new Event();
+    Iterator<Event> eventsIter = events.iterator();
+    InvalidField invalidField = new InvalidField();
+    while (eventsIter.hasNext()) {
+      try {
+        event = eventsIter.next();
+        event.setGroup(group);
+        eventValidator.isEventValid(event, principal, invalidField);
+      } catch (AccessDeniedException | ValidationException e) {
+        invalidEvents.put(invalidField.getName(), e.getMessage());
+        eventsToRemove.add(event);
+      }
+    }
   }
 
   /**
@@ -157,11 +180,11 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @throws AccessDeniedException when a coordinator wants to update an event in other location
    * @throws ValidationException when the information provided for the update is incorrect
    */
-  public Event updateSingleEvent(Event event, Principal principal)
+  public Event updateSingleEvent(Event event, Principal principal, InvalidField invalidField)
       throws AccessDeniedException, ValidationException {
     Event existedEvent = eventRepository.findOne(event.getId());
     Event eventToUpdate = eventValidator.checkEventFields(event, existedEvent);
-    eventValidator.isEventUpdateValid(eventToUpdate, principal);
+    eventValidator.isEventUpdateValid(eventToUpdate, principal, invalidField);
     eventRepository.save(eventToUpdate);
     return eventToUpdate;
   }
@@ -177,15 +200,30 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @throws ValidationException when the information provided for the update is incorrect
    */
   @Override
-  public List<EventResource> updateSchedule(List<Event> events, Principal principal)
+  public ScheduleResponseWrapper updateSchedule(List<Event> events, Principal principal)
       throws AccessDeniedException, ValidationException {
-    List<EventResource> eventResourceList = new ArrayList<>();
-    for (Event event : events) {
-      event = updateSingleEvent(event, principal);
-      EventResource eventResource = eventResourceAssembler.toResource(event);
-      eventResourceList.add(eventResource);
+    HashMap<String, String> invalidEvents = new HashMap<>();
+    Iterator<Event> eventsIter = events.iterator();
+    List<Event> eventsToRemove = new ArrayList<>();
+    Event event = new Event();
+    InvalidField invalidField = new InvalidField();
+    while (eventsIter.hasNext()) {
+      try {
+        event = eventsIter.next();
+        Event existedEvent = eventRepository.findOne(event.getId());
+        Event eventToUpdate = eventValidator.checkEventFields(event, existedEvent);
+        eventValidator.isEventUpdateValid(eventToUpdate, principal, invalidField);
+        eventRepository.save(eventToUpdate);
+      } catch (AccessDeniedException | ValidationException e) {
+        invalidEvents.put(invalidField.getName(), e.getMessage());
+        eventsToRemove.add(event);
+      }
     }
-    return eventResourceList;
+    events.removeAll(eventsToRemove);
+    ScheduleResponseWrapper response = new ScheduleResponseWrapper(
+        events.stream().map(eventResourceAssembler::toResource).collect(
+            Collectors.toList()), invalidEvents);
+    return response;
   }
 
   /**
@@ -193,7 +231,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    *
    * @param events list of key dates to add or update
    * @param groupId id of group to update
-   * @return <code>EventResponseWrapper</code> that contains info about successful updating and
+   * @return <code>ScheduleResponseWrapper</code> that contains info about successful updating and
    * invalid events
    */
   public EventResponseWrapper addKeyDates(List<Event> events, Integer groupId) {

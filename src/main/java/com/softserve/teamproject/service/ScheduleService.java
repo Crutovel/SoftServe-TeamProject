@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
@@ -37,10 +38,10 @@ public interface ScheduleService {
   EventResponseWrapper addKeyDates(List<Event> events, Integer id);
 
   @PreAuthorize("hasAuthority('coordinator')")
-  List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
+  ScheduleResponseWrapper addSchedule(List<Event> events, Integer groupId, Principal principal)
       throws AccessDeniedException, ValidationException;
 
   @PreAuthorize("hasAuthority('coordinator')")
-  List<EventResource> updateSchedule(List<Event> events, Principal principal)
+  ScheduleResponseWrapper updateSchedule(List<Event> events, Principal principal)
       throws AccessDeniedException, ValidationException;
 }
