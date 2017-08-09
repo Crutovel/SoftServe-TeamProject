@@ -161,7 +161,7 @@ public class GroupServiceImpl implements GroupService {
       throw new AccessDeniedException("Coordinator can't edit group in alien location");
     }
 
-    groupRep.save(group);
+    group = groupRep.save(group);
 
     return groupResourceAssembler.toResource(group);
   }
