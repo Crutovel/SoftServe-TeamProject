@@ -3,17 +3,21 @@ package com.softserve.teamproject.controller;
 import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
+import com.softserve.teamproject.dto.KeyDateWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.service.ScheduleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -129,10 +133,10 @@ public class ScheduleController {
   }
 
   @PostMapping(value = "/events/demo")
-  @ApiOperation(value = "Add key dates for the specified group")
-  public EventResponseWrapper addKeyDates(@RequestBody List<Event> events,
-      @RequestParam("groupId") Integer groupId, Principal principal) {
-    return scheduleService.addKeyDates(events, groupId);
+  @ApiOperation(value = "Add key events for selected groups", response = EventResponseWrapper.class)
+  public EventResponseWrapper addKeyDates(@ApiParam("Only need date, event type id, group id")
+  @RequestBody @Valid KeyDateWrapper events, BindingResult result) {
+    return scheduleService.addKeyDates(events.getDates(), result);
   }
 
   /**
