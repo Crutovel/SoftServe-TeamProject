@@ -6,6 +6,7 @@ import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
+import com.softserve.teamproject.validation.GroupValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.security.Principal;
@@ -30,6 +31,12 @@ public class GroupController {
 
   private TeacherGroupsManipulationService groupsActions;
   private GroupService groupService;
+  private GroupValidator groupValidator;
+
+  @Autowired
+  public void setGroupValidator(GroupValidator groupValidator) {
+    this.groupValidator = groupValidator;
+  }
 
   @Autowired
   public void setTeacherGroupsManipulationService(TeacherGroupsManipulationService groupsActions) {
@@ -117,7 +124,7 @@ public class GroupController {
   public GroupResource editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
     Status currentStatus = groupService.getGroupById(id).getStatus();
-    groupService.fieldsCheck(group);
+    groupValidator.fieldsCheck(group);
     return groupService.updateGroup(group, currentStatus, principal.getName());
   }
 
