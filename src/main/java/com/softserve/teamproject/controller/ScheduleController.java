@@ -1,5 +1,6 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.dto.KeyDateWrapper;
@@ -146,22 +147,24 @@ public class ScheduleController {
    * @param id id of the selected group as a url parameter
    */
   @PostMapping(value = "/events/groups/{id}")
-  public List<EventResource> addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+  @ApiOperation(value = "Add schedule (list of events) for the selected group", response = Event.class,
+      responseContainer = "List")
+  public ScheduleResponseWrapper addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
       Principal principal) throws ValidationException {
     return scheduleService.addSchedule(events, id, principal);
   }
 
   /**
-   * Method allows to edit a schedule (edit all events from the list) for the group with the
-   * specified id.
+   * Method allows to edit a schedule (edit all events from the list).
    *
    * @param events list of events in JSON format
-   * @param id id of the selected group as a url parameter
    */
-  @PutMapping(value = "/events/groups/{id}")
-  public List<EventResource> editSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
-      Principal principal) throws ValidationException {
-    return scheduleService.updateSchedule(events, id, principal);
+  @PutMapping(value = "/events")
+  @ApiOperation(value = "Edit schedule (list of events)", response = Event.class,
+      responseContainer = "List")
+  public ScheduleResponseWrapper editSchedule(@RequestBody List<Event> events, Principal principal)
+      throws ValidationException {
+    return scheduleService.updateSchedule(events, principal);
   }
 
 }

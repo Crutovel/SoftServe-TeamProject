@@ -2,26 +2,25 @@ package com.softserve.teamproject.service.impl;
 
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
 
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.GroupRepository;
-import com.softserve.teamproject.repository.UserRepository;
-import com.softserve.teamproject.repository.custom.EventRepositoryCustom;
 import com.softserve.teamproject.service.ScheduleService;
-import com.softserve.teamproject.validation.SimpleEventValidator;
+import com.softserve.teamproject.validation.EventValidator;
+import com.softserve.teamproject.validation.impl.InvalidField;
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -37,8 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
   private EventRepository eventRepository;
   private GroupRepository groupRepository;
-  private UserRepository userRepository;
-  private SimpleEventValidator eventValidator;
+  private EventValidator eventValidator;
   private EventResourceAssembler eventResourceAssembler;
 
 
@@ -49,22 +47,13 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   @Autowired
-  public void setEventValidator(SimpleEventValidator eventValidator) {
+  public void setEventValidator(EventValidator eventValidator) {
     this.eventValidator = eventValidator;
-  }
-
-  @Autowired
-  public void setUserRepository(UserRepository userRepository) {
-    this.userRepository = userRepository;
   }
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRepository) {
     this.groupRepository = groupRepository;
-  }
-
-  public EventRepositoryCustom getEventRepository() {
-    return eventRepository;
   }
 
   @Autowired
@@ -131,93 +120,104 @@ public class ScheduleServiceImpl implements ScheduleService {
     return eventResourceAssembler.toResource(eventRepository.findOne(id));
   }
 
-  private void addSingleEvent(Event event, Principal principal)
-      throws AccessDeniedException, ValidationException {
-    User user = userRepository.getUserByNickName(principal.getName());
-    if (!event.getGroup().getLocation().equals(user.getLocation())) {
-      throw new AccessDeniedException(
-          ": The coordinators can create the schedule only in their location");
-    } else {
-      eventValidator.isEventValid(event);
-      eventRepository.save(event);
-    }
-  }
-
-  private void validateEvent(Event event, Principal principal)
-      throws AccessDeniedException, ValidationException {
-    User user = userRepository.getUserByNickName(principal.getName());
-    if (!event.getGroup().getLocation().equals(user.getLocation())) {
-      throw new AccessDeniedException(
-          ": The coordinators can create the schedule only in their location");
-    } else {
-      eventValidator.isEventValid(event);
-    }
-  }
-
+  /**
+   * The method adds a schedule (in fact, a list of events) in the database for the specified
+   * group.
+   *
+   * @param events the list of events that form the schedule
+   * @param groupId the id of the group
+   * @param principal the authenticated user
+   * @return eventResourceList - the list of elements of the EventResource type to display them in
+   * hateoas style in json
+   * @throws AccessDeniedException when a coordinator wants to create a schedule in other location
+   * @throws ValidationException when the  information is incorrect
+   */
   @Override
-  public List<EventResource> addSchedule(List<Event> events, Integer groupId, Principal principal)
-      throws AccessDeniedException, ValidationException {
-    Group group = groupRepository.findOne(groupId);
-    for (Event event : events) {
-      event.setGroup(group);
-      validateEvent(event, principal);
-    }
-    eventRepository.save(events);
-    return events.stream().map(eventResourceAssembler::toResource).collect(
-        Collectors.toList());
-  }
-
-  private Event updateSingleEvent(Event event, Principal principal)
-      throws AccessDeniedException, ValidationException {
-    User user = userRepository.getUserByNickName(principal.getName());
-    if (!event.getGroup().getLocation().equals(user.getLocation())) {
-      throw new AccessDeniedException(
-          ": The coordinators can edit the schedule only in their location");
-    } else {
-      if (event.getId() == 0) {
-        throw new ValidationException("Please specify the event you are going to change.");
-      }
-      Event eventToUpdate = checkEventFields(event);
-      eventRepository.save(eventToUpdate);
-      return eventToUpdate;
-    }
-  }
-
-  private Event checkEventFields(Event event) {
-    Event eventToUpdate = eventRepository.findOne(event.getId());
-    if (eventToUpdate == null) {
-      throw new ValidationException("The event doesn't exist.");
-    }
-    LocalDateTime oldLocalDateTime = eventToUpdate.getDateTime();
-    if (!(event.getDateTime() == null)) {
-      eventToUpdate.setDateTime(event.getDateTime());
-    }
-    if (!(event.getDuration() == 0)) {
-      eventToUpdate.setDuration(event.getDuration());
-    }
-    if (!(event.getEventType() == null)) {
-      eventToUpdate.setEventType(event.getEventType());
-    }
-    if (!(event.getRoom() == null)) {
-      eventToUpdate.setRoom(event.getRoom());
-    }
-    eventValidator.isEventUpdateValid(eventToUpdate, oldLocalDateTime);
-    return eventToUpdate;
-  }
-
-  @Override
-  public List<EventResource> updateSchedule(List<Event> events, Integer groupId,
+  public ScheduleResponseWrapper addSchedule(List<Event> events, Integer groupId,
       Principal principal)
       throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
-    List<EventResource> eventResourceList = new ArrayList<>();
-    for (Event event : events) {
-      event.setGroup(group);
-      event = updateSingleEvent(event, principal);
-      EventResource eventResource = eventResourceAssembler.toResource(event);
-      eventResourceList.add(eventResource);
+    HashMap<String, String> invalidEvents = new HashMap<>();
+    List<Event> eventsToRemove = new ArrayList<>();
+    processAllEventsBeforeAdd(events, invalidEvents, eventsToRemove, group, principal);
+    events.removeAll(eventsToRemove);
+    eventRepository.save(events);
+
+    return new ScheduleResponseWrapper(
+        events.stream().map(eventResourceAssembler::toResource).collect(Collectors.toList()),
+        invalidEvents);
+  }
+
+  private void processAllEventsBeforeAdd(List<Event> events, HashMap<String, String> invalidEvents,
+      List<Event> eventsToRemove, Group group, Principal principal) {
+    Event event = new Event();
+    Iterator<Event> eventsIter = events.iterator();
+    InvalidField invalidField = new InvalidField();
+    while (eventsIter.hasNext()) {
+      try {
+        event = eventsIter.next();
+        event.setGroup(group);
+        eventValidator.isEventValid(event, principal, invalidField);
+      } catch (AccessDeniedException | ValidationException e) {
+        invalidEvents.put(invalidField.getName(), e.getMessage());
+        eventsToRemove.add(event);
+      }
     }
-    return eventResourceList;
+  }
+
+  /**
+   * The method updates a single event.
+   *
+   * @param event which is to be updated (edited)
+   * @param principal - the authenticated user
+   * @return eventToUpdate - an updated event
+   * @throws AccessDeniedException when a coordinator wants to update an event in other location
+   * @throws ValidationException when the information provided for the update is incorrect
+   */
+  public Event updateSingleEvent(Event event, Principal principal, InvalidField invalidField)
+      throws AccessDeniedException, ValidationException {
+    Event existedEvent = eventRepository.findOne(event.getId());
+    Event eventToUpdate = eventValidator.checkEventFields(event, existedEvent);
+    eventValidator.isEventUpdateValid(eventToUpdate, principal, invalidField);
+    eventRepository.save(eventToUpdate);
+    return eventToUpdate;
+  }
+
+  /**
+   * The method updates the schedule (in fact, a list of events) for the specified group.
+   *
+   * @param events the list of events that form the schedule
+   * @param principal the authenticated user
+   * @return eventResourceList - the list of elements of the EventResource type to display them in
+   * hateoas style in json
+   * @throws AccessDeniedException when a coordinator wants to update schedule in other location
+   * @throws ValidationException when the information provided for the update is incorrect
+   */
+  @Override
+  public ScheduleResponseWrapper updateSchedule(List<Event> events, Principal principal)
+      throws AccessDeniedException, ValidationException {
+    HashMap<String, String> invalidEvents = new HashMap<>();
+    Iterator<Event> eventsIter = events.iterator();
+    List<Event> eventsToRemove = new ArrayList<>();
+    Event event = new Event();
+    InvalidField invalidField = new InvalidField();
+    while (eventsIter.hasNext()) {
+      try {
+        event = eventsIter.next();
+        Event existedEvent = eventRepository.findOne(event.getId());
+        Event eventToUpdate = eventValidator.checkEventFields(event, existedEvent);
+        eventValidator.isEventUpdateValid(eventToUpdate, principal, invalidField);
+        eventRepository.save(eventToUpdate);
+      } catch (AccessDeniedException | ValidationException e) {
+        invalidEvents.put(invalidField.getName(), e.getMessage());
+        eventsToRemove.add(event);
+      }
+    }
+    events.removeAll(eventsToRemove);
+    ScheduleResponseWrapper response = new ScheduleResponseWrapper(
+        events.stream().map(eventResourceAssembler::toResource).collect(
+            Collectors.toList()), invalidEvents);
+    return response;
   }
 
   /**
