@@ -94,7 +94,7 @@ public class GroupServiceImpl implements GroupService {
     groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
     Status status = statusRepository.getStatusByName("planned");
     group.setStatus(status);
-    groupRep.save(group);
+    group = groupRep.save(group);
     return groupResourceAssembler.toResource(group);
   }
 
@@ -110,6 +110,9 @@ public class GroupServiceImpl implements GroupService {
   public void deleteGroup(int groupId, String userName) {
     User user = userRepository.getUserByNickName(userName);
     Group group = groupRep.findOne(groupId);
+    if (group == null) {
+      throw new ValidationException("group is not exist");
+    }
     groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
     if (!group.getStatus().getName().equalsIgnoreCase("planned")) {
       group.setDeleted(true);
@@ -138,7 +141,7 @@ public class GroupServiceImpl implements GroupService {
     }
     User user = userRepository.getUserByNickName(userName);
     groupValidator.checkGroupEditPermissions(user, group, currentStatus);
-    groupRep.save(group);
+    group = groupRep.save(group);
     return groupResourceAssembler.toResource(group);
   }
 
