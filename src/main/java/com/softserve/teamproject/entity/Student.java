@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "student")
@@ -21,9 +23,13 @@ public class Student {
   private int id;
 
   @Column(name = "first_name")
+  @Size(min = 2, max = 20, message = "Wrong size")
+  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-/]+", message = "Wrong pattern")
   private String firstName;
 
   @Column(name = "last_name")
+  @Size(min = 2, max = 20, message = "Wrong size")
+  @Pattern(regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-/]+", message = "Wrong pattern")
   private String lastName;
 
   @Lob
@@ -35,7 +41,7 @@ public class Student {
   private Group group;
 
   @ManyToOne
-  @JoinColumn(name = "english_level_id", referencedColumnName = "id", nullable = false)
+  @JoinColumn(name = "english_level_id", referencedColumnName = "id")
   private EnglishLevel englishLevel;
 
   public int getId() {
@@ -103,10 +109,10 @@ public class Student {
         .equals(group, other.group);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(firstName, lastName, group.getId());
-  }
+//  @Override
+//  public int hashCode() {
+//    return Objects.hash(firstName, lastName, group.getId());
+//  }
 
   @Override
   public String toString() {

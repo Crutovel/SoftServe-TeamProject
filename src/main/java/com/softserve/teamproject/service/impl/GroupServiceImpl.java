@@ -128,7 +128,7 @@ public class GroupServiceImpl implements GroupService {
    * @param group is a current group
    * @param currentStatus is a status of group which will be updated
    * @param userName is a nickname of current authorized user
-   * @throws AccessDeniedException if current authorized user has't access to update group
+   * @throws AccessDeniedException if current authorized user doesn't have access to update group
    */
   @Override
   public GroupResource updateGroup(Group group, Status currentStatus, String userName)

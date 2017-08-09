@@ -14,13 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GroupValidatorImpl implements GroupValidator {
 
-  private GroupService groupService;
   private GroupRepository groupRepository;
-
-  @Autowired
-  public void setGroupService(GroupService groupService) {
-    this.groupService = groupService;
-  }
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRepository) {
@@ -35,7 +29,7 @@ public class GroupValidatorImpl implements GroupValidator {
    */
   @Override
   public void fieldsCheck(Group group) {
-    Group existedGroup = groupService.getGroupById(group.getId());
+    Group existedGroup =  groupRepository.findOne(group.getId());
     Class<?> groupClass = group.getClass();
     for (Field field : groupClass.getDeclaredFields()) {
       field.setAccessible(true);

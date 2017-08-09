@@ -3,11 +3,17 @@ package com.softserve.teamproject.controller;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.StudentResource;
 import com.softserve.teamproject.service.StudentService;
+import com.softserve.teamproject.validation.StudentValidator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,10 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
 
   private StudentService studentService;
+  private StudentValidator studentValidator;
 
   @Autowired
   public void setStudentService(StudentService studentService) {
     this.studentService = studentService;
+  }
+
+  @Autowired
+  public void setStudentValidator(StudentValidator studentValidator) {
+    this.studentValidator = studentValidator;
   }
 
   /**
@@ -40,5 +52,22 @@ public class StudentController {
       return studentService.getStudentsByGroupId(groupId);
     }
     return studentService.getAllStudents();
+  }
+
+  @PostMapping(value = "/groups/{id}/students", produces = "application/json")
+  @ApiOperation(value = "Add students for given group", response = Student.class,
+      responseContainer = "List")
+  public Iterable<StudentResource> addStudents(@RequestBody List<Student> students,
+      @PathVariable Integer id, Principal principal) {
+    return studentService.addStudents(students, id, principal.getName());
+  }
+
+  @PutMapping(value = "/groups/{id}/students", produces = "application/json")
+  @ApiOperation(value = "Edit students for given group", response = Student.class,
+      responseContainer = "List")
+  public Iterable<StudentResource> editStudents(@RequestBody List<Student> students,
+      @PathVariable Integer id, Principal principal) {
+    studentValidator.checkStudentFields(students);
+    return studentService.updateStudents(students, principal.getName());
   }
 }
