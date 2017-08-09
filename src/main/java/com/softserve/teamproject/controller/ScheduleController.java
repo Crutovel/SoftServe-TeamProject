@@ -8,6 +8,7 @@ import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.service.ScheduleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
@@ -131,8 +132,9 @@ public class ScheduleController {
   }
 
   @PostMapping(value = "/events/demo")
-  public EventResponseWrapper addKeyDates(@RequestBody @Valid KeyDateWrapper events,
-      BindingResult result) {
+  @ApiOperation(value = "Add key events for selected groups", response = EventResponseWrapper.class)
+  public EventResponseWrapper addKeyDates(@ApiParam("Only need date, event type id, group id")
+  @RequestBody @Valid KeyDateWrapper events, BindingResult result) {
     return scheduleService.addKeyDates(events.getDates(), result);
   }
 

@@ -62,7 +62,7 @@ public class KeyDateDto {
   public String toString() {
     return "{" +
         "group:" + (group != null ? group.getName() : null) +
-        ", eventType:" + eventType.getName() +
+        ", eventType:" + (eventType != null ? eventType.getName() : null) +
         ", date:" + date +
         '}';
   }
