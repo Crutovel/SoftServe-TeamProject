@@ -24,17 +24,11 @@ public interface GroupService {
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
   GroupResource updateGroup(@Valid Group group, Status currentStatus, String userName) throws AccessDeniedException;
 
-  void fieldsCheck(Group group);
-
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
   Group getGroupById(Integer id);
 
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
   GroupResource getGroupResourceById(Integer id);
-
-  boolean isValid(Group group);
-
-  boolean isValidGroupName(Group group);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   Iterable<GroupResource> getGroupsByFilter(GroupsFilter filter);

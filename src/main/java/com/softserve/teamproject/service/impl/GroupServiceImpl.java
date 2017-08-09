@@ -13,7 +13,7 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
-import java.lang.reflect.Field;
+import com.softserve.teamproject.validation.GroupValidator;
 import java.util.List;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
@@ -33,6 +33,12 @@ public class GroupServiceImpl implements GroupService {
   private StatusRepository statusRepository;
   private LocationRepository locationRepository;
   private GroupResourceAssembler groupResourceAssembler;
+  private GroupValidator groupValidator;
+
+  @Autowired
+  public void setGroupValidator(GroupValidator groupValidator) {
+    this.groupValidator = groupValidator;
+  }
 
   @Autowired
   public void setGroupResourceAssembler(
@@ -81,22 +87,14 @@ public class GroupServiceImpl implements GroupService {
    */
   @Override
   public GroupResource addGroup(Group group, String userName) throws AccessDeniedException {
-    if (!isValid(group)) {
+    if (!groupValidator.isValid(group)) {
       throw new ValidationException("This group already exists");
     }
-
     User user = userRepository.getUserByNickName(userName);
-
-    if (user.getRole().getName().equals("coordinator")
-        && !user.getLocation().equals(group.getLocation())) {
-      throw new AccessDeniedException("Coordinator can't add group in alien location");
-    }
-
+    groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
     Status status = statusRepository.getStatusByName("planned");
     group.setStatus(status);
-
     groupRep.save(group);
-
     return groupResourceAssembler.toResource(group);
   }
 
@@ -111,13 +109,8 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public void deleteGroup(int groupId, String userName) {
     User user = userRepository.getUserByNickName(userName);
-    Group group = groupRep.getOne(groupId);
-
-    if (user.getRole().getName().equals("coordinator")
-        && !user.getLocation().equals(group.getLocation())) {
-      throw new AccessDeniedException("Coordinator can't delete group in alien location");
-    }
-
+    Group group = groupRep.findOne(groupId);
+    groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
     if (!group.getStatus().getName().equalsIgnoreCase("planned")) {
       group.setDeleted(true);
       groupRep.save(group);
@@ -140,54 +133,13 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public GroupResource updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
-    if (!isValidGroupName(group)) {
+    if (!groupValidator.isValidGroupName(group)) {
       throw new ValidationException("Group with this name already exists.");
     }
-
     User user = userRepository.getUserByNickName(userName);
-
-    if (user.getRole().getName().equals("teacher")) {
-      if (group.getTeachers().contains(user) && !user.getLocation().equals(group.getLocation())) {
-        throw new AccessDeniedException("Teacher can't edit group in alien location");
-      } else if (!group.getTeachers().contains(user)) {
-        throw new AccessDeniedException("Teacher can't edit group which doesn't assigned to him.");
-      } else if (group.getTeachers().contains(user)
-          && user.getLocation().equals(group.getLocation()) && currentStatus
-          .getName().equalsIgnoreCase("graduated")) {
-        throw new AccessDeniedException("Teacher can't edit group which is graduated.");
-      }
-    } else if (user.getRole().getName().equals("coordinator")
-        && !user.getLocation().equals(group.getLocation())) {
-      throw new AccessDeniedException("Coordinator can't edit group in alien location");
-    }
-
-    group = groupRep.save(group);
-
+    groupValidator.checkGroupEditPermissions(user, group, currentStatus);
+    groupRep.save(group);
     return groupResourceAssembler.toResource(group);
-  }
-
-  /**
-   * Checks if all fields of updated group exist. If some field is not exists, we copy required
-   * fields from an old group using reflection.
-   *
-   * @param group is a group we want to update.
-   */
-  @Override
-  public void fieldsCheck(Group group) {
-    Group existedGroup = getGroupById(group.getId());
-    Class<?> groupClass = group.getClass();
-    for (Field field : groupClass.getDeclaredFields()) {
-      field.setAccessible(true);
-      try {
-        if (field.get(group) == null) {
-          Field existedField = existedGroup.getClass().getDeclaredField(field.getName());
-          existedField.setAccessible(true);
-          field.set(group, existedField.get(existedGroup));
-        }
-      } catch (IllegalAccessException | NoSuchFieldException e) {
-        e.printStackTrace();
-      }
-    }
   }
 
   /**
@@ -214,38 +166,6 @@ public class GroupServiceImpl implements GroupService {
       return null;
     }
     return groupResourceAssembler.toResource(group);
-  }
-
-  /**
-   * Checks if group is valid. If group already exists, group is not valid. Method is used by
-   * addGroup method.
-   *
-   * @param group is a group we want to add.
-   * @return true if group is valid, or false if group is not valid.
-   */
-  @Override
-  public boolean isValid(Group group) {
-    Group existed = groupRep.findByName(group.getName());
-    return existed == null;
-  }
-
-  /**
-   * Checks if group's name is valid. Name is valid if the other groups don't have the same name.
-   * Method is used by updateGroup method.
-   *
-   * @param group is a group we want to update.
-   * @return true if group's name is valid, or false if group's name is not valid.
-   */
-  @Override
-  public boolean isValidGroupName(Group group) {
-    Group currentGroup = groupRep.findByName(group.getName());
-    if (currentGroup == null) {
-      return true;
-    }
-    if (currentGroup.getName().equals(group.getName()) && currentGroup.getId() != group.getId()) {
-      return false;
-    }
-    return true;
   }
 
   /**

@@ -48,19 +48,6 @@ public class GroupControllerIntegrationTest {
   private MockMvc mvc;
   @Autowired
   private GroupRepository groupRepository;
-//  @Autowired
-//  private GroupService groupService;
-
-  /**
-   * getGroupsByFilter(@RequestBody GroupsFilter requestFilter)
-   */
-
-  /**
-   * _allowedUserAndTeacherWithGroups_returnGroups(){}
-   * _allowedUserAndLocationWithoutGroups_returnEmptyResult()
-   * _notRegisteredUser_unauthorizedStatus()
-   * _notAllowedUser_forbiddenStatus()
-   */
 
   @TestGroup
   @WithUserDetails(COORDINATOR)
@@ -439,11 +426,11 @@ public class GroupControllerIntegrationTest {
   @TestGroup
   @WithUserDetails(COORDINATOR)
   @Test
-  public void deleteGroup_notExistGroupId_notFoundStatus() throws Exception {
+  public void deleteGroup_notExistGroupId_badRequestStatus() throws Exception {
     //Arrange
     final String TESTED_URL = "/groups/{id}";
     final Integer GROUP_ID = 100;
-    final int EXPECTED_HTTP_STATUS = 404;
+    final int EXPECTED_HTTP_STATUS = 400;
 
     //Act && Assert
     mvc.perform(delete(TESTED_URL, GROUP_ID))

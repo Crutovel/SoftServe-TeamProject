@@ -1,0 +1,460 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="tdk (generated)" id="1502179246877-1">
+        <createTable tableName="budget_owner">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-2">
+        <createTable tableName="educational_group">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="date">
+            </column>
+            <column name="finish_date" type="date">
+            </column>
+            <column name="status_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="specialization_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="budget_owner_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="is_deleted" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-3">
+        <createTable tableName="english_level">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-4">
+        <createTable tableName="event">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="datetime" type="TIMESTAMP(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="event_type_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-5">
+        <createTable tableName="event_type">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueBoolean="false" name="is_key_date" type="BIT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-6">
+        <createTable tableName="expert">
+            <column name="edu_group_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expert_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-7">
+        <createTable tableName="group_teacher">
+            <column name="teacher_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="group_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-8">
+        <createTable tableName="location">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="coordinator_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-9">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-10">
+        <createTable tableName="role_category">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-11">
+        <createTable tableName="room">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="number" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-12">
+        <createTable tableName="specialization">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="strategy_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-13">
+        <createTable tableName="status">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-14">
+        <createTable tableName="status_category">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-15">
+        <createTable tableName="strategy">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-16">
+        <createTable tableName="student">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="LONGBLOB"/>
+            <column name="group_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="english_level_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-17">
+        <createTable tableName="template">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="event_type_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="strategy_id" type="INT"/>
+            <column name="duration" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-18">
+        <createTable tableName="user">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nick_name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash_code" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="LONGBLOB"/>
+            <column name="location_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-19">
+        <addUniqueConstraint columnNames="level" constraintName="level_UNIQUE" tableName="english_level"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-20">
+        <addUniqueConstraint columnNames="name" constraintName="budget_owner_name_UNIQUE" tableName="budget_owner"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-21">
+        <addUniqueConstraint columnNames="name" constraintName="group_name_UNIQUE1" tableName="educational_group"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-22">
+        <addUniqueConstraint columnNames="name" constraintName="english_level_name_UNIQUE" tableName="english_level"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-23">
+        <addUniqueConstraint columnNames="name" constraintName="event_type_name_UNIQUE" tableName="event_type"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-24">
+        <addUniqueConstraint columnNames="name" constraintName="location_name_UNIQUE" tableName="location"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-25">
+        <addUniqueConstraint columnNames="name" constraintName="role_name_UNIQUE" tableName="role"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-26">
+        <addUniqueConstraint columnNames="name" constraintName="role_category_name_UNIQUE" tableName="role_category"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-27">
+        <addUniqueConstraint columnNames="name" constraintName="specialization_name_UNIQUE" tableName="specialization"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-28">
+        <addUniqueConstraint columnNames="name" constraintName="status_name_UNIQUE" tableName="status"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-29">
+        <addUniqueConstraint columnNames="name" constraintName="status_category_name_UNIQUE" tableName="status_category"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-30">
+        <addUniqueConstraint columnNames="nick_name" constraintName="nick_name_UNIQUE" tableName="user"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-31">
+        <createIndex indexName="fk_edu_group_budget_owner1" tableName="educational_group">
+            <column name="budget_owner_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-32">
+        <createIndex indexName="fk_event_educational_group1_idx" tableName="event">
+            <column name="group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-33">
+        <createIndex indexName="fk_event_event_type1_idx" tableName="event">
+            <column name="event_type_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-34">
+        <createIndex indexName="fk_event_room1_idx" tableName="event">
+            <column name="room_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-35">
+        <createIndex indexName="fk_expert_education_group1_idx" tableName="expert">
+            <column name="edu_group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-36">
+        <createIndex indexName="fk_group_location1_idx" tableName="educational_group">
+            <column name="location_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-37">
+        <createIndex indexName="fk_group_specialization1_idx" tableName="educational_group">
+            <column name="specialization_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-38">
+        <createIndex indexName="fk_group_status1_idx" tableName="educational_group">
+            <column name="status_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-39">
+        <createIndex indexName="fk_group_teacher_educational_group1_idx" tableName="group_teacher">
+            <column name="group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-40">
+        <createIndex indexName="fk_group_teacher_user1_idx" tableName="group_teacher">
+            <column name="teacher_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-41">
+        <createIndex indexName="fk_location_user1_idx" tableName="location">
+            <column name="coordinator_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-42">
+        <createIndex indexName="fk_role_category1_idx" tableName="role">
+            <column name="category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-43">
+        <createIndex indexName="fk_room_location1_idx" tableName="room">
+            <column name="location_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-44">
+        <createIndex indexName="fk_specialization_strategy_idx" tableName="specialization">
+            <column name="strategy_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-45">
+        <createIndex indexName="fk_status_status_category1_idx" tableName="status">
+            <column name="category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-46">
+        <createIndex indexName="fk_student_educational_group1_idx" tableName="student">
+            <column name="group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-47">
+        <createIndex indexName="fk_student_english_level1" tableName="student">
+            <column name="english_level_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-48">
+        <createIndex indexName="fk_template_event_type_idx" tableName="template">
+            <column name="event_type_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-49">
+        <createIndex indexName="fk_template_strategy_idx" tableName="template">
+            <column name="strategy_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-50">
+        <createIndex indexName="fk_user_location1_idx" tableName="user">
+            <column name="location_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-51">
+        <createIndex indexName="fk_user_role1_idx" tableName="user">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-52">
+        <addForeignKeyConstraint baseColumnNames="budget_owner_id" baseTableName="educational_group" constraintName="fk_edu_group_budget_owner1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="budget_owner"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-53">
+        <addForeignKeyConstraint baseColumnNames="location_id" baseTableName="educational_group" constraintName="fk_edu_group_location1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="location"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-54">
+        <addForeignKeyConstraint baseColumnNames="specialization_id" baseTableName="educational_group" constraintName="fk_edu_group_specialization1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="specialization"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-55">
+        <addForeignKeyConstraint baseColumnNames="status_id" baseTableName="educational_group" constraintName="fk_edu_group_status1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="status"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-56">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="event" constraintName="fk_event_educational_group1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="educational_group"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-57">
+        <addForeignKeyConstraint baseColumnNames="event_type_id" baseTableName="event" constraintName="fk_event_event_type1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="event_type"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-58">
+        <addForeignKeyConstraint baseColumnNames="room_id" baseTableName="event" constraintName="fk_event_room1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="room"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-59">
+        <addForeignKeyConstraint baseColumnNames="edu_group_id" baseTableName="expert" constraintName="fk_expert_education_group1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="educational_group"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-60">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="group_teacher" constraintName="fk_group_teacher_educational_group1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="educational_group"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-61">
+        <addForeignKeyConstraint baseColumnNames="teacher_id" baseTableName="group_teacher" constraintName="fk_group_teacher_user1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-62">
+        <addForeignKeyConstraint baseColumnNames="coordinator_id" baseTableName="location" constraintName="fk_location_user1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-63">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="role" constraintName="fk_role_category1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="role_category"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-64">
+        <addForeignKeyConstraint baseColumnNames="location_id" baseTableName="room" constraintName="fk_room_location1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="location"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-65">
+        <addForeignKeyConstraint baseColumnNames="strategy_id" baseTableName="specialization" constraintName="fk_specialization_strategy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="strategy"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-66">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="status" constraintName="fk_status_status_category1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="status_category"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-67">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="student" constraintName="fk_student_educational_group1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="educational_group"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-68">
+        <addForeignKeyConstraint baseColumnNames="english_level_id" baseTableName="student" constraintName="fk_student_english_level1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="english_level"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-69">
+        <addForeignKeyConstraint baseColumnNames="event_type_id" baseTableName="template" constraintName="fk_template_event_type" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="event_type"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-70">
+        <addForeignKeyConstraint baseColumnNames="strategy_id" baseTableName="template" constraintName="fk_template_strategy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="strategy"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-71">
+        <addForeignKeyConstraint baseColumnNames="location_id" baseTableName="user" constraintName="fk_user_location1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="location"/>
+    </changeSet>
+    <changeSet author="tdk (generated)" id="1502179246877-72">
+        <addForeignKeyConstraint baseColumnNames="role_id" baseTableName="user" constraintName="fk_user_role1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="role"/>
+    </changeSet>
+</databaseChangeLog>
