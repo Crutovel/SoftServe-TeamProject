@@ -65,6 +65,7 @@ insert into `educational_group` (`name`,location_id,start_date,finish_date, stat
 insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('DP-116',1,'2017-04-29', '2017-08-18',6,6,1);
 insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('SO-115',2,'2017-04-29', '2017-08-18',4,7,1);
 insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id,is_deleted) values ('DP-1115',1,'2017-04-29', '2017-08-18',6,7,1,TRUE);
+insert into `educational_group` (`name`,location_id,start_date,finish_date, status_id,specialization_id,budget_owner_id) values ('DP-118',1,'2017-04-29', '2017-08-18',4,1,1);
 
 insert into expert (edu_group_id, expert_name) values (1, 'Sergey');
 
@@ -73,17 +74,35 @@ insert into user (first_name,last_name,role_id,nick_name,password_hash_code,loca
 
 insert into group_teacher (teacher_id,group_id) values (1,1);
 insert into group_teacher (teacher_id,group_id) values (1,2);
+insert into group_teacher (teacher_id,group_id) values (1,5);
 
-insert into event_type (`name`,`is_key_date`) values ('demo',TRUE);
+insert into event_type (`name`,`is_key_date`) values ('Demo 1',TRUE);
+insert into event_type (`name`,`is_key_date`) values ('Demo 2',TRUE);
+insert into event_type (`name`,`is_key_date`) values ('Offerring Demo',TRUE);
+insert into event_type (`name`,`is_key_date`) values ('Final Demo',TRUE);
 insert into event_type (`name`) values ('lesson');
+insert into event_type (`name`) values ('weekly report');
+insert into event_type (`name`) values ('lecture');
 
 insert into room (`number`,location_id) values ('705',1);
 insert into room (`number`,location_id) values ('703',1);
 
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,1,2,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-25 18:00:00',120,1,1,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,2,2,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-25 18:00:00',120,2,1,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-08-17 18:00:00',120,2,1,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-08-14 00:00:00',120,3,1,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-08-18 18:00:00',120,2,2,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-18 18:00:00',120,2,3,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-05 18:00:00',120,2,4,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-27 18:30:00',30,3,5,1);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,4,6,2);
+insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 10:00:00',120,3,2,null);
+
+insert into template (event_type_id,strategy_id, duration) values (1,1,21);
+insert into template (event_type_id,strategy_id, duration) values (1,2,28);
+insert into template (event_type_id,strategy_id, duration) values (2,1,21);
+insert into template (event_type_id,strategy_id, duration) values (3,1,21);
+insert into template (event_type_id,strategy_id, duration) values (4,1,0);
+insert into template (event_type_id,strategy_id, duration) values (4,2,0);
 
 update location SET coordinator_id = 2 WHERE name='Dnipro';
 update location SET coordinator_id = 3 WHERE name='Sofia';
+

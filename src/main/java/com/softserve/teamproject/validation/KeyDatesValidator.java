@@ -90,14 +90,14 @@ public class KeyDatesValidator implements
    */
   private void validateKeyDate(KeyDateDto event) {
     updateTemplate(event);
-    TemporalField temporalField = WeekFields.of(Locale.US).dayOfWeek();
     if (event.getEventType() == null || !validationTemplate.containsKey(event.getEventType())) {
       throw new IllegalArgumentException("Incorrect Event Type");
     }
+    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
     LocalDate startOfWeek = validationTemplate.get(event.getEventType()).with(temporalField, 1);
-    LocalDate endOfWeek = startOfWeek.with(temporalField, 7);
+    LocalDate endOfWeek = startOfWeek.with(temporalField, 5);
     LocalDate eventDate = event.getDate();
-    if (!(eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek))) {
+    if (eventDate == null || !(eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek))) {
       throw new IllegalArgumentException("Wrong date specified");
     }
   }
@@ -106,10 +106,10 @@ public class KeyDatesValidator implements
     if (event.getGroup() == null) {
       throw new IllegalArgumentException("Group is not specified");
     }
+    checkAuth(event.getGroup());
     if (group == null || !event.getGroup().equals(group)) {
-      group = event.getGroup();
-      checkAuth();
       generateDates(event.getGroup());
+      group = event.getGroup();
     }
   }
 
@@ -118,7 +118,7 @@ public class KeyDatesValidator implements
     context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
   }
 
-  private void checkAuth() {
+  private void checkAuth(Group group) {
     User currentUser = userRepository.getUserByNickName(securityService.findLoggedInUsername());
     if ((currentUser.getRole().getName().equals("coordinator")
         && currentUser.getLocation() != group.getLocation())

@@ -46,8 +46,8 @@ public class TeacherGroupsManipulationServiceImplTest {
   @Test
   public void getAllGroupResourcesOfTheTeacher_correctTeacherName_returnGroupResources() {
     //Arrange
-    final List<String> EXPECTED_NAMES = Arrays.asList("DP-115", "DP-116");
-    final int EXPECTED_LIST_SIZE = 2;
+    final List<String> EXPECTED_NAMES = Arrays.asList("DP-115", "DP-116","DP-118");
+    final int EXPECTED_LIST_SIZE = 3;
 
     //Act
     List<GroupResource> list = teacherService.getAllGroupResourcesOfTheTeacher(TEACHER_WITH_GROUPS);

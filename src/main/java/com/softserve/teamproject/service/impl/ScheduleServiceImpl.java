@@ -2,9 +2,10 @@ package com.softserve.teamproject.service.impl;
 
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
 
-import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
+import com.softserve.teamproject.dto.KeyDateResponseDto;
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
@@ -23,7 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     this.eventRepository = eventRepository;
   }
 
-  public Iterable<EventResource> getKeyEventsByGroupId(Integer groupId) {
+  public List<EventResource> getKeyEventsByGroupId(Integer groupId) {
     return convertToResource(eventRepository.getKeyEventsByGroupId(groupId));
   }
 
@@ -73,25 +73,25 @@ public class ScheduleServiceImpl implements ScheduleService {
     return convertToResource(eventRepository.findAll(getKeyDates()));
   }
 
-  private Iterable<EventResource> getLastWeekEvents(Integer groupId) {
+  private List<EventResource> getLastWeekEvents(Integer groupId) {
     Group group = groupRepository.findOne(groupId);
-    TemporalField temporalField = WeekFields.of(Locale.US).dayOfWeek();
+    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
     LocalDate start;
     LocalDate end;
     if (group.getStatus().getStatusCategory().getName().equals("current")) {
       start = LocalDate.now().with(temporalField, 1);
-      end = LocalDate.now().with(temporalField, 7);
+      end = LocalDate.now().with(temporalField, 5);
     } else if (group.getStatus().getStatusCategory().getName().equals("finished")) {
       LocalDate finished = group.getFinishDate();
       start = finished.with(temporalField, 1);
-      end = finished.with(temporalField, 7);
+      end = finished.with(temporalField, 5);
     } else {
-      return null;
+      throw new IllegalArgumentException("Group is in planned state");
     }
     return getEventsByGroupId(groupId, start, end);
   }
 
-  public Iterable<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
+  public List<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
       LocalDate end) {
     if (start == null && end == null) {
       return getLastWeekEvents(groupId);
@@ -104,7 +104,7 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   public Iterable<EventResource> getEventsByFilter(
-      Integer[] groupId, LocalDate start, LocalDate end) {
+      List<Integer> groupId, LocalDate start, LocalDate end) {
     if (start == null || end == null) {
       throw new IllegalArgumentException("Dates must be specified");
     }
@@ -112,7 +112,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
   }
 
-  public Iterable<EventResource> getKeyEventsByFilter(Integer[] groupId) {
+  public Iterable<EventResource> getKeyEventsByFilter(List<Integer> groupId) {
     return convertToResource(eventRepository.getKeyEventsByGroupId(groupId));
   }
 
@@ -229,10 +229,11 @@ public class ScheduleServiceImpl implements ScheduleService {
    */
 
   public EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result) {
-    Map<KeyDateDto, String> invalidEvents = new HashMap<>();
+    List<KeyDateResponseDto> invalidEvents = new ArrayList<>();
     result.getFieldErrors().forEach(error -> {
       events.remove(KeyDateDto.class.cast(error.getRejectedValue()));
-      invalidEvents.put((KeyDateDto) error.getRejectedValue(), error.getDefaultMessage());
+      invalidEvents
+          .add(((KeyDateDto) error.getRejectedValue()).toResponseDto(error.getDefaultMessage()));
     });
 
     List<Event> savedEvents = saveKeyDates(events.stream().map(

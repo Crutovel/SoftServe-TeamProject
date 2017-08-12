@@ -28,12 +28,12 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
   }
 
   @Override
-  public List<Event> getKeyEventsByGroupId(Integer[] groups) {
+  public List<Event> getKeyEventsByGroupId(List<Integer> groups) {
     return from(QEvent.event).where(getKeyDates().and(getEventByGroupId(groups))).fetch();
   }
 
   @Override
-  public List<Event> getEventsByGroupId(Integer[] groups, LocalDateTime start,
+  public List<Event> getEventsByGroupId(List<Integer> groups, LocalDateTime start,
       LocalDateTime finish) {
     return from(QEvent.event)
         .where(getEventByGroupId(groups).and(getEventBetweenDates(start, finish))).fetch();

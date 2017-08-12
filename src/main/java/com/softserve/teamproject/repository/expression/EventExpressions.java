@@ -3,6 +3,7 @@ package com.softserve.teamproject.repository.expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.softserve.teamproject.entity.QEvent;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class EventExpressions {
 
@@ -14,7 +15,7 @@ public class EventExpressions {
     return QEvent.event.group.id.eq(id);
   }
 
-  public static BooleanExpression getEventByGroupId(Integer[] groups) {
+  public static BooleanExpression getEventByGroupId(List<Integer> groups) {
     return QEvent.event.group.id.in(groups);
   }
 

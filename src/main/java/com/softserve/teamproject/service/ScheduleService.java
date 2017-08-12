@@ -22,16 +22,16 @@ public interface ScheduleService {
   Iterable<EventResource> getAllKeyEvents();
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getEventsByGroupId(Integer groupId, LocalDate start, LocalDate end);
+  List<EventResource> getEventsByGroupId(Integer groupId, LocalDate start, LocalDate end);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getKeyEventsByGroupId(Integer groupId);
+  List<EventResource> getKeyEventsByGroupId(Integer groupId);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getEventsByFilter(Integer[] groupId, LocalDate start, LocalDate end);
+  Iterable<EventResource> getEventsByFilter(List<Integer> groupId, LocalDate start, LocalDate end);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getKeyEventsByFilter(Integer[] groupId);
+  Iterable<EventResource> getKeyEventsByFilter(List<Integer> groupId);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   EventResource getEvent(Integer id);
