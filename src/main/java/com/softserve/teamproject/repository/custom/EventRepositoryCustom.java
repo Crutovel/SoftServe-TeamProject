@@ -16,6 +16,8 @@ public interface EventRepositoryCustom {
 
   List<Event> getEventsByTime(LocalDateTime start, LocalDateTime finish);
 
+  List<Event> getCrossEvents(LocalDateTime start, LocalDateTime finish);
+
   Event getEventByEventTypeId(Integer eventTypeId, Integer groupId);
 
 }
