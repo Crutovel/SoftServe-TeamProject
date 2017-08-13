@@ -52,7 +52,8 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
   @Override
   public List<Event> getCrossEvents(LocalDateTime start,
       LocalDateTime finish) {
-    List<Event> crossDate = from(QEvent.event)
+    List<Event> crossDate = new ArrayList<>();
+    crossDate = from(QEvent.event)
         .where(getEventBetweenDates(start, finish)).fetch();
     if (crossDate.size() == 0) {
       List<Event> allEventsBeforeStarfrom = from(QEvent.event)

@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.softserve.teamproject.entity.deserializer.ExpertDeserializer;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -57,6 +59,41 @@ public class Student {
   @ManyToOne
   @JoinColumn(name = "english_level_id", referencedColumnName = "id")
   private EnglishLevel englishLevel;
+
+  @Column(name="incoming_test", nullable = false)
+  private Integer incomingTest;
+
+  @Column(name="entry_score", nullable = false)
+  private Double entryScore;
+
+  @ManyToOne
+  @JoinColumn(name = "approved_by_expert_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = ExpertDeserializer.class)
+  private Expert testApprovedByExpert;
+
+  public Integer getIncomingTest() {
+    return incomingTest;
+  }
+
+  public void setIncomingTest(Integer incomingTest) {
+    this.incomingTest = incomingTest;
+  }
+
+  public Double getEntryScore() {
+    return entryScore;
+  }
+
+  public void setEntryScore(Double entryScore) {
+    this.entryScore = entryScore;
+  }
+
+  public Expert getTestApprovedByExpert() {
+    return testApprovedByExpert;
+  }
+
+  public void setTestApprovedByExpert(Expert testApprovedByExpert) {
+    this.testApprovedByExpert = testApprovedByExpert;
+  }
 
   public int getId() {
     return id;

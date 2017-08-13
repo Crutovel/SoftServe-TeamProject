@@ -5,6 +5,7 @@ import com.softserve.teamproject.entity.BudgetOwner;
 import com.softserve.teamproject.entity.EnglishLevel;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.EventType;
+import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Room;
@@ -16,6 +17,8 @@ import java.time.LocalDateTime;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +40,7 @@ public abstract class TestData {
     Student student = new Student();
     student.setFirstName(firstName);
     student.setLastName("Carrey");
-    student.setEnglishLevel(new EnglishLevel(){{
+    student.setEnglishLevel(new EnglishLevel() {{
       setId(4);
     }});
     return student;
