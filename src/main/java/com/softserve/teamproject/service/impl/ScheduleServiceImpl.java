@@ -6,9 +6,9 @@ import static com.softserve.teamproject.utils.DateUtil.getSundayDateOfWeek;
 
 import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.dto.EventDto;
-import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
@@ -17,15 +17,12 @@ import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.service.ScheduleService;
 import com.softserve.teamproject.utils.DateUtil;
-import com.softserve.teamproject.validation.KeyDatesValidator;
-import java.security.Principal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import com.softserve.teamproject.validation.EventValidator;
 import com.softserve.teamproject.validation.impl.InvalidField;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -36,7 +33,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.persistence.PersistenceContext;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -140,7 +136,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @param groupId the id of the group
    * @param principal the authenticated user
    * @return eventResourceList - the list of elements of the EventResource type to display them in
-   * hateoas style in json
+   * hateoas style in json.
    * @throws AccessDeniedException when a coordinator wants to create a schedule in other location
    * @throws ValidationException when the  information is incorrect
    */
@@ -201,7 +197,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @param events the list of events that form the schedule
    * @param principal the authenticated user
    * @return eventResourceList - the list of elements of the EventResource type to display them in
-   * hateoas style in json
+   * hateoas style in json.
    * @throws AccessDeniedException when a coordinator wants to update schedule in other location
    * @throws ValidationException when the information provided for the update is incorrect
    */
@@ -237,7 +233,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    *
    * @param events list of key dates to add or update
    * @return <code>EventResponseWrapper</code> that contains info about successful updating and
-   * invalid events
+   * invalid events.
    */
 
   public EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result) {
@@ -302,7 +298,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (eventDateTime.isAfter(finish.plusDays(1).atStartOfDay())) {
           break;
         }
-        temp = new Event(eventDateTime, event.getDuration(),
+        temp = new Event(null,eventDateTime, event.getDuration(),
             event.getRoom(), event.getGroup(), event.getEventType());
         if (isEventConflicts(temp)) {
           incorrect.add(temp);

@@ -2,9 +2,9 @@ package com.softserve.teamproject.service;
 
 import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.dto.EventDto;
-import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import java.security.Principal;

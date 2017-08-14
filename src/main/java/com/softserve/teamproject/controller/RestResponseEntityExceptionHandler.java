@@ -1,6 +1,5 @@
 package com.softserve.teamproject.controller;
 
-import edu.umd.cs.findbugs.annotations.OverrideMustInvoke;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -126,5 +125,4 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         ex, createResponseBody(MSG_BAD_REQUEST + ": " + map.toString()), new HttpHeaders(),
         HttpStatus.BAD_REQUEST, request);
   }
-
 }
