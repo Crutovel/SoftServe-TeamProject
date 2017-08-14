@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
-
 public class CopyPasteScheduleWrapper {
 
   @NotNull(message = "groupid must be specified")

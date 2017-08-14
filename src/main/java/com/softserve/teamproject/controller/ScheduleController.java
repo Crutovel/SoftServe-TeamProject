@@ -170,14 +170,11 @@ public class ScheduleController {
    * Method allows to copy paste a schedule for the group with the specified id.
    *
    * @param copyPasteSchedule wrapper for request info such as group id, copy date, paste date
-   * @param principal to get the name of the authenticated user
    * @return copyPasteSchedule wrapper with group id, copy date, paste date and conflicts
    */
   @PostMapping("/events/copypaste")
-  @ValidCopyPasteSchedule
   public CopyPasteScheduleWrapper copyPasteSchedule(
-      @RequestBody @Valid CopyPasteScheduleWrapper copyPasteSchedule,
-      @NotNull Principal principal) {
+      @RequestBody @ValidCopyPasteSchedule @Valid CopyPasteScheduleWrapper copyPasteSchedule) {
     copyPasteSchedule.setConflicts(scheduleService.copyPasteSchedule(copyPasteSchedule));
     return copyPasteSchedule;
   }

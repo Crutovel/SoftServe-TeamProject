@@ -4,25 +4,29 @@ import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
-import java.security.Principal;
+import com.softserve.teamproject.service.SecurityService;
 import java.time.LocalDate;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import javax.validation.constraintvalidation.SupportedValidationTarget;
-import javax.validation.constraintvalidation.ValidationTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.stereotype.Service;
 
-
-@SupportedValidationTarget(ValidationTarget.PARAMETERS)
+@Service
 public class CopyPasteScheduleValidator implements
-    ConstraintValidator<ValidCopyPasteSchedule, Object[]> {
+    ConstraintValidator<ValidCopyPasteSchedule, CopyPasteScheduleWrapper> {
 
   private UserRepository userRepository;
+  private SecurityService securityService;
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
     this.userRepository = userRepository;
+  }
+
+  @Autowired
+  public void setSecurityService(SecurityService securityService) {
+    this.securityService = securityService;
   }
 
   @Override
@@ -30,7 +34,7 @@ public class CopyPasteScheduleValidator implements
   }
 
   private void validateGroup(Group group, User user) {
-    if (user.getRole().getRoleCategory().getName().equals("itacademy")
+    if (user.getRole().getName().equals("teacher")
         && !group.getTeachers().contains(user)) {
       throw new AccessDeniedException(
           "teacher can copy/paste the schedule only for their groups");
@@ -93,17 +97,14 @@ public class CopyPasteScheduleValidator implements
   }
 
   @Override
-  public boolean isValid(Object[] value, ConstraintValidatorContext context) {
-    if (value.length != 2 || !(value[0] instanceof CopyPasteScheduleWrapper)
-        || !(value[1] instanceof Principal)) {
-      throw new IllegalArgumentException("Illegal method signature");
-    }
-    CopyPasteScheduleWrapper wrapper = (CopyPasteScheduleWrapper) value[0];
-    Group group = wrapper.getGroup();
-    User user = userRepository.getUserByNickName(((Principal) value[1]).getName());
+  public boolean isValid(CopyPasteScheduleWrapper value, ConstraintValidatorContext context) {
+
+    Group group = value.getGroup();
+    User user = userRepository.getUserByNickName(securityService.findLoggedInUsername());
     try {
       validateGroup(group, user);
-      validateDates(wrapper.getCopyWeekDate(), wrapper.getPasteWeekDate(), wrapper.getPasteFillDate(), group);
+      validateDates(value.getCopyWeekDate(), value.getPasteWeekDate(), value.getPasteFillDate(),
+          group);
       return true;
     } catch (AccessDeniedException | IllegalArgumentException e) {
       context.disableDefaultConstraintViolation();
