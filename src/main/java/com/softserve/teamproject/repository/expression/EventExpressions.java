@@ -18,8 +18,12 @@ public class EventExpressions {
     return QEvent.event.group.id.in(groups);
   }
 
-  public static BooleanExpression getEventBetweenDates(LocalDateTime start,LocalDateTime finish) {
-    return QEvent.event.dateTime.between(start,finish);
+  public static BooleanExpression getEventBetweenDates(LocalDateTime start, LocalDateTime finish) {
+    return QEvent.event.dateTime.between(start, finish);
+  }
+
+  public static BooleanExpression getEventsBeforeStart(LocalDateTime start) {
+    return QEvent.event.dateTime.before(start);
   }
 
   public static BooleanExpression eventByEventTypeId(Integer id) {
