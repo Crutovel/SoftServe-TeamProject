@@ -89,7 +89,7 @@ public class Group {
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
   private BudgetOwner budgetOwner;
 
-  @Column(name = "is_deleted", columnDefinition = "boolean default false")
+  @Column(name = "is_deleted", columnDefinition = "bit(1) default false")
   private boolean isDeleted;
 
   public int getId() {

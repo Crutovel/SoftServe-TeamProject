@@ -4,16 +4,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.softserve.teamproject.entity.deserializer.EventTypeDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateTimeDeserializer;
+import com.softserve.teamproject.entity.deserializer.RoomDeserializer;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "event")
@@ -32,6 +27,7 @@ public class Event {
 
   @ManyToOne
   @JoinColumn(name = "room_id", referencedColumnName = "id")
+  @JsonDeserialize(using = RoomDeserializer.class)
   private Room room;
 
   @ManyToOne
@@ -60,9 +56,7 @@ public class Event {
     this.eventType = event.getEventType();
   }
 
-  public Event() {
-
-  }
+  public Event() { }
 
   public Integer getId() {
     return id;

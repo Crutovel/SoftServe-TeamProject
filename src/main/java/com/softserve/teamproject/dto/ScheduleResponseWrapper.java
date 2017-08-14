@@ -4,10 +4,10 @@ import com.softserve.teamproject.entity.resource.EventResource;
 import java.util.List;
 import java.util.Map;
 
-public class EventResponseWrapper {
+public class ScheduleResponseWrapper {
 
   List<EventResource> succeed;
-  Map<KeyDateDto, String> invalid;
+  Map<String, String> invalid;
 
   public List<EventResource> getSucceed() {
     return succeed;
@@ -17,17 +17,17 @@ public class EventResponseWrapper {
     this.succeed = succeed;
   }
 
-  public Map<KeyDateDto, String> getInvalid() {
+  public Map<String, String> getInvalid() {
     return invalid;
   }
 
-  public void setInvalid(Map<KeyDateDto, String> invalid) {
+  public void setInvalid(Map<String, String> invalid) {
     this.invalid = invalid;
   }
 
-  public EventResponseWrapper(
+  public ScheduleResponseWrapper(
       List<EventResource> succeed,
-      Map<KeyDateDto, String> invalid) {
+      Map<String, String> invalid) {
     this.succeed = succeed;
     this.invalid = invalid;
   }

@@ -41,6 +41,13 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
   }
 
   @Override
+  public List<Event> getEventsByTime(LocalDateTime start,
+                                        LocalDateTime finish) {
+    return from(QEvent.event)
+            .where((getEventBetweenDates(start, finish))).fetch();
+  }
+
+  @Override
   public List<Event> getEventsByGroupId(Integer groupId, LocalDateTime start,
       LocalDateTime finish) {
     return from(QEvent.event)
