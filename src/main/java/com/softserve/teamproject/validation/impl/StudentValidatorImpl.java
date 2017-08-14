@@ -29,7 +29,7 @@ public class StudentValidatorImpl implements StudentValidator {
   }
 
   @Override
-  public void checkStudentFields(List<Student> students) {
+  public void fillNotUpdatedFields(List<Student> students) {
     for (Student student : students) {
       Student existedStudent = studentRepository.findOne(student.getId());
       Class<?> studentClass = student.getClass();

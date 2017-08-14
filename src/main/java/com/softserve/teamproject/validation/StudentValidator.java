@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface StudentValidator {
 
-  void checkStudentFields(List<Student> students);
+  void fillNotUpdatedFields(List<Student> students);
 
   void checkCoordinatorLocationToManipulateStudent(Group group, String userName);
 

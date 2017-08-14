@@ -102,7 +102,7 @@ public class StudentServiceImpl implements StudentService {
     for (Student student : students) {
       student.setGroup(group);
       if (student.getEnglishLevel() == null) {
-        student.setEnglishLevel(englishLevelRepository.findOne(3));
+        student.setEnglishLevel(englishLevelRepository.findByName("intermediate"));
       }
     }
     studentRepository.save(students);
@@ -141,4 +141,5 @@ public class StudentServiceImpl implements StudentService {
     studentRepository.save(student);
     return student;
   }
+
 }

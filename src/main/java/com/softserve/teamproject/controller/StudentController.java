@@ -68,7 +68,7 @@ public class StudentController {
       responseContainer = "List")
   public Iterable<StudentResource> editStudents(@RequestBody List<Student> students,
       Principal principal) {
-    studentValidator.checkStudentFields(students);
+    studentValidator.fillNotUpdatedFields(students);
     return studentService.updateStudents(students, principal.getName());
   }
 }

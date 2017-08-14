@@ -7,4 +7,6 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 public interface EnglishLevelRepository extends JpaRepository<EnglishLevel, Integer>,
     QueryDslPredicateExecutor<EnglishLevel> {
 
+  EnglishLevel findByName(String name);
+
 }
