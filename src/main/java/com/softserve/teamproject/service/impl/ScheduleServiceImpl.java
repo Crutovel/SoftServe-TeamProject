@@ -11,6 +11,7 @@ import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.GroupRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.ScheduleService;
 import com.softserve.teamproject.validation.EventValidator;
 import com.softserve.teamproject.validation.impl.InvalidField;
@@ -27,6 +28,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -38,7 +40,18 @@ public class ScheduleServiceImpl implements ScheduleService {
   private GroupRepository groupRepository;
   private EventValidator eventValidator;
   private EventResourceAssembler eventResourceAssembler;
+  private MessageByLocaleService messageByLocaleService;
 
+  @Value("${group.current}")
+  private String currentGroupStatus;
+  @Value("${group.finished}")
+  private String finishedGroupStatus;
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
 
   @Autowired
   public void setEventResourceAssembler(
@@ -78,10 +91,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     TemporalField temporalField = WeekFields.of(Locale.US).dayOfWeek();
     LocalDate start;
     LocalDate end;
-    if (group.getStatus().getStatusCategory().getName().equals("current")) {
+    if (group.getStatus().getStatusCategory().getName().equals(currentGroupStatus)) {
       start = LocalDate.now().with(temporalField, 1);
       end = LocalDate.now().with(temporalField, 7);
-    } else if (group.getStatus().getStatusCategory().getName().equals("finished")) {
+    } else if (group.getStatus().getStatusCategory().getName().equals(finishedGroupStatus)) {
       LocalDate finished = group.getFinishDate();
       start = finished.with(temporalField, 1);
       end = finished.with(temporalField, 7);
@@ -97,7 +110,8 @@ public class ScheduleServiceImpl implements ScheduleService {
       return getLastWeekEvents(groupId);
     }
     if (start == null || end == null) {
-      throw new IllegalArgumentException("Bad request");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.getEventsById"));
     }
     return convertToResource(eventRepository.getEventsByGroupId(
         groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
@@ -106,7 +120,8 @@ public class ScheduleServiceImpl implements ScheduleService {
   public Iterable<EventResource> getEventsByFilter(
       Integer[] groupId, LocalDate start, LocalDate end) {
     if (start == null || end == null) {
-      throw new IllegalArgumentException("Dates must be specified");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.getEventsByFilter"));
     }
     return convertToResource(eventRepository.getEventsByGroupId(
         groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
