@@ -25,6 +25,10 @@ public class EventExpressions {
     return QEvent.event.dateTime.between(start, finish);
   }
 
+  public static BooleanExpression getEventsBeforeStart(LocalDateTime start) {
+    return QEvent.event.dateTime.before(start);
+  }
+
   public static BooleanExpression eventByEventTypeId(Integer id) {
     return QEvent.event.eventType.id.eq(id);
   }

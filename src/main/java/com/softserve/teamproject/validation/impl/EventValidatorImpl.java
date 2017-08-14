@@ -99,7 +99,7 @@ public class EventValidatorImpl implements EventValidator {
     for (Field field : eventClass.getDeclaredFields()) {
       field.setAccessible(true);
       try {
-        if (field.get(event) == null) {
+        if (field.get(event) == null&&!(field.getName().equals("id"))) {
           invalidField.setName(field.getName());
           throw new ValidationException(
               "Please, provide the relevant information for the field -" + field.getName()
@@ -124,7 +124,7 @@ public class EventValidatorImpl implements EventValidator {
       throw new AccessDeniedException(
           ": The coordinators can create the schedule only in their location");
     }
-    if (event.getId() == 0) {
+    if (event.getId()==null) {
       invalidField.setName("eventId");
       throw new ValidationException("Please specify the event you are going to change.");
     }
@@ -186,7 +186,7 @@ public class EventValidatorImpl implements EventValidator {
     int duration = event.getDuration();
     LocalDateTime startTime = event.getDateTime();
     LocalDateTime endTime = startTime.plusMinutes(duration);
-    List<Event> crossEvents = eventRepository.getEventsByTime(startTime, endTime);
+    List<Event> crossEvents = eventRepository.getCrossEvents(startTime, endTime);
     if (crossEvents.isEmpty()) {
       return true;
     } else {
@@ -203,12 +203,12 @@ public class EventValidatorImpl implements EventValidator {
     int duration = event.getDuration();
     LocalDateTime startTime = event.getDateTime();
     LocalDateTime endTime = startTime.plusMinutes(duration);
-    List<Event> crossEvents = eventRepository.getEventsByTime(startTime, endTime);
+    List<Event> crossEvents = eventRepository.getCrossEvents(startTime, endTime);
     if (crossEvents.isEmpty()) {
       return true;
     } else {
       for (Event e : crossEvents) {
-        if (event.getRoom().equals(e.getRoom()) && !(event.getId() == e.getId())) {
+        if (event.getRoom().equals(e.getRoom()) && !(event.getId().equals(e.getId()))) {
           return false;
         }
       }
