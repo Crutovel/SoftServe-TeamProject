@@ -1,9 +1,11 @@
 package com.softserve.teamproject;
 
 import com.softserve.teamproject.entity.BudgetOwner;
+import com.softserve.teamproject.entity.EnglishLevel;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Specialization;
+import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,16 @@ public abstract class TestData {
   public static Set<GroupResource> getGroupResourceSet(String... names) {
     Set<GroupResource> groupResources = new LinkedHashSet<>(getGroupResourceList(names));
     return groupResources;
+  }
+
+  public static Student getStudent(String firstName) {
+    Student student = new Student();
+    student.setFirstName(firstName);
+    student.setLastName("Carrey");
+    student.setEnglishLevel(new EnglishLevel(){{
+      setId(4);
+    }});
+    return student;
   }
 
   public static List<GroupResource> getGroupResourceList(String... names) {

@@ -12,15 +12,15 @@ import org.springframework.test.context.jdbc.Sql;
 
 /**
  * Use to avoid of reoccurrence Sql and Transactional annotations in each testing method of class
- * that test methods from GroupService interface
+ * that test methods from StudentService interface
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Sql("/test-data-group.sql")
+@Sql("/test-data-student.sql")
 @Sql(scripts = "/test-clean-table.sql",
     executionPhase = AFTER_TEST_METHOD)
 @Transactional
-public @interface TestGroup {
+public @interface TestStudent {
 
 }

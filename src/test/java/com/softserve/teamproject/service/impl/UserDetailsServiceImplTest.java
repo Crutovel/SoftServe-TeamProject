@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import com.softserve.teamproject.entity.Role;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,8 @@ public class UserDetailsServiceImplTest {
 
   @Mock
   UserRepository userRepository;
+  @Mock
+  MessageByLocaleService messageByLocaleService;
 
   @Before
   public void init() {
@@ -30,6 +33,7 @@ public class UserDetailsServiceImplTest {
     when(userRepository.getUserByNickName(anyString())).thenReturn(null);
     UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
     userDetailsService.setUserRepository(userRepository);
+    userDetailsService.setMessageByLocaleService(messageByLocaleService);
     userDetailsService.loadUserByUsername("");
   }
 

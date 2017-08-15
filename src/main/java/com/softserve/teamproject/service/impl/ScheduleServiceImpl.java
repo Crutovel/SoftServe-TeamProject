@@ -351,7 +351,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     List<Event> copyEvents = getEventsForCopy(group.getId(), copyWeekDate);
     if (copyEvents.size() == 0) {
       throw new IllegalArgumentException(
-          messageByLocaleService.getMessage("illegalArgs.schedule.dates.existOne")
+          messageByLocaleService.getMessage("illegalArgs.schedule.noCopyEvents")
       );
     }
     LocalDate start;
