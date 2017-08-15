@@ -350,7 +350,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     LocalDate pasteEnd = copyPasteSchedule.getPasteFillDate();
     List<Event> copyEvents = getEventsForCopy(group.getId(), copyWeekDate);
     if (copyEvents.size() == 0) {
-      throw new IllegalArgumentException("No events for copy");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.dates.existOne")
+      );
     }
     LocalDate start;
     LocalDate end;

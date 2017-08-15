@@ -13,12 +13,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class CopyPasteScheduleWrapper {
 
-  @NotNull(message = "groupid must be specified")
+  @NotNull(message = "{NotNull.copyPasteScheduleWrapper.group}")
   @JsonDeserialize(using = GroupDeserializer.class)
   @JsonSerialize(using = GroupSerializer.class)
   private Group group;
 
-  @NotNull(message = "copyWeekDate must be specified")
+  @NotNull(message = "{NotNull.copyPasteScheduleWrapper.copyWeekDate}")
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

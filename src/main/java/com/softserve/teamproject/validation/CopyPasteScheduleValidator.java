@@ -4,6 +4,7 @@ import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.SecurityService;
 import java.time.LocalDate;
 import javax.validation.ConstraintValidator;
@@ -18,6 +19,7 @@ public class CopyPasteScheduleValidator implements
 
   private UserRepository userRepository;
   private SecurityService securityService;
+  private MessageByLocaleService messageByLocaleService;
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -29,6 +31,12 @@ public class CopyPasteScheduleValidator implements
     this.securityService = securityService;
   }
 
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
+
   @Override
   public void initialize(ValidCopyPasteSchedule constraint) {
   }
@@ -37,41 +45,54 @@ public class CopyPasteScheduleValidator implements
     if (user.getRole().getName().equals("teacher")
         && !group.getTeachers().contains(user)) {
       throw new AccessDeniedException(
-          "teacher can copy/paste the schedule only for their groups");
+          messageByLocaleService.getMessage("auth.schedule.copyPaste.teacher"));
     }
     if (user.getRole().getName().equals("coordinator") && !group.getLocation()
         .equals(user.getLocation())) {
       throw new AccessDeniedException(
-          "coordinator can create the schedule only in their location");
+          messageByLocaleService.getMessage("auth.schedule.copyPaste.coordinator"));
     }
     if (group.getStatus().getStatusCategory().getName().equals("future")) {
-      throw new IllegalArgumentException("group not started yet");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.group.notStarted"));
     }
     if (group.getStatus().getStatusCategory().getName().equals("finished")) {
-      throw new IllegalArgumentException("group already finished");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.group.alreadyFinished")
+      );
     }
   }
 
   private void validatePasteDate(LocalDate pasteDate, LocalDate today, LocalDate startDate,
       LocalDate finishDate) {
     if (pasteDate.isBefore(startDate)) {
-      throw new IllegalArgumentException("You cannot paste events before group start date.");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.pasteDate.early")
+      );
     }
     if (pasteDate.isBefore(today)) {
-      throw new IllegalArgumentException("You cannot paste events retroactively.");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.pasteDate.beforeToday")
+      );
     }
     if (pasteDate.isAfter(finishDate)) {
-      throw new IllegalArgumentException("You cant paste events after group finish date.");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.pasteDate.late")
+      );
     }
   }
 
   private void validateCopyDate(LocalDate copyDate, LocalDate startDate,
       LocalDate finishDate) {
     if (copyDate.isBefore(startDate)) {
-      throw new IllegalArgumentException("You cannot copy events before group start date");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.copyDate.early")
+      );
     }
     if (copyDate.isAfter(finishDate)) {
-      throw new IllegalArgumentException("You cant copy events after group finish date");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.copyDate.late")
+      );
     }
   }
 
@@ -81,7 +102,8 @@ public class CopyPasteScheduleValidator implements
     if ((pasteWeekDate == null && pasteFillDate == null)
         || (pasteWeekDate != null && pasteFillDate != null)) {
       throw new IllegalArgumentException(
-          "There must be one parameter: pasteWeekDate or pasteFillDate");
+          messageByLocaleService.getMessage("illegalArgs.schedule.noCopyEvents")
+      );
     }
     LocalDate startDate = group.getStartDate();
     LocalDate finishDate = group.getFinishDate();
@@ -98,7 +120,6 @@ public class CopyPasteScheduleValidator implements
 
   @Override
   public boolean isValid(CopyPasteScheduleWrapper value, ConstraintValidatorContext context) {
-
     Group group = value.getGroup();
     User user = userRepository.getUserByNickName(securityService.findLoggedInUsername());
     try {

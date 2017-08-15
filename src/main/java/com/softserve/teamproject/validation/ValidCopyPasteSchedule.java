@@ -18,7 +18,7 @@ public @interface ValidCopyPasteSchedule {
   /**
    * @return message for invalid result
    */
-  String message() default "Invalid arguments";
+  String message() default "{com.softserve.teamproject.validation.ValidCopyPasteSchedule.message}";
 
   Class<?>[] groups() default {};
 
