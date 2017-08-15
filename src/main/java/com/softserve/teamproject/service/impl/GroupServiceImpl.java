@@ -13,6 +13,7 @@ import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
 import com.softserve.teamproject.service.GroupService;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.validation.GroupValidator;
 import java.util.List;
 import javax.validation.ValidationException;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +36,16 @@ public class GroupServiceImpl implements GroupService {
   private LocationRepository locationRepository;
   private GroupResourceAssembler groupResourceAssembler;
   private GroupValidator groupValidator;
+  private MessageByLocaleService messageByLocaleService;
+
+  @Value("${group.planned}")
+  private String plannedGroupStatus;
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
 
   @Autowired
   public void setGroupValidator(GroupValidator groupValidator) {
@@ -88,11 +100,12 @@ public class GroupServiceImpl implements GroupService {
   @Override
   public GroupResource addGroup(Group group, String userName) throws AccessDeniedException {
     if (!groupValidator.isValid(group)) {
-      throw new ValidationException("This group already exists");
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.error.group.exist"));
     }
     User user = userRepository.getUserByNickName(userName);
     groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
-    Status status = statusRepository.getStatusByName("planned");
+    Status status = statusRepository.getStatusByName(plannedGroupStatus);
     group.setStatus(status);
     group = groupRep.save(group);
     return groupResourceAssembler.toResource(group);
@@ -111,10 +124,10 @@ public class GroupServiceImpl implements GroupService {
     User user = userRepository.getUserByNickName(userName);
     Group group = groupRep.findOne(groupId);
     if (group == null) {
-      throw new ValidationException("group is not exist");
+      throw new ValidationException(messageByLocaleService.getMessage("valid.error.group.notExist"));
     }
     groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
-    if (!group.getStatus().getName().equalsIgnoreCase("planned")) {
+    if (!group.getStatus().getName().equalsIgnoreCase(plannedGroupStatus)) {
       group.setDeleted(true);
       groupRep.save(group);
     } else {
@@ -137,7 +150,7 @@ public class GroupServiceImpl implements GroupService {
   public GroupResource updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
     if (!groupValidator.isValidGroupName(group)) {
-      throw new ValidationException("Group with this name already exists.");
+      throw new ValidationException(messageByLocaleService.getMessage("valid.error.group.exist"));
     }
     User user = userRepository.getUserByNickName(userName);
     groupValidator.checkGroupEditPermissions(user, group, currentStatus);

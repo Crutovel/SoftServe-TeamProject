@@ -6,6 +6,7 @@ import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Template;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.SecurityService;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
@@ -17,6 +18,7 @@ import java.util.Map;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +32,18 @@ public class KeyDatesValidator implements
   private UserRepository userRepository;
   private SecurityService securityService;
   private Group group;
+  private MessageByLocaleService messageByLocaleService;
+  private Map<EventType, LocalDate> validationTemplate = new HashMap<>();
+  @Value("${user.teacher}")
+  private String teacher;
+  @Value("${user.coordinator}")
+  private String coordinator;
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -56,8 +70,6 @@ public class KeyDatesValidator implements
     }
   }
 
-  private Map<EventType, LocalDate> validationTemplate = new HashMap<>();
-
   /**
    * Generate dates, which are pointing to demo week
    *
@@ -65,7 +77,8 @@ public class KeyDatesValidator implements
    */
   private void generateDates(Group group) {
     if (group.getStartDate() == null) {
-      throw new IllegalArgumentException("Group start date must be specified");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.keyDate.generateDate.start"));
     }
     LocalDate startDate = group.getStartDate();
     List<Template> templates = group.getSpecialization().getStrategy().getTemplates();
@@ -91,20 +104,23 @@ public class KeyDatesValidator implements
   private void validateKeyDate(KeyDateDto event) {
     updateTemplate(event);
     if (event.getEventType() == null || !validationTemplate.containsKey(event.getEventType())) {
-      throw new IllegalArgumentException("Incorrect Event Type");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.keyDate.validate.eventType"));
     }
     TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
     LocalDate startOfWeek = validationTemplate.get(event.getEventType()).with(temporalField, 1);
     LocalDate endOfWeek = startOfWeek.with(temporalField, 5);
     LocalDate eventDate = event.getDate();
     if (eventDate == null || !(eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek))) {
-      throw new IllegalArgumentException("Wrong date specified");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.keyDate.validate.date"));
     }
   }
 
   private void updateTemplate(KeyDateDto event) {
     if (event.getGroup() == null) {
-      throw new IllegalArgumentException("Group is not specified");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.keyDate.event.group"));
     }
     checkAuth(event.getGroup());
     if (group == null || !event.getGroup().equals(group)) {
@@ -120,11 +136,12 @@ public class KeyDatesValidator implements
 
   private void checkAuth(Group group) {
     User currentUser = userRepository.getUserByNickName(securityService.findLoggedInUsername());
-    if ((currentUser.getRole().getName().equals("coordinator")
+    if ((currentUser.getRole().getName().equals(coordinator)
         && currentUser.getLocation() != group.getLocation())
-        || (currentUser.getRole().getName().equals("teacher")
+        || (currentUser.getRole().getName().equals(teacher)
         && !group.getTeachers().contains(currentUser))) {
-      throw new IllegalArgumentException("Access denied");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("auth.error.access.denied"));
     }
   }
 }
