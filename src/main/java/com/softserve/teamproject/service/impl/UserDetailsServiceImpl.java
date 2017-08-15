@@ -53,7 +53,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       UsernameNotFoundException {
     User user = userRepository.getUserByNickName(userName);
     if (user == null) {
-      throw new UsernameNotFoundException(messageByLocaleService.getMessage("username.notFound.userDetailService", userName));//"User " + userName + " is not found."
+      throw new UsernameNotFoundException(
+          messageByLocaleService.getMessage("username.notFound.userDetailService", userName)
+      );//"User " + userName + " is not found."
     }
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
     Role role = user.getRole();

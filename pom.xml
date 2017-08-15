@@ -105,6 +105,11 @@
       <version>${querydsl.version}</version>
     </dependency>
     <dependency>
+      <groupId>com.querydsl</groupId>
+      <artifactId>querydsl-sql</artifactId>
+      <version>${querydsl.version}</version>
+    </dependency>
+    <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
       <version>${json.simple.version}</version>
@@ -128,6 +133,16 @@
       <artifactId>springfox-data-rest</artifactId>
       <version>${springfox.version}</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>4.3.9.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>4.3.9.RELEASE</version>
     </dependency>
 
   </dependencies>

@@ -1,10 +1,14 @@
 package com.softserve.teamproject.service.impl;
 
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
+import static com.softserve.teamproject.utils.DateUtil.getMondayDateOfWeek;
+import static com.softserve.teamproject.utils.DateUtil.getSundayDateOfWeek;
 
-import com.softserve.teamproject.dto.ScheduleResponseWrapper;
+import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
+import com.softserve.teamproject.dto.EventDto;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.assembler.EventResourceAssembler;
@@ -13,13 +17,17 @@ import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.ScheduleService;
+import com.softserve.teamproject.utils.DateUtil;
 import com.softserve.teamproject.validation.EventValidator;
 import com.softserve.teamproject.validation.impl.InvalidField;
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +40,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
+
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -52,7 +61,7 @@ public class ScheduleServiceImpl implements ScheduleService {
       MessageByLocaleService messageByLocaleService) {
     this.messageByLocaleService = messageByLocaleService;
   }
-
+  
   @Autowired
   public void setEventResourceAssembler(
       EventResourceAssembler eventResourceAssembler) {
@@ -143,7 +152,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @param groupId the id of the group
    * @param principal the authenticated user
    * @return eventResourceList - the list of elements of the EventResource type to display them in
-   * hateoas style in json
+   * hateoas style in json.
    * @throws AccessDeniedException when a coordinator wants to create a schedule in other location
    * @throws ValidationException when the  information is incorrect
    */
@@ -204,7 +213,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @param events the list of events that form the schedule
    * @param principal the authenticated user
    * @return eventResourceList - the list of elements of the EventResource type to display them in
-   * hateoas style in json
+   * hateoas style in json.
    * @throws AccessDeniedException when a coordinator wants to update schedule in other location
    * @throws ValidationException when the information provided for the update is incorrect
    */
@@ -240,7 +249,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    *
    * @param events list of key dates to add or update
    * @return <code>EventResponseWrapper</code> that contains info about successful updating and
-   * invalid events
+   * invalid events.
    */
 
   public EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result) {
@@ -274,4 +283,128 @@ public class ScheduleServiceImpl implements ScheduleService {
     events.forEach(event -> eventResources.add(eventResourceAssembler.toResource(event)));
     return eventResources;
   }
+
+  private void prepareEventsForCopy(List<Event> copyWeekEvents, LocalDate start) {
+    long diff = ChronoUnit.DAYS.between(DateUtil.getMondayDateOfWeek(start),
+        DateUtil.getMondayDateOfWeek(copyWeekEvents.get(0).getDateTime().toLocalDate()));
+    if (diff > 0) {
+      for (Event event : copyWeekEvents) {
+        event.setDateTime(event.getDateTime().plusDays(diff));
+      }
+    }
+    if (diff < 0) {
+      for (Event event : copyWeekEvents) {
+        event.setDateTime(event.getDateTime().minusDays(diff));
+      }
+    }
+  }
+
+  private void generateEventsForPaste(List<Event> copyWeekEvents, LocalDate start,
+      LocalDate finish, List<Event> correct, List<Event> incorrect) {
+    prepareEventsForCopy(copyWeekEvents, start);
+    LocalDateTime eventDateTime;
+    Event temp;
+    for (Event event : copyWeekEvents) {
+      for (int i = 0; ; i++) {
+        eventDateTime = event.getDateTime().plusDays(7 * i);
+
+        if (eventDateTime.isBefore(start.atStartOfDay())) {
+          continue;
+        }
+        if (eventDateTime.isAfter(finish.plusDays(1).atStartOfDay())) {
+          break;
+        }
+        temp = new Event(null,eventDateTime, event.getDuration(),
+            event.getRoom(), event.getGroup(), event.getEventType());
+        if (isEventConflicts(temp)) {
+          incorrect.add(temp);
+        } else {
+          correct.add(temp);
+        }
+      }
+    }
+  }
+
+  private List<Event> getEventsForCopy(Integer groupId, LocalDate copyWeekDate) {
+    LocalDateTime start = getMondayDateOfWeek(copyWeekDate).atStartOfDay();
+    LocalDateTime end = getSundayDateOfWeek(copyWeekDate).plusDays(1).atStartOfDay();
+    List<Event> events = eventRepository.getNotKeyEventsByGroupId(groupId, start, end);
+    List<Event> copyEvents = new ArrayList<>();
+    events.forEach(event -> copyEvents.add(new Event(event)));
+    return copyEvents;
+  }
+
+  /**
+   * Copy & Paste events to schedule by weeks.
+   *
+   * @param copyPasteSchedule wrapper which contains info such as group id, copy date, paste date
+   * @return list of conflict events
+   */
+  @Override
+  public Iterable<EventDto> copyPasteSchedule(CopyPasteScheduleWrapper copyPasteSchedule) {
+    Group group = copyPasteSchedule.getGroup();
+    List<Event> correct = new ArrayList<>();
+    List<Event> incorrect = new ArrayList<>();
+    LocalDate copyWeekDate = copyPasteSchedule.getCopyWeekDate();
+    LocalDate pasteWeekDate = copyPasteSchedule.getPasteWeekDate();
+    LocalDate pasteEnd = copyPasteSchedule.getPasteFillDate();
+    List<Event> copyEvents = getEventsForCopy(group.getId(), copyWeekDate);
+    if (copyEvents.size() == 0) {
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.dates.existOne")
+      );
+    }
+    LocalDate start;
+    LocalDate end;
+
+    if (pasteWeekDate != null) {
+      start = getMondayDateOfWeek(pasteWeekDate);
+      end = getSundayDateOfWeek(pasteWeekDate);
+    } else {
+      if (copyWeekDate.isBefore(LocalDate.now())) {
+        start = LocalDate.now();
+      } else {
+        start = copyWeekDate;
+      }
+      end = pasteEnd;
+    }
+    generateEventsForPaste(copyEvents, start, end, correct, incorrect);
+    eventRepository.save(correct);
+    List<EventDto> eventDtos = new ArrayList<>();
+    incorrect.forEach(event -> eventDtos.add(new EventDto(event)));
+    Collections.sort(eventDtos);
+    return eventDtos;
+  }
+
+  private Integer[] getGroupIdsByLocation(Event event) {
+    List<Group> groups = groupRepository
+        .getGroupsByLocationId(event.getGroup().getLocation().getId());
+    Integer[] groupIds = new Integer[groups.size()];
+    int i = 0;
+    for (Group item : groups) {
+      groupIds[i] = item.getId();
+      i++;
+    }
+    return groupIds;
+  }
+
+  /**
+   * Check event for conflict.
+   *
+   * @param event that we check
+   * @return if conflicts true, if not false
+   */
+  private boolean isEventConflicts(Event event) {
+    List<Event> events = eventRepository.getEventsByGroupId(getGroupIdsByLocation(event),
+        event.getDateTime().toLocalDate().atStartOfDay(),
+        event.getDateTime().plusDays(1).toLocalDate().atStartOfDay());
+    for (Event item : events) {
+      if (event.getDateTime().plusMinutes(event.getDuration()).isAfter(item.getDateTime())
+          && event.getDateTime().isBefore(item.getDateTime().plusMinutes(item.getDuration()))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

@@ -40,14 +40,22 @@ public class Event {
   @JsonDeserialize(using = EventTypeDeserializer.class)
   private EventType eventType;
 
-  public Event(Integer id, LocalDateTime dateTime, int duration,
-      Room room, Group group, EventType eventType) {
+  public Event(Integer id, LocalDateTime dateTime, int duration, Room room, Group group,
+      EventType eventType) {
     this.id = id;
     this.dateTime = dateTime;
     this.duration = duration;
     this.room = room;
     this.group = group;
     this.eventType = eventType;
+  }
+
+  public Event(Event event) {
+    this.dateTime = event.getDateTime();
+    this.duration = event.getDuration();
+    this.room = event.getRoom();
+    this.group = event.getGroup();
+    this.eventType = event.getEventType();
   }
 
   public Event() {

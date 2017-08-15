@@ -1137,4 +1137,34 @@
             <where>name = 'Kyiv'</where>
         </update>
     </changeSet>
+    <changeSet author="lev" id="1502373598271-20">
+    <insert tableName="event">
+        <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
+        <column name="duration" valueNumeric="120"/>
+        <column name="group_id" valueNumeric="1"/>
+        <column name="event_type_id" valueNumeric="5"/>
+        <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+        <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
+        <column name="duration" valueNumeric="120"/>
+        <column name="group_id" valueNumeric="1"/>
+        <column name="event_type_id" valueNumeric="7"/>
+        <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+        <column name="datetime" valueDate="2017-07-26 18:00:00.0"/>
+        <column name="duration" valueNumeric="120"/>
+        <column name="group_id" valueNumeric="1"/>
+        <column name="event_type_id" valueNumeric="9"/>
+        <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+        <column name="datetime" valueDate="2017-07-27 18:00:00.0"/>
+        <column name="duration" valueNumeric="120"/>
+        <column name="group_id" valueNumeric="1"/>
+        <column name="event_type_id" valueNumeric="10"/>
+        <column name="room_id" valueNumeric="1"/>
+    </insert>
+    </changeSet>
 </databaseChangeLog>

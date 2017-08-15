@@ -57,13 +57,12 @@ public class KeyDateDto {
     return new Event(id, date.atTime(0, 0), 0, null, group, eventType);
   }
 
-
   @Override
   public String toString() {
-    return "{" +
-        "group:" + (group != null ? group.getName() : null) +
-        ", eventType:" + (eventType != null ? eventType.getName() : null) +
-        ", date:" + date +
-        '}';
+    return "{"
+        + "group:" + (group != null ? group.getName() : null)
+        + ", eventType:" + (eventType != null ? eventType.getName() : null)
+        + ", date:" + date
+        + '}';
   }
 }
