@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Set;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +22,6 @@ public class GroupResource extends ResourceSupport {
 
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate finishDate;
-
-  private Set<String> experts;
-
-  public Set<String> getExperts() {
-    return experts;
-  }
-
-  public void setExperts(Set<String> experts) {
-    this.experts = experts;
-  }
 
   public int getGroupId() {
     return groupId;

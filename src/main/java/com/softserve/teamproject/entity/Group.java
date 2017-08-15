@@ -8,13 +8,10 @@ import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
 import com.softserve.teamproject.entity.deserializer.SpecializationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
 import com.softserve.teamproject.entity.deserializer.UserDeserializer;
-import com.softserve.teamproject.validation.StringConstraintInSet;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -77,13 +74,11 @@ public class Group {
   @JsonDeserialize(using = SpecializationDeserializer.class)
   private Specialization specialization;
 
-  @ElementCollection
-  @CollectionTable(name = "expert",
-      joinColumns = @JoinColumn(name = "edu_group_id")
-  )
-  @Column(name = "expert_name")
-  @StringConstraintInSet(min = 5, max = 25, regexp = "[\\p{IsAlphabetic}\\p{IsWhite_Space}-\\.]+")
-  private Set<String> experts;
+
+  @ManyToMany
+  @JoinTable(name = "expert_group", joinColumns = {@JoinColumn(name = "group_id")},
+      inverseJoinColumns = {@JoinColumn(name = "expert_id")})
+  private Set<Expert> experts;
 
   @ManyToOne
   @JoinColumn(name = "budget_owner_id", referencedColumnName = "id", nullable = false)
@@ -156,11 +151,11 @@ public class Group {
     this.teachers = teachers;
   }
 
-  public Set<String> getExperts() {
+  public Set<Expert> getExperts() {
     return experts;
   }
 
-  public void setExperts(Set<String> experts) {
+  public void setExperts(Set<Expert> experts) {
     this.experts = experts;
   }
 

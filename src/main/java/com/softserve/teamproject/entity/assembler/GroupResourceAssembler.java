@@ -47,6 +47,7 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
     addEntityFieldLinkToResource(groupResource, group.getStatus().getId(), Status.class);
     addEntityFieldLinkToResource(groupResource, group.getSpecialization().getId(),
         Specialization.class);
+    addCollectionFieldLinkToResource(groupResource, group, "experts");
   }
 
   private void addCollectionFieldLinkToResource(GroupResource groupResource, Group group,
@@ -74,6 +75,5 @@ public class GroupResourceAssembler extends ResourceAssemblerSupport<Group, Grou
     groupResource.setName(group.getName());
     groupResource.setStartDate(group.getStartDate());
     groupResource.setFinishDate(group.getFinishDate());
-    groupResource.setExperts(group.getExperts());
   }
 }
