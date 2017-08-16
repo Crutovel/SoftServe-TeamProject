@@ -6,4 +6,16 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="add-column-CV-name" author="kholod">
+    <addColumn tableName="student">
+      <column name = "cv_name" type = "VARCHAR(45)">
+      </column>
+    </addColumn>
+  </changeSet>
+  <changeSet id="add-column-image-name" author="kholod">
+    <addColumn tableName="student">
+      <column name = "image_name" type = "VARCHAR(45)">
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

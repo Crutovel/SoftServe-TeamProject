@@ -36,9 +36,15 @@ public class Student {
   @Column(name = "image")
   private byte[] image;
 
+  @Column(name = "image_name")
+  private String imageName;
+
   @Lob
   @Column(name = "cv")
   private byte[] cv;
+
+  @Column(name = "cv_name")
+  private String cvName;
 
   @ManyToOne
   @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
@@ -80,12 +86,28 @@ public class Student {
     this.image = image;
   }
 
+  public String getImageName() {
+    return imageName;
+  }
+
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
+
   public byte[] getCv() {
     return cv;
   }
 
   public void setCv(byte[] cv) {
     this.cv = cv;
+  }
+
+  public String getCvName() {
+    return cvName;
+  }
+
+  public void setCvName(String cvName) {
+    this.cvName = cvName;
   }
 
   public Group getGroup() {
