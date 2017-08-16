@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = KeyDatesValidator.class)
 @Documented
 public @interface KeyDates {
-  String message() default "Event is not valid";
+  String message() default "{com.softserve.teamproject.validation.KeyDates.message}";
 
   Class<?>[] groups() default {};
 

@@ -7,4 +7,7 @@ public interface GroupRepositoryCustom {
 
   List<Group> getUndeletedGroups();
 
+  List<Group> getGroupsByLocationId(Integer id);
+
+  List<Group> getGroupsByLocationIds(Integer[] ids);
 }

@@ -1,6 +1,5 @@
 package com.softserve.teamproject.service.impl;
 
-import com.softserve.teamproject.entity.EnglishLevel;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.User;
@@ -102,7 +101,6 @@ public class StudentServiceImpl implements StudentService {
     studentValidator.checkCoordinatorLocationToManipulateStudent(group, userName);
     for (Student student : students) {
       student.setGroup(group);
-      EnglishLevel englishLevel = student.getEnglishLevel();
       if (student.getEnglishLevel() == null) {
         student.setEnglishLevel(englishLevelRepository.findByName("intermediate"));
       }

@@ -1,8 +1,10 @@
 package com.softserve.teamproject.service;
 
-import com.softserve.teamproject.dto.ScheduleResponseWrapper;
+import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
+import com.softserve.teamproject.dto.EventDto;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import java.security.Principal;
@@ -22,16 +24,16 @@ public interface ScheduleService {
   Iterable<EventResource> getAllKeyEvents();
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getEventsByGroupId(Integer groupId, LocalDate start, LocalDate end);
+  List<EventResource> getEventsByGroupId(Integer groupId, LocalDate start, LocalDate end);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getKeyEventsByGroupId(Integer groupId);
+  List<EventResource> getKeyEventsByGroupId(Integer groupId);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getEventsByFilter(Integer[] groupId, LocalDate start, LocalDate end);
+  Iterable<EventResource> getEventsByFilter(List<Integer> groupId, LocalDate start, LocalDate end);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  Iterable<EventResource> getKeyEventsByFilter(Integer[] groupId);
+  Iterable<EventResource> getKeyEventsByFilter(List<Integer> groupId);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   EventResource getEvent(Integer id);
@@ -46,4 +48,7 @@ public interface ScheduleService {
   @PreAuthorize("hasAuthority('coordinator')")
   ScheduleResponseWrapper updateSchedule(List<Event> events, Principal principal)
       throws AccessDeniedException, ValidationException;
+
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
+  Iterable<EventDto> copyPasteSchedule(CopyPasteScheduleWrapper copyPasteSchedule);
 }

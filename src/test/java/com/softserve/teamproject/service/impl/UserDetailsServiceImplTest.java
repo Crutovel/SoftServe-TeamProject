@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import com.softserve.teamproject.entity.Role;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserDetailsServiceImplTest {
 
   @Mock
-  UserRepository userRepository;
+  private UserRepository userRepository;
+  @Mock
+  private MessageByLocaleService messageByLocaleService;
 
   @Before
   public void init() {
@@ -30,6 +33,7 @@ public class UserDetailsServiceImplTest {
     when(userRepository.getUserByNickName(anyString())).thenReturn(null);
     UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
     userDetailsService.setUserRepository(userRepository);
+    userDetailsService.setMessageByLocaleService(messageByLocaleService);
     userDetailsService.loadUserByUsername("");
   }
 
@@ -46,6 +50,7 @@ public class UserDetailsServiceImplTest {
 
     UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
     userDetailsService.setUserRepository(userRepository);
+    userDetailsService.setMessageByLocaleService(messageByLocaleService);
     UserDetails actual = userDetailsService.loadUserByUsername("");
 
     Assert.assertEquals(actual.getUsername(), user.getNickName());

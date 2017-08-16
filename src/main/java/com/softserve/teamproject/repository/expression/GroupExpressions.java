@@ -9,6 +9,10 @@ public class GroupExpressions {
     return QGroup.group.location.id.in(locations);
   }
 
+  public static BooleanExpression getByLocationId(Integer location) {
+    return QGroup.group.location.id.eq(location);
+  }
+
   public static BooleanExpression getUndeleted() {
     return QGroup.group.isDeleted.isFalse();
   }

@@ -1,12 +1,14 @@
 package com.softserve.teamproject.controller;
 
-import com.softserve.teamproject.dto.ScheduleResponseWrapper;
+import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.dto.KeyDateWrapper;
+import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.service.ScheduleService;
+import com.softserve.teamproject.validation.ValidCopyPasteSchedule;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -18,6 +20,7 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,7 +65,6 @@ public class ScheduleController {
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
       @RequestParam(value = "end", required = false)
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-
     if (groupId != null) {
       return scheduleService.getEventsByGroupId(groupId, start, end);
     }
@@ -149,7 +151,8 @@ public class ScheduleController {
   @PostMapping(value = "/events/groups/{id}")
   @ApiOperation(value = "Add schedule (list of events) for the selected group", response = Event.class,
       responseContainer = "List")
-  public ScheduleResponseWrapper addSchedule(@RequestBody List<Event> events, @PathVariable Integer id,
+  public ScheduleResponseWrapper addSchedule(@RequestBody List<Event> events,
+      @PathVariable Integer id,
       Principal principal) throws ValidationException {
     return scheduleService.addSchedule(events, id, principal);
   }
@@ -165,6 +168,20 @@ public class ScheduleController {
   public ScheduleResponseWrapper editSchedule(@RequestBody List<Event> events, Principal principal)
       throws ValidationException {
     return scheduleService.updateSchedule(events, principal);
+  }
+
+  /**
+   * Method allows to copy paste a schedule for the group with the specified id.
+   *
+   * @param copyPasteSchedule wrapper for request info such as group id, copy date, paste date
+   * @return copyPasteSchedule wrapper with group id, copy date, paste date and conflicts
+   */
+  @Validated
+  @PostMapping("/events/copypaste")
+  public CopyPasteScheduleWrapper copyPasteSchedule(
+      @RequestBody @ValidCopyPasteSchedule @Valid CopyPasteScheduleWrapper copyPasteSchedule) {
+    copyPasteSchedule.setConflicts(scheduleService.copyPasteSchedule(copyPasteSchedule));
+    return copyPasteSchedule;
   }
 
 }

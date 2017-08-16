@@ -8,14 +8,18 @@ public interface EventRepositoryCustom {
 
   List<Event> getKeyEventsByGroupId(Integer groupId);
 
-  List<Event> getKeyEventsByGroupId(Integer[] groups);
+  List<Event> getKeyEventsByGroupId(List<Integer> groups);
 
-  List<Event> getEventsByGroupId(Integer[] groups, LocalDateTime start, LocalDateTime finish);
+  List<Event> getEventsByGroupId(List<Integer> groups, LocalDateTime start, LocalDateTime finish);
 
   List<Event> getEventsByGroupId(Integer groupId, LocalDateTime start, LocalDateTime finish);
 
   List<Event> getEventsByTime(LocalDateTime start, LocalDateTime finish);
 
+  List<Event> getCrossEvents(LocalDateTime start, LocalDateTime finish);
+
   Event getEventByEventTypeId(Integer eventTypeId, Integer groupId);
 
+  List<Event> getNotKeyEventsByGroupId(Integer groupId, LocalDateTime start,
+      LocalDateTime finish);
 }

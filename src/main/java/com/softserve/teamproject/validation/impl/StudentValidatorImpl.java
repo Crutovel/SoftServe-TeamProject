@@ -3,7 +3,6 @@ package com.softserve.teamproject.validation.impl;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.User;
-import com.softserve.teamproject.repository.EnglishLevelRepository;
 import com.softserve.teamproject.repository.StudentRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.validation.StudentValidator;
@@ -18,7 +17,6 @@ public class StudentValidatorImpl implements StudentValidator {
 
   private StudentRepository studentRepository;
   private UserRepository userRepository;
-  private EnglishLevelRepository englishLevelRepository;
 
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
@@ -58,9 +56,4 @@ public class StudentValidatorImpl implements StudentValidator {
       throw new AccessDeniedException("Coordinator can't add/edit students in the alien location.");
     }
   }
-
-  public void isValidEnglishLevel(List<Student> students) {
-
-  }
-
 }

@@ -1,24 +1,29 @@
 package com.softserve.teamproject.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
+import com.softserve.teamproject.entity.serializer.LocalDateSerializer;
 import java.time.LocalDate;
+import java.util.List;
 
 public class EventsFilter {
 
-  private Integer[] groups;
+  private List<Integer> groups;
 
+  @JsonSerialize(using = LocalDateSerializer.class)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   private LocalDate startDate;
 
+  @JsonSerialize(using = LocalDateSerializer.class)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   private LocalDate endDate;
 
-  public Integer[] getGroups() {
+  public List<Integer> getGroups() {
     return groups;
   }
 
-  public void setGroups(Integer[] groups) {
+  public void setGroups(List<Integer> groups) {
     this.groups = groups;
   }
 

@@ -1,6 +1,7 @@
 package com.softserve.teamproject.controller.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import java.io.BufferedReader;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,16 @@ public class JsonUsernamePasswordAuthenticationFilter extends
 
   private String username;
   private String password;
+  private final String HEADER_CONTENT_PARAM_NAME="Content-Type";
+  private final String JSON_CONTENT_TYPE ="application/json";
+
+  private MessageByLocaleService messageByLocaleService;
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
 
   @Autowired
   public void setSuccessHandler(
@@ -24,7 +35,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends
   @Override
   protected String obtainPassword(HttpServletRequest request) {
     String password = null;
-    if ("application/json".equals(request.getHeader("Content-Type"))) {
+    if (JSON_CONTENT_TYPE.equals(request.getHeader(HEADER_CONTENT_PARAM_NAME))) {
       password = this.password;
     } else {
       password = super.obtainPassword(request);
@@ -37,7 +48,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends
   protected String obtainUsername(HttpServletRequest request) {
     String username = null;
 
-    if ("application/json".equals(request.getHeader("Content-Type"))) {
+    if (JSON_CONTENT_TYPE.equals(request.getHeader(HEADER_CONTENT_PARAM_NAME))) {
       username = this.username;
     } else {
       username = super.obtainUsername(request);
@@ -50,8 +61,7 @@ public class JsonUsernamePasswordAuthenticationFilter extends
   public Authentication attemptAuthentication(HttpServletRequest request,
       HttpServletResponse response) {
 
-    String s = request.getHeader("Content-Type");
-    if ("application/json".equals(request.getHeader("Content-Type"))) {
+    if (JSON_CONTENT_TYPE.equals(request.getHeader(HEADER_CONTENT_PARAM_NAME))) {
       try {
         StringBuilder sb = new StringBuilder();
         String line = null;
@@ -67,11 +77,12 @@ public class JsonUsernamePasswordAuthenticationFilter extends
         this.username = loginRequest.getUsername();
         this.password = loginRequest.getPassword();
       } catch (Exception e) {
-          throw new AuthenticationServiceException("Cannot recognize JSON parameters");/* NOP */
+        throw new AuthenticationServiceException(
+            messageByLocaleService.getMessage("auth.error.json.params"));/* NOP */
       }
-    }
-    else {
-      throw new AuthenticationServiceException("Content-Type 'application/json' is allowed");
+    } else {
+      throw new AuthenticationServiceException(
+          messageByLocaleService.getMessage("auth.error.json.type"));
     }
     return super.attemptAuthentication(request, response);
   }
