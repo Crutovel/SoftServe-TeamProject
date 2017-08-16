@@ -35,6 +35,11 @@ public class StudentValidatorImpl implements StudentValidator {
     }
   }
 
+  /**
+   * Fills fields of student that we don't update. These fields are taken from repository
+   *
+   * @param student given student with fields we need to update
+   */
   @Override
   public void fillNotUpdatedFields(Student student) {
     Student existedStudent = studentRepository.findOne(student.getId());
@@ -62,6 +67,11 @@ public class StudentValidatorImpl implements StudentValidator {
     }
   }
 
+  /**
+   * Checks whether name presents in given Student object with image and CV
+   *
+   * @param student given student object
+   */
   @Override
   public void checkPresentImageAndCvNames(Student student) {
     if (student.getImage() != null && student.getImageName() == null) {

@@ -142,6 +142,12 @@ public class StudentServiceImpl implements StudentService {
     return student;
   }
 
+  /**
+   * Gets student by given id
+   *
+   * @param id given student's id
+   * @return StudentResource object for this student
+   */
   @Override
   public StudentResource getStudentResourceById(Integer id) {
     Student student = studentRepository.findOne(id);
@@ -151,6 +157,12 @@ public class StudentServiceImpl implements StudentService {
     return studentResourceAssembler.toResource(student);
   }
 
+  /**
+   * Updates given student
+   *
+   * @param student student with new data
+   * @return StudentResource object for updated student
+   */
   @Override
   public StudentResource updateStudent(Student student) {
     student = studentRepository.save(student);
