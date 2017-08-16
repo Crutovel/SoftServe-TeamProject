@@ -8,13 +8,11 @@ import static org.mockito.Mockito.doNothing;
 
 import com.softserve.teamproject.TestData;
 import com.softserve.teamproject.dto.GroupsFilter;
-import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
-import com.softserve.teamproject.repository.ExpertRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
@@ -67,8 +65,6 @@ public class GroupServiceImplTest {
   private UserRepository userRepository;
   @Autowired
   private GroupValidator groupValidator;
-  @Autowired
-  private ExpertRepository expertRepository;
 
   @Before
   public void setup() {
@@ -314,12 +310,9 @@ public class GroupServiceImplTest {
     //Arrange
     final int SET_SIZE = 2;
     Group edited = groupRepository.findByName("DP-116");
-    Expert sergey = expertRepository.findOne(1);
-    Expert anton = expertRepository.findOne(2);
-
-    edited.setExperts(new LinkedHashSet<Expert>() {{
-      add(sergey);
-      add(anton);
+    edited.setExperts(new LinkedHashSet<String>() {{
+      add("Sergey");
+      add("Anton");
     }});
     entityManager.detach(edited);
 

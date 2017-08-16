@@ -38,29 +38,29 @@ public class Student {
   @JoinColumn(name = "english_level_id", referencedColumnName = "id", nullable = false)
   private EnglishLevel englishLevel;
 
-  @Column(name="incoming_test")
-  private int incomingTest;
+  @Column(name="incoming_test", nullable = false)
+  private Integer incomingTest;
 
-  @Column(name="entry_score")
-  private double entryScore;
+  @Column(name="entry_score", nullable = false)
+  private Double entryScore;
 
   @ManyToOne
   @JoinColumn(name = "approved_by_expert_id", referencedColumnName = "id", nullable = false)
   private Expert testApprovedByExpert;
 
-  public int getIncomingTest() {
+  public Integer getIncomingTest() {
     return incomingTest;
   }
 
-  public void setIncomingTest(int incomingTest) {
+  public void setIncomingTest(Integer incomingTest) {
     this.incomingTest = incomingTest;
   }
 
-  public double getEntryScore() {
+  public Double getEntryScore() {
     return entryScore;
   }
 
-  public void setEntryScore(double entryScore) {
+  public void setEntryScore(Double entryScore) {
     this.entryScore = entryScore;
   }
 

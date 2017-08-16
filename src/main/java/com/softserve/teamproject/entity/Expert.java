@@ -18,13 +18,6 @@ public class Expert {
   @Column(name = "expert_name")
   private String expertName;
 
-  public Expert() {
-  }
-
-  public Expert(String name) {
-    this.expertName = name;
-  }
-
   public int getId() {
     return id;
   }

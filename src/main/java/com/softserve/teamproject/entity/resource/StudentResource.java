@@ -18,25 +18,25 @@ public class StudentResource extends ResourceSupport {
 
   private byte[] image;
 
-  private int incomingTest;
+  private Integer incomingTest;
 
-  private double entryScore;
+  private Double entryScore;
 
   private Expert testApprovedByExpert;
 
-  public int getIncomingTest() {
+  public Integer getIncomingTest() {
     return incomingTest;
   }
 
-  public void setIncomingTest(int incomingTest) {
+  public void setIncomingTest(Integer incomingTest) {
     this.incomingTest = incomingTest;
   }
 
-  public double getEntryScore() {
+  public Double getEntryScore() {
     return entryScore;
   }
 
-  public void setEntryScore(double entryScore) {
+  public void setEntryScore(Double entryScore) {
     this.entryScore = entryScore;
   }
 

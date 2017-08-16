@@ -4,7 +4,9 @@
     <addColumn tableName="student">
       <column name="incoming_test" type="INT"/>
       <column name="entry_score" type="DOUBLE PRECISION"/>
-      <column name="approved_by_expert_id" type="INT"/>
+      <column name="approved_by_expert_id" type="INT">
+      <constraints nullable="false"/>
+      </column>
     </addColumn>
   <addColumn tableName="expert">
    <column autoIncrement="true" name="id" type="INT">

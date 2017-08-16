@@ -1,12 +1,13 @@
 package com.softserve.teamproject;
 
 import com.softserve.teamproject.entity.BudgetOwner;
-import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,9 +47,8 @@ public abstract class TestData {
       setId(1);
       setName("SOFTSERVE");
     }});
-    Expert sergey = new Expert("Sergey");
-    group.setExperts(new LinkedHashSet<Expert>() {{
-      add(sergey);
+    group.setExperts(new LinkedHashSet<String>() {{
+      add("Sergey");
     }});
     return group;
   }
