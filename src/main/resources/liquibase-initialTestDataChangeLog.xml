@@ -1,1170 +1,1170 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet author="tdk" id="1502373598271-1">
-        <insert tableName="role_category">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="itacademy"/>
-        </insert>
-        <insert tableName="role_category">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="tes"/>
-        </insert>
-        <insert tableName="role_category">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="watcher"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-2">
-        <insert tableName="role">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="recrouter"/>
-            <column name="category_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="guest"/>
-            <column name="category_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="teacher"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="coordinator"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="admin"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="tes"/>
-            <column name="category_id" valueNumeric="3"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-3">
-        <insert tableName="status_category">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="current"/>
-        </insert>
-        <insert tableName="status_category">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="finished"/>
-        </insert>
-        <insert tableName="status_category">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="future"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-4">
-        <insert tableName="strategy">
-            <column name="id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="strategy">
-            <column name="id" valueNumeric="2"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-5">
-        <insert tableName="status">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="planned"/>
-            <column name="category_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="status">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="boarding"/>
-            <column name="category_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="status">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="before start"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="status">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="in-process"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="status">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="offering"/>
-            <column name="category_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="status">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="graduated"/>
-            <column name="category_id" valueNumeric="3"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-6">
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="oop_java_core"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="js_core"/>
-            <column name="strategy_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="web_C#_.net"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="testing_ISTQB"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="HTML5_CSS3_JS_foundamentals"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="iOS"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="7"/>
-            <column name="name" value="JAVA"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="8"/>
-            <column name="name" value="java_for_non_it"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="9"/>
-            <column name="name" value=".NET"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="10"/>
-            <column name="name" value="Database"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="11"/>
-            <column name="name" value="manual_quality_control"/>
-            <column name="strategy_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="12"/>
-            <column name="name" value="ua_c++"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="13"/>
-            <column name="name" value="automation_testing_quality_control"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="14"/>
-            <column name="name" value="devops"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="15"/>
-            <column name="name" value="lamp"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="16"/>
-            <column name="name" value="web_ui"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="17"/>
-            <column name="name" value="web_ui_full_stack"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="18"/>
-            <column name="name" value="UX"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="19"/>
-            <column name="name" value="ua_web_ui_js"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="20"/>
-            <column name="name" value="quality_control_for_cloud_computing"/>
-            <column name="strategy_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="21"/>
-            <column name="name" value="angular_boot_camp"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="22"/>
-            <column name="name" value="ua_go_boot_camp"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="23"/>
-            <column name="name" value="ua_test_automation_boot_camp_for_mobile_with_python"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="specialization">
-            <column name="id" valueNumeric="24"/>
-            <column name="name" value="ua_software_engineering_with_testing"/>
-            <column name="strategy_id" valueNumeric="1"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-7">
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="Demo 1"/>
-            <column name="is_key_date" valueBoolean="true"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="Demo 2"/>
-            <column name="is_key_date" valueBoolean="true"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="Offerring Demo"/>
-            <column name="is_key_date" valueBoolean="true"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="Final Demo"/>
-            <column name="is_key_date" valueBoolean="true"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="lesson"/>
-            <column name="is_key_date" valueBoolean="false"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="weekly report"/>
-            <column name="is_key_date" valueBoolean="false"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="7"/>
-            <column name="name" value="lecture"/>
-            <column name="is_key_date" valueBoolean="false"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="8"/>
-            <column name="name" value="consultation"/>
-            <column name="is_key_date" valueBoolean="false"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="9"/>
-            <column name="name" value="practice"/>
-            <column name="is_key_date" valueBoolean="false"/>
-        </insert>
-        <insert tableName="event_type">
-            <column name="id" valueNumeric="10"/>
-            <column name="name" value="work with expert"/>
-            <column name="is_key_date" valueBoolean="false"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-8">
-        <insert tableName="location">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="Dnipro"/>
-        </insert>
-        <insert tableName="location">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="Sofia"/>
-        </insert>
-        <insert tableName="location">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="Lviv"/>
-        </insert>
-        <insert tableName="location">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="Chernivtsi"/>
-        </insert>
-        <insert tableName="location">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="Kyiv"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-9">
-        <insert tableName="budget_owner">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="OPEN GROUP"/>
-        </insert>
-        <insert tableName="budget_owner">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="SOFTSERVE"/>
-        </insert>
-    </changeSet>
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  <changeSet author="tdk" id="1502373598271-1">
+    <insert tableName="role_category">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="itacademy"/>
+    </insert>
+    <insert tableName="role_category">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="tes"/>
+    </insert>
+    <insert tableName="role_category">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="watcher"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-2">
+    <insert tableName="role">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="recrouter"/>
+      <column name="category_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="role">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="guest"/>
+      <column name="category_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="role">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="teacher"/>
+      <column name="category_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="role">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="coordinator"/>
+      <column name="category_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="role">
+      <column name="id" valueNumeric="5"/>
+      <column name="name" value="admin"/>
+      <column name="category_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="role">
+      <column name="id" valueNumeric="6"/>
+      <column name="name" value="tes"/>
+      <column name="category_id" valueNumeric="3"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-3">
+    <insert tableName="status_category">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="current"/>
+    </insert>
+    <insert tableName="status_category">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="finished"/>
+    </insert>
+    <insert tableName="status_category">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="future"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-4">
+    <insert tableName="strategy">
+      <column name="id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="strategy">
+      <column name="id" valueNumeric="2"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-5">
+    <insert tableName="status">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="planned"/>
+      <column name="category_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="status">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="boarding"/>
+      <column name="category_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="status">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="before start"/>
+      <column name="category_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="status">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="in-process"/>
+      <column name="category_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="status">
+      <column name="id" valueNumeric="5"/>
+      <column name="name" value="offering"/>
+      <column name="category_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="status">
+      <column name="id" valueNumeric="6"/>
+      <column name="name" value="graduated"/>
+      <column name="category_id" valueNumeric="3"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-6">
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="oop_java_core"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="js_core"/>
+      <column name="strategy_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="web_C#_.net"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="testing_ISTQB"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="5"/>
+      <column name="name" value="HTML5_CSS3_JS_foundamentals"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="6"/>
+      <column name="name" value="iOS"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="7"/>
+      <column name="name" value="JAVA"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="8"/>
+      <column name="name" value="java_for_non_it"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="9"/>
+      <column name="name" value=".NET"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="10"/>
+      <column name="name" value="Database"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="11"/>
+      <column name="name" value="manual_quality_control"/>
+      <column name="strategy_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="12"/>
+      <column name="name" value="ua_c++"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="13"/>
+      <column name="name" value="automation_testing_quality_control"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="14"/>
+      <column name="name" value="devops"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="15"/>
+      <column name="name" value="lamp"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="16"/>
+      <column name="name" value="web_ui"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="17"/>
+      <column name="name" value="web_ui_full_stack"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="18"/>
+      <column name="name" value="UX"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="19"/>
+      <column name="name" value="ua_web_ui_js"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="20"/>
+      <column name="name" value="quality_control_for_cloud_computing"/>
+      <column name="strategy_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="21"/>
+      <column name="name" value="angular_boot_camp"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="22"/>
+      <column name="name" value="ua_go_boot_camp"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="23"/>
+      <column name="name" value="ua_test_automation_boot_camp_for_mobile_with_python"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="specialization">
+      <column name="id" valueNumeric="24"/>
+      <column name="name" value="ua_software_engineering_with_testing"/>
+      <column name="strategy_id" valueNumeric="1"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-7">
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="Demo 1"/>
+      <column name="is_key_date" valueBoolean="true"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="Demo 2"/>
+      <column name="is_key_date" valueBoolean="true"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="Offerring Demo"/>
+      <column name="is_key_date" valueBoolean="true"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="Final Demo"/>
+      <column name="is_key_date" valueBoolean="true"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="5"/>
+      <column name="name" value="lesson"/>
+      <column name="is_key_date" valueBoolean="false"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="6"/>
+      <column name="name" value="weekly report"/>
+      <column name="is_key_date" valueBoolean="false"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="7"/>
+      <column name="name" value="lecture"/>
+      <column name="is_key_date" valueBoolean="false"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="8"/>
+      <column name="name" value="consultation"/>
+      <column name="is_key_date" valueBoolean="false"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="9"/>
+      <column name="name" value="practice"/>
+      <column name="is_key_date" valueBoolean="false"/>
+    </insert>
+    <insert tableName="event_type">
+      <column name="id" valueNumeric="10"/>
+      <column name="name" value="work with expert"/>
+      <column name="is_key_date" valueBoolean="false"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-8">
+    <insert tableName="location">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="Dnipro"/>
+    </insert>
+    <insert tableName="location">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="Sofia"/>
+    </insert>
+    <insert tableName="location">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="Lviv"/>
+    </insert>
+    <insert tableName="location">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="Chernivtsi"/>
+    </insert>
+    <insert tableName="location">
+      <column name="id" valueNumeric="5"/>
+      <column name="name" value="Kyiv"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-9">
+    <insert tableName="budget_owner">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="OPEN GROUP"/>
+    </insert>
+    <insert tableName="budget_owner">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="SOFTSERVE"/>
+    </insert>
+  </changeSet>
 
-    <changeSet author="tdk" id="1502373598271-10">
-        <insert tableName="user">
-            <column name="id" valueNumeric="1"/>
-            <column name="first_name" value="Oleg"/>
-            <column name="last_name" value="Shvets"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="OlegShvets"/>
-            <column name="password_hash_code" value="ghd22df"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="2"/>
-            <column name="first_name" value="Dmytro"/>
-            <column name="last_name" value="Petin"/>
-            <column name="role_id" valueNumeric="4"/>
-            <column name="nick_name" value="DmytroPetin"/>
-            <column name="password_hash_code" value="fgdfg24sd"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="3"/>
-            <column name="first_name" value="Lucas"/>
-            <column name="last_name" value="Lukichich"/>
-            <column name="role_id" valueNumeric="5"/>
-            <column name="nick_name" value="LukasLukichich"/>
-            <column name="password_hash_code" value="fjgf24sd"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="4"/>
-            <column name="first_name" value="Stefan"/>
-            <column name="last_name" value="Vendera"/>
-            <column name="role_id" valueNumeric="4"/>
-            <column name="nick_name" value="SlavaUkr"/>
-            <column name="password_hash_code" value="asfsdag2"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="5"/>
-            <column name="first_name" value="Kozak"/>
-            <column name="last_name" value="Kozachenko"/>
-            <column name="role_id" valueNumeric="4"/>
-            <column name="nick_name" value="Kozachok"/>
-            <column name="password_hash_code" value="dfgdsg33s"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="6"/>
-            <column name="first_name" value="Petro"/>
-            <column name="last_name" value="Poroshenko"/>
-            <column name="role_id" valueNumeric="4"/>
-            <column name="nick_name" value="Roshenneprodam"/>
-            <column name="password_hash_code" value="zxvfdsg3sa"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="7"/>
-            <column name="first_name" value="Mykhaylo"/>
-            <column name="last_name" value="Zadornoff"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="AmericansAreStupid"/>
-            <column name="password_hash_code" value="asdfsda33d"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="8"/>
-            <column name="first_name" value="Volodymyr"/>
-            <column name="last_name" value="Sharapov"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="IveSadGorbatyi"/>
-            <column name="password_hash_code" value="fdgsdfg4"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="9"/>
-            <column name="first_name" value="Ole"/>
-            <column name="last_name" value="Lukoe"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="OnionRing"/>
-            <column name="password_hash_code" value="dsgagbb42"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="10"/>
-            <column name="first_name" value="Milko"/>
-            <column name="last_name" value="Trinichich"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="MilkoTrilko"/>
-            <column name="password_hash_code" value="cvbxnmdsdf2d"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="11"/>
-            <column name="first_name" value="Yulia"/>
-            <column name="last_name" value="Timoshenko"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="Kosa"/>
-            <column name="password_hash_code" value="dsgacccbbc"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="12"/>
-            <column name="first_name" value="Viktor"/>
-            <column name="last_name" value="Fedorovich"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="Shapka"/>
-            <column name="password_hash_code" value="safsdghds"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="13"/>
-            <column name="first_name" value="Renat"/>
-            <column name="last_name" value="Ahmetov"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="UkrDonaldTrump"/>
-            <column name="password_hash_code" value="asg33w4wfs"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="14"/>
-            <column name="first_name" value="Taras"/>
-            <column name="last_name" value="Shevchenko"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="IveCriedForUkr"/>
-            <column name="password_hash_code" value="gdsfg3fgcccc"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="15"/>
-            <column name="first_name" value="Bogdan"/>
-            <column name="last_name" value="Khmelniskiy"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="SonKiller"/>
-            <column name="password_hash_code" value="sdfgvbcvb32dsf"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="16"/>
-            <column name="first_name" value="Bill"/>
-            <column name="last_name" value="Gates"/>
-            <column name="role_id" valueNumeric="3"/>
-            <column name="nick_name" value="HonoredCitizen"/>
-            <column name="password_hash_code" value=",mnbvcgfd3"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="17"/>
-            <column name="first_name" value="Lev"/>
-            <column name="last_name" value="Bukhanets"/>
-            <column name="role_id" valueNumeric="2"/>
-            <column name="nick_name" value="Myst1c"/>
-            <column name="password_hash_code" value="sdfhs332w"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="user">
-            <column name="id" valueNumeric="18"/>
-            <column name="first_name" value="Dmytro"/>
-            <column name="last_name" value="Kholod"/>
-            <column name="role_id" valueNumeric="2"/>
-            <column name="nick_name" value="DimaKh"/>
-            <column name="password_hash_code" value="sdasdfdew"/>
-            <column name="image"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-11">
-        <insert tableName="english_level">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="elementary"/>
-            <column name="level" valueNumeric="1"/>
-        </insert>
-        <insert tableName="english_level">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="pre-intermediate"/>
-            <column name="level" valueNumeric="2"/>
-        </insert>
-        <insert tableName="english_level">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="intermediate"/>
-            <column name="level" valueNumeric="3"/>
-        </insert>
-        <insert tableName="english_level">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="upper-intermediate"/>
-            <column name="level" valueNumeric="4"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-12">
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="DP-115"/>
-            <column name="location_id" valueNumeric="1"/>
-            <column name="start_date" valueDate="2017-04-29"/>
-            <column name="finish_date" valueDate="2017-08-18"/>
-            <column name="status_id" valueNumeric="4"/>
-            <column name="specialization_id" valueNumeric="7"/>
-            <column name="budget_owner_id" valueNumeric="1"/>
-            <column name="is_deleted" valueBoolean="false"/>
-        </insert>
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="2"/>
-            <column name="name" value="DP-116"/>
-            <column name="location_id" valueNumeric="1"/>
-            <column name="start_date" valueDate="2017-04-29"/>
-            <column name="finish_date" valueDate="2017-08-18"/>
-            <column name="status_id" valueNumeric="6"/>
-            <column name="specialization_id" valueNumeric="6"/>
-            <column name="budget_owner_id" valueNumeric="1"/>
-            <column name="is_deleted" valueBoolean="true"/>
-        </insert>
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="3"/>
-            <column name="name" value="DP-111-net"/>
-            <column name="location_id" valueNumeric="1"/>
-            <column name="start_date" valueDate="2016-04-30"/>
-            <column name="finish_date" valueDate="2016-08-01"/>
-            <column name="status_id" valueNumeric="6"/>
-            <column name="specialization_id" valueNumeric="9"/>
-            <column name="budget_owner_id" valueNumeric="1"/>
-            <column name="is_deleted" valueBoolean="false"/>
-        </insert>
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="4"/>
-            <column name="name" value="SF-120-js"/>
-            <column name="location_id" valueNumeric="2"/>
-            <column name="start_date" valueDate="2018-01-10"/>
-            <column name="finish_date" valueDate="2018-04-10"/>
-            <column name="status_id" valueNumeric="1"/>
-            <column name="specialization_id" valueNumeric="2"/>
-            <column name="budget_owner_id" valueNumeric="2"/>
-            <column name="is_deleted" valueBoolean="false"/>
-        </insert>
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="5"/>
-            <column name="name" value="CH-116-csh"/>
-            <column name="location_id" valueNumeric="1"/>
-            <column name="start_date" valueDate="2017-08-05"/>
-            <column name="finish_date" valueDate="2017-11-06"/>
-            <column name="status_id" valueNumeric="3"/>
-            <column name="specialization_id" valueNumeric="3"/>
-            <column name="budget_owner_id" valueNumeric="1"/>
-            <column name="is_deleted" valueBoolean="false"/>
-        </insert>
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="6"/>
-            <column name="name" value="KV-99-db"/>
-            <column name="location_id" valueNumeric="5"/>
-            <column name="start_date" valueDate="2017-08-25"/>
-            <column name="finish_date" valueDate="2017-12-01"/>
-            <column name="status_id" valueNumeric="2"/>
-            <column name="specialization_id" valueNumeric="10"/>
-            <column name="budget_owner_id" valueNumeric="1"/>
-            <column name="is_deleted" valueBoolean="false"/>
-        </insert>
-        <insert tableName="educational_group">
-            <column name="id" valueNumeric="7"/>
-            <column name="name" value="LV-143-ios"/>
-            <column name="location_id" valueNumeric="3"/>
-            <column name="start_date" valueDate="2017-04-28"/>
-            <column name="finish_date" valueDate="2017-08-18"/>
-            <column name="status_id" valueNumeric="5"/>
-            <column name="specialization_id" valueNumeric="6"/>
-            <column name="budget_owner_id" valueNumeric="1"/>
-            <column name="is_deleted" valueBoolean="false"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-13">
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="1"/>
-            <column name="group_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="1"/>
-            <column name="group_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="11"/>
-            <column name="group_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="12"/>
-            <column name="group_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="10"/>
-            <column name="group_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="18"/>
-            <column name="group_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="8"/>
-            <column name="group_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="13"/>
-            <column name="group_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="14"/>
-            <column name="group_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="17"/>
-            <column name="group_id" valueNumeric="6"/>
-        </insert>
-        <insert tableName="group_teacher">
-            <column name="teacher_id" valueNumeric="17"/>
-            <column name="group_id" valueNumeric="6"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-14">
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="1"/>
-            <column name="expert_name" value="Sergey"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="2"/>
-            <column name="expert_name" value="kristina agilera"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="4"/>
-            <column name="expert_name" value="Justin Bieber"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="4"/>
-            <column name="expert_name" value="Selena Gomez"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="3"/>
-            <column name="expert_name" value="Lyolik"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="3"/>
-            <column name="expert_name" value="Bolik"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="5"/>
-            <column name="expert_name" value="Igor Kolomoiskiy"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="5"/>
-            <column name="expert_name" value="Dmytro Parubiy"/>
-        </insert>
-        <insert tableName="expert">
-            <column name="edu_group_id" valueNumeric="6"/>
-            <column name="expert_name" value="Lev Troitskiy"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-15">
-        <insert tableName="room">
-            <column name="id" valueNumeric="1"/>
-            <column name="number" value="705"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="2"/>
-            <column name="number" value="703"/>
-            <column name="location_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="3"/>
-            <column name="number" value="611"/>
-            <column name="location_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="4"/>
-            <column name="number" value="612"/>
-            <column name="location_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="5"/>
-            <column name="number" value="613"/>
-            <column name="location_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="6"/>
-            <column name="number" value="705"/>
-            <column name="location_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="7"/>
-            <column name="number" value="706-a"/>
-            <column name="location_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="8"/>
-            <column name="number" value="706-b"/>
-            <column name="location_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="9"/>
-            <column name="number" value="505"/>
-            <column name="location_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="10"/>
-            <column name="number" value="502"/>
-            <column name="location_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="11"/>
-            <column name="number" value="501"/>
-            <column name="location_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="12"/>
-            <column name="number" value="311"/>
-            <column name="location_id" valueNumeric="5"/>
-        </insert>
-        <insert tableName="room">
-            <column name="id" valueNumeric="13"/>
-            <column name="number" value="312"/>
-            <column name="location_id" valueNumeric="5"/>
-        </insert>
-    </changeSet>
+  <changeSet author="tdk" id="1502373598271-10">
+    <insert tableName="user">
+      <column name="id" valueNumeric="1"/>
+      <column name="first_name" value="Oleg"/>
+      <column name="last_name" value="Shvets"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="OlegShvets"/>
+      <column name="password_hash_code" value="ghd22df"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="2"/>
+      <column name="first_name" value="Dmytro"/>
+      <column name="last_name" value="Petin"/>
+      <column name="role_id" valueNumeric="4"/>
+      <column name="nick_name" value="DmytroPetin"/>
+      <column name="password_hash_code" value="fgdfg24sd"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="3"/>
+      <column name="first_name" value="Lucas"/>
+      <column name="last_name" value="Lukichich"/>
+      <column name="role_id" valueNumeric="5"/>
+      <column name="nick_name" value="LukasLukichich"/>
+      <column name="password_hash_code" value="fjgf24sd"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="4"/>
+      <column name="first_name" value="Stefan"/>
+      <column name="last_name" value="Vendera"/>
+      <column name="role_id" valueNumeric="4"/>
+      <column name="nick_name" value="SlavaUkr"/>
+      <column name="password_hash_code" value="asfsdag2"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="5"/>
+      <column name="first_name" value="Kozak"/>
+      <column name="last_name" value="Kozachenko"/>
+      <column name="role_id" valueNumeric="4"/>
+      <column name="nick_name" value="Kozachok"/>
+      <column name="password_hash_code" value="dfgdsg33s"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="6"/>
+      <column name="first_name" value="Petro"/>
+      <column name="last_name" value="Poroshenko"/>
+      <column name="role_id" valueNumeric="4"/>
+      <column name="nick_name" value="Roshenneprodam"/>
+      <column name="password_hash_code" value="zxvfdsg3sa"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="7"/>
+      <column name="first_name" value="Mykhaylo"/>
+      <column name="last_name" value="Zadornoff"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="AmericansAreStupid"/>
+      <column name="password_hash_code" value="asdfsda33d"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="8"/>
+      <column name="first_name" value="Volodymyr"/>
+      <column name="last_name" value="Sharapov"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="IveSadGorbatyi"/>
+      <column name="password_hash_code" value="fdgsdfg4"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="9"/>
+      <column name="first_name" value="Ole"/>
+      <column name="last_name" value="Lukoe"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="OnionRing"/>
+      <column name="password_hash_code" value="dsgagbb42"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="10"/>
+      <column name="first_name" value="Milko"/>
+      <column name="last_name" value="Trinichich"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="MilkoTrilko"/>
+      <column name="password_hash_code" value="cvbxnmdsdf2d"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="11"/>
+      <column name="first_name" value="Yulia"/>
+      <column name="last_name" value="Timoshenko"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="Kosa"/>
+      <column name="password_hash_code" value="dsgacccbbc"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="12"/>
+      <column name="first_name" value="Viktor"/>
+      <column name="last_name" value="Fedorovich"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="Shapka"/>
+      <column name="password_hash_code" value="safsdghds"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="13"/>
+      <column name="first_name" value="Renat"/>
+      <column name="last_name" value="Ahmetov"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="UkrDonaldTrump"/>
+      <column name="password_hash_code" value="asg33w4wfs"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="14"/>
+      <column name="first_name" value="Taras"/>
+      <column name="last_name" value="Shevchenko"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="IveCriedForUkr"/>
+      <column name="password_hash_code" value="gdsfg3fgcccc"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="15"/>
+      <column name="first_name" value="Bogdan"/>
+      <column name="last_name" value="Khmelniskiy"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="SonKiller"/>
+      <column name="password_hash_code" value="sdfgvbcvb32dsf"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="16"/>
+      <column name="first_name" value="Bill"/>
+      <column name="last_name" value="Gates"/>
+      <column name="role_id" valueNumeric="3"/>
+      <column name="nick_name" value="HonoredCitizen"/>
+      <column name="password_hash_code" value=",mnbvcgfd3"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="17"/>
+      <column name="first_name" value="Lev"/>
+      <column name="last_name" value="Bukhanets"/>
+      <column name="role_id" valueNumeric="2"/>
+      <column name="nick_name" value="Myst1c"/>
+      <column name="password_hash_code" value="sdfhs332w"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="user">
+      <column name="id" valueNumeric="18"/>
+      <column name="first_name" value="Dmytro"/>
+      <column name="last_name" value="Kholod"/>
+      <column name="role_id" valueNumeric="2"/>
+      <column name="nick_name" value="DimaKh"/>
+      <column name="password_hash_code" value="sdasdfdew"/>
+      <column name="image"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-11">
+    <insert tableName="english_level">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="elementary"/>
+      <column name="level" valueNumeric="1"/>
+    </insert>
+    <insert tableName="english_level">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="pre-intermediate"/>
+      <column name="level" valueNumeric="2"/>
+    </insert>
+    <insert tableName="english_level">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="intermediate"/>
+      <column name="level" valueNumeric="3"/>
+    </insert>
+    <insert tableName="english_level">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="upper-intermediate"/>
+      <column name="level" valueNumeric="4"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-12">
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="1"/>
+      <column name="name" value="DP-115"/>
+      <column name="location_id" valueNumeric="1"/>
+      <column name="start_date" valueDate="2017-04-29"/>
+      <column name="finish_date" valueDate="2017-08-18"/>
+      <column name="status_id" valueNumeric="4"/>
+      <column name="specialization_id" valueNumeric="7"/>
+      <column name="budget_owner_id" valueNumeric="1"/>
+      <column name="is_deleted" valueBoolean="false"/>
+    </insert>
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="2"/>
+      <column name="name" value="DP-116"/>
+      <column name="location_id" valueNumeric="1"/>
+      <column name="start_date" valueDate="2017-04-29"/>
+      <column name="finish_date" valueDate="2017-08-18"/>
+      <column name="status_id" valueNumeric="6"/>
+      <column name="specialization_id" valueNumeric="6"/>
+      <column name="budget_owner_id" valueNumeric="1"/>
+      <column name="is_deleted" valueBoolean="true"/>
+    </insert>
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="3"/>
+      <column name="name" value="DP-111-net"/>
+      <column name="location_id" valueNumeric="1"/>
+      <column name="start_date" valueDate="2016-04-30"/>
+      <column name="finish_date" valueDate="2016-08-01"/>
+      <column name="status_id" valueNumeric="6"/>
+      <column name="specialization_id" valueNumeric="9"/>
+      <column name="budget_owner_id" valueNumeric="1"/>
+      <column name="is_deleted" valueBoolean="false"/>
+    </insert>
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="4"/>
+      <column name="name" value="SF-120-js"/>
+      <column name="location_id" valueNumeric="2"/>
+      <column name="start_date" valueDate="2018-01-10"/>
+      <column name="finish_date" valueDate="2018-04-10"/>
+      <column name="status_id" valueNumeric="1"/>
+      <column name="specialization_id" valueNumeric="2"/>
+      <column name="budget_owner_id" valueNumeric="2"/>
+      <column name="is_deleted" valueBoolean="false"/>
+    </insert>
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="5"/>
+      <column name="name" value="CH-116-csh"/>
+      <column name="location_id" valueNumeric="1"/>
+      <column name="start_date" valueDate="2017-08-05"/>
+      <column name="finish_date" valueDate="2017-11-06"/>
+      <column name="status_id" valueNumeric="3"/>
+      <column name="specialization_id" valueNumeric="3"/>
+      <column name="budget_owner_id" valueNumeric="1"/>
+      <column name="is_deleted" valueBoolean="false"/>
+    </insert>
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="6"/>
+      <column name="name" value="KV-99-db"/>
+      <column name="location_id" valueNumeric="5"/>
+      <column name="start_date" valueDate="2017-08-25"/>
+      <column name="finish_date" valueDate="2017-12-01"/>
+      <column name="status_id" valueNumeric="2"/>
+      <column name="specialization_id" valueNumeric="10"/>
+      <column name="budget_owner_id" valueNumeric="1"/>
+      <column name="is_deleted" valueBoolean="false"/>
+    </insert>
+    <insert tableName="educational_group">
+      <column name="id" valueNumeric="7"/>
+      <column name="name" value="LV-143-ios"/>
+      <column name="location_id" valueNumeric="3"/>
+      <column name="start_date" valueDate="2017-04-28"/>
+      <column name="finish_date" valueDate="2017-08-18"/>
+      <column name="status_id" valueNumeric="5"/>
+      <column name="specialization_id" valueNumeric="6"/>
+      <column name="budget_owner_id" valueNumeric="1"/>
+      <column name="is_deleted" valueBoolean="false"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-13">
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="1"/>
+      <column name="group_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="1"/>
+      <column name="group_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="11"/>
+      <column name="group_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="12"/>
+      <column name="group_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="10"/>
+      <column name="group_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="18"/>
+      <column name="group_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="8"/>
+      <column name="group_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="13"/>
+      <column name="group_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="14"/>
+      <column name="group_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="17"/>
+      <column name="group_id" valueNumeric="6"/>
+    </insert>
+    <insert tableName="group_teacher">
+      <column name="teacher_id" valueNumeric="17"/>
+      <column name="group_id" valueNumeric="6"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-14">
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="1"/>
+      <column name="expert_name" value="Sergey"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="2"/>
+      <column name="expert_name" value="kristina agilera"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="4"/>
+      <column name="expert_name" value="Justin Bieber"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="4"/>
+      <column name="expert_name" value="Selena Gomez"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="3"/>
+      <column name="expert_name" value="Lyolik"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="3"/>
+      <column name="expert_name" value="Bolik"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="5"/>
+      <column name="expert_name" value="Igor Kolomoiskiy"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="5"/>
+      <column name="expert_name" value="Dmytro Parubiy"/>
+    </insert>
+    <insert tableName="expert">
+      <column name="edu_group_id" valueNumeric="6"/>
+      <column name="expert_name" value="Lev Troitskiy"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-15">
+    <insert tableName="room">
+      <column name="id" valueNumeric="1"/>
+      <column name="number" value="705"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="2"/>
+      <column name="number" value="703"/>
+      <column name="location_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="3"/>
+      <column name="number" value="611"/>
+      <column name="location_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="4"/>
+      <column name="number" value="612"/>
+      <column name="location_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="5"/>
+      <column name="number" value="613"/>
+      <column name="location_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="6"/>
+      <column name="number" value="705"/>
+      <column name="location_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="7"/>
+      <column name="number" value="706-a"/>
+      <column name="location_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="8"/>
+      <column name="number" value="706-b"/>
+      <column name="location_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="9"/>
+      <column name="number" value="505"/>
+      <column name="location_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="10"/>
+      <column name="number" value="502"/>
+      <column name="location_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="11"/>
+      <column name="number" value="501"/>
+      <column name="location_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="12"/>
+      <column name="number" value="311"/>
+      <column name="location_id" valueNumeric="5"/>
+    </insert>
+    <insert tableName="room">
+      <column name="id" valueNumeric="13"/>
+      <column name="number" value="312"/>
+      <column name="location_id" valueNumeric="5"/>
+    </insert>
+  </changeSet>
 
-    <changeSet author="tdk" id="1502373598271-16">
-        <insert tableName="event">
-            <column name="id" valueNumeric="1"/>
-            <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
-            <column name="duration" valueNumeric="120"/>
-            <column name="group_id" valueNumeric="1"/>
-            <column name="event_type_id" valueNumeric="2"/>
-            <column name="room_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="2"/>
-            <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
-            <column name="duration" valueNumeric="120"/>
-            <column name="group_id" valueNumeric="1"/>
-            <column name="event_type_id" valueNumeric="1"/>
-            <column name="room_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="3"/>
-            <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
-            <column name="duration" valueNumeric="120"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="event_type_id" valueNumeric="2"/>
-            <column name="room_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="4"/>
-            <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
-            <column name="duration" valueNumeric="120"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="event_type_id" valueNumeric="1"/>
-            <column name="room_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="5"/>
-            <column name="datetime" valueDate="2017-07-27 18:30:00.0"/>
-            <column name="duration" valueNumeric="30"/>
-            <column name="group_id" valueNumeric="1"/>
-            <column name="event_type_id" valueNumeric="3"/>
-            <column name="room_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="6"/>
-            <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
-            <column name="duration" valueNumeric="120"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="event_type_id" valueNumeric="2"/>
-            <column name="room_id" valueNumeric="8"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="7"/>
-            <column name="datetime" valueDate="2017-07-28 10:00:00.0"/>
-            <column name="duration" valueNumeric="120"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="event_type_id" valueNumeric="4"/>
-            <column name="room_id" valueNumeric="6"/>
-        </insert>
-        <insert tableName="event">
-            <column name="id" valueNumeric="8"/>
-            <column name="datetime" valueDate="2017-07-29 12:30:00.0"/>
-            <column name="duration" valueNumeric="90"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="event_type_id" valueNumeric="5"/>
-            <column name="room_id" valueNumeric="7"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-17">
-        <insert tableName="student">
-            <column name="id" valueNumeric="1"/>
-            <column name="first_name" value="Lev"/>
-            <column name="last_name" value="Bukhanets"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="2"/>
-            <column name="first_name" value="Maksym"/>
-            <column name="last_name" value="Kameniev"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="3"/>
-            <column name="first_name" value="Dmytro"/>
-            <column name="last_name" value="Kholod"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="4"/>
-            <column name="first_name" value="Konstantin"/>
-            <column name="last_name" value="Musienko"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="5"/>
-            <column name="first_name" value="Andrii"/>
-            <column name="last_name" value="Serkes"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="6"/>
-            <column name="first_name" value="Vladyslav"/>
-            <column name="last_name" value="Vorontsov"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="7"/>
-            <column name="first_name" value="Anastasiia"/>
-            <column name="last_name" value="Ilina"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="2"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="8"/>
-            <column name="first_name" value="Roy"/>
-            <column name="last_name" value="Batty"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="9"/>
-            <column name="first_name" value="Motoko"/>
-            <column name="last_name" value="Kusanagi"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="10"/>
-            <column name="first_name" value="Daisuke"/>
-            <column name="last_name" value="Aramaki"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="11"/>
-            <column name="first_name" value="Thomas"/>
-            <column name="last_name" value="Anderson"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="12"/>
-            <column name="first_name" value="Hans"/>
-            <column name="last_name" value="Landa"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="13"/>
-            <column name="first_name" value="King"/>
-            <column name="last_name" value="Schultz"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="14"/>
-            <column name="first_name" value="Ace"/>
-            <column name="last_name" value="Ventura"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="3"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="15"/>
-            <column name="first_name" value="Forrest"/>
-            <column name="last_name" value="Gump"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="5"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="16"/>
-            <column name="first_name" value="Hannibal"/>
-            <column name="last_name" value="Lecter"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="5"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="17"/>
-            <column name="first_name" value="Jack"/>
-            <column name="last_name" value="Sparrow"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="5"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="18"/>
-            <column name="first_name" value="Marty"/>
-            <column name="last_name" value="McFly"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="5"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="19"/>
-            <column name="first_name" value="Darth"/>
-            <column name="last_name" value="Vader"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="5"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="20"/>
-            <column name="first_name" value="Tyler"/>
-            <column name="last_name" value="Durden"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="21"/>
-            <column name="first_name" value="John"/>
-            <column name="last_name" value="McClane"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="1"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="22"/>
-            <column name="first_name" value="Ellen"/>
-            <column name="last_name" value="Ripley"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="23"/>
-            <column name="first_name" value="Han"/>
-            <column name="last_name" value="Solo"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="24"/>
-            <column name="first_name" value="James"/>
-            <column name="last_name" value="Bond"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="25"/>
-            <column name="first_name" value="Indiana"/>
-            <column name="last_name" value="Jones"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="26"/>
-            <column name="first_name" value="Bruce"/>
-            <column name="last_name" value="Wayne"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="27"/>
-            <column name="first_name" value="Andy"/>
-            <column name="last_name" value="Dufresne"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="6"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="28"/>
-            <column name="first_name" value="Edward"/>
-            <column name="last_name" value="Scissorhands"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="7"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="29"/>
-            <column name="first_name" value="Stanley"/>
-            <column name="last_name" value="Ipkiss"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="7"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="30"/>
-            <column name="first_name" value="Freddy"/>
-            <column name="last_name" value="Krueger"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="7"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="31"/>
-            <column name="first_name" value="William"/>
-            <column name="last_name" value="Wallace"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="7"/>
-            <column name="english_level_id" valueNumeric="3"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="32"/>
-            <column name="first_name" value="Bruce"/>
-            <column name="last_name" value="Nolan"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="7"/>
-            <column name="english_level_id" valueNumeric="4"/>
-        </insert>
-        <insert tableName="student">
-            <column name="id" valueNumeric="33"/>
-            <column name="first_name" value="Carl"/>
-            <column name="last_name" value="Allen"/>
-            <column name="image"/>
-            <column name="group_id" valueNumeric="7"/>
-            <column name="english_level_id" valueNumeric="2"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-18">
-        <insert tableName="template">
-            <column name="id" valueNumeric="1"/>
-            <column name="event_type_id" valueNumeric="1"/>
-            <column name="strategy_id" valueNumeric="1"/>
-            <column name="duration" valueNumeric="21"/>
-        </insert>
-        <insert tableName="template">
-            <column name="id" valueNumeric="2"/>
-            <column name="event_type_id" valueNumeric="1"/>
-            <column name="strategy_id" valueNumeric="2"/>
-            <column name="duration" valueNumeric="28"/>
-        </insert>
-        <insert tableName="template">
-            <column name="id" valueNumeric="3"/>
-            <column name="event_type_id" valueNumeric="2"/>
-            <column name="strategy_id" valueNumeric="1"/>
-            <column name="duration" valueNumeric="21"/>
-        </insert>
-        <insert tableName="template">
-            <column name="id" valueNumeric="4"/>
-            <column name="event_type_id" valueNumeric="3"/>
-            <column name="strategy_id" valueNumeric="1"/>
-            <column name="duration" valueNumeric="21"/>
-        </insert>
-        <insert tableName="template">
-            <column name="id" valueNumeric="5"/>
-            <column name="event_type_id" valueNumeric="4"/>
-            <column name="strategy_id" valueNumeric="1"/>
-            <column name="duration" valueNumeric="0"/>
-        </insert>
-        <insert tableName="template">
-            <column name="id" valueNumeric="6"/>
-            <column name="event_type_id" valueNumeric="4"/>
-            <column name="strategy_id" valueNumeric="2"/>
-            <column name="duration" valueNumeric="0"/>
-        </insert>
-    </changeSet>
-    <changeSet author="tdk" id="1502373598271-19">
-        <update tableName="location">
-            <column name="coordinator_id" valueNumeric="2"/>
-            <where>name = 'Dnipro'</where>
-        </update>
-        <update tableName="location">
-            <column name="coordinator_id" valueNumeric="3"/>
-            <where>name = 'Sofia'</where>
-        </update>
-        <update tableName="location">
-            <column name="coordinator_id" valueNumeric="6"/>
-            <where>name = 'Lviv'</where>
-        </update>
-        <update tableName="location">
-            <column name="coordinator_id" valueNumeric="7"/>
-            <where>name = 'Chernivtsi'</where>
-        </update>
-        <update tableName="location">
-            <column name="coordinator_id" valueNumeric="8"/>
-            <where>name = 'Kyiv'</where>
-        </update>
-    </changeSet>
-    <changeSet author="lev" id="1502373598271-20">
+  <changeSet author="tdk" id="1502373598271-16">
     <insert tableName="event">
-        <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
-        <column name="duration" valueNumeric="120"/>
-        <column name="group_id" valueNumeric="1"/>
-        <column name="event_type_id" valueNumeric="5"/>
-        <column name="room_id" valueNumeric="1"/>
+      <column name="id" valueNumeric="1"/>
+      <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="2"/>
+      <column name="room_id" valueNumeric="1"/>
     </insert>
     <insert tableName="event">
-        <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
-        <column name="duration" valueNumeric="120"/>
-        <column name="group_id" valueNumeric="1"/>
-        <column name="event_type_id" valueNumeric="7"/>
-        <column name="room_id" valueNumeric="1"/>
+      <column name="id" valueNumeric="2"/>
+      <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="1"/>
+      <column name="room_id" valueNumeric="1"/>
     </insert>
     <insert tableName="event">
-        <column name="datetime" valueDate="2017-07-26 18:00:00.0"/>
-        <column name="duration" valueNumeric="120"/>
-        <column name="group_id" valueNumeric="1"/>
-        <column name="event_type_id" valueNumeric="9"/>
-        <column name="room_id" valueNumeric="1"/>
+      <column name="id" valueNumeric="3"/>
+      <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="event_type_id" valueNumeric="2"/>
+      <column name="room_id" valueNumeric="1"/>
     </insert>
     <insert tableName="event">
-        <column name="datetime" valueDate="2017-07-27 18:00:00.0"/>
-        <column name="duration" valueNumeric="120"/>
-        <column name="group_id" valueNumeric="1"/>
-        <column name="event_type_id" valueNumeric="10"/>
-        <column name="room_id" valueNumeric="1"/>
+      <column name="id" valueNumeric="4"/>
+      <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="event_type_id" valueNumeric="1"/>
+      <column name="room_id" valueNumeric="1"/>
     </insert>
-    </changeSet>
+    <insert tableName="event">
+      <column name="id" valueNumeric="5"/>
+      <column name="datetime" valueDate="2017-07-27 18:30:00.0"/>
+      <column name="duration" valueNumeric="30"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="3"/>
+      <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+      <column name="id" valueNumeric="6"/>
+      <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="event_type_id" valueNumeric="2"/>
+      <column name="room_id" valueNumeric="8"/>
+    </insert>
+    <insert tableName="event">
+      <column name="id" valueNumeric="7"/>
+      <column name="datetime" valueDate="2017-07-28 10:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="event_type_id" valueNumeric="4"/>
+      <column name="room_id" valueNumeric="6"/>
+    </insert>
+    <insert tableName="event">
+      <column name="id" valueNumeric="8"/>
+      <column name="datetime" valueDate="2017-07-29 12:30:00.0"/>
+      <column name="duration" valueNumeric="90"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="event_type_id" valueNumeric="5"/>
+      <column name="room_id" valueNumeric="7"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-17">
+    <insert tableName="student">
+      <column name="id" valueNumeric="1"/>
+      <column name="first_name" value="Lev"/>
+      <column name="last_name" value="Bukhanets"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="2"/>
+      <column name="first_name" value="Maksym"/>
+      <column name="last_name" value="Kameniev"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="3"/>
+      <column name="first_name" value="Dmytro"/>
+      <column name="last_name" value="Kholod"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="4"/>
+      <column name="first_name" value="Konstantin"/>
+      <column name="last_name" value="Musienko"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="5"/>
+      <column name="first_name" value="Andrii"/>
+      <column name="last_name" value="Serkes"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="6"/>
+      <column name="first_name" value="Vladyslav"/>
+      <column name="last_name" value="Vorontsov"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="7"/>
+      <column name="first_name" value="Anastasiia"/>
+      <column name="last_name" value="Ilina"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="2"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="8"/>
+      <column name="first_name" value="Roy"/>
+      <column name="last_name" value="Batty"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="9"/>
+      <column name="first_name" value="Motoko"/>
+      <column name="last_name" value="Kusanagi"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="10"/>
+      <column name="first_name" value="Daisuke"/>
+      <column name="last_name" value="Aramaki"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="11"/>
+      <column name="first_name" value="Thomas"/>
+      <column name="last_name" value="Anderson"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="12"/>
+      <column name="first_name" value="Hans"/>
+      <column name="last_name" value="Landa"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="13"/>
+      <column name="first_name" value="King"/>
+      <column name="last_name" value="Schultz"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="14"/>
+      <column name="first_name" value="Ace"/>
+      <column name="last_name" value="Ventura"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="3"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="15"/>
+      <column name="first_name" value="Forrest"/>
+      <column name="last_name" value="Gump"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="5"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="16"/>
+      <column name="first_name" value="Hannibal"/>
+      <column name="last_name" value="Lecter"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="5"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="17"/>
+      <column name="first_name" value="Jack"/>
+      <column name="last_name" value="Sparrow"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="5"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="18"/>
+      <column name="first_name" value="Marty"/>
+      <column name="last_name" value="McFly"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="5"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="19"/>
+      <column name="first_name" value="Darth"/>
+      <column name="last_name" value="Vader"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="5"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="20"/>
+      <column name="first_name" value="Tyler"/>
+      <column name="last_name" value="Durden"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="21"/>
+      <column name="first_name" value="John"/>
+      <column name="last_name" value="McClane"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="22"/>
+      <column name="first_name" value="Ellen"/>
+      <column name="last_name" value="Ripley"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="23"/>
+      <column name="first_name" value="Han"/>
+      <column name="last_name" value="Solo"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="24"/>
+      <column name="first_name" value="James"/>
+      <column name="last_name" value="Bond"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="25"/>
+      <column name="first_name" value="Indiana"/>
+      <column name="last_name" value="Jones"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="26"/>
+      <column name="first_name" value="Bruce"/>
+      <column name="last_name" value="Wayne"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="27"/>
+      <column name="first_name" value="Andy"/>
+      <column name="last_name" value="Dufresne"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="6"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="28"/>
+      <column name="first_name" value="Edward"/>
+      <column name="last_name" value="Scissorhands"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="7"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="29"/>
+      <column name="first_name" value="Stanley"/>
+      <column name="last_name" value="Ipkiss"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="7"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="30"/>
+      <column name="first_name" value="Freddy"/>
+      <column name="last_name" value="Krueger"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="7"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="31"/>
+      <column name="first_name" value="William"/>
+      <column name="last_name" value="Wallace"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="7"/>
+      <column name="english_level_id" valueNumeric="3"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="32"/>
+      <column name="first_name" value="Bruce"/>
+      <column name="last_name" value="Nolan"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="7"/>
+      <column name="english_level_id" valueNumeric="4"/>
+    </insert>
+    <insert tableName="student">
+      <column name="id" valueNumeric="33"/>
+      <column name="first_name" value="Carl"/>
+      <column name="last_name" value="Allen"/>
+      <column name="image"/>
+      <column name="group_id" valueNumeric="7"/>
+      <column name="english_level_id" valueNumeric="2"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-18">
+    <insert tableName="template">
+      <column name="id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="1"/>
+      <column name="strategy_id" valueNumeric="1"/>
+      <column name="duration" valueNumeric="21"/>
+    </insert>
+    <insert tableName="template">
+      <column name="id" valueNumeric="2"/>
+      <column name="event_type_id" valueNumeric="1"/>
+      <column name="strategy_id" valueNumeric="2"/>
+      <column name="duration" valueNumeric="28"/>
+    </insert>
+    <insert tableName="template">
+      <column name="id" valueNumeric="3"/>
+      <column name="event_type_id" valueNumeric="2"/>
+      <column name="strategy_id" valueNumeric="1"/>
+      <column name="duration" valueNumeric="21"/>
+    </insert>
+    <insert tableName="template">
+      <column name="id" valueNumeric="4"/>
+      <column name="event_type_id" valueNumeric="3"/>
+      <column name="strategy_id" valueNumeric="1"/>
+      <column name="duration" valueNumeric="21"/>
+    </insert>
+    <insert tableName="template">
+      <column name="id" valueNumeric="5"/>
+      <column name="event_type_id" valueNumeric="4"/>
+      <column name="strategy_id" valueNumeric="1"/>
+      <column name="duration" valueNumeric="0"/>
+    </insert>
+    <insert tableName="template">
+      <column name="id" valueNumeric="6"/>
+      <column name="event_type_id" valueNumeric="4"/>
+      <column name="strategy_id" valueNumeric="2"/>
+      <column name="duration" valueNumeric="0"/>
+    </insert>
+  </changeSet>
+  <changeSet author="tdk" id="1502373598271-19">
+    <update tableName="location">
+      <column name="coordinator_id" valueNumeric="2"/>
+      <where>name = 'Dnipro'</where>
+    </update>
+    <update tableName="location">
+      <column name="coordinator_id" valueNumeric="3"/>
+      <where>name = 'Sofia'</where>
+    </update>
+    <update tableName="location">
+      <column name="coordinator_id" valueNumeric="6"/>
+      <where>name = 'Lviv'</where>
+    </update>
+    <update tableName="location">
+      <column name="coordinator_id" valueNumeric="7"/>
+      <where>name = 'Chernivtsi'</where>
+    </update>
+    <update tableName="location">
+      <column name="coordinator_id" valueNumeric="8"/>
+      <where>name = 'Kyiv'</where>
+    </update>
+  </changeSet>
+  <changeSet author="lev" id="1502373598271-20">
+    <insert tableName="event">
+      <column name="datetime" valueDate="2017-07-24 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="5"/>
+      <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+      <column name="datetime" valueDate="2017-07-25 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="7"/>
+      <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+      <column name="datetime" valueDate="2017-07-26 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="9"/>
+      <column name="room_id" valueNumeric="1"/>
+    </insert>
+    <insert tableName="event">
+      <column name="datetime" valueDate="2017-07-27 18:00:00.0"/>
+      <column name="duration" valueNumeric="120"/>
+      <column name="group_id" valueNumeric="1"/>
+      <column name="event_type_id" valueNumeric="10"/>
+      <column name="room_id" valueNumeric="1"/>
+    </insert>
+  </changeSet>
 </databaseChangeLog>

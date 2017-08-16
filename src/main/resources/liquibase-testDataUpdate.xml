@@ -1,0 +1,206 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  <changeSet id="st-7" author="Unknown">
+    <update tableName="student">
+        <column name="approved_by_expert_id" valueNumeric="1"/>
+        <column name="entry_score" valueNumeric="5.0"/>
+        <column name="incoming_test" valueNumeric="600"/>
+        <where>id=1</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="2"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=2</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="3"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=3</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="5"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=4</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="5"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=5</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="1"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=6</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="1"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=7</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="6"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=8</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="9"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=9</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="2"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=10</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="3"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=11</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="3"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=12</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="1"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=13</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="2"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=14</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="5"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=15</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="6"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=16</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="4"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=17</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="1"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=18</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="2"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=19</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="3"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=20</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="4"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=21</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="5"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=22</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="6"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=23</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="7"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=24</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="8"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=25</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="9"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=26</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="3"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=27</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="2"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=28</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="1"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=29</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="4"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=30</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="4"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=31</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="5"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=32</where>
+    </update>
+    <update tableName="student">
+      <column name="approved_by_expert_id" valueNumeric="1"/>
+      <column name="entry_score" valueNumeric="5.0"/>
+      <column name="incoming_test" valueNumeric="600"/>
+      <where>id=33</where>
+    </update>
+</changeSet>
+</databaseChangeLog>

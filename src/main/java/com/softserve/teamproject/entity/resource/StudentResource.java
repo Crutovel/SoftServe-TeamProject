@@ -1,5 +1,6 @@
 package com.softserve.teamproject.entity.resource;
 
+import com.softserve.teamproject.entity.Expert;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,36 @@ public class StudentResource extends ResourceSupport {
   private String lastName;
 
   private byte[] image;
+
+  private Integer incomingTest;
+
+  private Double entryScore;
+
+  private Expert testApprovedByExpert;
+
+  public Integer getIncomingTest() {
+    return incomingTest;
+  }
+
+  public void setIncomingTest(Integer incomingTest) {
+    this.incomingTest = incomingTest;
+  }
+
+  public Double getEntryScore() {
+    return entryScore;
+  }
+
+  public void setEntryScore(Double entryScore) {
+    this.entryScore = entryScore;
+  }
+
+  public Expert getTestApprovedByExpert() {
+    return testApprovedByExpert;
+  }
+
+  public void setTestApprovedByExpert(Expert testApprovedByExpert) {
+    this.testApprovedByExpert = testApprovedByExpert;
+  }
 
   public int getStudentId() {
     return studentId;
