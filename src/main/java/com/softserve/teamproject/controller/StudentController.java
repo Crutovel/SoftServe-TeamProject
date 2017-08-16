@@ -71,4 +71,32 @@ public class StudentController {
     studentValidator.fillNotUpdatedFields(students);
     return studentService.updateStudents(students, principal.getName());
   }
+
+  /**
+   * Gets student by given id
+   *
+   * @param id given student's id
+   * @return StudentResource object for this student
+   */
+  @GetMapping(value = "/students/{id}")
+  @ApiOperation(value = "Get student by given id", response = Student.class)
+  public StudentResource getStudentById(@PathVariable Integer id) {
+    return studentService.getStudentResourceById(id);
+  }
+
+  /**
+   * Updates given student
+   *
+   * @param student student with new data
+   * @param id id of given student
+   * @return StudentResource object for updated student
+   */
+  @PutMapping(value = "/students/{id}", produces = "application/json")
+  @ApiOperation(value = "Update given student", response = Student.class)
+  public StudentResource editStudent(@RequestBody Student student, @PathVariable Integer id) {
+    student.setId(id);
+    studentValidator.checkPresentImageAndCvNames(student);
+    studentValidator.fillNotUpdatedFields(student);
+    return studentService.updateStudent(student);
+  }
 }

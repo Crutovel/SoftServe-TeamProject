@@ -8,6 +8,10 @@ public interface StudentValidator {
 
   void fillNotUpdatedFields(List<Student> students);
 
+  void fillNotUpdatedFields(Student student);
+
   void checkCoordinatorLocationToManipulateStudent(Group group, String userName);
+
+  void checkPresentImageAndCvNames(Student student);
 
 }
