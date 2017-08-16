@@ -27,5 +27,5 @@ public interface StudentService {
   StudentResource getStudentResourceById(Integer id);
 
   @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
-  StudentResource updateStudent(Student student);
+  StudentResource updateStudent(@Valid Student student);
 }

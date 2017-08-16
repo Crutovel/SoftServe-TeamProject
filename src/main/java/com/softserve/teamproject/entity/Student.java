@@ -37,6 +37,9 @@ public class Student {
   private byte[] image;
 
   @Column(name = "image_name")
+  @Pattern(regexp = ".+(\\.jpg|\\.jpeg|\\.tiff|\\.png)",
+      message = "Sorry, you should use only allowed file types:"
+          + " doc, docx, pdf or rtf for CV and jpg, jpeg, tiff or png for photo")
   private String imageName;
 
   @Lob
@@ -44,6 +47,9 @@ public class Student {
   private byte[] cv;
 
   @Column(name = "cv_name")
+  @Pattern(regexp = ".+(\\.doc|\\.docx|\\.pdf|\\.rtf)",
+      message = "Sorry, you should use only allowed file types:"
+          + " doc, docx, pdf or rtf for CV and jpg, jpeg, tiff or png for photo")
   private String cvName;
 
   @ManyToOne

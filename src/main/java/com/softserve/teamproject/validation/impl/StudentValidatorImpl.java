@@ -61,4 +61,15 @@ public class StudentValidatorImpl implements StudentValidator {
       throw new AccessDeniedException("Coordinator can't add/edit students in the alien location.");
     }
   }
+
+  @Override
+  public void checkPresentImageAndCvNames(Student student) {
+    if (student.getImage() != null && student.getImageName() == null) {
+      throw new IllegalArgumentException("You must send image name with image");
+    }
+
+    if (student.getCv() != null && student.getCvName() == null) {
+      throw new IllegalArgumentException("You must send CV name with CV");
+    }
+  }
 }

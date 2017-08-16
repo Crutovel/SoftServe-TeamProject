@@ -80,6 +80,7 @@ public class StudentController {
   @PutMapping(value = "/students/{id}", produces = "application/json")
   public StudentResource editStudent(@RequestBody Student student, @PathVariable Integer id) {
     student.setId(id);
+    studentValidator.checkPresentImageAndCvNames(student);
     studentValidator.fillNotUpdatedFields(student);
     return studentService.updateStudent(student);
   }

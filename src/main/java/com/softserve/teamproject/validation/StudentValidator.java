@@ -12,4 +12,6 @@ public interface StudentValidator {
 
   void checkCoordinatorLocationToManipulateStudent(Group group, String userName);
 
+  void checkPresentImageAndCvNames(Student student);
+
 }
