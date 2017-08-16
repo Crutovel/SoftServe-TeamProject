@@ -20,7 +20,7 @@ import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.dto.KeyDateWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.repository.EventRepository;
-import com.softserve.teamproject.service.TestGroup;
+import com.softserve.teamproject.service.TestSchedule;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -56,7 +56,7 @@ public class ScheduleControllerIntegrationTest {
 
 
   @WithUserDetails(COORDINATOR)
-  @TestGroup
+  @TestSchedule
   @Test
   public void getEvents_groupIsNotSpecified_allEventsExpected() throws Exception {
     //Arrange
@@ -72,7 +72,7 @@ public class ScheduleControllerIntegrationTest {
 
 
   @WithUserDetails(COORDINATOR)
-  @TestGroup
+  @TestSchedule
   @Test
   public void getEvents_groupAndDatesSpecified_eventListExpected() throws Exception {
     //Arrange
@@ -91,7 +91,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
   @WithUserDetails(COORDINATOR)
-  @TestGroup
+  @TestSchedule
   @Test
   public void getEventsByFilter_groupsAndDatesSpecified_eventListExpected() throws Exception {
     //Arrange
@@ -117,7 +117,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
   @WithUserDetails(COORDINATOR)
-  @TestGroup
+  @TestSchedule
   @Test
   public void getEventsByFilter_nullGroupsSpecified_badRequestExpected() throws Exception {
     //Arrange
@@ -139,7 +139,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
   @WithUserDetails(COORDINATOR)
-  @TestGroup
+  @TestSchedule
   @Test
   public void getEventsByFilter_emptyGroupListSpecified_emptytListExpected() throws Exception {
     //Arrange
@@ -162,7 +162,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
   @WithUserDetails(COORDINATOR)
-  @TestGroup
+  @TestSchedule
   @Test
   public void getEventsByFilter_datesNotSpecified_badRequestExpected() throws Exception {
     //Arrange
@@ -179,7 +179,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getKeyEvents_noGroupSpecified_allKeyEventsReturned() throws Exception {
@@ -198,7 +198,7 @@ public class ScheduleControllerIntegrationTest {
 
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getKeyEvents_groupSpecified_keyEventsReturnedForGroup() throws Exception {
@@ -218,7 +218,7 @@ public class ScheduleControllerIntegrationTest {
             jsonPath("$[*].links[3].href", everyItem(containsOneOfStrings(keyEventTypesId))));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getKeyEventsByFilter_groupsSpecified_keyEventsReturnedForGroup() throws Exception {
@@ -242,7 +242,7 @@ public class ScheduleControllerIntegrationTest {
             jsonPath("$[*].links[3].href", everyItem(containsOneOfStrings(keyEventTypesId))));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getKeyEventsByFilter_noGroupsSpecified_nullExpected() throws Exception {
@@ -259,7 +259,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(content().string(isEmptyOrNullString()));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getKeyEventsByFilter_emptyRequestBody_badRequestExpected() throws Exception {
@@ -274,7 +274,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getEvent_eventIdSpecified_eventReturned() throws Exception {
@@ -288,7 +288,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.eventId", is(EXPECTED_ID)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void getEvent_invalidEventID_badRequestExpected() throws Exception {
@@ -301,7 +301,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void addKeyDates_validData_keyEventAdded() throws Exception {
@@ -329,7 +329,7 @@ public class ScheduleControllerIntegrationTest {
             jsonPath("$.succeed[0].links[3].href", containsString("eventTypes/" + EVENT_TYPE)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER_WITH_GROUPS)
   @Test
   public void addKeyDates_validDataTeacherOfThisGroup_keyEventAdded() throws Exception {
@@ -358,7 +358,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void addKeyDates_groupIdNotSpecified_invalidEventWithMessageExpected() throws Exception {
@@ -383,7 +383,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void addKeyDates_eventTypeNotSpecified_invalidEventWithMessageExpected() throws Exception {
@@ -408,7 +408,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void addKeyDates_wrongDateSpecified_invalidEventWithMessageExpected() throws Exception {
@@ -435,7 +435,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void addKeyDates_nullDateSpecified_invalidEventWithMessageExpected() throws Exception {
@@ -460,7 +460,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR_OTHER_LOCATION)
   @Test
   public void addKeyDates_coordinatorInAnotherLocation_invalidEventWithMessageExpected()
@@ -486,7 +486,7 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER_WITHOUT_GROUPS)
   @Test
   public void addKeyDates_teacherOfOtherGroup_invalidEventWithMessageExpected() throws Exception {
@@ -512,7 +512,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(COORDINATOR)
   @Test
   public void addSchedule_validData_EventCreated() throws Exception {
@@ -539,7 +539,7 @@ public class ScheduleControllerIntegrationTest {
   }
 
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER_WITH_GROUPS)
   @Test
   public void addSchedule_teacherAuth_forbiddenExpected() throws Exception {

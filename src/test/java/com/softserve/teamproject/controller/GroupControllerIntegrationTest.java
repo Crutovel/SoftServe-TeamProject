@@ -54,13 +54,13 @@ public class GroupControllerIntegrationTest {
   @Test
   public void getGroupsByFilter_twoLocationsExist_returnGroupResources() throws Exception {
     //Arrange
-    final int EXPECTED_SIZE = 5;
+    final int EXPECTED_SIZE = 4;
     Integer[] groupLocations = new Integer[]{1, 2};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
     }};
     final String TESTED_URL = "/groups/filter";
-    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116", "DP-1115", "SO-115","DP-118"};
+    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116", "DP-1115", "SO-115"};
 
     //Act && Assert
     mvc.perform(post(TESTED_URL)
@@ -76,13 +76,13 @@ public class GroupControllerIntegrationTest {
   @Test
   public void getGroupsByFilter_threeLocationOneNotExist_returnGroupResources() throws Exception {
     //Arrange
-    final int EXPECTED_SIZE = 5;
+    final int EXPECTED_SIZE = 4;
     Integer[] groupLocations = new Integer[]{1, 2, 5};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
     }};
     final String TESTED_URL = "/groups/filter";
-    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116", "DP-1115", "SO-115","DP-118"};
+    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116", "DP-1115", "SO-115"};
 
     //Act && Assert
     mvc.perform(post(TESTED_URL)
@@ -573,8 +573,8 @@ public class GroupControllerIntegrationTest {
   @Test
   public void getTeachersGroups_teacherWithGroups_returnGroups() throws Exception {
     //Arrange
-    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116","DP-118"};
-    final int RESULT_SET_SIZE = 3;
+    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116"};
+    final int RESULT_SET_SIZE = 2;
     final String TESTED_URL = "/groups/my";
 
     //Act && Assert
@@ -634,8 +634,8 @@ public class GroupControllerIntegrationTest {
   public void getGroupsFromUserLocation_allowedUserAndLocationWithGroups_returnGroups()
       throws Exception {
     //Arrange
-    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116", "DP-1115","DP-118"};
-    final int RESULT_SET_SIZE = 4;
+    final String[] EXPECTED_GROUP_NAMES = {"DP-115", "DP-116", "DP-1115"};
+    final int RESULT_SET_SIZE = 3;
     final String TESTED_URL = "/groups/mylocation";
 
     //Act && Assert

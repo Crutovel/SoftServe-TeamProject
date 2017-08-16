@@ -150,7 +150,7 @@ public class GroupServiceImplTest {
   @Test
   public void getAllGroupResources_teacher_returnAllGroupResources() {
     //Arrange
-    final int EXPECTED_GROUP_COUNT = 4;
+    final int EXPECTED_GROUP_COUNT = 3;
 
     //Act
     List<GroupResource> list = groupService.getAllGroupResources();
@@ -204,7 +204,7 @@ public class GroupServiceImplTest {
   @Test
   public void getGroupsByFilter_twoLocationsExist_returnGroups() {
     //Arrange
-    final int EXPECTED_SIZE = 5;
+    final int EXPECTED_SIZE = 4;
     Integer[] groupLocations = new Integer[]{1, 2};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
@@ -223,7 +223,7 @@ public class GroupServiceImplTest {
   @Test
   public void getGroupsByFilter_oneLocationsExists_returnGroups() {
     //Arrange
-    final int EXPECTED_SIZE = 4;
+    final int EXPECTED_SIZE = 3;
     Integer[] groupLocations = new Integer[]{1};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);
@@ -242,7 +242,7 @@ public class GroupServiceImplTest {
   @Test
   public void getGroupsByFilter_threeLocationOneNotExist_returnGroups() {
     //Arrange
-    final int EXPECTED_SIZE = 5;
+    final int EXPECTED_SIZE = 4;
     Integer[] groupLocations = new Integer[]{1, 2, 5};
     GroupsFilter filter = new GroupsFilter() {{
       setLocations(groupLocations);

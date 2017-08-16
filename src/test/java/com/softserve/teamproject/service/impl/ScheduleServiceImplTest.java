@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import com.softserve.teamproject.entity.resource.EventResource;
 import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.service.ScheduleService;
-import com.softserve.teamproject.service.TestGroup;
+import com.softserve.teamproject.service.TestSchedule;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class ScheduleServiceImplTest {
     MockitoAnnotations.initMocks(this);
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER)
   @Test
   public void getEventsByGroupId_bothDatesNotSpecifiedStatusFinished_lastWeekEventsExpected() {
@@ -56,7 +56,7 @@ public class ScheduleServiceImplTest {
     events.forEach(event -> assertTrue(week.contains(event.getDateTime().toLocalDate())));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER)
   @Test
   public void getEventsByGroupId_bothDatesNotSpecifiedStatusCurrent_currentWeekEventsExpected() {
@@ -70,7 +70,7 @@ public class ScheduleServiceImplTest {
     events.forEach(event -> assertTrue(week.contains(event.getDateTime().toLocalDate())));
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER)
   @Test(expected = IllegalArgumentException.class)
   public void getEventsByGroupId_bothDatesNotSpecifiedStatusPlanned_exceptionThrown() {
@@ -80,7 +80,7 @@ public class ScheduleServiceImplTest {
 
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER)
   @Test(expected = IllegalArgumentException.class)
   public void getEventsByGroupId_oneDateIsNotSpecifiedCorrectStatus_exceptionExpected() {
@@ -90,7 +90,7 @@ public class ScheduleServiceImplTest {
         .getEventsByGroupId(PLANNED_GROUP_ID, LocalDate.now(), null);
   }
 
-  @TestGroup
+  @TestSchedule
   @WithUserDetails(TEACHER)
   @Test
   public void getEventsByGroupId_BothDatesSpecifiedCorrectStatus_eventsReturned() {
