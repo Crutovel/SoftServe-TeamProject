@@ -38,8 +38,7 @@ public class Student {
 
   @Column(name = "image_name")
   @Pattern(regexp = ".+(\\.jpg|\\.jpeg|\\.tiff|\\.png)",
-      message = "Sorry, you should use only allowed file types:"
-          + " doc, docx, pdf or rtf for CV and jpg, jpeg, tiff or png for photo")
+      message = "{illegalArgs.student.cvOrImage.name}")
   private String imageName;
 
   @Lob
@@ -48,8 +47,7 @@ public class Student {
 
   @Column(name = "cv_name")
   @Pattern(regexp = ".+(\\.doc|\\.docx|\\.pdf|\\.rtf)",
-      message = "Sorry, you should use only allowed file types:"
-          + " doc, docx, pdf or rtf for CV and jpg, jpeg, tiff or png for photo")
+      message = "{illegalArgs.student.cvOrImage.name}")
   private String cvName;
 
   @ManyToOne
