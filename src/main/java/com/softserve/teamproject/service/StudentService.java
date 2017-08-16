@@ -22,4 +22,10 @@ public interface StudentService {
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
   Student updateSingleStudent(Student student, String userName);
+
+  @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
+  StudentResource getStudentResourceById(Integer id);
+
+  @PreAuthorize("hasAnyAuthority('teacher', 'coordinator', 'admin')")
+  StudentResource updateStudent(@Valid Student student);
 }
