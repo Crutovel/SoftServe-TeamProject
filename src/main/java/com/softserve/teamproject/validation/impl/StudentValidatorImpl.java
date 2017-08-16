@@ -5,6 +5,7 @@ import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.StudentRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.validation.StudentValidator;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -17,6 +18,7 @@ public class StudentValidatorImpl implements StudentValidator {
 
   private StudentRepository studentRepository;
   private UserRepository userRepository;
+  private MessageByLocaleService messageByLocaleService;
 
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
@@ -26,6 +28,12 @@ public class StudentValidatorImpl implements StudentValidator {
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
     this.userRepository = userRepository;
+  }
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
   }
 
   @Override
@@ -75,11 +83,15 @@ public class StudentValidatorImpl implements StudentValidator {
   @Override
   public void checkPresentImageAndCvNames(Student student) {
     if (student.getImage() != null && student.getImageName() == null) {
-      throw new IllegalArgumentException("You must send image name with image");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.student.image.presentName")
+      );
     }
 
     if (student.getCv() != null && student.getCvName() == null) {
-      throw new IllegalArgumentException("You must send CV name with CV");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.student.cv.presentName")
+      );
     }
   }
 }
