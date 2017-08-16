@@ -36,6 +36,22 @@ public class Student {
   @Column(name = "image")
   private byte[] image;
 
+  @Column(name = "image_name")
+  @Pattern(regexp = ".+(\\.jpg|\\.jpeg|\\.tiff|\\.png)",
+      message = "Sorry, you should use only allowed file types:"
+          + " doc, docx, pdf or rtf for CV and jpg, jpeg, tiff or png for photo")
+  private String imageName;
+
+  @Lob
+  @Column(name = "cv")
+  private byte[] cv;
+
+  @Column(name = "cv_name")
+  @Pattern(regexp = ".+(\\.doc|\\.docx|\\.pdf|\\.rtf)",
+      message = "Sorry, you should use only allowed file types:"
+          + " doc, docx, pdf or rtf for CV and jpg, jpeg, tiff or png for photo")
+  private String cvName;
+
   @ManyToOne
   @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
   private Group group;
@@ -74,6 +90,30 @@ public class Student {
 
   public void setImage(byte[] image) {
     this.image = image;
+  }
+
+  public String getImageName() {
+    return imageName;
+  }
+
+  public void setImageName(String imageName) {
+    this.imageName = imageName;
+  }
+
+  public byte[] getCv() {
+    return cv;
+  }
+
+  public void setCv(byte[] cv) {
+    this.cv = cv;
+  }
+
+  public String getCvName() {
+    return cvName;
+  }
+
+  public void setCvName(String cvName) {
+    this.cvName = cvName;
   }
 
   public Group getGroup() {
