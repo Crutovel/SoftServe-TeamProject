@@ -4,7 +4,7 @@
     <addColumn tableName="student">
       <column name="incoming_test" type="INT"/>
       <column name="entry_score" type="DOUBLE PRECISION"/>
-      <column name="approved_by_expert_id" type="INT">
+      <column name="approved_by_expert_id" type="INT" defaultValueNumeric="1">
       <constraints nullable="false"/>
       </column>
     </addColumn>
@@ -17,4 +17,178 @@
 <changeSet id="st-2" author="Anastasia">
 <addForeignKeyConstraint baseColumnNames="approved_by_expert_id" baseTableName="student" constraintName="fk_student_expert1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="expert"/>
 </changeSet>
+  <!--<changeSet author="Ana" id="st-3">-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+    <!--<insert tableName="student">-->
+      <!--<column name="approved_by_expert_id" valueNumeric="1"/>-->
+      <!--<column name="incoming_test" valueNumeric="600"/>-->
+      <!--<column name="entry_test" valueNumeric="4.0"/>-->
+    <!--</insert>-->
+  <!--</changeSet>-->
+  <!--<changeSet author="Anastasia" id="addDefaultValue-expert">-->
+    <!--<addDefaultValue-->
+      <!--columnDataType="int"-->
+      <!--columnName="approved_by_expert_id"-->
+      <!--defaultValueNumeric="1"-->
+      <!--tableName="student"/>-->
+  <!--</changeSet>-->
 </databaseChangeLog>

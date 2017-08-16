@@ -1,5 +1,7 @@
 package com.softserve.teamproject.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.softserve.teamproject.entity.deserializer.ExpertDeserializer;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -52,6 +54,7 @@ public class Student {
 
   @ManyToOne
   @JoinColumn(name = "approved_by_expert_id", referencedColumnName = "id", nullable = false)
+  @JsonDeserialize(using = ExpertDeserializer.class)
   private Expert testApprovedByExpert;
 
   public Integer getIncomingTest() {
