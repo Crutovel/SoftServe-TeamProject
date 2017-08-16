@@ -3,6 +3,7 @@ package com.softserve.teamproject.service.impl;
 import com.softserve.teamproject.entity.Role;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,13 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   private UserRepository userRepository;
+  private MessageByLocaleService messageByLocaleService;
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -45,7 +53,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       UsernameNotFoundException {
     User user = userRepository.getUserByNickName(userName);
     if (user == null) {
-      throw new UsernameNotFoundException("User " + userName + " is not found.");
+      throw new UsernameNotFoundException(
+          messageByLocaleService.getMessage("username.notFound.userDetailService", userName)
+      );//"User " + userName + " is not found."
     }
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
     Role role = user.getRole();

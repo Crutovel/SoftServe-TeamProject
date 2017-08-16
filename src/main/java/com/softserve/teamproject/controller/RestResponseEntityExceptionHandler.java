@@ -1,6 +1,7 @@
 package com.softserve.teamproject.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
@@ -13,11 +14,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -26,6 +31,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
   private static final String MSG_NOT_FOUND = "Not Found";
   private static final String MSG_BAD_REQUEST = "Bad request";
   private static final String MSG_ACCESS_DENIED = "Access Denied";
+  private static final String MSG_WRONG_TYPE = "Wrong type of request parameter";
+  private static final String VALIDATION_ERRORS = "validationErrors";
 
   public RestResponseEntityExceptionHandler() {
     super();
@@ -38,7 +45,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     return body;
   }
 
-  @ExceptionHandler({IllegalArgumentException.class})
+  @ExceptionHandler({IllegalArgumentException.class, NullPointerException.class})
   public ResponseEntity<Object> handleIllegalArgumentException(final Exception ex,
       final WebRequest request) {
     return new ResponseEntity<>(createResponseBody(ex.getMessage()), new HttpHeaders(),
@@ -69,6 +76,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         HttpStatus.BAD_REQUEST, request);
   }
 
+  @ExceptionHandler(value = {MethodArgumentTypeMismatchException.class})
+  protected ResponseEntity<Object> handleMethodArgumentTypeMismatchException(
+      final RuntimeException ex, final WebRequest request) {
+    return handleExceptionInternal(
+        ex, createResponseBody(MSG_WRONG_TYPE), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST, request);
+  }
+
   @ExceptionHandler(value = {ConstraintViolationException.class})
   protected ResponseEntity<Object> handleConstraintViolationException(
       final ConstraintViolationException ex, final WebRequest request) {
@@ -76,8 +91,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     Set<String> messages = new HashSet<>(constraintViolations.size());
     messages.addAll(constraintViolations.stream()
-        .map(constraintViolation -> String.format("Value '%s' is incorrect - %s",
-            constraintViolation.getInvalidValue(), constraintViolation.getMessage()))
+        .map(ConstraintViolation::getMessage)
         .collect(Collectors.toList()));
     return handleExceptionInternal(
         ex, createResponseBody(MSG_BAD_REQUEST + ": " + messages), new HttpHeaders(),
@@ -96,4 +110,19 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         status, request);
   }
 
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+      HttpHeaders headers, HttpStatus status, WebRequest request) {
+    List<FieldError> errors = ex.getBindingResult().getFieldErrors();
+    ModelMap map = new ModelMap();
+    ModelMap errorMap = new ModelMap();
+    for (FieldError fieldError : errors) {
+      errorMap.addAttribute(fieldError.getField(), fieldError.getDefaultMessage());
+    }
+    map.addAttribute(VALIDATION_ERRORS, errorMap);
+
+    return handleExceptionInternal(
+        ex, createResponseBody(MSG_BAD_REQUEST + ": " + map.toString()), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST, request);
+  }
 }
