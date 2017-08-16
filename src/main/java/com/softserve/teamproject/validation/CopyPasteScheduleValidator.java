@@ -102,7 +102,7 @@ public class CopyPasteScheduleValidator implements
     if ((pasteWeekDate == null && pasteFillDate == null)
         || (pasteWeekDate != null && pasteFillDate != null)) {
       throw new IllegalArgumentException(
-          messageByLocaleService.getMessage("illegalArgs.schedule.noCopyEvents")
+          messageByLocaleService.getMessage("illegalArgs.schedule.dates.existOne")
       );
     }
     LocalDate startDate = group.getStartDate();

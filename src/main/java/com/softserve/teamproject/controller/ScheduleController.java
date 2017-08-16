@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Controller that used for handle events.
  */
-@Validated
 @RestController
 @Api(value = "scheduleController", description = "Operations with events")
 public class ScheduleController {
@@ -66,7 +65,6 @@ public class ScheduleController {
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
       @RequestParam(value = "end", required = false)
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-//TODO Fix this shit
     if (groupId != null) {
       return scheduleService.getEventsByGroupId(groupId, start, end);
     }
@@ -178,6 +176,7 @@ public class ScheduleController {
    * @param copyPasteSchedule wrapper for request info such as group id, copy date, paste date
    * @return copyPasteSchedule wrapper with group id, copy date, paste date and conflicts
    */
+  @Validated
   @PostMapping("/events/copypaste")
   public CopyPasteScheduleWrapper copyPasteSchedule(
       @RequestBody @ValidCopyPasteSchedule @Valid CopyPasteScheduleWrapper copyPasteSchedule) {
