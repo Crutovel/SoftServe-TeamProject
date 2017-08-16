@@ -821,7 +821,7 @@
       <column name="english_level_id" valueNumeric="4"/>
       <column name="approved_by_expert_id" valueNumeric="1"/>
       <column name="incoming_test" valueNumeric="600"/>
-      <column name="entry_score" valueNumeric="4.0"/>
+      <column name="entry_test" valueNumeric="4.0"/>
     </insert>
     <insert tableName="student">
       <column name="id" valueNumeric="2"/>
@@ -832,7 +832,7 @@
       <column name="english_level_id" valueNumeric="4"/>
       <column name="approved_by_expert_id" valueNumeric="1"/>
       <column name="incoming_test" valueNumeric="600"/>
-      <column name="entry_score" valueNumeric="4.0"/>
+      <column name="entry_test" valueNumeric="4.0"/>
     </insert>
     <insert tableName="student">
       <column name="id" valueNumeric="3"/>
