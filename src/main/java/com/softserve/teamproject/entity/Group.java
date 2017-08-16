@@ -3,7 +3,7 @@ package com.softserve.teamproject.entity;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
-import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
+import com.softserve.teamproject.entity.serializer.LocalDateSerializer;
 import com.softserve.teamproject.entity.deserializer.LocationDeserializer;
 import com.softserve.teamproject.entity.deserializer.SpecializationDeserializer;
 import com.softserve.teamproject.entity.deserializer.StatusDeserializer;
@@ -35,7 +35,7 @@ public class Group {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private int id;
+  private Integer id;
 
   @Column(name = "name", unique = true)
   @Size(min = 4, max = 20, message = "Wrong size")
@@ -92,11 +92,11 @@ public class Group {
   @Column(name = "is_deleted", columnDefinition = "bit(1) default false")
   private boolean isDeleted;
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

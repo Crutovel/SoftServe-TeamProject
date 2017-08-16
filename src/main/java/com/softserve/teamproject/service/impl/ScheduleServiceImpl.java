@@ -8,6 +8,7 @@ import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.dto.EventDto;
 import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
+import com.softserve.teamproject.dto.KeyDateResponseDto;
 import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.Group;
@@ -27,12 +28,12 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class ScheduleServiceImpl implements ScheduleService {
       MessageByLocaleService messageByLocaleService) {
     this.messageByLocaleService = messageByLocaleService;
   }
-  
+
   @Autowired
   public void setEventResourceAssembler(
       EventResourceAssembler eventResourceAssembler) {
@@ -83,7 +84,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     this.eventRepository = eventRepository;
   }
 
-  public Iterable<EventResource> getKeyEventsByGroupId(Integer groupId) {
+  public List<EventResource> getKeyEventsByGroupId(Integer groupId) {
     return convertToResource(eventRepository.getKeyEventsByGroupId(groupId));
   }
 
@@ -95,25 +96,25 @@ public class ScheduleServiceImpl implements ScheduleService {
     return convertToResource(eventRepository.findAll(getKeyDates()));
   }
 
-  private Iterable<EventResource> getLastWeekEvents(Integer groupId) {
+  private List<EventResource> getLastWeekEvents(Integer groupId) {
     Group group = groupRepository.findOne(groupId);
-    TemporalField temporalField = WeekFields.of(Locale.US).dayOfWeek();
+    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
     LocalDate start;
     LocalDate end;
     if (group.getStatus().getStatusCategory().getName().equals(currentGroupStatus)) {
       start = LocalDate.now().with(temporalField, 1);
-      end = LocalDate.now().with(temporalField, 7);
+      end = LocalDate.now().with(temporalField, 5);
     } else if (group.getStatus().getStatusCategory().getName().equals(finishedGroupStatus)) {
       LocalDate finished = group.getFinishDate();
       start = finished.with(temporalField, 1);
-      end = finished.with(temporalField, 7);
+      end = finished.with(temporalField, 5);
     } else {
-      return null;
+      throw new IllegalArgumentException("Group is in planned state");
     }
     return getEventsByGroupId(groupId, start, end);
   }
 
-  public Iterable<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
+  public List<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
       LocalDate end) {
     if (start == null && end == null) {
       return getLastWeekEvents(groupId);
@@ -127,7 +128,7 @@ public class ScheduleServiceImpl implements ScheduleService {
   }
 
   public Iterable<EventResource> getEventsByFilter(
-      Integer[] groupId, LocalDate start, LocalDate end) {
+      List<Integer> groupId, LocalDate start, LocalDate end) {
     if (start == null || end == null) {
       throw new IllegalArgumentException(
           messageByLocaleService.getMessage("illegalArgs.schedule.getEventsByFilter"));
@@ -136,7 +137,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         groupId, start.atStartOfDay(), end.plusDays(1).atStartOfDay()));
   }
 
-  public Iterable<EventResource> getKeyEventsByFilter(Integer[] groupId) {
+  public Iterable<EventResource> getKeyEventsByFilter(List<Integer> groupId) {
     return convertToResource(eventRepository.getKeyEventsByGroupId(groupId));
   }
 
@@ -253,10 +254,11 @@ public class ScheduleServiceImpl implements ScheduleService {
    */
 
   public EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result) {
-    Map<KeyDateDto, String> invalidEvents = new HashMap<>();
+    List<KeyDateResponseDto> invalidEvents = new ArrayList<>();
     result.getFieldErrors().forEach(error -> {
       events.remove(KeyDateDto.class.cast(error.getRejectedValue()));
-      invalidEvents.put((KeyDateDto) error.getRejectedValue(), error.getDefaultMessage());
+      invalidEvents
+          .add(((KeyDateDto) error.getRejectedValue()).toResponseDto(error.getDefaultMessage()));
     });
 
     List<Event> savedEvents = saveKeyDates(events.stream().map(
@@ -314,7 +316,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (eventDateTime.isAfter(finish.plusDays(1).atStartOfDay())) {
           break;
         }
-        temp = new Event(null,eventDateTime, event.getDuration(),
+        temp = new Event(null, eventDateTime, event.getDuration(),
             event.getRoom(), event.getGroup(), event.getEventType());
         if (isEventConflicts(temp)) {
           incorrect.add(temp);
@@ -351,7 +353,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     List<Event> copyEvents = getEventsForCopy(group.getId(), copyWeekDate);
     if (copyEvents.size() == 0) {
       throw new IllegalArgumentException(
-          messageByLocaleService.getMessage("illegalArgs.schedule.dates.existOne")
+          messageByLocaleService.getMessage("illegalArgs.schedule.noCopyEvents")
       );
     }
     LocalDate start;
@@ -395,7 +397,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @return if conflicts true, if not false
    */
   private boolean isEventConflicts(Event event) {
-    List<Event> events = eventRepository.getEventsByGroupId(getGroupIdsByLocation(event),
+    List<Event> events = eventRepository.getEventsByGroupId(Arrays.asList(getGroupIdsByLocation(event)),
         event.getDateTime().toLocalDate().atStartOfDay(),
         event.getDateTime().plusDays(1).toLocalDate().atStartOfDay());
     for (Event item : events) {

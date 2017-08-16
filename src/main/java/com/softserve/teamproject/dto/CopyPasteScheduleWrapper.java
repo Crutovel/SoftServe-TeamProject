@@ -6,7 +6,7 @@ import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupSerializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
-import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
+import com.softserve.teamproject.entity.serializer.LocalDateSerializer;
 import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
