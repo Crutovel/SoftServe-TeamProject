@@ -1,5 +1,9 @@
 # API Documentation for End Point "/groups"
 
+This endpoint allows authorized teacher, coordinator or admin
+to get data about education groups.
+Also it allows authorized coordinator or admin to add and update groups
+
 <a name="table-of-content"></a>
 ## Table of Content
 
@@ -49,6 +53,8 @@
 
 <a name="all-groups"></a>
 ## Show all groups
+
+Teacher, coordinator and admin can get all groups
 
 <a name="all-groups-url"></a>
 ### URL :
@@ -149,6 +155,9 @@ None
 
 <a name="teacher-groups"></a>
 ## Show the groups, that belong to the currently authenticated teacher
+
+The currently authenticated teacher, coordinator or admin
+can get his groups
 
 <a name="teacher-groups-url"></a>
 ### URL :
@@ -258,6 +267,9 @@ None
 <a name="current-user-location-groups"></a>
 ## Show the groups, that belong to the location of the currently authenticated user
 
+Authorized teacher, coordinator or admin can get the groups,
+that belong to the his location
+
 <a name="current-user-location-groups-url"></a>
 ### URL :
 /groups/mylocation
@@ -366,13 +378,16 @@ None
 <a name="filter-groups"></a>
 ## Show the groups, with filter
 
+Authorized teacher, coordinator or admin can get the groups,
+that belong to the given locations
+
 <a name="filter-groups-url"></a>
 ### URL :
 /groups/filter
 
 <a name="filter-groups-method"></a>
 ### Method :
-GET
+POST
 
 <a name="filter-groups-url-params"></a>
 ### URL Params :
@@ -382,7 +397,31 @@ Example: `location=1`
 
 <a name="filter-groups-data-params"></a>
 ### Data Params :
-None
+**Required:**
+ 
+    {
+        [
+            "location":
+            {
+                "id": [integer],
+            }
+        ]
+    }
+ 
+Example:
+
+    {
+        [
+            "location":
+            {
+                "id": 1
+            },
+            "location":
+            {
+                "id": 2
+            }
+        ]
+    }
 
 <a name="filter-groups-success-response"></a>
 ### Success Response:
@@ -475,6 +514,9 @@ None
 
 <a name="add-group"></a>
 ## Add group
+
+The authorized coordinator can add group in his location.
+The admin can add group in any location
 
 <a name="add-group-url"></a>
 ### URL :
@@ -585,6 +627,9 @@ application/json
 <a name="delete-group"></a>
 ## Delete group
 
+The authorized coordinator can delete group in his location.
+The admin can delete group in any location
+
 <a name="delete-group-url"></a>
 ### URL :
 /groups/{id}
@@ -638,3 +683,4 @@ None
     }
     
 [Table of content](#table-of-content)
+

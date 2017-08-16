@@ -1,5 +1,7 @@
 # API Documentation for End Point "/users"
 
+This endpoint allows authorized user to get data for one user or for all users
+
 <a name="table-of-content"></a>
 ## Table of Content
 

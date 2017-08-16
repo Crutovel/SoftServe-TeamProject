@@ -1,5 +1,7 @@
 # API Documentation for End Point "/login"
 
+This is endpoint for authorization
+
 <a name="table-of-content"></a>
 ## Table of Content
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * User photo is converted into JSON format as a Base64 string.
  */
 @RestController
-@Api(value = "studentController", description = "Operations with students")
+@Api(value = "userProfileController", description = "Information about current user")
 public class UserProfileController {
 
   private UserProfileService userProfileService;
