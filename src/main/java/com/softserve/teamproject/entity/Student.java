@@ -111,7 +111,7 @@ public class Student {
 
   @Override
   public int hashCode() {
-    return Objects.hash(firstName, lastName, group.getId());
+    return Objects.hash(firstName, lastName);
   }
 
   @Override
