@@ -1,11 +1,13 @@
 package com.softserve.teamproject.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.deserializer.EventTypeDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateTimeDeserializer;
 import com.softserve.teamproject.entity.deserializer.RoomDeserializer;
 
+import com.softserve.teamproject.entity.serializer.LocalDateTimeSerializer;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -19,6 +21,7 @@ public class Event {
   private Integer id;
 
   @Column(name = "datetime")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   private LocalDateTime dateTime;
 

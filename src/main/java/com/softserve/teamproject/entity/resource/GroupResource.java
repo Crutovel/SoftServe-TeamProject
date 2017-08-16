@@ -1,7 +1,7 @@
 package com.softserve.teamproject.entity.resource;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.softserve.teamproject.entity.deserializer.LocalDateSerializer;
+import com.softserve.teamproject.entity.serializer.LocalDateSerializer;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;

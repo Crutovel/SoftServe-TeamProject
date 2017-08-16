@@ -65,7 +65,6 @@ public class ScheduleController {
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
       @RequestParam(value = "end", required = false)
       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
-
     if (groupId != null) {
       return scheduleService.getEventsByGroupId(groupId, start, end);
     }

@@ -1,13 +1,12 @@
 package com.softserve.teamproject.entity.resource;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.softserve.teamproject.entity.deserializer.LocalDateTimeSerializer;
+import com.softserve.teamproject.entity.serializer.LocalDateTimeSerializer;
 import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- * Use for represent Student object in http response in HATEOAS style.
+ * Use for represent Event object in http response in HATEOAS style.
  */
 public class EventResource extends ResourceSupport {
 

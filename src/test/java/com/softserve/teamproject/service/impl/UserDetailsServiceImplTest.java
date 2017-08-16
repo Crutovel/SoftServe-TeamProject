@@ -19,9 +19,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public class UserDetailsServiceImplTest {
 
   @Mock
-  UserRepository userRepository;
+  private UserRepository userRepository;
   @Mock
-  MessageByLocaleService messageByLocaleService;
+  private MessageByLocaleService messageByLocaleService;
 
   @Before
   public void init() {
@@ -50,6 +50,7 @@ public class UserDetailsServiceImplTest {
 
     UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
     userDetailsService.setUserRepository(userRepository);
+    userDetailsService.setMessageByLocaleService(messageByLocaleService);
     UserDetails actual = userDetailsService.loadUserByUsername("");
 
     Assert.assertEquals(actual.getUsername(), user.getNickName());

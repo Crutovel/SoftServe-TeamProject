@@ -5,7 +5,7 @@ import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Room;
 import com.softserve.teamproject.entity.deserializer.EventTypeSerializer;
-import com.softserve.teamproject.entity.deserializer.LocalDateTimeSerializer;
+import com.softserve.teamproject.entity.serializer.LocalDateTimeSerializer;
 import com.softserve.teamproject.entity.deserializer.RoomSerializer;
 import java.time.LocalDateTime;
 import java.util.Objects;
