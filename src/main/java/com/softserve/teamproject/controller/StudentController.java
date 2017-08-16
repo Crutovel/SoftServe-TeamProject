@@ -71,4 +71,16 @@ public class StudentController {
     studentValidator.fillNotUpdatedFields(students);
     return studentService.updateStudents(students, principal.getName());
   }
+
+  @GetMapping(value = "/students/{id}")
+  public StudentResource getStudentById(@PathVariable Integer id) {
+    return studentService.getStudentResourceById(id);
+  }
+
+  @PutMapping(value = "/students/{id}", produces = "application/json")
+  public StudentResource editStudent(@RequestBody Student student, @PathVariable Integer id) {
+    student.setId(id);
+    studentValidator.fillNotUpdatedFields(student);
+    return studentService.updateStudent(student);
+  }
 }

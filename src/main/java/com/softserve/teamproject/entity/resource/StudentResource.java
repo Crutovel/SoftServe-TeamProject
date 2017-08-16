@@ -17,6 +17,8 @@ public class StudentResource extends ResourceSupport {
 
   private byte[] image;
 
+  private byte[] cv;
+
   public int getStudentId() {
     return studentId;
   }
@@ -47,5 +49,13 @@ public class StudentResource extends ResourceSupport {
 
   public void setImage(byte[] image) {
     this.image = image;
+  }
+
+  public byte[] getCv() {
+    return cv;
+  }
+
+  public void setCv(byte[] cv) {
+    this.cv = cv;
   }
 }

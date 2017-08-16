@@ -1,6 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-   <include file="liquibase-initialChangeLog.xml"/>
-   <include file="liquibase-initialTestDataChangeLog.xml"/>
-   <include file="liquibase-addCvChangeLog.xml"/>
+  <changeSet id="add-column-CV" author="kholod">
+    <addColumn tableName="student">
+      <column name = "cv" type = "LONGBLOB">
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

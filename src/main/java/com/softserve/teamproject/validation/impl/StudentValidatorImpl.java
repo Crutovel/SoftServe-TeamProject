@@ -31,19 +31,24 @@ public class StudentValidatorImpl implements StudentValidator {
   @Override
   public void fillNotUpdatedFields(List<Student> students) {
     for (Student student : students) {
-      Student existedStudent = studentRepository.findOne(student.getId());
-      Class<?> studentClass = student.getClass();
-      for (Field field : studentClass.getDeclaredFields()) {
-        field.setAccessible(true);
-        try {
-          if (field.get(student) == null) {
-            Field existedField = existedStudent.getClass().getDeclaredField(field.getName());
-            existedField.setAccessible(true);
-            field.set(student, existedField.get(existedStudent));
-          }
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-          e.printStackTrace();
+      fillNotUpdatedFields(student);
+    }
+  }
+
+  @Override
+  public void fillNotUpdatedFields(Student student) {
+    Student existedStudent = studentRepository.findOne(student.getId());
+    Class<?> studentClass = student.getClass();
+    for (Field field : studentClass.getDeclaredFields()) {
+      field.setAccessible(true);
+      try {
+        if (field.get(student) == null) {
+          Field existedField = existedStudent.getClass().getDeclaredField(field.getName());
+          existedField.setAccessible(true);
+          field.set(student, existedField.get(existedStudent));
         }
+      } catch (IllegalAccessException | NoSuchFieldException e) {
+        e.printStackTrace();
       }
     }
   }

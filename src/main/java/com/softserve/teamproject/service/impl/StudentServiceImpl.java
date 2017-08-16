@@ -142,4 +142,18 @@ public class StudentServiceImpl implements StudentService {
     return student;
   }
 
+  @Override
+  public StudentResource getStudentResourceById(Integer id) {
+    Student student = studentRepository.findOne(id);
+    if (student == null) {
+      return null;
+    }
+    return studentResourceAssembler.toResource(student);
+  }
+
+  @Override
+  public StudentResource updateStudent(Student student) {
+    student = studentRepository.save(student);
+    return studentResourceAssembler.toResource(student);
+  }
 }

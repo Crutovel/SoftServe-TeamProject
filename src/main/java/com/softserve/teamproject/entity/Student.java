@@ -36,6 +36,10 @@ public class Student {
   @Column(name = "image")
   private byte[] image;
 
+  @Lob
+  @Column(name = "cv")
+  private byte[] cv;
+
   @ManyToOne
   @JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)
   private Group group;
@@ -74,6 +78,14 @@ public class Student {
 
   public void setImage(byte[] image) {
     this.image = image;
+  }
+
+  public byte[] getCv() {
+    return cv;
+  }
+
+  public void setCv(byte[] cv) {
+    this.cv = cv;
   }
 
   public Group getGroup() {

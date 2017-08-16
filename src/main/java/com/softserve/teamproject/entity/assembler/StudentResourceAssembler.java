@@ -70,5 +70,6 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     studentResource.setFirstName(student.getFirstName());
     studentResource.setLastName(student.getLastName());
     studentResource.setImage(student.getImage());
+    studentResource.setCv(student.getCv());
   }
 }
