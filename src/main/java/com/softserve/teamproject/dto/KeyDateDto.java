@@ -8,6 +8,7 @@ import com.softserve.teamproject.entity.deserializer.EventTypeDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.validation.KeyDates;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 
 @KeyDates
@@ -29,6 +30,7 @@ public class KeyDateDto {
     this.id = id;
   }
 
+  @ApiModelProperty(dataType = "com.softserve.teamproject.entity.swagger.EventTypeSwagger")
   public EventType getEventType() {
     return eventType;
   }
@@ -45,6 +47,7 @@ public class KeyDateDto {
     this.date = date;
   }
 
+  @ApiModelProperty(dataType = "com.softserve.teamproject.entity.swagger.GroupSwagger")
   public Group getGroup() {
     return group;
   }
