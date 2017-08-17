@@ -74,6 +74,12 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
         .where(getEventByGroupId(groupId).and(getEventBetweenDates(start, finish))).fetch();
   }
 
+  @Override
+  public List<Event> getEventsByGroupId(Integer groupId) {
+    return from(QEvent.event)
+        .where(getEventByGroupId(groupId)).fetch();
+  }
+
   public Event getEventByEventTypeId(Integer eventTypeId, Integer groupId) {
     return from(QEvent.event)
         .where(eventByEventTypeId(eventTypeId).and(getEventByGroupId(groupId))).fetchOne();
