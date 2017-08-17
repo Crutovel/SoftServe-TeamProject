@@ -14,17 +14,10 @@ import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Test data for test classes and methods
@@ -107,11 +100,5 @@ public abstract class TestData {
     eventType.setId(eventTypeId);
     event.setEventType(eventType);
     return event;
-  }
-
-  public static List<LocalDate> getWeek(LocalDate date) {
-    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
-    LocalDate start = date.with(temporalField, 1);
-    return Stream.iterate(start, d -> d.plusDays(1)).limit(5).collect(Collectors.toList());
   }
 }

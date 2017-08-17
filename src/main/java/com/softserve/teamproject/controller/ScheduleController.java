@@ -112,7 +112,7 @@ public class ScheduleController {
    * @param groupId is received as a request param
    * @return key events info by groupId or just all key events
    */
-  @GetMapping(value = "/keyevents", produces = "application/json")
+  @GetMapping(value = "/events/demo", produces = "application/json")
   @ApiOperation(value = "Get key events for given group", response = Event.class,
       responseContainer = "List")
   public Iterable<EventResource> getKeyEvents(
@@ -129,7 +129,7 @@ public class ScheduleController {
    * @param requestFilter dto object in json format, need for filter.
    * @return key events info by array of group ids
    */
-  @PostMapping(value = "/keyevents/filter", produces = "application/json")
+  @PostMapping(value = "/events/demo/filter", produces = "application/json")
   @ApiOperation(value = "Get key events for given array of group", response = Event.class,
       responseContainer = "List")
   public Iterable<EventResource> getKeyEventsByFilter(@RequestBody EventsFilter requestFilter) {

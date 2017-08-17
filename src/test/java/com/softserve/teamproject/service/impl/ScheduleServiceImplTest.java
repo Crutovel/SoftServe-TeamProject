@@ -1,6 +1,6 @@
 package com.softserve.teamproject.service.impl;
 
-import static com.softserve.teamproject.TestData.getWeek;
+import static com.softserve.teamproject.utils.DateUtil.getWorkWeekOfDate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,7 +46,7 @@ public class ScheduleServiceImplTest {
   public void getLastWeekEvents_bothDatesNotSpecifiedStatusFinished_lastWeekEventsExpected() {
     //Arrange
     final int EXPECTED_SIZE = 2;
-    List<LocalDate> week = getWeek(LocalDate.parse("2017-08-18"));
+    List<LocalDate> week = getWorkWeekOfDate(LocalDate.parse("2017-08-18"));
 
     //Act
     List<EventResource> events = scheduleService.getLastWeekEvents(FINISHED_GROUP_ID);
@@ -61,7 +61,7 @@ public class ScheduleServiceImplTest {
   @Test
   public void getLastWeekEvents_StatusCurrent_currentWeekEventsExpected() {
     //Arrange
-    List<LocalDate> week = getWeek(LocalDate.now());
+    List<LocalDate> week = getWorkWeekOfDate(LocalDate.now());
 
     //Act
     List<EventResource> events = scheduleService.getLastWeekEvents(CURRENT_GROUP_ID);

@@ -1,5 +1,7 @@
 # API Documentation for End Point "/logout"
 
+This is endpoint for cancellation authorization
+
 <a name="table-of-content"></a>
 ## Table of Content
 
