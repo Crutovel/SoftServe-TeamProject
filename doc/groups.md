@@ -74,44 +74,61 @@ None
 
     [
         {
-            "groupId": 1,
+            "id": 1,
             "name": "DP-115",
+            "teachers":
+            [
+                {
+                    "id": 1,
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
+                    {
+                        "id": 3,
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
+                    }
+                }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
+            },
             "startDate": "2017-04-29",
             "finishDate": "2017-08-18",
-            "experts": [
+            "status":
+            {
+                "id": 4,
+                "name": "in-process",
+                "statusCategory":
+                {
+                    "id": 2,
+                    "name": "current"
+                }
+            },
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
                 "Sergey"
             ],
-            "links": [
-                {
-                    "rel": "self",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "group",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "location",
-                    "href": "http://localhost:8080/locations/1"
-                },
-                {
-                    "rel": "budgetOwner",
-                    "href": "http://localhost:8080/budgetOwners/1"
-                },
-                {
-                    "rel": "teachers",
-                    "href": "http://localhost:8080/groups/1/teachers"
-                },
-                {
-                    "rel": "status",
-                    "href": "http://localhost:8080/statuses/4"
-                },
-                {
-                    "rel": "specialization",
-                    "href": "http://localhost:8080/specializations/7"
-                }
-            ]
-        }, etc
+            "budgetOwner": "SOFTSERVE"
+        }
     ]
 
 <a name="all-groups-error-response"></a>
@@ -157,43 +174,60 @@ None
 
     [
         {
-            "groupId": 1,
+            "id": 1,
             "name": "DP-115",
+            "teachers":
+            [
+                {
+                    "id": 1,
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
+                    {
+                        "id": 3,
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
+                    }
+                }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
+            },
             "startDate": "2017-04-29",
             "finishDate": "2017-08-18",
-            "experts": [
+            "status":
+            {
+                "id": 4,
+                "name": "in-process",
+                "statusCategory":
+                {
+                    "id": 2,
+                    "name": "current"
+                }
+            },
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
                 "Sergey"
             ],
-            "links": [
-                {
-                    "rel": "self",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "group",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "location",
-                    "href": "http://localhost:8080/locations/1"
-                },
-                {
-                    "rel": "budgetOwner",
-                    "href": "http://localhost:8080/budgetOwners/1"
-                },
-                {
-                    "rel": "teachers",
-                    "href": "http://localhost:8080/groups/1/teachers"
-                },
-                {
-                    "rel": "status",
-                    "href": "http://localhost:8080/statuses/4"
-                },
-                {
-                    "rel": "specialization",
-                    "href": "http://localhost:8080/specializations/7"
-                }
-            ]
+            "budgetOwner": "SOFTSERVE"
         }
     ]
 
@@ -248,84 +282,61 @@ None
 
     [
         {
-            "groupId": 1,
+            "id": 1,
             "name": "DP-115",
+            "teachers":
+            [
+                {
+                    "id": 1,
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
+                    {
+                        "id": 3,
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
+                    }
+                }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
+            },
             "startDate": "2017-04-29",
             "finishDate": "2017-08-18",
-            "experts": [
+            "status":
+            {
+                "id": 4,
+                "name": "in-process",
+                "statusCategory":
+                {
+                    "id": 2,
+                    "name": "current"
+                }
+            },
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
                 "Sergey"
             ],
-            "links": [
-                {
-                    "rel": "self",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "group",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "location",
-                    "href": "http://localhost:8080/locations/1"
-                },
-                {
-                    "rel": "budgetOwner",
-                    "href": "http://localhost:8080/budgetOwners/1"
-                },
-                {
-                    "rel": "teachers",
-                    "href": "http://localhost:8080/groups/1/teachers"
-                },
-                {
-                    "rel": "status",
-                    "href": "http://localhost:8080/statuses/4"
-                },
-                {
-                    "rel": "specialization",
-                    "href": "http://localhost:8080/specializations/7"
-                }
-            ]
-        },
-        {
-            "groupId": 5,
-            "name": "CH-116-csh",
-            "startDate": "2017-08-05",
-            "finishDate": "2017-11-06",
-            "experts": [
-                "Dmytro Parubiy",
-                "Igor Kolomoiskiy"
-            ],
-            "links": [
-                {
-                    "rel": "self",
-                    "href": "http://localhost:8080/groups/5"
-                },
-                {
-                    "rel": "group",
-                    "href": "http://localhost:8080/groups/5"
-                },
-                {
-                    "rel": "location",
-                    "href": "http://localhost:8080/locations/1"
-                },
-                {
-                    "rel": "budgetOwner",
-                    "href": "http://localhost:8080/budgetOwners/1"
-                },
-                {
-                    "rel": "teachers",
-                    "href": "http://localhost:8080/groups/5/teachers"
-                },
-                {
-                    "rel": "status",
-                    "href": "http://localhost:8080/statuses/3"
-                },
-                {
-                    "rel": "specialization",
-                    "href": "http://localhost:8080/specializations/3"
-                }
-            ]
-        }, etc
+            "budgetOwner": "SOFTSERVE"
+        }
     ]
 
 <a name="current-user-location-groups-error-response"></a>
@@ -361,27 +372,18 @@ None
 
 <a name="filter-groups-method"></a>
 ### Method :
-POST
+GET
 
 <a name="filter-groups-url-params"></a>
 ### URL Params :
 **Required:** `location=[integer]`
-
+ 
 Example: `location=1`
 
 <a name="filter-groups-data-params"></a>
 ### Data Params :
-**Required:**
-`{
-    location[]=[integer]
-}`
+None
 
-Example:
-```
-{
-    "locations"=[1,2,3]
-}
-```
 <a name="filter-groups-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
@@ -390,44 +392,61 @@ Example:
 
     [
         {
-            "groupId": 1,
+            "id": 1,
             "name": "DP-115",
+            "teachers":
+            [
+                {
+                    "id": 1,
+                    "firstName": "Oleg",
+                    "lastName": "Shvets",
+                    "role":
+                    {
+                        "id": 3,
+                        "name": "teacher",
+                        "roleCategory":
+                        {
+                            "id": 2,
+                            "name":" itacademy"
+                        }
+                    },
+                    "nickName": "OlegShvets",
+                    "image": null,
+                    "location":
+                    {
+                        "id": 1,
+                        "name": "Dnipro"
+                    }
+                }
+            ],
+            "location":
+            {
+                "id": 1,
+                "name": "Dnipro"
+            },
             "startDate": "2017-04-29",
             "finishDate": "2017-08-18",
-            "experts": [
+            "status":
+            {
+                "id": 4,
+                "name": "in-process",
+                "statusCategory":
+                {
+                    "id": 2,
+                    "name": "current"
+                }
+            },
+            "specialization":
+            {
+                "id": 7,
+                "name": "JAVA"
+            },
+            "experts":
+            [
                 "Sergey"
             ],
-            "links": [
-                {
-                    "rel": "self",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "group",
-                    "href": "http://localhost:8080/groups/1"
-                },
-                {
-                    "rel": "location",
-                    "href": "http://localhost:8080/locations/1"
-                },
-                {
-                    "rel": "budgetOwner",
-                    "href": "http://localhost:8080/budgetOwners/1"
-                },
-                {
-                    "rel": "teachers",
-                    "href": "http://localhost:8080/groups/1/teachers"
-                },
-                {
-                    "rel": "status",
-                    "href": "http://localhost:8080/statuses/4"
-                },
-                {
-                    "rel": "specialization",
-                    "href": "http://localhost:8080/specializations/7"
-                }
-            ]
-        }, etc
+            "budgetOwner": "SOFTSERVE"
+        }
     ]
 
 <a name="filter-groups-error-response"></a>
@@ -484,11 +503,9 @@ None
         {
             "id": [Integer]
         },	
-        "budgetOwner": {
-            "id": [Integer],
-        }
-        "startDate": [String ISO-date],
-        "finishDate": [String ISO-date],
+        "budgetOwner": [String],
+        "startDate": [String],
+        "finishDate": [String],	
         "teachers":
         [
             {
@@ -503,31 +520,29 @@ None
 Example:
 
     {
-            "name": "DP-115x",
-            "experts": ["sergey", "andrey"],
-            "location":
+        "name": "DP-115x",
+        "experts": ["sergey", "andrey"],
+        "location":
+        {
+            "id": 1
+        },
+        "specialization":
+        {
+            "id": 1
+        },	
+        "budgetOwner": "SOFTSERVE",
+        "startDate": "2017-07-01",
+        "finishDate": "2017-09-01",
+        "teachers":
+        [
             {
                 "id": 1
             },
-            "specialization":
             {
-                "id": 1
-            },
-            "budgetOwner": {
-            	"id":1
-            },
-            "startDate": "2017-07-01",
-            "finishDate": "2017-09-01",
-            "teachers":
-            [
-                {
-                    "id": 1
-                },
-                {
-                    "id": 2
-                }
-            ]
-        }
+                "id": 2
+            }
+        ]
+    }
 
 <a name="add-group-data-type"></a>
 ### Data type :
@@ -537,42 +552,7 @@ application/json
 ### Success Response:
 **Code:** 200 OK
 
-**Content:**
-```
-{
-    "groupId": 8,
-    "name": "DP-115x",
-    "startDate": "2017-07-01",
-    "finishDate": "2017-09-01",
-    "experts": [
-        "sergey",
-        "andrey"
-    ],
-    "_links": {
-        "self": {
-            "href": "http://localhost:8080/groups/8"
-        },
-        "group": {
-            "href": "http://localhost:8080/groups/8"
-        },
-        "location": {
-            "href": "http://localhost:8080/locations/1"
-        },
-        "budgetOwner": {
-            "href": "http://localhost:8080/budgetOwners/1"
-        },
-        "teachers": {
-            "href": "http://localhost:8080/groups/8/teachers"
-        },
-        "status": {
-            "href": "http://localhost:8080/statuses/1"
-        },
-        "specialization": {
-            "href": "http://localhost:8080/specializations/1"
-        }
-    }
-}
-```
+**Content:** None
 
 <a name="add-group-error-response"></a>
 ### Error Response :

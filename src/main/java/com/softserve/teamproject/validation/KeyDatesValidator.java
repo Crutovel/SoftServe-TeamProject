@@ -1,5 +1,7 @@
 package com.softserve.teamproject.validation;
 
+import static com.softserve.teamproject.utils.DateUtil.getWorkWeekOfDate;
+
 import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Group;
@@ -9,11 +11,8 @@ import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.SecurityService;
 import java.time.LocalDate;
-import java.time.temporal.TemporalField;
-import java.time.temporal.WeekFields;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -107,11 +106,9 @@ public class KeyDatesValidator implements
       throw new IllegalArgumentException(
           messageByLocaleService.getMessage("illegalArgs.keyDate.validate.eventType"));
     }
-    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
-    LocalDate startOfWeek = validationTemplate.get(event.getEventType()).with(temporalField, 1);
-    LocalDate endOfWeek = startOfWeek.with(temporalField, 5);
+    List<LocalDate> week = getWorkWeekOfDate(validationTemplate.get(event.getEventType()));
     LocalDate eventDate = event.getDate();
-    if (eventDate == null || !(eventDate.isAfter(startOfWeek) && eventDate.isBefore(endOfWeek))) {
+    if (eventDate == null || !week.contains(eventDate)){
       throw new IllegalArgumentException(
           messageByLocaleService.getMessage("illegalArgs.keyDate.validate.date"));
     }

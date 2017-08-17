@@ -185,7 +185,7 @@ public class ScheduleControllerIntegrationTest {
   public void getKeyEvents_noGroupSpecified_allKeyEventsReturned() throws Exception {
     //Arrange
     final int EXPECTED_SIZE = 6;
-    final String TESTED_URL = "/keyevents";
+    final String TESTED_URL = "/events/demo";
     List<String> keyEventTypesId = Arrays.
         asList("eventTypes/1", "eventTypes/2", "eventTypes/3", "eventTypes/4");
 
@@ -205,7 +205,7 @@ public class ScheduleControllerIntegrationTest {
     //Arrange
     final int EXPECTED_SIZE = 4;
     final int GROUP_ID = 2;
-    final String TESTED_URL = String.format("/keyevents?groupid=%d", GROUP_ID);
+    final String TESTED_URL = String.format("/events/demo?groupid=%d", GROUP_ID);
     List<String> keyEventTypesId = Arrays.
         asList("eventTypes/1", "eventTypes/2", "eventTypes/3", "eventTypes/4");
 
@@ -224,7 +224,7 @@ public class ScheduleControllerIntegrationTest {
   public void getKeyEventsByFilter_groupsSpecified_keyEventsReturnedForGroup() throws Exception {
     //Arrange
     final int EXPECTED_SIZE = 6;
-    final String TESTED_URL = "/keyevents/filter";
+    final String TESTED_URL = "/events/demo/filter";
     EventsFilter filter = new EventsFilter();
     filter.setGroups(Arrays.asList(2, 3));
     List<String> keyEventTypesId = Arrays.
@@ -247,7 +247,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void getKeyEventsByFilter_noGroupsSpecified_nullExpected() throws Exception {
     //Arrange
-    final String TESTED_URL = "/keyevents/filter";
+    final String TESTED_URL = "/events/demo/filter";
     EventsFilter filter = new EventsFilter();
     filter.setGroups(null);
 
@@ -264,7 +264,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void getKeyEventsByFilter_emptyRequestBody_badRequestExpected() throws Exception {
     //Arrange
-    final String TESTED_URL = "/keyevents/filter";
+    final String TESTED_URL = "/events/demo/filter";
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
