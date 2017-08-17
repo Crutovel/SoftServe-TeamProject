@@ -283,10 +283,26 @@ None
              "lastName": [String],
              "englishLevel": {
                "id": [Integer]
+             },
+             "testApprovedByExpert":{
+               "id":[Integer]
              }
           }
      ]
+     
+**Optional:**
 
+     [
+          {        
+             "image": [base64],
+             "imageName": [String],
+             "cv": [base64],
+             "cvName": [String],
+             "incomingTest": [Integer],
+             "entryScore": [Double]
+          }
+     ]
+     
 Example:
 
     [
@@ -295,6 +311,9 @@ Example:
          "lastName": "Carrey",
          "englishLevel": {
            "id": 2
+         },
+         "testApprovedByExpert":{
+           "id": 1
          }
       }
     ]
@@ -318,6 +337,8 @@ application/json
             "imageName": null,
             "cv": null,
             "cvName": null,
+            "incomingTest": null,
+            "entryScore": null,
             "links": [
                 {
                     "rel": "self",
@@ -335,6 +356,10 @@ application/json
                     "rel": "englishLevel",
                     "href": "http://localhost:8080/englishLevels/2"
                 }
+                {
+                    "rel": "expert",
+                    "href": "http://localhost:8080/experts/1"
+                }
             ]
         }
     ]
@@ -350,12 +375,17 @@ application/json
         "status": 401,
         "error": "Unauthorized",
         "message": "Unauthorized",
-        "path": "/groups"
+        "path": "/students"
     }
 
 **Code:** 400 Bad Request
 
-**Content:** None
+**Content:** 
+
+     {
+         "message": "[errors]"
+     }
+
 
 **Code:** 403 Forbidden
 
@@ -366,7 +396,7 @@ application/json
     }
 
     {
-        "message": "Access Denied 
+        "message": "Access Denied" 
     }
 
 [Table of content](#table-of-content)
@@ -392,15 +422,31 @@ None
 
      [
           {     
-             "id": [Integer],   
-             "firstName": [String],
-             "lastName": [String],
-             "englishLevel": {
-               "id": [Integer]
-             }
+             "id": [Integer]   
           }
      ]
+     
+**Optional:**
 
+     [
+          {        
+              "firstName": [String],
+              "lastName": [String],
+              "englishLevel": {
+                "id": [Integer]
+              },
+              "testApprovedByExpert":{
+                "id":[Integer]
+              }
+             "image": [base64],
+             "imageName": [String],
+             "cv": [base64],
+             "cvName": [String],
+             "incomingTest": [Integer],
+             "entryScore": [Double]
+          }
+     ]
+     
 Example:
 
     [
@@ -410,6 +456,9 @@ Example:
          "lastName": "Carrey",
          "englishLevel": {
            "id": 2
+         },
+         "testApprovedByExpert":{
+           "id": 1
          }
       }
     ]
@@ -433,6 +482,8 @@ application/json
             "imageName": null,
             "cv": null,
             "cvName": null,
+            "incomingTest": 600,
+            "entryScore": 4,
             "links": [
                 {
                     "rel": "self",
@@ -449,7 +500,12 @@ application/json
                 {
                     "rel": "englishLevel",
                     "href": "http://localhost:8080/englishLevels/2"
+                },
+                {
+                    "rel": "expert",
+                    "href": "http://localhost:8080/experts/1"
                 }
+                
             ]
         }
     ]
