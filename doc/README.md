@@ -7,7 +7,7 @@ application endpoints that are current available. There are:
 - resource for accessing [users](users.md) - entities that
 represent users of application
 - resource for accessing [current user information](userprofile.md) - data of authorized user
-- resource for accessing [groups](groups.md) - 
+- resource for accessing [groups](groups.md) -
 entities that represent group of people attending ITA course
 - resource for accessing [students](students.md) - 
 basic entity that describes people who studies in ITA
