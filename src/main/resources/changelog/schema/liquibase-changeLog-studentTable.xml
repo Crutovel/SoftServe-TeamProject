@@ -9,12 +9,13 @@
       </column>
     </addColumn>
   <addColumn tableName="expert">
-   <column autoIncrement="true" name="id" type="INT">
-      <constraints primaryKey="true"/>
-    </column>
+   <column name="id" type="INT"/>
   </addColumn>
   </changeSet>
 <changeSet id="st-2" author="Anastasia">
+  <addNotNullConstraint tableName="expert" columnName="id" columnDataType="INT"/>
+  <addPrimaryKey tableName="expert" columnNames="id" />
+  <addAutoIncrement tableName="expert" columnName="id" columnDataType="INT"/>
 <addForeignKeyConstraint baseColumnNames="approved_by_expert_id" baseTableName="student" constraintName="fk_student_expert1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="expert"/>
 </changeSet>
 </databaseChangeLog>

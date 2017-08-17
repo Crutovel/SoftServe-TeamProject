@@ -43,6 +43,9 @@ public abstract class TestData {
     student.setEnglishLevel(new EnglishLevel() {{
       setId(4);
     }});
+    Expert expert = new Expert();
+    expert.setId(1);
+    student.setTestApprovedByExpert(expert);
     return student;
   }
 

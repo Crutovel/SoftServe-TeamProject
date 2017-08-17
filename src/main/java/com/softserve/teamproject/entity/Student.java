@@ -60,10 +60,10 @@ public class Student {
   @JoinColumn(name = "english_level_id", referencedColumnName = "id")
   private EnglishLevel englishLevel;
 
-  @Column(name="incoming_test", nullable = false)
+  @Column(name="incoming_test")
   private Integer incomingTest;
 
-  @Column(name="entry_score", nullable = false)
+  @Column(name="entry_score")
   private Double entryScore;
 
   @ManyToOne
