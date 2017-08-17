@@ -60,7 +60,7 @@ public class StudentValidatorImpl implements StudentValidator {
           existedField.setAccessible(true);
           field.set(student, existedField.get(existedStudent));
         }
-      } catch (Exception  e) {
+      } catch (IllegalAccessException | NoSuchFieldException e) {
         e.printStackTrace();
       }
     }

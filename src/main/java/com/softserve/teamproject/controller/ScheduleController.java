@@ -82,10 +82,7 @@ public class ScheduleController {
       responseContainer = "List")
   public Iterable<EventResource> getEventsForLastWeek(
       @RequestParam(value = "groupid") Integer groupId) {
-    if (groupId != null) {
       return scheduleService.getLastWeekEvents(groupId);
-    }
-    return null;
   }
 
   /**
