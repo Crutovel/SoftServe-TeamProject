@@ -298,12 +298,10 @@ None
      ]
 
 Example:
+/events/groups/2
 
     [
     	{
-    		"groups":{
-    			"id":1
-    		},
     		"room":{
     			"id":1
     		},
@@ -320,6 +318,126 @@ Example:
 application/json
 
 <a name="add-schedule-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:**
+
+    {
+        "succeed": [
+            {
+                "eventId": 13,
+                "dateTime": "2017-09-14 15:30",
+                "duration": 120,
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "http://localhost:8080/events/13"
+                    },
+                    {
+                        "rel": "event",
+                        "href": "http://localhost:8080/events/13"
+                    },
+                    {
+                        "rel": "group",
+                        "href": "http://localhost:8080/groups/1"
+                    },
+                    {
+                        "rel": "eventType",
+                        "href": "http://localhost:8080/eventTypes/1"
+                    },
+                    {
+                        "rel": "room",
+                        "href": "http://localhost:8080/rooms/1"
+                    }
+                ]
+            }
+        ],
+        "invalid": {}
+    }
+
+<a name="add-schedule-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/groups"
+    }
+
+**Code:** 400 Bad Request
+
+**Content:** None
+
+
+[Table of content](#table-of-content)
+
+<a name="add-key-event"></a>
+## Add key event
+
+<a name="add-key-event-url"></a>
+### URL :
+events/demo
+
+<a name="add-key-event-method"></a>
+### Method :
+POST
+
+<a name="add-key-event-url-params"></a>
+### URL Params :
+None
+
+<a name="add-key-event-data-params"></a>
+### Data Params :
+**Required:**
+
+     [
+            "group":{
+                "id":integer
+            }
+            "eventType":{
+                "id":integer
+            },
+           "date":"yyyy-MM-dd"
+         }
+     ]
+
+Example:
+
+    {
+    	"dates":[
+    				{
+    				"group":{
+    					"id":1
+    				},
+    				"eventType":{
+    					"id":1
+    				},
+    				"date":"2017-05-15"
+    				},
+    				{
+                    "group":{
+                       	"id":2
+                    },
+                    "eventType":{
+                      	"id":2
+                    },
+                      	"date":"2017-05-15"
+                    }
+    			]
+
+    }
+
+<a name="add-key-event-data-type"></a>
+### Data type :
+application/json
+
+<a name="add-key-event-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
 
