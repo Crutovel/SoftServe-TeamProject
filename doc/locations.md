@@ -1,5 +1,8 @@
 # API Documentation for End Point "/locations"
 
+This endpoint allows th authorized teacher, coordinator or admin to get
+all existing locations
+
 <a name="table-of-content"></a>
 ## Table of Content
 

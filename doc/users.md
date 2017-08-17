@@ -1,5 +1,7 @@
 # API Documentation for End Point "/users"
 
+This endpoint allows authorized user to get data for one user or for all users
+
 <a name="table-of-content"></a>
 ## Table of Content
 
@@ -180,7 +182,7 @@ None
 
 <a name="one-user-url"></a>
 ### URL :
-/users
+/users/{id}
 
 <a name="one-user-method"></a>
 ### Method : 
@@ -188,9 +190,7 @@ GET
 
 <a name="one-user-url-params"></a>
 ### URL Params :
-**Required:** `id=[integer]`
-
-Example: `id=2`
+None
 
 <a name="one-user-data-params"></a>
 ### Data Params :
@@ -203,44 +203,25 @@ None
 **Content:**
 
     {
-      "_embedded" : {
-        "users" : [ {
-          "firstName" : "Dmytro",
-          "lastName" : "Petin",
-          "nickName" : "DmytroPetin",
-          "image" : null,
-          "_links" : {
-            "self" : {
-              "href" : "http://localhost:8080/users/2"
+        "firstName": "Oleg",
+        "lastName": "Shvets",
+        "nickName": "OlegShvets",
+        "image": null,
+        "_links": {
+            "self": {
+                "href": "http://localhost:8080/users/1"
             },
-            "user" : {
-              "href" : "http://localhost:8080/users/2"
+            "user": {
+                "href": "http://localhost:8080/users/1"
             },
-            "role" : {
-              "href" : "http://localhost:8080/users/2/role"
+            "role": {
+                "href": "http://localhost:8080/users/1/role"
             },
-            "location" : {
-              "href" : "http://localhost:8080/users/2/location"
+            "location": {
+                "href": "http://localhost:8080/users/1/location"
             }
-          }
-        } ]
-      },
-      "_links" : {
-        "self" : {
-          "href" : "http://localhost:8080/users{?page,size,sort}",
-          "templated" : true
-        },
-        "profile" : {
-          "href" : "http://localhost:8080/profile/users"
         }
-      },
-      "page" : {
-        "size" : 20,
-        "totalElements" : 1,
-        "totalPages" : 1,
-        "number" : 0
-      }
-    }
+    } 
 
 <a name="one-user-error-response"></a>
 ### Error Response :
