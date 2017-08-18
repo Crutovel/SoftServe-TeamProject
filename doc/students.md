@@ -25,6 +25,14 @@
     - [Data Type](#add-students-data-type)
     - [Success Response](#add-students-success-response)
     - [Error Response](#add-students-error-response) 
+- [Edit student](#edit-student)
+    - [URL](#edit-student-url)
+    - [Method](#edit-student-method)
+    - [URL Params](#edit-student-url-params)
+    - [Data Params](#edit-student-data-params)
+    - [Data Type](#edit-student-data-type)
+    - [Success Response](#edit-student-success-response)
+    - [Error Response](#edit-student-error-response)     
 - [Edit students](#edit-students)
     - [URL](#edit-students-url)
     - [Method](#edit-students-method)
@@ -402,11 +410,11 @@ application/json
 [Table of content](#table-of-content)
 
 <a name="edit-students"></a>
-## Add students
+## Edit students
 
 <a name="edit-students-url"></a>
 ### URL :
-/students/{id}
+/students
 
 <a name="edit-students-method"></a>
 ### Method :
@@ -463,11 +471,11 @@ Example:
       }
     ]
 
-<a name="edit-student-data-type"></a>
+<a name="edit-students-data-type"></a>
 ### Data type :
 application/json
 
-<a name="edit-student-success-response"></a>
+<a name="edit-students-success-response"></a>
 ### Success Response:
 **Code:** 200 OK
 
@@ -510,6 +518,138 @@ application/json
         }
     ]
 
+<a name="edit-students-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/students"
+    }
+
+**Code:** 400 Bad Request
+
+**Content:** None
+
+**Code:** 403 Forbidden
+
+**Content:**
+
+    {
+        "message": "Access Denied: Coordinator can't add/edit students in the alien location."
+    }
+
+    {
+        "message": "Access Denied 
+    }
+
+[Table of content](#table-of-content)
+
+<a name="edit-student"></a>
+## Edit student
+
+<a name="edit-student-url"></a>
+### URL :
+/students/{id}
+
+<a name="edit-student-method"></a>
+### Method :
+PUT
+
+<a name="edit-student-url-params"></a>
+### URL Params :
+None
+
+<a name="edit-student-data-params"></a>
+### Data Params :
+    
+**Optional:**
+
+     
+      {        
+           "firstName": [String],
+           "lastName": [String],
+           "englishLevel": {
+             "id": [Integer]
+           },
+           "testApprovedByExpert":{
+             "id":[Integer]
+           }
+           "image": [base64],
+           "imageName": [String],
+           "cv": [base64],
+           "cvName": [String],
+           "incomingTest": [Integer],
+           "entryScore": [Double]
+      }
+     
+     
+Example:
+
+     {      
+           "firstName": "Jim",
+           "lastName": "Carrey",
+           "englishLevel": {
+               "id": 2
+           },
+           "testApprovedByExpert":{
+               "id": 1
+           }
+     }
+    
+
+<a name="edit-student-data-type"></a>
+### Data type :
+application/json
+
+<a name="edit-student-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:**
+
+    {
+        "studentId": 2,
+        "firstName": "Jim",
+        "lastName": "Carrey",
+        "image": null,
+        "imageName": null,
+        "cv": null,
+        "cvName": null,
+        "incomingTest": 600,
+        "entryScore": 4,
+          "links": [
+          {
+          "rel": "self",
+          "href": "http://localhost:8080/students/2"
+          },
+          {
+           "rel": "student",
+           "href": "http://localhost:8080/students/2"
+          },
+          {
+           "rel": "group",
+           "href": "http://localhost:8080/groups/1"
+          },
+          {
+          "rel": "englishLevel",
+          "href": "http://localhost:8080/englishLevels/2"
+          },
+          {
+          "rel": "expert",
+          "href": "http://localhost:8080/experts/1"
+          }
+          ]
+    }
+    
+        
+    
+
 <a name="edit-student-error-response"></a>
 ### Error Response :
 **Code:** 401 Unauthorized
@@ -539,5 +679,4 @@ application/json
     {
         "message": "Access Denied 
     }
-
    
