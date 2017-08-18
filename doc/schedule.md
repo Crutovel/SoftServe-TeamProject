@@ -959,7 +959,7 @@ application/json
 
 <a name="lastWeekEvents-method"></a>
 ### Method :
-POST
+GET
 
 <a name="lastWeekEvents-url-params"></a>
 ### URL Params :
