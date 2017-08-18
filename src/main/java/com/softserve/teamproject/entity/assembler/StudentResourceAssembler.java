@@ -77,6 +77,5 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     studentResource.setCvName(student.getCvName());
     studentResource.setEntryScore(student.getEntryScore());
     studentResource.setIncomingTest(student.getIncomingTest());
-    studentResource.setTestApprovedByExpert(student.getTestApprovedByExpert());
   }
 }

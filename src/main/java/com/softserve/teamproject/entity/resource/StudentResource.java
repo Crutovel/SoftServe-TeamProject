@@ -28,8 +28,6 @@ public class StudentResource extends ResourceSupport {
 
   private Double entryScore;
 
-  private Expert testApprovedByExpert;
-
   public Integer getIncomingTest() {
     return incomingTest;
   }
@@ -44,14 +42,6 @@ public class StudentResource extends ResourceSupport {
 
   public void setEntryScore(Double entryScore) {
     this.entryScore = entryScore;
-  }
-
-  public Expert getTestApprovedByExpert() {
-    return testApprovedByExpert;
-  }
-
-  public void setTestApprovedByExpert(Expert testApprovedByExpert) {
-    this.testApprovedByExpert = testApprovedByExpert;
   }
 
   public int getStudentId() {

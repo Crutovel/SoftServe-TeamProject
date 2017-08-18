@@ -72,6 +72,20 @@ public class ScheduleController {
   }
 
   /**
+   * Get events by groupId and last week.
+   *
+   * @param groupId is received as a request param
+   * @return events info by groupId and last week
+   */
+  @GetMapping(value = "/events/lastweek", produces = "application/json")
+  @ApiOperation(value = "Get events for given group and last week", response = Event.class,
+      responseContainer = "List")
+  public Iterable<EventResource> getEventsForLastWeek(
+      @RequestParam(value = "groupid") Integer groupId) {
+      return scheduleService.getLastWeekEvents(groupId);
+  }
+
+  /**
    * Get events by array of group ids and date interval [start,end].
    *
    * @param requestFilter dto object in json format, need for filter.

@@ -43,13 +43,13 @@ public class ScheduleServiceImplTest {
   @TestSchedule
   @WithUserDetails(TEACHER)
   @Test
-  public void getEventsByGroupId_bothDatesNotSpecifiedStatusFinished_lastWeekEventsExpected() {
+  public void getLastWeekEvents_bothDatesNotSpecifiedStatusFinished_lastWeekEventsExpected() {
     //Arrange
     final int EXPECTED_SIZE = 2;
     List<LocalDate> week = getWorkWeekOfDate(LocalDate.parse("2017-08-18"));
 
     //Act
-    List<EventResource> events = scheduleService.getEventsByGroupId(FINISHED_GROUP_ID, null, null);
+    List<EventResource> events = scheduleService.getLastWeekEvents(FINISHED_GROUP_ID);
 
     //Assert
     assertEquals(EXPECTED_SIZE, events.size());
@@ -59,12 +59,12 @@ public class ScheduleServiceImplTest {
   @TestSchedule
   @WithUserDetails(TEACHER)
   @Test
-  public void getEventsByGroupId_bothDatesNotSpecifiedStatusCurrent_currentWeekEventsExpected() {
+  public void getLastWeekEvents_StatusCurrent_currentWeekEventsExpected() {
     //Arrange
     List<LocalDate> week = getWorkWeekOfDate(LocalDate.now());
 
     //Act
-    List<EventResource> events = scheduleService.getEventsByGroupId(CURRENT_GROUP_ID, null, null);
+    List<EventResource> events = scheduleService.getLastWeekEvents(CURRENT_GROUP_ID);
 
     //Assert
     events.forEach(event -> assertTrue(week.contains(event.getDateTime().toLocalDate())));
@@ -73,10 +73,10 @@ public class ScheduleServiceImplTest {
   @TestSchedule
   @WithUserDetails(TEACHER)
   @Test(expected = IllegalArgumentException.class)
-  public void getEventsByGroupId_bothDatesNotSpecifiedStatusPlanned_exceptionThrown() {
+  public void getLastWeekEvents_StatusPlanned_exceptionThrown() {
     //Arrange
     //Act
-    List<EventResource> events = scheduleService.getEventsByGroupId(PLANNED_GROUP_ID, null, null);
+    List<EventResource> events = scheduleService.getLastWeekEvents(PLANNED_GROUP_ID);
 
   }
 

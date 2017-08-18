@@ -51,4 +51,7 @@ public interface ScheduleService {
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   Iterable<EventDto> copyPasteSchedule(CopyPasteScheduleWrapper copyPasteSchedule);
+
+  @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
+  List<EventResource> getLastWeekEvents(Integer groupId);
 }
