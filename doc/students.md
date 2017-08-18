@@ -409,6 +409,138 @@ application/json
 
 [Table of content](#table-of-content)
 
+<a name="edit-student"></a>
+## Edit student
+
+<a name="edit-student-url"></a>
+### URL :
+/students/{id}
+
+<a name="edit-student-method"></a>
+### Method :
+PUT
+
+<a name="edit-student-url-params"></a>
+### URL Params :
+None
+
+<a name="edit-student-data-params"></a>
+### Data Params :
+    
+**Optional:**
+
+     
+      {        
+           "firstName": [String],
+           "lastName": [String],
+           "englishLevel": {
+             "id": [Integer]
+           },
+           "testApprovedByExpert":{
+             "id":[Integer]
+           }
+           "image": [base64],
+           "imageName": [String],
+           "cv": [base64],
+           "cvName": [String],
+           "incomingTest": [Integer],
+           "entryScore": [Double]
+      }
+     
+     
+Example:
+
+     {      
+           "firstName": "Jim",
+           "lastName": "Carrey",
+           "englishLevel": {
+               "id": 2
+           },
+           "testApprovedByExpert":{
+               "id": 1
+           }
+     }
+    
+
+<a name="edit-student-data-type"></a>
+### Data type :
+application/json
+
+<a name="edit-student-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:**
+
+    {
+        "studentId": 2,
+        "firstName": "Jim",
+        "lastName": "Carrey",
+        "image": null,
+        "imageName": null,
+        "cv": null,
+        "cvName": null,
+        "incomingTest": 600,
+        "entryScore": 4,
+          "links": [
+          {
+          "rel": "self",
+          "href": "http://localhost:8080/students/2"
+          },
+          {
+           "rel": "student",
+           "href": "http://localhost:8080/students/2"
+          },
+          {
+           "rel": "group",
+           "href": "http://localhost:8080/groups/1"
+          },
+          {
+          "rel": "englishLevel",
+          "href": "http://localhost:8080/englishLevels/2"
+          },
+          {
+          "rel": "expert",
+          "href": "http://localhost:8080/experts/1"
+          }
+          ]
+    }
+    
+        
+    
+
+<a name="edit-student-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/students/2"
+    }
+
+**Code:** 400 Bad Request
+
+**Content:** None
+
+**Code:** 403 Forbidden
+
+**Content:**
+
+    {
+        "message": "Access Denied: Coordinator can't add/edit students in the alien location."
+    }
+
+    {
+        "message": "Access Denied 
+    }
+   
+[Table of content](#table-of-content)
+
 <a name="edit-students"></a>
 ## Edit students
 
@@ -547,136 +679,3 @@ application/json
     {
         "message": "Access Denied 
     }
-
-[Table of content](#table-of-content)
-
-<a name="edit-student"></a>
-## Edit student
-
-<a name="edit-student-url"></a>
-### URL :
-/students/{id}
-
-<a name="edit-student-method"></a>
-### Method :
-PUT
-
-<a name="edit-student-url-params"></a>
-### URL Params :
-None
-
-<a name="edit-student-data-params"></a>
-### Data Params :
-    
-**Optional:**
-
-     
-      {        
-           "firstName": [String],
-           "lastName": [String],
-           "englishLevel": {
-             "id": [Integer]
-           },
-           "testApprovedByExpert":{
-             "id":[Integer]
-           }
-           "image": [base64],
-           "imageName": [String],
-           "cv": [base64],
-           "cvName": [String],
-           "incomingTest": [Integer],
-           "entryScore": [Double]
-      }
-     
-     
-Example:
-
-     {      
-           "firstName": "Jim",
-           "lastName": "Carrey",
-           "englishLevel": {
-               "id": 2
-           },
-           "testApprovedByExpert":{
-               "id": 1
-           }
-     }
-    
-
-<a name="edit-student-data-type"></a>
-### Data type :
-application/json
-
-<a name="edit-student-success-response"></a>
-### Success Response:
-**Code:** 200 OK
-
-**Content:**
-
-    {
-        "studentId": 2,
-        "firstName": "Jim",
-        "lastName": "Carrey",
-        "image": null,
-        "imageName": null,
-        "cv": null,
-        "cvName": null,
-        "incomingTest": 600,
-        "entryScore": 4,
-          "links": [
-          {
-          "rel": "self",
-          "href": "http://localhost:8080/students/2"
-          },
-          {
-           "rel": "student",
-           "href": "http://localhost:8080/students/2"
-          },
-          {
-           "rel": "group",
-           "href": "http://localhost:8080/groups/1"
-          },
-          {
-          "rel": "englishLevel",
-          "href": "http://localhost:8080/englishLevels/2"
-          },
-          {
-          "rel": "expert",
-          "href": "http://localhost:8080/experts/1"
-          }
-          ]
-    }
-    
-        
-    
-
-<a name="edit-student-error-response"></a>
-### Error Response :
-**Code:** 401 Unauthorized
-
-**Content:**
-
-    {
-        "timestamp": 1500674037140,
-        "status": 401,
-        "error": "Unauthorized",
-        "message": "Unauthorized",
-        "path": "/students/2"
-    }
-
-**Code:** 400 Bad Request
-
-**Content:** None
-
-**Code:** 403 Forbidden
-
-**Content:**
-
-    {
-        "message": "Access Denied: Coordinator can't add/edit students in the alien location."
-    }
-
-    {
-        "message": "Access Denied 
-    }
-   
