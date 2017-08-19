@@ -174,6 +174,18 @@ insert into student (first_name,last_name,group_id,english_level_id, incoming_te
 insert into student (first_name,last_name,group_id,english_level_id, incoming_test, entry_score, approved_by_expert_id) values ('William','Wallace',7,3, 600, 4,1);
 insert into student (first_name,last_name,group_id,english_level_id, incoming_test, entry_score, approved_by_expert_id) values ('Bruce','Nolan',7,4, 600, 4,1);
 insert into student (first_name,last_name,group_id,english_level_id, incoming_test, entry_score, approved_by_expert_id) values ('Carl','Allen',7,2, 600, 4,1);
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (1,1,'2017-04-10');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (1,2,'2017-05-05');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (1,3,'2017-06-15');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (1,5,'2017-08-20');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (1,6,'2017-09-10');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (2,5,'2017-08-15');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (2,6,'2017-09-20');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (3,2,'2017-07-16');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (3,3,'2017-08-20');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (3,4,'2017-09-21');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (3,4,'2017-10-11');
+insert into task_scheduler (group_id, status_id, date_Of_Update) VALUES (4,2,'2017-08-19');
 update location set coordinator_id = 2 where `name` = 'Dnipro';
 update location set coordinator_id = 3 where `name` = 'Sofia';
 update location set coordinator_id = 6 where `name` = 'Lviv';

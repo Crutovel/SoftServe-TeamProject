@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  <changeSet id="scheduler-1" author="TDK">
+    <createTable tableName="task_scheduler">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="date_Of_Update" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="group_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="scheduler-2" author="TDK">
+    <createIndex tableName="task_scheduler" indexName="fk_task_scheduler_group_idx">
+      <column name="group_id" type="INT"/>
+    </createIndex>
+    <createIndex tableName="task_scheduler" indexName="fk_task_scheduler_status_idx">
+      <column name="status_id" type="INT"/>
+    </createIndex>
+    <addForeignKeyConstraint baseTableName="task_scheduler" baseColumnNames="group_id"
+      constraintName="fk_task_scheduler_group" referencedTableName="educational_group"
+      referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="task_scheduler" baseColumnNames="status_id"
+      constraintName="fk_task_scheduler_status" referencedTableName="status"
+      referencedColumnNames="id"/>
+  </changeSet>
+
+</databaseChangeLog>

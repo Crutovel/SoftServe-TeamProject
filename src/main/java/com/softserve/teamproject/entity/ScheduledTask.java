@@ -26,7 +26,7 @@ public class ScheduledTask {
   @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
   private Status updatedStatus;
 
-  @Column(name = "time")
+  @Column(name = "date_Of_Update")
   private LocalDate dayOfUpdate;
 
   public int getId() {
