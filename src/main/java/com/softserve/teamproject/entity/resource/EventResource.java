@@ -13,9 +13,10 @@ public class EventResource extends ResourceSupport {
   private int eventId;
 
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime dateTime;
+  private LocalDateTime start;
 
-  private int duration;
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  private LocalDateTime end;
 
   public int getEventId() {
     return eventId;
@@ -25,19 +26,19 @@ public class EventResource extends ResourceSupport {
     this.eventId = eventId;
   }
 
-  public LocalDateTime getDateTime() {
-    return dateTime;
+  public LocalDateTime getStart() {
+    return start;
   }
 
-  public void setDateTime(LocalDateTime dateTime) {
-    this.dateTime = dateTime;
+  public void setStart(LocalDateTime start) {
+    this.start = start;
   }
 
-  public int getDuration() {
-    return duration;
+  public LocalDateTime getEnd() {
+    return end;
   }
 
-  public void setDuration(int duration) {
-    this.duration = duration;
+  public void setEnd(LocalDateTime end) {
+    this.end = end;
   }
 }

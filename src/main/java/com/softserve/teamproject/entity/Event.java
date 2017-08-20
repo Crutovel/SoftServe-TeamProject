@@ -20,13 +20,15 @@ public class Event {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  @Column(name = "datetime")
+  @Column(name = "start")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-  private LocalDateTime dateTime;
+  private LocalDateTime start;
 
-  @Column(name = "duration")
-  private int duration;
+  @Column(name = "end")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime end;
 
   @ManyToOne
   @JoinColumn(name = "room_id", referencedColumnName = "id")
@@ -43,19 +45,19 @@ public class Event {
   @JsonDeserialize(using = EventTypeDeserializer.class)
   private EventType eventType;
 
-  public Event(Integer id, LocalDateTime dateTime, int duration, Room room, Group group,
+  public Event(Integer id, LocalDateTime start, LocalDateTime end, Room room, Group group,
       EventType eventType) {
     this.id = id;
-    this.dateTime = dateTime;
-    this.duration = duration;
+    this.start = start;
+    this.end = end;
     this.room = room;
     this.group = group;
     this.eventType = eventType;
   }
 
   public Event(Event event) {
-    this.dateTime = event.getDateTime();
-    this.duration = event.getDuration();
+    this.start = event.getStart();
+    this.end = event.getEnd();
     this.room = event.getRoom();
     this.group = event.getGroup();
     this.eventType = event.getEventType();
@@ -72,12 +74,20 @@ public class Event {
     this.id = id;
   }
 
-  public int getDuration() {
-    return duration;
+  public LocalDateTime getStart() {
+    return start;
   }
 
-  public void setDuration(int duration) {
-    this.duration = duration;
+  public void setStart(LocalDateTime start) {
+    this.start = start;
+  }
+
+  public LocalDateTime getEnd() {
+    return end;
+  }
+
+  public void setEnd(LocalDateTime end) {
+    this.end = end;
   }
 
   public Group getGroup() {
@@ -104,14 +114,6 @@ public class Event {
     this.room = room;
   }
 
-  public LocalDateTime getDateTime() {
-    return dateTime;
-  }
-
-  public void setDateTime(LocalDateTime dateTime) {
-    this.dateTime = dateTime;
-  }
-
   @Override
   public boolean equals(Object otherObject) {
     if (this == otherObject) {
@@ -124,21 +126,22 @@ public class Event {
       return false;
     }
     Event other = (Event) otherObject;
-    return Objects.equals(dateTime, other.dateTime) && Objects.equals(group, other.group)
+    return Objects.equals(start, other.start) && Objects.equals(end, other.end)
+        && Objects.equals(group, other.group)
         && Objects.equals(eventType, other.eventType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dateTime, group, eventType);
+    return Objects.hash(start, end, group, eventType);
   }
 
   @Override
   public String toString() {
     return "Event{"
         + "id=" + id
-        + ", dateTime='" + dateTime + '\''
-        + ", duration='" + duration + '\''
+        + ", start='" + start + '\''
+        + ", end='" + end + '\''
         + ", group='" + group.getName() + '\''
         + ", eventType='" + eventType.getName() + '\''
         + '}';

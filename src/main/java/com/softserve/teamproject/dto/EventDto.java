@@ -15,9 +15,11 @@ public class EventDto implements Comparable<EventDto> {
 
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-  private LocalDateTime dateTime;
+  private LocalDateTime start;
 
-  private int duration;
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  private LocalDateTime end;
 
   @JsonSerialize(using = RoomSerializer.class)
   private Room room;
@@ -30,26 +32,26 @@ public class EventDto implements Comparable<EventDto> {
   }
 
   public EventDto(Event event) {
-    this.dateTime = event.getDateTime();
-    this.duration = event.getDuration();
+    this.start = event.getStart();
+    this.end = event.getEnd();
     this.room = event.getRoom();
     this.eventType = event.getEventType();
   }
 
-  public LocalDateTime getDateTime() {
-    return dateTime;
+  public LocalDateTime getStart() {
+    return start;
   }
 
-  public void setDateTime(LocalDateTime dateTime) {
-    this.dateTime = dateTime;
+  public void setStart(LocalDateTime start) {
+    this.start = start;
   }
 
-  public int getDuration() {
-    return duration;
+  public LocalDateTime getEnd() {
+    return end;
   }
 
-  public void setDuration(int duration) {
-    this.duration = duration;
+  public void setEnd(LocalDateTime end) {
+    this.end = end;
   }
 
   public Room getRoom() {
@@ -80,33 +82,33 @@ public class EventDto implements Comparable<EventDto> {
       return false;
     }
     EventDto other = (EventDto) otherObject;
-    return Objects.equals(dateTime, other.dateTime) && Objects.equals(eventType, other.eventType);
+    return Objects.equals(start, other.start) && Objects.equals(end, other.end)
+        && Objects.equals(eventType, other.eventType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dateTime, eventType);
+    return Objects.hash(start, end, eventType);
   }
 
   @Override
   public int compareTo(EventDto event) {
-    if (this.dateTime.isEqual(event.getDateTime())) {
+    if (this.start.isEqual(event.getStart())) {
       return 0;
     } else {
-      if (this.dateTime.isAfter(event.getDateTime())) {
+      if (this.start.isAfter(event.getStart())) {
         return 1;
       } else {
         return -1;
       }
     }
-
   }
 
   @Override
   public String toString() {
     return "Event{"
-        + ", dateTime='" + dateTime + '\''
-        + ", duration='" + duration + '\''
+        + ", start='" + start + '\''
+        + ", end='" + end + '\''
         + ", room='" + room.getNumber() + '\''
         + ", eventType='" + eventType.getName() + '\''
         + '}';

@@ -1,10 +1,7 @@
 package com.softserve.teamproject.repository.expression;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.DateTimeExpression;
-import com.querydsl.sql.SQLExpressions;
 import com.softserve.teamproject.entity.QEvent;
-import com.softserve.teamproject.entity.QGroup;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,11 +20,11 @@ public class EventExpressions {
   }
 
   public static BooleanExpression getEventBetweenDates(LocalDateTime start, LocalDateTime finish) {
-    return QEvent.event.dateTime.between(start, finish);
+    return QEvent.event.start.between(start, finish);
   }
 
   public static BooleanExpression getEventsBeforeStart(LocalDateTime start) {
-    return QEvent.event.dateTime.before(start);
+    return QEvent.event.start.before(start);
   }
 
   public static BooleanExpression eventByEventTypeId(Integer id) {
