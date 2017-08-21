@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/signin.css" >
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+                <div class="card card-container">
+                    <h2 class='login_title text-center'><span th:text="#{signin.title}"/></h2>
+                    <hr>
+                    <p th:if="${loginError}" class="error"><span th:text="#{error.login}"/></p>
+                    <form th:action="@{/signin.html}" method="post" class="form-signin">
+                        <label for="username" class="input_title"><span th:text="#{signin.username}"/></label>:
+                        <input type="text" id="username" name="username" autofocus="autofocus" class="login_box" th:value="DmytroPetin"/> <br />
+                        <label for="password" class="input_title"><span th:text="#{signin.password}"/></label>:
+                        <input type="password" id="password" name="password" class="login_box" th:value="fgdfg24sd"/> <br />
+                        <input type="submit" th:value="#{signin.button.submit}" class="btn btn-lg btn-primary"/>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
