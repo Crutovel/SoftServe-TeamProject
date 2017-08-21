@@ -1,0 +1,21 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  <changeSet id="st-1" author="Unknown">
+    <addColumn tableName="student">
+      <column name="incoming_test" type="INT"/>
+      <column name="entry_score" type="DOUBLE PRECISION"/>
+      <column name="approved_by_expert_id" type="INT" defaultValueNumeric="1">
+      <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  <addColumn tableName="expert">
+   <column name="id" type="INT"/>
+  </addColumn>
+  </changeSet>
+<changeSet id="st-2" author="Anastasia">
+  <addNotNullConstraint tableName="expert" columnName="id" columnDataType="INT"/>
+  <addPrimaryKey tableName="expert" columnNames="id" />
+  <addAutoIncrement tableName="expert" columnName="id" columnDataType="INT"/>
+<addForeignKeyConstraint baseColumnNames="approved_by_expert_id" baseTableName="student" constraintName="fk_student_expert1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="expert"/>
+</changeSet>
+</databaseChangeLog>

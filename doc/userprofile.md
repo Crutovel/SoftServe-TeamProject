@@ -1,5 +1,7 @@
 # API Documentation for End Point "/user/profile"
 
+This endpoint allows current authorized user to get its data
+
 <a name="table-of-content"></a>
 ## Table of Content
 

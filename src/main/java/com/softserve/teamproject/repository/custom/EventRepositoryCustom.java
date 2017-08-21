@@ -22,4 +22,6 @@ public interface EventRepositoryCustom {
 
   List<Event> getNotKeyEventsByGroupId(Integer groupId, LocalDateTime start,
       LocalDateTime finish);
+
+  List<Event> getEventsByGroupId(Integer groupId) ;
 }

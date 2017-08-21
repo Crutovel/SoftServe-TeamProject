@@ -52,7 +52,8 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
   @Override
   public List<Event> getCrossEvents(LocalDateTime start,
       LocalDateTime finish) {
-    List<Event> crossDate = from(QEvent.event)
+    List<Event> crossDate = new ArrayList<>();
+    crossDate = from(QEvent.event)
         .where(getEventBetweenDates(start, finish)).fetch();
     if (crossDate.size() == 0) {
       List<Event> allEventsBeforeStarfrom = from(QEvent.event)
@@ -71,6 +72,12 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
       LocalDateTime finish) {
     return from(QEvent.event)
         .where(getEventByGroupId(groupId).and(getEventBetweenDates(start, finish))).fetch();
+  }
+
+  @Override
+  public List<Event> getEventsByGroupId(Integer groupId) {
+    return from(QEvent.event)
+        .where(getEventByGroupId(groupId)).fetch();
   }
 
   public Event getEventByEventTypeId(Integer eventTypeId, Integer groupId) {

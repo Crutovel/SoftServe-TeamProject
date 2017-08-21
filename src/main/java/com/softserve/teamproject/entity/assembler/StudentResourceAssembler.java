@@ -2,6 +2,7 @@ package com.softserve.teamproject.entity.assembler;
 
 import com.softserve.teamproject.controller.StudentController;
 import com.softserve.teamproject.entity.EnglishLevel;
+import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.StudentResource;
@@ -38,6 +39,7 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     addEntityFieldLinkToResource(studentResource, student.getGroup().getId(), Group.class);
     addEntityFieldLinkToResource(studentResource, student.getEnglishLevel().getId(),
         EnglishLevel.class);
+    addEntityFieldLinkToResource(studentResource,student.getTestApprovedByExpert().getId(), Expert.class);
 
     return studentResource;
   }
@@ -73,5 +75,7 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     studentResource.setImageName(student.getImageName());
     studentResource.setCv(student.getCv());
     studentResource.setCvName(student.getCvName());
+    studentResource.setEntryScore(student.getEntryScore());
+    studentResource.setIncomingTest(student.getIncomingTest());
   }
 }

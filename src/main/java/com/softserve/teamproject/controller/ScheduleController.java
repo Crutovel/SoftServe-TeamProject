@@ -72,6 +72,20 @@ public class ScheduleController {
   }
 
   /**
+   * Get events by groupId and last week.
+   *
+   * @param groupId is received as a request param
+   * @return events info by groupId and last week
+   */
+  @GetMapping(value = "/events/lastweek", produces = "application/json")
+  @ApiOperation(value = "Get events for given group and last week", response = Event.class,
+      responseContainer = "List")
+  public Iterable<EventResource> getEventsForLastWeek(
+      @RequestParam(value = "groupid") Integer groupId) {
+      return scheduleService.getLastWeekEvents(groupId);
+  }
+
+  /**
    * Get events by array of group ids and date interval [start,end].
    *
    * @param requestFilter dto object in json format, need for filter.
@@ -95,7 +109,7 @@ public class ScheduleController {
    * @param groupId is received as a request param
    * @return key events info by groupId or just all key events
    */
-  @GetMapping(value = "/keyevents", produces = "application/json")
+  @GetMapping(value = "/events/demo", produces = "application/json")
   @ApiOperation(value = "Get key events for given group", response = Event.class,
       responseContainer = "List")
   public Iterable<EventResource> getKeyEvents(
@@ -112,7 +126,7 @@ public class ScheduleController {
    * @param requestFilter dto object in json format, need for filter.
    * @return key events info by array of group ids
    */
-  @PostMapping(value = "/keyevents/filter", produces = "application/json")
+  @PostMapping(value = "/events/demo/filter", produces = "application/json")
   @ApiOperation(value = "Get key events for given array of group", response = Event.class,
       responseContainer = "List")
   public Iterable<EventResource> getKeyEventsByFilter(@RequestBody EventsFilter requestFilter) {

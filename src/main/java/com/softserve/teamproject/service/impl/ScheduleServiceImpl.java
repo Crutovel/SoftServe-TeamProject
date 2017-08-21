@@ -96,7 +96,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     return convertToResource(eventRepository.findAll(getKeyDates()));
   }
 
-  private List<EventResource> getLastWeekEvents(Integer groupId) {
+  public List<EventResource> getLastWeekEvents(Integer groupId) {
     Group group = groupRepository.findOne(groupId);
     TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
     LocalDate start;
@@ -109,7 +109,8 @@ public class ScheduleServiceImpl implements ScheduleService {
       start = finished.with(temporalField, 1);
       end = finished.with(temporalField, 5);
     } else {
-      throw new IllegalArgumentException("Group is in planned state");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.group.plannedState"));
     }
     return getEventsByGroupId(groupId, start, end);
   }
@@ -117,7 +118,7 @@ public class ScheduleServiceImpl implements ScheduleService {
   public List<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
       LocalDate end) {
     if (start == null && end == null) {
-      return getLastWeekEvents(groupId);
+      return convertToResource(eventRepository.getEventsByGroupId(groupId));
     }
     if (start == null || end == null) {
       throw new IllegalArgumentException(

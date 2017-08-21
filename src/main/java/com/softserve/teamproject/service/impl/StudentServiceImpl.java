@@ -9,11 +9,13 @@ import com.softserve.teamproject.repository.EnglishLevelRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.StudentRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.validation.StudentValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ public class StudentServiceImpl implements StudentService {
   private GroupRepository groupRepository;
   private StudentValidator studentValidator;
   private EnglishLevelRepository englishLevelRepository;
+  private MessageByLocaleService messageByLocaleService;
 
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
@@ -59,6 +62,12 @@ public class StudentServiceImpl implements StudentService {
   @Autowired
   public void setEnglishLevelRepository(EnglishLevelRepository englishLevelRepository) {
     this.englishLevelRepository = englishLevelRepository;
+  }
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
   }
 
   /**
@@ -101,8 +110,25 @@ public class StudentServiceImpl implements StudentService {
     studentValidator.checkCoordinatorLocationToManipulateStudent(group, userName);
     for (Student student : students) {
       student.setGroup(group);
+      if (student.getFirstName() == null) {
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.firstName")
+        );
+      }
+      if (student.getLastName() == null) {
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.lastName")
+        );
+      }
       if (student.getEnglishLevel() == null) {
-        student.setEnglishLevel(englishLevelRepository.findByName("intermediate"));
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.englishLevel")
+            );
+      }
+      if(student.getTestApprovedByExpert()==null){
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.expert")
+            );
       }
     }
     studentRepository.save(students);

@@ -90,18 +90,18 @@ insert into english_level (name,`level`) values ('pre-intermediate',2);
 insert into english_level (name,`level`) values ('intermediate',3);
 insert into english_level (name,`level`) values ('upper-intermediate',4);
 
-INSERT INTO student (first_name, last_name, group_id, english_level_id)
-VALUES ('Lev', 'Bukhanets', 2, 4);
-INSERT INTO student (first_name, last_name, group_id, english_level_id)
-VALUES ('Maksym', 'Kameniev', 2, 4);
-INSERT INTO student (first_name, last_name, group_id, english_level_id)
-VALUES ('Dmytro', 'Kholod', 2, 4);
-INSERT INTO student (first_name, last_name, group_id, english_level_id)
-VALUES ('Roy', 'Batty', 3, 3);
-INSERT INTO student (first_name, last_name, group_id, english_level_id)
-VALUES ('Motoko', 'Kusanagi', 3, 2);
-INSERT INTO student (first_name, last_name, group_id, english_level_id)
-VALUES ('Ace', 'Ventura', 3, 4);
+INSERT INTO student (first_name, last_name, group_id, english_level_id, approved_by_expert_id)
+VALUES ('Lev', 'Bukhanets', 2, 4, 1);
+INSERT INTO student (first_name, last_name, group_id, english_level_id, approved_by_expert_id)
+VALUES ('Maksym', 'Kameniev', 2, 4, 1);
+INSERT INTO student (first_name, last_name, group_id, english_level_id, approved_by_expert_id)
+VALUES ('Dmytro', 'Kholod', 2, 4, 1);
+INSERT INTO student (first_name, last_name, group_id, english_level_id, approved_by_expert_id)
+VALUES ('Roy', 'Batty', 3, 3, 1);
+INSERT INTO student (first_name, last_name, group_id, english_level_id, approved_by_expert_id)
+VALUES ('Motoko', 'Kusanagi', 3, 2, 1);
+INSERT INTO student (first_name, last_name, group_id, english_level_id, approved_by_expert_id)
+VALUES ('Ace', 'Ventura', 3, 4, 1);
 
 update location SET coordinator_id = 2 WHERE name='Dnipro';
 update location SET coordinator_id = 3 WHERE name='Sofia';
