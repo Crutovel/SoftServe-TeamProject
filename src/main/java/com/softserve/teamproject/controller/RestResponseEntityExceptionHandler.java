@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import org.json.simple.JSONObject;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     return handleExceptionInternal(ex, createResponseBody(MSG_NOT_FOUND), new HttpHeaders(),
         HttpStatus.NOT_FOUND, request);
+  }
+
+  @ExceptionHandler(value = {DataIntegrityViolationException.class})
+  protected ResponseEntity<Object> handleDataIntegrityViolationException(
+      final RuntimeException ex, final WebRequest request) {
+    return handleExceptionInternal(
+        ex, createResponseBody(MSG_BAD_REQUEST), new HttpHeaders(),
+        HttpStatus.BAD_REQUEST, request);
   }
 
   @ExceptionHandler(value = {ValidationException.class})

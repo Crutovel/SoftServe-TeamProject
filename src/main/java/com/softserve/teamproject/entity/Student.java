@@ -71,6 +71,18 @@ public class Student {
   @JsonDeserialize(using = ExpertDeserializer.class)
   private Expert testApprovedByExpert;
 
+  @Column(name = "teacher_score")
+  private Integer teacherScore;
+
+  @Column(name = "teacher_feedback")
+  private String teacherFeedback;
+
+  @Column(name = "expert_score")
+  private Integer expertScore;
+
+  @Column(name = "expert_feedback")
+  private String expertFeedback;
+
   public Integer getIncomingTest() {
     return incomingTest;
   }
@@ -165,6 +177,38 @@ public class Student {
 
   public void setEnglishLevel(EnglishLevel englishLevel) {
     this.englishLevel = englishLevel;
+  }
+
+  public Integer getTeacherScore() {
+    return teacherScore;
+  }
+
+  public void setTeacherScore(Integer teacherScore) {
+    this.teacherScore = teacherScore;
+  }
+
+  public String getTeacherFeedback() {
+    return teacherFeedback;
+  }
+
+  public void setTeacherFeedback(String teacherFeedback) {
+    this.teacherFeedback = teacherFeedback;
+  }
+
+  public Integer getExpertScore() {
+    return expertScore;
+  }
+
+  public void setExpertScore(Integer expertScore) {
+    this.expertScore = expertScore;
+  }
+
+  public String getExpertFeedback() {
+    return expertFeedback;
+  }
+
+  public void setExpertFeedback(String expertFeedback) {
+    this.expertFeedback = expertFeedback;
   }
 
   @Override

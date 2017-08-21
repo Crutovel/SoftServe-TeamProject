@@ -28,6 +28,14 @@ public class StudentResource extends ResourceSupport {
 
   private Double entryScore;
 
+  private Integer teacherScore;
+
+  private String teacherFeedback;
+
+  private Integer expertScore;
+
+  private String expertFeedback;
+
   public Integer getIncomingTest() {
     return incomingTest;
   }
@@ -98,5 +106,37 @@ public class StudentResource extends ResourceSupport {
 
   public void setCvName(String cvName) {
     this.cvName = cvName;
+  }
+
+  public Integer getTeacherScore() {
+    return teacherScore;
+  }
+
+  public void setTeacherScore(Integer teacherScore) {
+    this.teacherScore = teacherScore;
+  }
+
+  public String getTeacherFeedback() {
+    return teacherFeedback;
+  }
+
+  public void setTeacherFeedback(String teacherFeedback) {
+    this.teacherFeedback = teacherFeedback;
+  }
+
+  public Integer getExpertScore() {
+    return expertScore;
+  }
+
+  public void setExpertScore(Integer expertScore) {
+    this.expertScore = expertScore;
+  }
+
+  public String getExpertFeedback() {
+    return expertFeedback;
+  }
+
+  public void setExpertFeedback(String expertFeedback) {
+    this.expertFeedback = expertFeedback;
   }
 }
