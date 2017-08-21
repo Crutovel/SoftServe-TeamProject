@@ -1,13 +1,12 @@
 package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.dto.UserDto;
-import com.softserve.teamproject.entity.User;
+import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AdminPanelController {
 
   private UserService userService;
+  private StudentService studentService;
+
+  @Autowired
+  public void setStudentService(StudentService studentService){
+    this.studentService=studentService;
+  }
 
   @Autowired
   public void setUserService(UserService userService) {
@@ -50,5 +55,11 @@ public class AdminPanelController {
 //    System.out.println(user.getLastName());
     userService.deleteUser(userId);
     return userService.getAllUserDto();
+  }
+
+  @RequestMapping("/admin/students")
+  public String seeAllStudents(Model model){
+    model.addAttribute("students", studentService.getAllStudentDto());
+    return "allStudents";
   }
 }

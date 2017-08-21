@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="students">
+  <form>
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>
+            <span th:text="#{admin.firstName}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.lastName}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.actions}"></span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student, studentStat : ${students}">
+          <td style="display:none" th:text="${student.id}"></td>
+          <td th:text="${student.firstName}"></td>
+          <td th:text="${student.lastName}"></td>
+          <td>
+            <button class="btn btn-primary"><span th:text="#{admin.button.edit}"></span></button>
+            <button class="btn btn-danger" th:value="${student.id}"><span
+                th:text="#{admin.button.delete}"></span></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-primary"><span th:text="#{admin.button.student.add}"></span></button>
+    </div>
+    <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>
+    </button>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,8 +1,8 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
-import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.StudentResourceAssembler;
 import com.softserve.teamproject.entity.resource.StudentResource;
 import com.softserve.teamproject.repository.EnglishLevelRepository;
@@ -15,9 +15,7 @@ import com.softserve.teamproject.validation.StudentValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.xml.bind.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -194,4 +192,11 @@ public class StudentServiceImpl implements StudentService {
     student = studentRepository.save(student);
     return studentResourceAssembler.toResource(student);
   }
+
+
+  public List<StudentDto> getAllStudentDto() {
+    List<Student> allStudents = studentRepository.findAll();
+    return allStudents.stream().map(StudentDto::new).collect(Collectors.toList());
+  }
+
 }
