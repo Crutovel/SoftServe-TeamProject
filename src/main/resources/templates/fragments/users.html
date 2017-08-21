@@ -8,7 +8,6 @@
   <form>
     <div class="col-md-2"></div>
     <div class="col-md-9">
-
       <table class="table table-striped">
         <thead>
         <tr>
@@ -49,13 +48,17 @@
           <td th:text="${user.login}"></td>
           <td th:text="${user.password}"></td>
           <td>
-            <button class="btn btn-primary"><span th:text="#{admin.button.edit}"></span></button>
-            <button class="btn btn-danger" th:value="${user.id}"><span
+            <button type="button" class="btn btn-primary edit-button" data-toggle="modal"
+                    data-target="#userModal"><span th:text="#{admin.button.edit}"></span></button>
+            <button class="btn btn-danger delete-button" th:value="${user.id}"><span
                 th:text="#{admin.button.delete}"></span></button>
           </td>
         </tr>
         </tbody>
       </table>
+
+      <div th:replace="fragments/user-modal :: user-modal"></div>
+
       <button class="btn btn-primary"><span th:text="#{admin.button.user.add}"></span></button>
     </div>
     <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>

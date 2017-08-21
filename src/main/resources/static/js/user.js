@@ -6,8 +6,12 @@ $(document).ready(
       $('button').click(function (event) {
         //stop submit the form, we will post it manually.
         event.preventDefault();
-        var user_id = $(this).val();
-        fireAjaxSubmit(user_id);
+        var requestDetails = {}
+        requestDetails["userId"] = $(this).val();
+        if ($(this).hasClass("delete-button")) {
+          requestDetails["url"] = "/admin/user/delete";
+        }
+        fireAjaxSubmit(requestDetails);
       });
     }
 );
@@ -24,7 +28,9 @@ function fillTable(result) {
             $('<td>').text(item.login),
             $('<td>').text(item.password),
             $('<td>').append(
-                $('<button>').text(editButtonName).addClass('btn btn-primary'),
+                $('<button>').text(editButtonName).addClass('btn btn-primary').attr(
+                    "data-toggle", "modal").attr("data-target", "#myModal").attr(
+                    "type", "button"),
                 $('<button>').text(deleteButtonName).addClass('btn btn-danger')
                 .attr('value', item.id)
             )
@@ -43,12 +49,12 @@ function cleanTable() {
   $("table.table.table-striped tbody tr").remove();
 }
 
-function fireAjaxSubmit(userId) {
+function fireAjaxSubmit(requestDetails) {
   $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/admin/user/delete",
-        data: userId,
+        url: requestDetails["url"],//"/admin/user/delete",
+        data: requestDetails["userId"],
         dataType: 'json',
         success: function (result) {
           console.log(result);

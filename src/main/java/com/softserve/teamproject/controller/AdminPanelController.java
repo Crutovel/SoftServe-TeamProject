@@ -46,8 +46,6 @@ public class AdminPanelController {
   @PostMapping(value = "/admin/user/delete", produces = "application/json")
   @ResponseBody
   public List<UserDto> removeUser(@RequestBody Integer userId){
-//    UserDto user=userService.findUser(userId);
-//    System.out.println(user.getLastName());
     userService.deleteUser(userId);
     return userService.getAllUserDto();
   }
