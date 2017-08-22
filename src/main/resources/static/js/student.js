@@ -12,32 +12,32 @@ $(document).ready(
     }
 );
 
-function fillTable(result) {
-  $.each(result, function (i, item) {
-        $('<tr>').append(
-            $('<td>').text(item.id).css("display", "none"),
-            $('<td>').text(item.firstName),
-            $('<td>').text(item.lastName),
-            // $('<td>').text(item.role),
-            // $('<td>').text(item.location),
-            // $('<td>').text(item.photo),
-            // $('<td>').text(item.login),
-            // $('<td>').text(item.password),
-            $('<td>').append(
-                $('<button>').text(editButtonName).addClass('btn btn-primary'),
-                $('<button>').text(deleteButtonName).addClass('btn btn-danger')
-                .attr('value', item.id)
-            )
-        ).appendTo("table.table.table-striped tbody");
-        $('button').click(function (event) {
-          //stop submit the form, we will post it manually.
-          event.preventDefault();
-          var student_id = $(this).val();
-          fireAjaxSubmit(student_id);
-        });
-      }
-  );
-}
+// function fillTable(result) {
+//   $.each(result, function (i, item) {
+//         $('<tr>').append(
+//             $('<td>').text(item.id).css("display", "none"),
+//             $('<td>').text(item.firstName),
+//             $('<td>').text(item.lastName),
+//             // $('<td>').text(item.role),
+//             // $('<td>').text(item.location),
+//             // $('<td>').text(item.photo),
+//             // $('<td>').text(item.login),
+//             // $('<td>').text(item.password),
+//             $('<td>').append(
+//                 $('<button>').text(editButtonName).addClass('btn btn-primary'),
+//                 $('<button>').text(deleteButtonName).addClass('btn btn-danger')
+//                 .attr('value', item.id)
+//             )
+//         ).appendTo("table.table.table-striped tbody");
+//         $('button').click(function (event) {
+//           //stop submit the form, we will post it manually.
+//           event.preventDefault();
+//           var student_id = $(this).val();
+//           fireAjaxSubmit(student_id);
+//         });
+//       }
+//   );
+// }
 
 function cleanTable() {
   $("table.table.table-striped tbody tr").remove();

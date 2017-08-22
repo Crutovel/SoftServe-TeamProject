@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css"
-          href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
-    <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
-    <script src="/js/student.js"></script>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" type="text/css"
+        href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+  <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+  <script src="/js/student.js"></script>
 </head>
 <body>
 <h1>
-    <span th:text="#{admin.title}"></span>
+  <span th:text="#{admin.title}"></span>
 </h1>
 <div th:replace="fragments/students :: students"></div>
 </body>
