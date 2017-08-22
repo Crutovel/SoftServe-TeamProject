@@ -13,9 +13,20 @@ public class Strategy {
   @GeneratedValue
   private int id;
   @OneToMany(mappedBy = "strategy")
-  private List<Template> templates;
+  private List<KeyEventTemplate> keyEventTemplates;
+  @OneToMany(mappedBy = "strategy")
+  private List<StatusTemplate> statusTemplates;
   @OneToMany(mappedBy = "strategy")
   private List<Specialization> specializations;
+
+  public List<StatusTemplate> getStatusTemplates() {
+    return statusTemplates;
+  }
+
+  public void setStatusTemplates(
+      List<StatusTemplate> statusTemplates) {
+    this.statusTemplates = statusTemplates;
+  }
 
   public List<Specialization> getSpecializations() {
     return specializations;
@@ -34,12 +45,11 @@ public class Strategy {
     this.id = id;
   }
 
-  public List<Template> getTemplates() {
-    return templates;
+  public List<KeyEventTemplate> getKeyEventTemplates() {
+    return keyEventTemplates;
   }
 
-  public void setTemplates(List<Template> templates) {
-    this.templates = templates;
+  public void setKeyEventTemplates(List<KeyEventTemplate> keyEventTemplates) {
+    this.keyEventTemplates = keyEventTemplates;
   }
-
 }

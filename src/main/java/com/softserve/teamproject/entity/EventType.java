@@ -27,13 +27,13 @@ public class EventType {
 
   @OneToMany(mappedBy = "eventType")
   @JsonIgnore
-  private List<Template> templates;
+  private List<KeyEventTemplate> templates;
 
-  public List<Template> getTemplates() {
+  public List<KeyEventTemplate> getTemplates() {
     return templates;
   }
 
-  public void setTemplates(List<Template> templates) {
+  public void setTemplates(List<KeyEventTemplate> templates) {
     this.templates = templates;
   }
 

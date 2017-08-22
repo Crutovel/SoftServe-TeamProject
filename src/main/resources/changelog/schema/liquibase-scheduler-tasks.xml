@@ -32,5 +32,31 @@
       constraintName="fk_task_scheduler_status" referencedTableName="status"
       referencedColumnNames="id"/>
   </changeSet>
-
+  <changeSet id="scheduler-3" author="TDK">
+    <addNotNullConstraint tableName="educational_group" columnName="start_date" columnDataType="DATE"/>
+    <addNotNullConstraint tableName="educational_group" columnName="finish_date" columnDataType="DATE"/>
+  </changeSet>
+  <changeSet id="scheduler-4" author="TDK">
+    <renameTable oldTableName="template" newTableName="key_event_template"/>
+    <addColumn tableName="key_event_template">
+      <column name="template_order" type="INT"/>
+      <column name="rel" type="INT"/>
+    </addColumn>
+  </changeSet>
+  <changeSet author="TDK" id="scheduler-5">
+    <createTable tableName="status_template">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="status_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="strategy_id" type="INT"/>
+      <column name="duration" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="template_order" type="INT"/>
+      <column name="rel" type="INT"/>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>

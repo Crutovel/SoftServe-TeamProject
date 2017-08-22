@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "task_scheduler")
-public class ScheduledTask {
+public class ScheduledTask implements Comparable<ScheduledTask> {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -60,4 +60,20 @@ public class ScheduledTask {
   public void setDayOfUpdate(LocalDate dayOfUpdate) {
     this.dayOfUpdate = dayOfUpdate;
   }
+
+
+  @Override
+  public int compareTo(ScheduledTask scheduledTask) {
+    if (scheduledTask.getUpdatedStatus().getId() > this.getUpdatedStatus().getId()) {
+      return -1;
+    } else if (scheduledTask.getUpdatedStatus().getId() < this.getUpdatedStatus().getId()) {
+      return 1;
+    } else if (scheduledTask.getDayOfUpdate().isBefore(this.getDayOfUpdate())) {
+      return 1;
+    } else if (scheduledTask.getDayOfUpdate().isAfter(this.getDayOfUpdate())) {
+      return -1;
+    }
+    return 0;
+  }
+
 }

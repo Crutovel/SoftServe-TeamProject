@@ -2,7 +2,9 @@ package com.softserve.teamproject.repository.custom;
 
 import static com.querydsl.jpa.JPAExpressions.select;
 import static com.softserve.teamproject.repository.expression.ScheduledTaskExpression.getTasksBeforeTomorrow;
+import static com.softserve.teamproject.repository.expression.ScheduledTaskExpression.isEqualToGroup;
 
+import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.QScheduledTask;
 import com.softserve.teamproject.entity.ScheduledTask;
 import java.util.List;
@@ -47,5 +49,10 @@ public class ScheduledTaskRepositoryImpl extends QueryDslRepositorySupport imple
   @Override
   public List<ScheduledTask> getOldTasks() {
     return from(QScheduledTask.scheduledTask).where(getTasksBeforeTomorrow()).fetch();
+  }
+
+  @Override
+  public List<ScheduledTask> getTasksByGroupId(Group group) {
+    return from(QScheduledTask.scheduledTask).where(isEqualToGroup(group)).fetch();
   }
 }

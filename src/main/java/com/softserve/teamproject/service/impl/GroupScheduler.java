@@ -1,10 +1,17 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.entity.Group;
+import com.softserve.teamproject.entity.ScheduledTask;
+import com.softserve.teamproject.entity.Status;
+import com.softserve.teamproject.generator.StatusGenerator;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.ScheduledTaskRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,9 +21,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class GroupScheduler implements Runnable {
 
+  private StatusGenerator generator;
   private GroupRepository groupRepository;
   private ScheduledTaskRepository schedulerRepo;
   private boolean firstRun = true;
+
+  @Autowired
+  public void setGenerator(StatusGenerator generator) {
+    this.generator = generator;
+  }
 
   @Autowired
   public GroupScheduler(GroupRepository groupRepository, ScheduledTaskRepository schedulerRepo) {
@@ -32,14 +45,33 @@ public class GroupScheduler implements Runnable {
 
   @Override
   public void run() {
-    schedulerRepo.getActualTasks().forEach(task -> {
+    List<ScheduledTask> tasks = schedulerRepo.getOldTasks();
+    tasks.sort(Comparator.naturalOrder());
+    tasks.forEach(task -> {
       task.getGroup().setStatus(task.getUpdatedStatus());
       groupRepository.save(task.getGroup());
       schedulerRepo.delete(task);
     });
-    if (firstRun) {
-      schedulerRepo.getOldTasks().forEach(task -> schedulerRepo.delete(task));
-      firstRun = !firstRun;
-    }
+  }
+
+  public void updateTasks(Group group) {
+    Map<Status,LocalDate> template = generator.generateKeyEventTemplates(
+        group.getSpecialization().getStrategy().getStatusTemplates(), group);
+    clearTasks(group);
+    template.forEach((status,date)->{
+      if (status.getId() <= group.getStatus().getId()) {
+        return;
+      }
+      ScheduledTask task = new ScheduledTask();
+      task.setDayOfUpdate(date);
+      task.setGroup(group);
+      task.setUpdatedStatus(status);
+      schedulerRepo.save(task);
+    });
+    run();
+  }
+
+  public void clearTasks(Group group) {
+    schedulerRepo.delete(schedulerRepo.getTasksByGroupId(group));
   }
 }

@@ -2,10 +2,11 @@ package com.softserve.teamproject.validation;
 
 import static com.softserve.teamproject.utils.DateUtil.getWorkWeekOfDate;
 
+import com.softserve.teamproject.generator.KeyEventGenerator;
 import com.softserve.teamproject.dto.KeyDateDto;
 import com.softserve.teamproject.entity.EventType;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.Template;
+import com.softserve.teamproject.entity.KeyEventTemplate;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.MessageByLocaleService;
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Service;
 public class KeyDatesValidator implements
     ConstraintValidator<KeyDates, KeyDateDto> {
 
+  @Autowired
+  private KeyEventGenerator generator;
   private UserRepository userRepository;
   private SecurityService securityService;
   private Group group;
@@ -70,31 +73,6 @@ public class KeyDatesValidator implements
   }
 
   /**
-   * Generate dates, which are pointing to demo week
-   *
-   * @param group the group to generate dates for
-   */
-  private void generateDates(Group group) {
-    if (group.getStartDate() == null) {
-      throw new IllegalArgumentException(
-          messageByLocaleService.getMessage("illegalArgs.keyDate.generateDate.start"));
-    }
-    LocalDate startDate = group.getStartDate();
-    List<Template> templates = group.getSpecialization().getStrategy().getTemplates();
-    for (Template template : templates) {
-      LocalDate newDate = null;
-      if (template.getDuration() == 0) {
-        newDate = group.getFinishDate();
-      } else {
-        newDate = startDate.plusDays(template.getDuration());
-      }
-
-      validationTemplate.put(template.getEventType(), newDate);
-      startDate = newDate;
-    }
-  }
-
-  /**
    * Validates input event according to <code>validDates</code> parameter
    *
    * @param event event to validate
@@ -108,7 +86,7 @@ public class KeyDatesValidator implements
     }
     List<LocalDate> week = getWorkWeekOfDate(validationTemplate.get(event.getEventType()));
     LocalDate eventDate = event.getDate();
-    if (eventDate == null || !week.contains(eventDate)){
+    if (eventDate == null || !week.contains(eventDate)) {
       throw new IllegalArgumentException(
           messageByLocaleService.getMessage("illegalArgs.keyDate.validate.date"));
     }
@@ -121,7 +99,9 @@ public class KeyDatesValidator implements
     }
     checkAuth(event.getGroup());
     if (group == null || !event.getGroup().equals(group)) {
-      generateDates(event.getGroup());
+      List<KeyEventTemplate> templates =
+          event.getGroup().getSpecialization().getStrategy().getKeyEventTemplates();
+      validationTemplate = generator.generateKeyEventTemplates(templates,event.getGroup());
       group = event.getGroup();
     }
   }
