@@ -57,7 +57,7 @@ public class AdminPanelController {
     return userService.getAllUserDto();
   }
 
-  @RequestMapping("/admin/students")
+  @RequestMapping("/admin/allStudents")
   public String seeAllStudents(Model model){
     model.addAttribute("students", studentService.getAllStudentDto());
     return "allStudents";
