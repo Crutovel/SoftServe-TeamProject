@@ -7,4 +7,5 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 public interface RoleRepository extends JpaRepository<Role, Integer>,
     QueryDslPredicateExecutor {
 
+  public Role findByName(String name);
 }

@@ -7,4 +7,5 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 public interface LocationRepository extends JpaRepository<Location, Integer>,
     QueryDslPredicateExecutor {
 
+  public Location findByName(String name);
 }
