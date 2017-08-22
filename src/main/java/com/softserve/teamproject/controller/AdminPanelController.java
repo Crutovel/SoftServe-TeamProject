@@ -1,5 +1,6 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.EditUserDto;
 import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.service.UserService;
@@ -44,15 +45,13 @@ public class AdminPanelController {
 
   @RequestMapping("/admin")
   public String adminPage(Model model) {
-    model.addAttribute("users",userService.getAllUserDto());
+    model.addAttribute("users", userService.getAllUserDto());
     return "admin";
   }
 
   @PostMapping(value = "/admin/user/delete", produces = "application/json")
   @ResponseBody
-  public List<UserDto> removeUser(@RequestBody Integer userId){
-//    UserDto user=userService.findUser(userId);
-//    System.out.println(user.getLastName());
+  public List<UserDto> removeUser(@RequestBody Integer userId) {
     userService.deleteUser(userId);
     return userService.getAllUserDto();
   }
@@ -65,4 +64,24 @@ public class AdminPanelController {
 //
 //  @RequestMapping("/editStudent")
 //  public String editStudent(Student student)
+
+  @PostMapping(value = "/admin/user/data", produces = "application/json")
+  @ResponseBody
+  public EditUserDto getUserInfo(@RequestBody Integer userId) {
+    EditUserDto editUserDto = userService.findUser(userId);
+    return editUserDto;
+  }
+
+  /**
+   * Controller for entry point that edit or add new use
+   *
+   * @param user new or edited user
+   * @return updated list of users
+   */
+  @PostMapping(value = "/admin/user/save", produces = "application/json")
+  @ResponseBody
+  public List<UserDto> saveUserInfo(@RequestBody UserDto user) {
+    userService.saveUser(user);
+    return userService.getAllUserDto();
+  }
 }
