@@ -5,6 +5,7 @@ import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.StudentResource;
 import java.util.List;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -40,5 +41,9 @@ public interface StudentService {
 
   @PreAuthorize("hasAnyAuthority('tes')")
   public void saveStudent(StudentDto studentDto);
+
+  @Transactional
+  @PreAuthorize("hasAnyAuthority('tes')")
+  public void deleteStudent(int studentId);
 
 }

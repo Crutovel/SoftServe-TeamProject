@@ -99,4 +99,11 @@ public class AdminPanelController {
     studentService.saveStudent(student);
     return studentService.getAllStudentDto();
   }
+
+  @PostMapping(value = "/admin/student/delete", produces = "application/json")
+  @ResponseBody
+  public List<StudentDto> removeStudent(@RequestBody Integer studentId) {
+    studentService.deleteStudent(studentId);
+    return studentService.getAllStudentDto();
+  }
 }

@@ -250,5 +250,10 @@ public class StudentServiceImpl implements StudentService {
     student.setIncomingTest(studentDto.getIncomingTest());
     studentRepository.save(student);
   }
+
+  @Override
+  public void deleteStudent(int studentId) {
+    studentRepository.deleteById(studentId);
+  }
 }
 
