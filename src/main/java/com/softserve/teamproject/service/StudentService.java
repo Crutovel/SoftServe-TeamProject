@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.StudentResource;
@@ -32,5 +33,12 @@ public interface StudentService {
 
   @PreAuthorize("hasAnyAuthority('coordinator', 'admin', 'tes')")
   public List<StudentDto> getAllStudentDto();
+
+  @PreAuthorize("hasAuthority('tes')")
+  public EditStudentDto findStudentToEdit(int studentId);
+
+
+  @PreAuthorize("hasAnyAuthority('tes')")
+  public void saveStudent(StudentDto studentDto);
 
 }

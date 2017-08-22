@@ -1,6 +1,8 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.EditUserDto;
+import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.service.UserService;
@@ -56,14 +58,6 @@ public class AdminPanelController {
     return userService.getAllUserDto();
   }
 
-  @RequestMapping("/allStudents")
-  public String seeAllStudents(Model model){
-    model.addAttribute("students", studentService.getAllStudentDto());
-    return "allStudents";
-  }
-//
-//  @RequestMapping("/editStudent")
-//  public String editStudent(Student student)
 
   @PostMapping(value = "/admin/user/data", produces = "application/json")
   @ResponseBody
@@ -83,5 +77,26 @@ public class AdminPanelController {
   public List<UserDto> saveUserInfo(@RequestBody UserDto user) {
     userService.saveUser(user);
     return userService.getAllUserDto();
+  }
+
+
+  @RequestMapping("/allStudents")
+  public String seeAllStudents(Model model){
+    model.addAttribute("students", studentService.getAllStudentDto());
+    return "allStudents";
+  }
+
+  @PostMapping(value = "/admin/student/data", produces = "application/json")
+  @ResponseBody
+  public EditStudentDto getStudentInfo(@RequestBody Integer studentId) {
+    EditStudentDto editStudentDto = studentService.findStudentToEdit(studentId);
+    return editStudentDto;
+  }
+
+  @PostMapping(value = "/admin/student/save", produces = "application/json")
+  @ResponseBody
+  public List<StudentDto> saveStudent(@RequestBody StudentDto student) {
+    studentService.saveStudent(student);
+    return studentService.getAllStudentDto();
   }
 }
