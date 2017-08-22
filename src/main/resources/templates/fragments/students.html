@@ -49,13 +49,16 @@
           <td th:text="${student.entryScore}"></td>
           <td th:text="${student.testApprovedByExpert.expertName}"></td>
           <td>
-            <button class="btn btn-primary"><span th:text="#{admin.button.edit}"></span></button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#editStudentModal"><span th:text="#{admin.button.edit}"></span></button>
             <button class="btn btn-danger" th:value="${student.id}"><span
                 th:text="#{admin.button.delete}"></span></button>
           </td>
         </tr>
         </tbody>
       </table>
+
+      <div th:replace="fragments/student-modal :: student-modal"></div>
+
       <button class="btn btn-primary"><span th:text="#{admin.button.student.add}"></span></button>
     </div>
     <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>

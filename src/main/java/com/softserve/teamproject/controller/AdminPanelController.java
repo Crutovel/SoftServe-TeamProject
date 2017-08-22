@@ -60,6 +60,9 @@ public class AdminPanelController {
   @RequestMapping("/allStudents")
   public String seeAllStudents(Model model){
     model.addAttribute("students", studentService.getAllStudentDto());
-    return "allStudents.html";
+    return "allStudents";
   }
+//
+//  @RequestMapping("/editStudent")
+//  public String editStudent(Student student)
 }
