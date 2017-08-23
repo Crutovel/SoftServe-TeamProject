@@ -60,10 +60,12 @@ function fillUserModal(result) {
   $('#modalUserId').val(result.id);
   $('#firstName').val(result.firstName);
   $('#lastName').val(result.lastName);
+  $('#roleSelect option').remove();
   $.each(result.roles, function (i, role) {
     $('#roleSelect').append($('<option>').text(role).val(role));
   });
   $("#roleSelect option[value=" + result.role + "]").attr('selected', 'true');
+  $('#locationSelect option').remove();
   $.each(result.locations, function (i, location) {
     $('#locationSelect').append($('<option>').text(location).val(location));
   });

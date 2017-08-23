@@ -56,22 +56,21 @@ function fillUserModal(result) {
   $('#modalStudentId').val(result.id);
   $('#firstName').val(result.firstName);
   $('#lastName').val(result.lastName);
-
+  $('#groupSelect option').remove();
   $.each(result.groups, function (i, group) {
     $('#groupSelect').append($('<option>').text(group).val(group));
   });
   $("#groupSelect option[value=" + result.group + "]").attr('selected', 'true');
-
+  $('#englishLevelSelect option').remove();
   $.each(result.englishLevels, function (i, englishLevel) {
     $('#englishLevelSelect').append(
         $('<option>').text(englishLevel).val(englishLevel));
   });
   $("#englishLevelSelect option[value=" + result.englishLevel + "]").attr(
       'selected', 'true');
-
   $('#incomingTest').val(result.incomingTest);
   $('#entryScore').val(result.entryScore);
-
+  $('#expertSelect option').remove();
   $.each(result.experts, function (i, expert) {
     $('#expertSelect').append($('<option>').text(expert).val(expert));
   });
