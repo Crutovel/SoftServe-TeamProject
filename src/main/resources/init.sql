@@ -72,7 +72,7 @@ CREATE TABLE `user` (
   `role_id` INT NOT NULL,
   `nick_name` VARCHAR(45) NOT NULL,
   `password_hash_code` VARCHAR(45) NOT NULL,
-  `image` LONGBLOB NULL,
+  `image` VARCHAR(45) NOT NULL DEFAULT 'default.jpg',
   `location_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_role1_idx` (`role_id` ASC),

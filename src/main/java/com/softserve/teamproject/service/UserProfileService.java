@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.entity.User;
 
 /**
@@ -13,4 +14,6 @@ public interface UserProfileService {
    * @return user from database by his nickname
    */
   User getUserProfile(String principalName);
+
+  User getUserProfileWithImage(String principalName);
 }
