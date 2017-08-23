@@ -1,21 +1,78 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
   <changeSet id="st-1" author="Unknown">
     <addColumn tableName="student">
       <column name="incoming_test" type="INT"/>
       <column name="entry_score" type="DOUBLE PRECISION"/>
       <column name="approved_by_expert_id" type="INT" defaultValueNumeric="1">
-      <constraints nullable="false"/>
+        <constraints nullable="false"/>
       </column>
     </addColumn>
-  <addColumn tableName="expert">
-   <column name="id" type="INT"/>
-  </addColumn>
+    <addColumn tableName="expert">
+      <column name="id" type="INT"/>
+    </addColumn>
   </changeSet>
-<changeSet id="st-2" author="Anastasia">
-  <addNotNullConstraint tableName="expert" columnName="id" columnDataType="INT"/>
-  <addPrimaryKey tableName="expert" columnNames="id" />
-  <addAutoIncrement tableName="expert" columnName="id" columnDataType="INT"/>
-<addForeignKeyConstraint baseColumnNames="approved_by_expert_id" baseTableName="student" constraintName="fk_student_expert1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="expert"/>
-</changeSet>
+  <changeSet id="st-2" author="Anastasia">
+    <addNotNullConstraint tableName="expert" columnName="id" columnDataType="INT"/>
+    <addPrimaryKey tableName="expert" columnNames="id"/>
+    <addAutoIncrement tableName="expert" columnName="id" columnDataType="INT"/>
+    <addForeignKeyConstraint baseColumnNames="approved_by_expert_id" baseTableName="student"
+      constraintName="fk_student_expert1" deferrable="false" initiallyDeferred="false"
+      onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+      referencedTableName="expert"/>
+  </changeSet>
+  <changeSet id="st-3" author="Konstantin">
+    <addColumn tableName="student">
+      <column name="teacher_score" type="INT"/>
+      <column name="teacher_feedback" type="varchar(255)"/>
+      <column name="expert_score" type="INT"/>
+      <column name="expert_feedback" type="varchar(255)"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="st-4" author="Konstantin">
+    <addColumn tableName="student">
+      <column name="interviewer_score" type="INT"/>
+      <column name="interviewer_feedback" type="varchar(255)"/>
+      <column name="test1_mark" type="INT"/>
+      <column name="test2_mark" type="INT"/>
+      <column name="test3_mark" type="INT"/>
+      <column name="test4_mark" type="INT"/>
+      <column name="test5_mark" type="INT"/>
+      <column name="intermediate_bas_test" type="INT"/>
+      <column name="intermediate_language_test" type="INT"/>
+      <column name="final_bas_test" type="INT"/>
+      <column name="final_language_test" type="INT"/>
+    </addColumn>
+  </changeSet>
+  <changeSet id="st-5" author="Konstantin">
+    <addColumn tableName="student">
+      <column name="learning_ability_by_teacher"
+        type="ENUM('QUICK','NORMAL','HARD_TO_LEARN','CANT_EVALUATE')"/>
+      <column name="learning_ability_by_expert"
+        type="ENUM('QUICK','NORMAL','HARD_TO_LEARN','CANT_EVALUATE')"/>
+      <column name="overall_technical_competence_by_teacher"
+        type="ENUM('STRONG','GOOD','NON_TECHNICAL','CANT_EVALUATE')"/>
+      <column name="overall_technical_competence_by_expert"
+        type="ENUM('STRONG','GOOD','NON_TECHNICAL','CANT_EVALUATE')"/>
+      <column name="passional_initiative_by_teacher"
+        type="ENUM('INITIATIVE','EQUAL_TO_MAJORITY','CANT_EVALUATE')"/>
+      <column name="passional_initiative_by_expert"
+        type="ENUM('INITIATIVE','EQUAL_TO_MAJORITY','CANT_EVALUATE')"/>
+      <column name="team_work_by_teacher"
+        type="ENUM('TEAM_PLAYER','WORKS_ALONE','LEADER','CANT_EVALUATE')"/>
+      <column name="team_work_by_expert"
+        type="ENUM('TEAM_PLAYER','WORKS_ALONE','LEADER','CANT_EVALUATE')"/>
+      <column name="getting_things_done_by_teacher"
+        type="ENUM('STRONG_AREA','NEEDS_IMPROVEMENT','CANT_EVALUATE')"/>
+      <column name="getting_things_done_by_expert"
+        type="ENUM('STRONG_AREA','NEEDS_IMPROVEMENT','CANT_EVALUATE')"/>
+      <column name="active_communicator_by_teacher"
+        type="ENUM('LISTENER_AND_PRESENTER','LISTENER','WEAK_COMMUNICATION','CANT_EVALUATE')"/>
+      <column name="active_communicator_by_expert"
+        type="ENUM('LISTENER_AND_PRESENTER','LISTENER','WEAK_COMMUNICATION','CANT_EVALUATE')"/>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>

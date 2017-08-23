@@ -37,7 +37,6 @@ public class StudentController {
     this.studentValidator = studentValidator;
   }
 
-
   /**
    * Get students by groupId.
    *
