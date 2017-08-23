@@ -163,7 +163,7 @@ public class ScheduleServiceImpl implements ScheduleService {
       Principal principal)
       throws AccessDeniedException, ValidationException {
     Group group = groupRepository.findOne(groupId);
-    HashMap<String, String> invalidEvents = new HashMap<>();
+    List<EventDto> invalidEvents = new ArrayList<>();
     List<Event> eventsToRemove = new ArrayList<>();
     processAllEventsBeforeAdd(events, invalidEvents, eventsToRemove, group, principal);
     events.removeAll(eventsToRemove);
@@ -174,9 +174,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         invalidEvents);
   }
 
-  private void processAllEventsBeforeAdd(List<Event> events, HashMap<String, String> invalidEvents,
+  private void processAllEventsBeforeAdd(List<Event> events, List<EventDto> invalidEvents,
       List<Event> eventsToRemove, Group group, Principal principal) {
     Event event = new Event();
+    EventDto eventDto;
     Iterator<Event> eventsIter = events.iterator();
     InvalidField invalidField = new InvalidField();
     while (eventsIter.hasNext()) {
@@ -185,7 +186,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         event.setGroup(group);
         eventValidator.isEventValid(event, principal, invalidField);
       } catch (AccessDeniedException | ValidationException e) {
-        invalidEvents.put(invalidField.getName(), e.getMessage());
+        eventDto = new EventDto(event);
+        eventDto.setMessage(e.getMessage());
+        invalidEvents.add(eventDto);
         eventsToRemove.add(event);
       }
     }
@@ -222,9 +225,10 @@ public class ScheduleServiceImpl implements ScheduleService {
   @Override
   public ScheduleResponseWrapper updateSchedule(List<Event> events, Principal principal)
       throws AccessDeniedException, ValidationException {
-    HashMap<String, String> invalidEvents = new HashMap<>();
+    List<EventDto> invalidEvents = new ArrayList<>();
     Iterator<Event> eventsIter = events.iterator();
     List<Event> eventsToRemove = new ArrayList<>();
+    EventDto eventDto;
     Event event = new Event();
     InvalidField invalidField = new InvalidField();
     while (eventsIter.hasNext()) {
@@ -235,7 +239,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         eventValidator.isEventUpdateValid(eventToUpdate, principal, invalidField);
         eventRepository.save(eventToUpdate);
       } catch (AccessDeniedException | ValidationException e) {
-        invalidEvents.put(invalidField.getName(), e.getMessage());
+        eventDto = new EventDto(event);
+        eventDto.setMessage(e.getMessage());
+        invalidEvents.add(eventDto);
         eventsToRemove.add(event);
       }
     }

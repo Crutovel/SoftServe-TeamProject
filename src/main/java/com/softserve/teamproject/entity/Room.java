@@ -9,7 +9,7 @@ public class Room {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private int id;
+  private Integer id;
 
   @Column(name = "number")
   private String number;
@@ -18,7 +18,7 @@ public class Room {
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
   private Location location;
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 

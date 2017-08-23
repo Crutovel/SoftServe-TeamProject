@@ -1,5 +1,7 @@
 package com.softserve.teamproject.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.Group;
@@ -24,11 +26,13 @@ public class CopyPasteScheduleWrapper {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate copyWeekDate;
 
+  @JsonInclude(Include.NON_NULL)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate pasteWeekDate;
 
+  @JsonInclude(Include.NON_NULL)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
