@@ -39,9 +39,8 @@ public class User {
   @Column(name = "password_hash_code")
   private String password;
 
-  @Lob
   @Column(name = "image")
-  private byte[] image;
+  private String image;
 
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
@@ -96,11 +95,11 @@ public class User {
     this.password = password;
   }
 
-  public byte[] getImage() {
+  public String getImage() {
     return image;
   }
 
-  public void setImage(byte[] image) {
+  public void setImage(String image) {
     this.image = image;
   }
 
@@ -141,7 +140,7 @@ public class User {
         + ", role=" + role
         + ", nickName='" + nickName + '\''
         + ", password='" + password + '\''
-        + ", image=" + Arrays.toString(image)
+        + ", image=" + image
         + '}';
   }
 }

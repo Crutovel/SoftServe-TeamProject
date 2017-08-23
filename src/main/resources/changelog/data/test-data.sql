@@ -67,7 +67,7 @@ insert into location (`name`) values ('Kyiv');
 insert into budget_owner (`name`) values ('SOFTSERVE');
 insert into budget_owner (`name`) values ('OPEN GROUP');
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','Shvets',3,'OlegShvets','ghd22df',1);
-insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Petin',4,'DmytroPetin','fgdfg24sd',1);
+insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id,image) values ('Dmytro','Petin',4,'DmytroPetin','fgdfg24sd',1,'petin.jpg');
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lucas','Lukichich',5,'LukasLukichich','fjgf24sd',2);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Stefan','Vendera',4,'SlavaUkr','asfsdag2',3);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Kozak','Kozachenko',4,'Kozachok','dfgdsg33s',4);

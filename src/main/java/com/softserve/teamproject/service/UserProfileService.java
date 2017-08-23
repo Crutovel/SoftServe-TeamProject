@@ -1,5 +1,6 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.entity.User;
 
 /**

@@ -1,5 +1,6 @@
 package com.softserve.teamproject.repository.custom;
 
+import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.entity.User;
 
 public interface UserRepositoryCustom {
