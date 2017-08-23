@@ -96,12 +96,12 @@ insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017
 insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00','2017-07-24 20:00:00',4,6,2);
 insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-24 10:00:00','2017-07-24 12:00:00',3,2,null);
 
-insert into template (event_type_id,strategy_id, duration) values (1,1,21);
-insert into template (event_type_id,strategy_id, duration) values (1,2,28);
-insert into template (event_type_id,strategy_id, duration) values (2,1,21);
-insert into template (event_type_id,strategy_id, duration) values (3,1,21);
-insert into template (event_type_id,strategy_id, duration) values (4,1,0);
-insert into template (event_type_id,strategy_id, duration) values (4,2,0);
+insert into key_event_template (event_type_id,strategy_id, duration,template_order, rel) values (1,1,21,1,1);
+insert into key_event_template (event_type_id,strategy_id, duration,template_order, rel) values (2,1,21,2,1);
+insert into key_event_template (event_type_id,strategy_id, duration,template_order, rel) values (3,1,-21,3,4);
+insert into key_event_template (event_type_id,strategy_id, duration,template_order, rel) values (4,1,0,4,4);
+insert into key_event_template (event_type_id,strategy_id, duration,template_order, rel) values (1,2,28,1,1);
+insert into key_event_template (event_type_id,strategy_id, duration,template_order, rel) values (4,2,0,2,4);
 
 update location SET coordinator_id = 2 WHERE name='Dnipro';
 update location SET coordinator_id = 3 WHERE name='Sofia';

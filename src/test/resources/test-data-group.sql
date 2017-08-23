@@ -87,3 +87,11 @@ insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017
 
 update location SET coordinator_id = 2 WHERE name='Dnipro';
 update location SET coordinator_id = 3 WHERE name='Sofia';
+
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (2,1,-28,2,4);
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (4,1,0,1,4);
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (5,1,-28,3,6);
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (6,1,0,4,6);
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (2,2,-28,2,4);
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (4,2,0,1,4);
+insert into status_template (status_id,strategy_id, duration,template_order, rel) values (6,2,0,4,6);
