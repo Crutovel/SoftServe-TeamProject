@@ -69,14 +69,22 @@
           <td th:text="${group.budgetOwner}"></td>
           <td th:text="${group.deleted}"></td>
           <td>
-            <button class="btn btn-primary"><span th:text="#{admin.button.edit}"></span></button>
-            <button class="btn btn-danger" th:value="${group.id}"><span
+            <button type="button" class="btn btn-primary edit-button modal-handler"
+                    data-toggle="modal"
+                    data-target="#groupModal" th:value="${group.id}"><span
+                th:text="#{admin.button.edit}"></span></button>
+            <button class="btn btn-danger delete-button" th:value="${group.id}"><span
                 th:text="#{admin.button.delete}"></span></button>
           </td>
         </tr>
         </tbody>
       </table>
-      <button class="btn btn-primary"><span th:text="#{group.add}"></span></button>
+
+      <div th:replace="fragments/group-modal :: group-modal"></div>
+
+      <button class="btn btn-primary modal-handler add-button" data-toggle="modal"
+              data-target="#groupModal">
+        <span th:text="#{group.add}"></span></button>
     </div>
     <div class="col-md-12">
       <br>

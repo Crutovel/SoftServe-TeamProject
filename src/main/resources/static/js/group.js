@@ -51,10 +51,16 @@ function modalHandler(button) {
   }
 }
 
-function fillUserModal(result) {
+function fillGroupModal(result) {
   console.log("fillGroupModal");
   $('#modalGroupId').val(result.id);
+
   $('#name').val(result.name);
+
+  $.each(result.listTeachers, function (i, teacher) {
+      $('#teacherSelect').append($('<option>').text(teacher).val(teacher));
+  });
+  $("#teacherSelect option[value=" + result.teacher + "]").attr('selected', 'true');
 
   $.each(result.locations, function (i, location) {
     $('#locationSelect').append($('<option>').text(location).val(location));
@@ -74,6 +80,8 @@ function fillUserModal(result) {
   });
   $("#specializationSelect option[value=" + result.specialization + "]").attr('selected', 'true');
 
+  $('#expert').val(result.expert);
+
   $.each(result.budgetOwners, function (i, budgetOwner) {
       $('#budgetOwnerSelect').append($('<option>').text(budgetOwner).val(budgetOwner));
     });
@@ -89,7 +97,7 @@ function handleSuccessAjax(requestDetails, result) {
     fillTable(result);
   }
   if (requestDetails["url"] == "/admin/group/data") {
-    fillUserModal(result);
+    fillGroupModal(result);
   }
   if (requestDetails["url"] == "/admin/group/save") {
     cleanTable();
@@ -103,11 +111,13 @@ function fillTable(result) {
         $('<tr>').append(
             $('<td>').text(item.id).css("display", "none"),
             $('<td>').text(item.name),
+            $('<td>').text(item.teacher),
             $('<td>').text(item.location),
             $('<td>').text(item.startDate),
             $('<td>').text(item.finishDate),
             $('<td>').text(item.status),
             $('<td>').text(item.specialization),
+            $('<td>').text(item.expert),
             $('<td>').text(item.budgetOwner),
             $('<td>').text(item.deleted),
             $('<td>').append(
