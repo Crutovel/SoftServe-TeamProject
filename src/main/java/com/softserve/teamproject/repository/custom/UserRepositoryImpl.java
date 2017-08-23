@@ -14,7 +14,11 @@ public class UserRepositoryImpl extends QueryDslRepositorySupport implements Use
   }
 
   public User getUserByNickName(String nickName) {
-    User user = from(QUser.user).where(getByNickName(nickName)).fetchFirst();
+     return from(QUser.user).where(getByNickName(nickName)).fetchFirst();
+  }
+
+  public User getUserByNickNameWithImage(String nickName) {
+    User user = getUserByNickName(nickName);
     return UserDto.setImageAsBase64(user);
   }
 }

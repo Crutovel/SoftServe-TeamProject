@@ -21,4 +21,9 @@ public class UserProfileServiceImpl implements UserProfileService {
   public User getUserProfile(String principalName) {
     return userRepository.getUserByNickName(principalName);
   }
+
+  @Override
+  public User getUserProfileWithImage(String principalName) {
+    return userRepository.getUserByNickNameWithImage(principalName);
+  }
 }

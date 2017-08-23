@@ -14,4 +14,6 @@ public interface UserProfileService {
    * @return user from database by his nickname
    */
   User getUserProfile(String principalName);
+
+  User getUserProfileWithImage(String principalName);
 }

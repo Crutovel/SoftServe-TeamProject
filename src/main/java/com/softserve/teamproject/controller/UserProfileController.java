@@ -37,6 +37,6 @@ public class UserProfileController {
   @GetMapping(value = "/user/profile", produces = "application/json")
   @ApiOperation(value = "Get user info of current user")
   public User getUserProfile(Principal principal) {
-    return userProfileService.getUserProfile(principal.getName());
+    return userProfileService.getUserProfileWithImage(principal.getName());
   }
 }

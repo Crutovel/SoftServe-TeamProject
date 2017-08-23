@@ -6,4 +6,6 @@ import com.softserve.teamproject.entity.User;
 public interface UserRepositoryCustom {
 
   User getUserByNickName(String nickName);
+
+  User getUserByNickNameWithImage(String nickName);
 }
