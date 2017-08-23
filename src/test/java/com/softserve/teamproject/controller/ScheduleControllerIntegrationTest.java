@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -60,7 +61,7 @@ public class ScheduleControllerIntegrationTest {
   @Test
   public void getEvents_groupIsNotSpecified_allEventsExpected() throws Exception {
     //Arrange
-    final int EXPECTED_SIZE = 8;
+    final int EXPECTED_SIZE = 9;
     final String TESTED_URL = "/events";
 
     //Act&&Assert
@@ -518,7 +519,7 @@ public class ScheduleControllerIntegrationTest {
   public void addSchedule_validData_EventCreated() throws Exception {
     //Arrange
     final int GROUP_ID = 5;
-    final int EVENT_TYPE = 1;
+    final int EVENT_TYPE = 5;
     final int ROOM_ID = 1;
     LocalDateTime start = LocalDate.parse("2017-08-28").atTime(6, 33);
     LocalDateTime end = LocalDate.parse("2017-08-28").atTime(8, 33);
@@ -537,6 +538,88 @@ public class ScheduleControllerIntegrationTest {
         .andExpect(jsonPath("$.succeed[0].links[2].href", containsString("groups/" + GROUP_ID)))
         .andExpect(jsonPath("$.succeed[0].links[4].href", containsString("rooms/" + ROOM_ID)));
   }
+
+  @TestSchedule
+  @WithUserDetails(COORDINATOR)
+  @Test
+  public void addSchedule_NotValidEventType_EmptySucceed() throws Exception {
+    //Arrange
+    final int GROUP_ID = 5;
+    final int EVENT_TYPE = 1;
+    final int ROOM_ID = 1;
+    LocalDateTime start = LocalDate.parse("2017-08-28").atTime(6, 33);
+    LocalDateTime end = LocalDate.parse("2017-08-28").atTime(8, 33);
+    final int EXPECTED_SIZE_SUCCEED = 0;
+    final int EXPECTED_SIZE_INVALID = 1;
+    final String TESTED_URL = "/events/groups/" + GROUP_ID;
+    List<Event> events = new ArrayList<>();
+    events.add(getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, start, end));
+
+    //Act&Assert
+    mvc.perform(post(TESTED_URL)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(events)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE_SUCCEED)))
+        .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE_INVALID)));
+       }
+
+  @TestSchedule
+  @WithUserDetails(COORDINATOR)
+  @Test
+  public void editSchedule_ValidEvent_SucceedEvent() throws Exception {
+    //Arrange
+    final int GROUP_ID = 1;
+    final int EVENT_ID = 9;
+    final int EVENT_TYPE = 7;
+    final int ROOM_ID = 1;
+    LocalDateTime start = LocalDate.parse("2017-08-27").atTime(18, 15);
+    LocalDateTime end = LocalDate.parse("2017-08-27").atTime(8, 0);
+    final int EXPECTED_SIZE_SUCCEED = 1;
+
+    final String TESTED_URL = "/events/";
+    List<Event> events = new ArrayList<>();
+    Event event =getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, start, end);
+    event.setId(EVENT_ID);
+    events.add(event);
+
+    //Act&Assert
+    mvc.perform(put(TESTED_URL)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(events)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE_SUCCEED)))
+        .andExpect(jsonPath("$.succeed[0].start", is("2017-08-27 18:15")));
+  }
+
+  @TestSchedule
+  @WithUserDetails(COORDINATOR)
+  @Test
+  public void editSchedule_NotValidEventType_EmptySucceed() throws Exception {
+    //Arrange
+    final int GROUP_ID = 1;
+    final int EVENT_ID = 9;
+    final int EVENT_TYPE = 1;
+    final int ROOM_ID = 1;
+    LocalDateTime start = LocalDate.parse("2017-08-27").atTime(18, 15);
+    LocalDateTime end = LocalDate.parse("2017-08-27").atTime(8, 0);
+    final int EXPECTED_SIZE_SUCCEED = 0;
+    final int EXPECTED_SIZE_INVALID = 1;
+    final String TESTED_URL = "/events/";
+    List<Event> events = new ArrayList<>();
+    Event event =getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, start, end);
+    event.setId(EVENT_ID);
+    events.add(event);
+
+    //Act&Assert
+    mvc.perform(put(TESTED_URL)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(events)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE_SUCCEED)))
+        .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE_INVALID)));
+  }
+
 
 
   @TestSchedule

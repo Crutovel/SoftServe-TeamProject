@@ -751,8 +751,8 @@ application/json
         "succeed": [
             {
                 "eventId": 2,
-                "dateTime": "2017-05-15 00:00",
-                "duration": 0,
+                "start": "2017-05-15 00:00",
+                "end": "2017-05-15 00:00",
                 "links": [
                     {
                         "rel": "self",
