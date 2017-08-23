@@ -1,11 +1,15 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.StudentDto;
+import com.softserve.teamproject.entity.EnglishLevel;
+import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.assembler.StudentResourceAssembler;
 import com.softserve.teamproject.entity.resource.StudentResource;
 import com.softserve.teamproject.repository.EnglishLevelRepository;
+import com.softserve.teamproject.repository.ExpertRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.StudentRepository;
 import com.softserve.teamproject.repository.UserRepository;
@@ -30,6 +34,12 @@ public class StudentServiceImpl implements StudentService {
   private StudentValidator studentValidator;
   private EnglishLevelRepository englishLevelRepository;
   private MessageByLocaleService messageByLocaleService;
+  private ExpertRepository expertRepository;
+
+  @Autowired
+  public void setExpertRepository(ExpertRepository expertRepository) {
+    this.expertRepository = expertRepository;
+  }
 
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
@@ -121,12 +131,12 @@ public class StudentServiceImpl implements StudentService {
       if (student.getEnglishLevel() == null) {
         throw new IllegalArgumentException(
             messageByLocaleService.getMessage("illegalArgs.student.englishLevel")
-            );
+        );
       }
-      if(student.getTestApprovedByExpert()==null){
+      if (student.getTestApprovedByExpert() == null) {
         throw new IllegalArgumentException(
             messageByLocaleService.getMessage("illegalArgs.student.expert")
-            );
+        );
       }
     }
     studentRepository.save(students);
@@ -199,4 +209,51 @@ public class StudentServiceImpl implements StudentService {
     return allStudents.stream().map(StudentDto::new).collect(Collectors.toList());
   }
 
+  @Override
+  public EditStudentDto findStudentToEdit(int studentId) {
+    List<String> englishLevels = englishLevelRepository.findAll().stream()
+        .map(EnglishLevel::getName)
+        .collect(Collectors.toList());
+    List<String> experts = expertRepository.findAll().stream().map(Expert::getExpertName).collect(
+        Collectors.toList());
+    List<String> groups = groupRepository.findAll().stream().map(Group::getName).collect(
+        Collectors.toList());
+    EditStudentDto editStudentDto = null;
+    try {
+      if (studentId == -1) {
+        editStudentDto = new EditStudentDto();
+      } else {
+        Student student = studentRepository.findOne(studentId);
+        editStudentDto = new EditStudentDto(student);
+      }
+      return editStudentDto;
+    } finally {
+      editStudentDto.setGroups(groups);
+      editStudentDto.setExperts(experts);
+      editStudentDto.setEnglishLevels(englishLevels);
+    }
+  }
+
+  @Override
+  public void saveStudent(StudentDto studentDto) {
+    Student student = new Student();
+    student.setId(studentDto.getId());
+    Group group = groupRepository.findByName(studentDto.getGroup());
+    Expert expert = expertRepository.findByExpertName(studentDto.getExpert());
+    EnglishLevel englishLevel = englishLevelRepository.findByName(studentDto.getEnglishLevel());
+    student.setGroup(group);
+    student.setTestApprovedByExpert(expert);
+    student.setEnglishLevel(englishLevel);
+    student.setFirstName(studentDto.getFirstName());
+    student.setLastName(studentDto.getLastName());
+    student.setEntryScore(studentDto.getEntryScore());
+    student.setIncomingTest(studentDto.getIncomingTest());
+    studentRepository.save(student);
+  }
+
+  @Override
+  public void deleteStudent(int studentId) {
+    studentRepository.deleteById(studentId);
+  }
 }
+

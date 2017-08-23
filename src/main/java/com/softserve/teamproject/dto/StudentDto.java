@@ -1,10 +1,6 @@
 package com.softserve.teamproject.dto;
 
-import com.softserve.teamproject.entity.EnglishLevel;
-import com.softserve.teamproject.entity.Expert;
-import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
-import java.util.Arrays;
 
 public class StudentDto {
 
@@ -15,11 +11,11 @@ public class StudentDto {
   private String imageName;
   private byte[] cv;
   private String cvName;
-  private Group group;
-  private EnglishLevel englishLevel;
+  private String group;
+  private String englishLevel;
   private Integer incomingTest;
   private Double entryScore;
-  private Expert testApprovedByExpert;
+  private String expert;
 
   public StudentDto(Student student) {
     this.id = student.getId();
@@ -29,11 +25,11 @@ public class StudentDto {
     this.imageName = student.getImageName();
     this.cv = student.getCv();
     this.cvName = student.getCvName();
-    this.group = student.getGroup();
-    this.englishLevel = student.getEnglishLevel();
+    this.group = student.getGroup().getName();
+    this.englishLevel = student.getEnglishLevel().getName();
     this.incomingTest = student.getIncomingTest();
     this.entryScore = student.getEntryScore();
-    this.testApprovedByExpert = student.getTestApprovedByExpert();
+    this.expert = student.getTestApprovedByExpert().getExpertName();
   }
 
 
@@ -53,12 +49,12 @@ public class StudentDto {
     this.entryScore = entryScore;
   }
 
-  public Expert getTestApprovedByExpert() {
-    return testApprovedByExpert;
+  public String getExpert() {
+    return expert;
   }
 
-  public void setTestApprovedByExpert(Expert testApprovedByExpert) {
-    this.testApprovedByExpert = testApprovedByExpert;
+  public void setTestApprovedByExpert(String expert) {
+    this.expert = expert;
   }
 
   public int getId() {
@@ -117,31 +113,21 @@ public class StudentDto {
     this.cvName = cvName;
   }
 
-  public Group getGroup() {
+  public String getGroup() {
     return group;
   }
 
-  public void setGroup(Group group) {
+  public void setGroup(String group) {
     this.group = group;
   }
 
-  public EnglishLevel getEnglishLevel() {
+  public String getEnglishLevel() {
     return englishLevel;
   }
 
-  public void setEnglishLevel(EnglishLevel englishLevel) {
+  public void setEnglishLevel(String englishLevel) {
     this.englishLevel = englishLevel;
   }
 
-  @Override
-  public String toString() {
-    return "User{"
-        + "id=" + id
-        + ", firstName='" + firstName + '\''
-        + ", lastName='" + lastName + '\''
-        + ", image=" + Arrays.toString(image)
-        + ", group='" + group.getName() + '\''
-        + ", englishLevel='" + englishLevel.getName() + '\''
-        + '}';
-  }
+  public StudentDto(){}
 }

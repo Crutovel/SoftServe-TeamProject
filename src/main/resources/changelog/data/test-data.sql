@@ -100,6 +100,7 @@ insert into expert (edu_group_id,expert_name) values (5,'Dmytro Parubiy');
 insert into expert (edu_group_id,expert_name) values (6,'Lev Troitskiy');
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Lev','Bukhanets',2,'Myst1c','sdfhs332w',1);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Dmytro','Kholod',2,'DimaKh','sdasdfdew',1);
+insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Oleg','TES',6,'TesUser','ghd22df',1);
 insert into group_teacher (teacher_id,group_id) values (1,1);
 insert into group_teacher (teacher_id,group_id) values (1,2);
 insert into group_teacher (teacher_id,group_id) values (11,3);
