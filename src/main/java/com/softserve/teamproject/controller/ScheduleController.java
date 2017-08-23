@@ -82,7 +82,7 @@ public class ScheduleController {
       responseContainer = "List")
   public Iterable<EventResource> getEventsForLastWeek(
       @RequestParam(value = "groupid") Integer groupId) {
-      return scheduleService.getLastWeekEvents(groupId);
+    return scheduleService.getLastWeekEvents(groupId);
   }
 
   /**

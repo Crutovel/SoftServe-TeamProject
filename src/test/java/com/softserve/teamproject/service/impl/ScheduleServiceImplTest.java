@@ -95,7 +95,7 @@ public class ScheduleServiceImplTest {
   @Test
   public void getEventsByGroupId_BothDatesSpecifiedCorrectStatus_eventsReturned() {
     //Arrange
-    final int EXPECTED_SIZE = 4;
+    final int EXPECTED_SIZE = 5;
 
     //Act
     List<EventResource> events = scheduleService.getEventsByGroupId(

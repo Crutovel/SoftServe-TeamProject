@@ -66,6 +66,10 @@ public class EventValidatorImpl implements EventValidator {
       invalidField.setName("dateTime = "+event.getStart());
       throw new ValidationException("You cannot set the event time retroactively.");
     }
+    if (!isEventTypeValid(event.getEventType())) {
+      invalidField.setName("eventType");
+      throw new ValidationException("The event type doesn't exist or incorrect.");
+    }
     if (!isEventInFreeRoom(event)) {
       invalidField.setName("room id=" + event.getRoom().getId());
       throw new ValidationException(
@@ -130,7 +134,7 @@ public class EventValidatorImpl implements EventValidator {
     }
     if (!isEventTypeValid(event.getEventType())) {
       invalidField.setName("eventType");
-      throw new ValidationException("The event type doesn't exist.");
+      throw new ValidationException("The event type doesn't exist or inappropriate.");
     }
     if (!doesRoomExist(event.getRoom())) {
       invalidField.setName("room id=" + event.getRoom().getId());
@@ -174,7 +178,7 @@ public class EventValidatorImpl implements EventValidator {
 
 
   private boolean isEventTypeValid(EventType eventType) {
-    return !(eventTypeRepository.findOne(eventType.getId()) == null);
+    return !(eventTypeRepository.findOne(eventType.getId()) == null || eventType.isKeyDate());
   }
 
   private boolean isEventDateValid(LocalDateTime dateTime) {
