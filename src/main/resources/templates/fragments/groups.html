@@ -53,20 +53,20 @@
           <td th:text="${group.name}"></td>
           <td>
              <span th:each="teacher : ${group.teachers}">
-               <span th:text="${teacher.firstName} + ' ' + ${teacher.lastName}"></span><br>
+               <span th:text="${teacher}"></span><br>
              </span>
           </td>
-          <td th:text="${group.location.name}"></td>
+          <td th:text="${group.location}"></td>
           <td th:text="${group.startDate}"></td>
           <td th:text="${group.finishDate}"></td>
-          <td th:text="${group.status.name}"></td>
-          <td th:text="${group.specialization.name}"></td>
+          <td th:text="${group.status}"></td>
+          <td th:text="${group.specialization}"></td>
           <td>
              <span th:each="expert : ${group.experts}">
                <span th:text="${expert}"></span><br>
              </span>
           </td>
-          <td th:text="${group.budgetOwner.name}"></td>
+          <td th:text="${group.budgetOwner}"></td>
           <td th:text="${group.deleted}"></td>
           <td>
             <button class="btn btn-primary"><span th:text="#{admin.button.edit}"></span></button>
@@ -78,8 +78,11 @@
       </table>
       <button class="btn btn-primary"><span th:text="#{group.add}"></span></button>
     </div>
-    <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>
-    </button>
+    <div class="col-md-12">
+      <br>
+      <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>
+      </button>
+    </div>
   </form>
 </div>
 

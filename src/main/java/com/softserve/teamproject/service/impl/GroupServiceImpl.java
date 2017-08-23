@@ -1,17 +1,25 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.dto.EditGroupDto;
+import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.dto.StudentDto;
+import com.softserve.teamproject.entity.BudgetOwner;
+import com.softserve.teamproject.entity.EnglishLevel;
+import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
+import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
+import com.softserve.teamproject.repository.BudgetOwnerRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.LocationRepository;
+import com.softserve.teamproject.repository.SpecializationRepository;
 import com.softserve.teamproject.repository.StatusRepository;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.repository.expression.GroupExpressions;
@@ -38,6 +46,8 @@ public class GroupServiceImpl implements GroupService {
   private UserRepository userRepository;
   private StatusRepository statusRepository;
   private LocationRepository locationRepository;
+  private SpecializationRepository specializationRepository;
+  private BudgetOwnerRepository budgetOwnerRepository;
   private GroupResourceAssembler groupResourceAssembler;
   private GroupValidator groupValidator;
   private MessageByLocaleService messageByLocaleService;
@@ -81,6 +91,18 @@ public class GroupServiceImpl implements GroupService {
   public void setLocationRepository(
       LocationRepository locationRepository) {
     this.locationRepository = locationRepository;
+  }
+
+  @Autowired
+  public void setSpecializationRepository(
+      SpecializationRepository specializationRepository) {
+    this.specializationRepository = specializationRepository;
+  }
+
+  @Autowired
+  public void setBudgetOwnerRepository(
+      BudgetOwnerRepository budgetOwnerRepository) {
+    this.budgetOwnerRepository = budgetOwnerRepository;
   }
 
   @Override
@@ -128,7 +150,8 @@ public class GroupServiceImpl implements GroupService {
     User user = userRepository.getUserByNickName(userName);
     Group group = groupRep.findOne(groupId);
     if (group == null) {
-      throw new ValidationException(messageByLocaleService.getMessage("valid.error.group.notExist"));
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.error.group.notExist"));
     }
     groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
     if (!group.getStatus().getName().equalsIgnoreCase(plannedGroupStatus)) {
@@ -223,5 +246,79 @@ public class GroupServiceImpl implements GroupService {
     return allGroups.stream()
         .map(GroupDto::new)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public EditGroupDto findGroupToEdit(int groupId) {
+    List<String> listTeachers = userRepository.findAll().stream()
+        .map(u -> u.getFirstName() + " " + u.getLastName() + " (" + u.getNickName() + ")")
+        .collect(Collectors.toList());
+    List<String> locations = locationRepository.findAll().stream()
+        .map(Location::getName)
+        .collect(Collectors.toList());
+    List<String> statuses = statusRepository.findAll().stream()
+        .map(Status::getName)
+        .collect(Collectors.toList());
+    List<String> specializations = specializationRepository.findAll().stream()
+        .map(Specialization::getName)
+        .collect(Collectors.toList());
+    List<String> budgetOwners = budgetOwnerRepository.findAll().stream()
+        .map(BudgetOwner::getName)
+        .collect(Collectors.toList());
+
+    EditGroupDto editGroupDto = null;
+
+    try {
+      if (groupId == -1) {
+        editGroupDto = new EditGroupDto();
+      } else {
+        Group group = groupRep.findOne(groupId);
+        editGroupDto = new EditGroupDto(group);
+      }
+      return editGroupDto;
+    } finally {
+      editGroupDto.setListTeachers(listTeachers);
+      editGroupDto.setLocations(locations);
+      editGroupDto.setStatuses(statuses);
+      editGroupDto.setSpecializations(specializations);
+      editGroupDto.setBudgetOwners(budgetOwners);
+    }
+  }
+
+  @Override
+  public void saveGroup(GroupDto groupDto) {
+    Group group = new Group();
+    group.setId(groupDto.getId());
+
+    Set<User> teachers = new HashSet<>();
+    for (String stringTeacher : groupDto.getTeachers()) {
+      String nickName = stringTeacher.substring(
+          stringTeacher.lastIndexOf(" ") + 1, stringTeacher.length() - 1);
+      User teacher = userRepository.getUserByNickName(nickName);
+      teachers.add(teacher);
+    }
+    Location location = locationRepository.findByName(groupDto.getLocation());
+    Status status = statusRepository.findByName(groupDto.getStatus());
+    Specialization specialization = specializationRepository
+        .findByName(groupDto.getSpecialization());
+    BudgetOwner budgetOwner = budgetOwnerRepository.findByName(groupDto.getBudgetOwner());
+
+    group.setName(groupDto.getName());
+    group.setTeachers(teachers);
+    group.setLocation(location);
+    group.setStartDate(groupDto.getStartDate());
+    group.setFinishDate(groupDto.getFinishDate());
+    group.setStatus(status);
+    group.setSpecialization(specialization);
+    group.setExperts(groupDto.getExperts());
+    group.setBudgetOwner(budgetOwner);
+    group.setDeleted(groupDto.isDeleted());
+
+    groupRep.save(group);
+  }
+
+  @Override
+  public void deleteGroup(int groupId) {
+    groupRep.deleteById(groupId);
   }
 }

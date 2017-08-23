@@ -1,13 +1,14 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.EditGroupDto;
 import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.GroupsFilter;
-import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.util.List;
 import java.util.Set;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,6 +44,16 @@ public interface GroupService {
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   Set<GroupResource> getGroupResourcesFromUserLocation(String principalName);
 
-  @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
+  @PreAuthorize("hasAnyAuthority('tes')")
   public List<GroupDto> getAllGroupsDto();
+
+  @PreAuthorize("hasAuthority('tes')")
+  public EditGroupDto findGroupToEdit(int groupId);
+
+  @PreAuthorize("hasAnyAuthority('tes')")
+  public void saveGroup(GroupDto groupDto);
+
+  @Transactional
+  @PreAuthorize("hasAnyAuthority('tes')")
+  public void deleteGroup(int groupId);
 }

@@ -7,33 +7,40 @@ import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GroupDto {
 
   private int id;
   private String name;
-  private Set<User> teachers;
-  private Location location;
+  private List<String> teachers;
+  private String location;
   private LocalDate startDate;
   private LocalDate finishDate;
-  private Status status;
-  private Specialization specialization;
+  private String status;
+  private String specialization;
   private Set<String> experts;
-  private BudgetOwner budgetOwner;
+  private String budgetOwner;
   private boolean deleted;
+
+  public GroupDto() {
+  }
 
   public GroupDto(Group group) {
     this.id = group.getId();
     this.name = group.getName();
-    this.teachers = group.getTeachers();
-    this.location = group.getLocation();
+    this.teachers = group.getTeachers().stream()
+        .map(u -> u.getFirstName() + " " + u.getLastName() + " (" + u.getNickName() + ")")
+        .collect(Collectors.toList());
+    this.location = group.getLocation().getName();
     this.startDate = group.getStartDate();
     this.finishDate = group.getFinishDate();
-    this.status = group.getStatus();
-    this.specialization = group.getSpecialization();
+    this.status = group.getStatus().getName();
+    this.specialization = group.getSpecialization().getName();
     this.experts = group.getExperts();
-    this.budgetOwner = group.getBudgetOwner();
+    this.budgetOwner = group.getBudgetOwner().getName();
     this.deleted = group.isDeleted();
   }
 
@@ -53,19 +60,19 @@ public class GroupDto {
     this.name = name;
   }
 
-  public Set<User> getTeachers() {
+  public List<String> getTeachers() {
     return teachers;
   }
 
-  public void setTeachers(Set<User> teachers) {
+  public void setTeachers(List<String> teachers) {
     this.teachers = teachers;
   }
 
-  public Location getLocation() {
+  public String getLocation() {
     return location;
   }
 
-  public void setLocation(Location location) {
+  public void setLocation(String location) {
     this.location = location;
   }
 
@@ -85,19 +92,19 @@ public class GroupDto {
     this.finishDate = finishDate;
   }
 
-  public Status getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 
-  public Specialization getSpecialization() {
+  public String getSpecialization() {
     return specialization;
   }
 
-  public void setSpecialization(Specialization specialization) {
+  public void setSpecialization(String specialization) {
     this.specialization = specialization;
   }
 
@@ -109,11 +116,11 @@ public class GroupDto {
     this.experts = experts;
   }
 
-  public BudgetOwner getBudgetOwner() {
+  public String getBudgetOwner() {
     return budgetOwner;
   }
 
-  public void setBudgetOwner(BudgetOwner budgetOwner) {
+  public void setBudgetOwner(String budgetOwner) {
     this.budgetOwner = budgetOwner;
   }
 
@@ -122,7 +129,7 @@ public class GroupDto {
   }
 
   public void setDeleted(boolean deleted) {
-    deleted = deleted;
+    this.deleted = deleted;
   }
 
   @Override
@@ -131,14 +138,14 @@ public class GroupDto {
         "id=" + id +
         ", name='" + name + '\'' +
         ", teachers=" + teachers +
-        ", location=" + location +
+        ", location='" + location + '\'' +
         ", startDate=" + startDate +
         ", finishDate=" + finishDate +
-        ", status=" + status +
-        ", specialization=" + specialization +
+        ", status='" + status + '\'' +
+        ", specialization='" + specialization + '\'' +
         ", experts=" + experts +
-        ", budgetOwner=" + budgetOwner +
-        ", isDeleted=" + deleted +
+        ", budgetOwner='" + budgetOwner + '\'' +
+        ", deleted=" + deleted +
         '}';
   }
 }

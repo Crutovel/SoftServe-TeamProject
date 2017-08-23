@@ -1,7 +1,9 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.EditGroupDto;
 import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.EditUserDto;
+import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.service.GroupService;
@@ -119,5 +121,26 @@ public class AdminPanelController {
   public String getAllGroups(Model model){
     model.addAttribute("groups", groupService.getAllGroupsDto());
     return "allGroups.html";
+  }
+
+  @PostMapping(value = "/admin/group/data", produces = "application/json")
+  @ResponseBody
+  public EditGroupDto getGroupInfo(@RequestBody Integer groupId) {
+    EditGroupDto editGroupDto = groupService.findGroupToEdit(groupId);
+    return editGroupDto;
+  }
+
+  @PostMapping(value = "/admin/group/save", produces = "application/json")
+  @ResponseBody
+  public List<GroupDto> saveGroup(@RequestBody GroupDto group) {
+    groupService.saveGroup(group);
+    return groupService.getAllGroupsDto();
+  }
+
+  @PostMapping(value = "/admin/group/delete", produces = "application/json")
+  @ResponseBody
+  public List<GroupDto> removeGroup(@RequestBody Integer groupId) {
+    groupService.deleteGroup(groupId);
+    return groupService.getAllGroupsDto();
   }
 }
