@@ -7,4 +7,5 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 public interface SpecializationRepository extends JpaRepository<Specialization, Integer>,
     QueryDslPredicateExecutor {
 
+  Specialization findByName(String name);
 }

@@ -8,4 +8,5 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 public interface StatusRepository extends JpaRepository<Status, Integer>,
     QueryDslPredicateExecutor, StatusRepositoryCustom {
 
+  Status findByName(String name);
 }

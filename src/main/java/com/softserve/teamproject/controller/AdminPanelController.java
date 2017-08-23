@@ -1,15 +1,19 @@
 package com.softserve.teamproject.controller;
 
+import com.softserve.teamproject.dto.EditGroupDto;
 import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.EditUserDto;
+import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.dto.UserDto;
+import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +27,7 @@ public class AdminPanelController {
 
   private UserService userService;
   private StudentService studentService;
+  private GroupService groupService;
 
   @Autowired
   public void setStudentService(StudentService studentService){
@@ -32,6 +37,11 @@ public class AdminPanelController {
   @Autowired
   public void setUserService(UserService userService) {
     this.userService = userService;
+  }
+
+  @Autowired
+  public void setGroupService(GroupService groupService) {
+    this.groupService = groupService;
   }
 
   @RequestMapping("/signin")
@@ -105,5 +115,32 @@ public class AdminPanelController {
   public List<StudentDto> removeStudent(@RequestBody Integer studentId) {
     studentService.deleteStudent(studentId);
     return studentService.getAllStudentDto();
+  }
+
+  @RequestMapping("/allGroups")
+  public String getAllGroups(Model model){
+    model.addAttribute("groups", groupService.getAllGroupsDto());
+    return "allGroups.html";
+  }
+
+  @PostMapping(value = "/admin/group/data", produces = "application/json")
+  @ResponseBody
+  public EditGroupDto getGroupInfo(@RequestBody Integer groupId) {
+    EditGroupDto editGroupDto = groupService.findGroupToEdit(groupId);
+    return editGroupDto;
+  }
+
+  @PostMapping(value = "/admin/group/save", produces = "application/json")
+  @ResponseBody
+  public List<GroupDto> saveGroup(@RequestBody GroupDto group) {
+    groupService.saveGroup(group);
+    return groupService.getAllGroupsDto();
+  }
+
+  @PostMapping(value = "/admin/group/delete", produces = "application/json")
+  @ResponseBody
+  public List<GroupDto> removeGroup(@RequestBody Integer groupId) {
+    groupService.deleteGroup(groupId);
+    return groupService.getAllGroupsDto();
   }
 }

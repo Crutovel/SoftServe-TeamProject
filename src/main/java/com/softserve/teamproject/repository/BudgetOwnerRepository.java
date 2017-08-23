@@ -7,4 +7,5 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 public interface BudgetOwnerRepository extends JpaRepository<BudgetOwner, Integer>,
     QueryDslPredicateExecutor {
 
+  BudgetOwner findByName(String name);
 }

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="groups">
+  <form>
+    <div class="col-md-2"></div>
+    <div class="col-md-12">
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>
+            <span th:text="#{group.name}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.teachers}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.location}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.startDate}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.finishDate}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.status}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.specialization}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.experts}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.budgetOwner}"></span>
+          </th>
+          <th>
+            <span th:text="#{group.isDeleted}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.actions}"></span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="group, groupStat : ${groups}">
+          <td style="display:none" th:text="${group.id}"></td>
+          <td th:text="${group.name}"></td>
+          <td>
+             <span th:each="teacher : ${group.teachers}">
+               <span th:text="${teacher}"></span><br>
+             </span>
+          </td>
+          <td th:text="${group.location}"></td>
+          <td th:text="${group.startDate}"></td>
+          <td th:text="${group.finishDate}"></td>
+          <td th:text="${group.status}"></td>
+          <td th:text="${group.specialization}"></td>
+          <td>
+             <span th:each="expert : ${group.experts}">
+               <span th:text="${expert}"></span><br>
+             </span>
+          </td>
+          <td th:text="${group.budgetOwner}"></td>
+          <td th:text="${group.deleted}"></td>
+          <td>
+            <button type="button" class="btn btn-primary edit-button modal-handler"
+                    data-toggle="modal"
+                    data-target="#groupModal" th:value="${group.id}"><span
+                th:text="#{admin.button.edit}"></span></button>
+            <button class="btn btn-danger delete-button" th:value="${group.id}"><span
+                th:text="#{admin.button.delete}"></span></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div th:replace="fragments/group-modal :: group-modal"></div>
+
+      <button class="btn btn-primary modal-handler add-button" data-toggle="modal"
+              data-target="#groupModal">
+        <span th:text="#{group.add}"></span></button>
+    </div>
+    <div class="col-md-12">
+      <br>
+      <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>
+      </button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
