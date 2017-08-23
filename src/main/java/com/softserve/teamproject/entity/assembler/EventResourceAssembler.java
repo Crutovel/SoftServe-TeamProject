@@ -67,7 +67,7 @@ public class EventResourceAssembler extends ResourceAssemblerSupport<Event, Even
   private void initResourceFields(EventResource eventResource, Event event) {
 
     eventResource.setEventId(event.getId());
-    eventResource.setDateTime(event.getDateTime());
-    eventResource.setDuration(event.getDuration());
+    eventResource.setStart(event.getStart());
+    eventResource.setEnd(event.getEnd());
   }
 }

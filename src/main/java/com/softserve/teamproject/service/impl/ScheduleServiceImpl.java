@@ -96,7 +96,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     return convertToResource(eventRepository.findAll(getKeyDates()));
   }
 
-  private List<EventResource> getLastWeekEvents(Integer groupId) {
+  public List<EventResource> getLastWeekEvents(Integer groupId) {
     Group group = groupRepository.findOne(groupId);
     TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
     LocalDate start;
@@ -109,7 +109,8 @@ public class ScheduleServiceImpl implements ScheduleService {
       start = finished.with(temporalField, 1);
       end = finished.with(temporalField, 5);
     } else {
-      throw new IllegalArgumentException("Group is in planned state");
+      throw new IllegalArgumentException(
+          messageByLocaleService.getMessage("illegalArgs.schedule.group.plannedState"));
     }
     return getEventsByGroupId(groupId, start, end);
   }
@@ -117,7 +118,7 @@ public class ScheduleServiceImpl implements ScheduleService {
   public List<EventResource> getEventsByGroupId(Integer groupId, LocalDate start,
       LocalDate end) {
     if (start == null && end == null) {
-      return getLastWeekEvents(groupId);
+      return convertToResource(eventRepository.getEventsByGroupId(groupId));
     }
     if (start == null || end == null) {
       throw new IllegalArgumentException(
@@ -288,15 +289,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 
   private void prepareEventsForCopy(List<Event> copyWeekEvents, LocalDate start) {
     long diff = ChronoUnit.DAYS.between(DateUtil.getMondayDateOfWeek(start),
-        DateUtil.getMondayDateOfWeek(copyWeekEvents.get(0).getDateTime().toLocalDate()));
+        DateUtil.getMondayDateOfWeek(copyWeekEvents.get(0).getStart().toLocalDate()));
     if (diff > 0) {
       for (Event event : copyWeekEvents) {
-        event.setDateTime(event.getDateTime().plusDays(diff));
+        event.setStart(event.getStart().plusDays(diff));
+        event.setEnd(event.getEnd().plusDays(diff));
       }
     }
     if (diff < 0) {
       for (Event event : copyWeekEvents) {
-        event.setDateTime(event.getDateTime().minusDays(diff));
+        event.setStart(event.getStart().minusDays(diff));
+        event.setEnd(event.getEnd().minusDays(diff));
       }
     }
   }
@@ -304,19 +307,20 @@ public class ScheduleServiceImpl implements ScheduleService {
   private void generateEventsForPaste(List<Event> copyWeekEvents, LocalDate start,
       LocalDate finish, List<Event> correct, List<Event> incorrect) {
     prepareEventsForCopy(copyWeekEvents, start);
-    LocalDateTime eventDateTime;
+    LocalDateTime eventStart;
+    LocalDateTime eventEnd;
     Event temp;
     for (Event event : copyWeekEvents) {
       for (int i = 0; ; i++) {
-        eventDateTime = event.getDateTime().plusDays(7 * i);
-
-        if (eventDateTime.isBefore(start.atStartOfDay())) {
+        eventStart = event.getStart().plusDays(7 * i);
+        eventEnd = event.getEnd().plusDays(7 * i);
+        if (eventStart.isBefore(start.atStartOfDay())) {
           continue;
         }
-        if (eventDateTime.isAfter(finish.plusDays(1).atStartOfDay())) {
+        if (eventStart.isAfter(finish.plusDays(1).atStartOfDay())) {
           break;
         }
-        temp = new Event(null, eventDateTime, event.getDuration(),
+        temp = new Event(null, eventStart, eventEnd,
             event.getRoom(), event.getGroup(), event.getEventType());
         if (isEventConflicts(temp)) {
           incorrect.add(temp);
@@ -397,12 +401,13 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @return if conflicts true, if not false
    */
   private boolean isEventConflicts(Event event) {
-    List<Event> events = eventRepository.getEventsByGroupId(Arrays.asList(getGroupIdsByLocation(event)),
-        event.getDateTime().toLocalDate().atStartOfDay(),
-        event.getDateTime().plusDays(1).toLocalDate().atStartOfDay());
+    List<Event> events = eventRepository
+        .getEventsByGroupId(Arrays.asList(getGroupIdsByLocation(event)),
+            event.getStart().toLocalDate().atStartOfDay(),
+            event.getStart().plusDays(1).toLocalDate().atStartOfDay());
     for (Event item : events) {
-      if (event.getDateTime().plusMinutes(event.getDuration()).isAfter(item.getDateTime())
-          && event.getDateTime().isBefore(item.getDateTime().plusMinutes(item.getDuration()))) {
+      if (event.getEnd().isAfter(item.getStart())
+          && event.getStart().isBefore(item.getEnd())) {
         return true;
       }
     }

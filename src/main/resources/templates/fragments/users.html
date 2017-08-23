@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="users">
+  <form>
+    <div class="col-md-2"></div>
+    <div class="col-md-9">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>
+            <span th:text="#{admin.firstName}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.lastName}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.role}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.location}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.photo}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.login}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.password}"></span>
+          </th>
+          <th>
+            <span th:text="#{admin.actions}"></span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, userStat : ${users}">
+          <td style="display:none" th:text="${user.id}"></td>
+          <td th:text="${user.firstName}"></td>
+          <td th:text="${user.lastName}"></td>
+          <td th:text="${user.role}"></td>
+          <td th:text="${user.location}"></td>
+          <td th:text="${user.photo}"></td>
+          <td th:text="${user.login}"></td>
+          <td th:text="${user.password}"></td>
+          <td>
+            <button type="button" class="btn btn-primary edit-button modal-handler"
+                    data-toggle="modal"
+                    data-target="#userModal" th:value="${user.id}"><span
+                th:text="#{admin.button.edit}"></span></button>
+            <button class="btn btn-danger delete-button" th:value="${user.id}"><span
+                th:text="#{admin.button.delete}"></span></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div th:replace="fragments/user-modal :: user-modal"></div>
+
+      <button class="btn btn-primary modal-handler add-button" data-toggle="modal"
+              data-target="#userModal">
+        <span th:text="#{admin.button.user.add}"></span></button>
+    </div>
+    <button type="button" class="btn btn-warning"><span th:text="#{admin.button.home}"></span>
+    </button>
+  </form>
+</div>
+
+</body>
+</html>

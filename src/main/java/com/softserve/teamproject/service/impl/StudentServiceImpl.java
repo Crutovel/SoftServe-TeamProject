@@ -1,21 +1,25 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.dto.EditStudentDto;
+import com.softserve.teamproject.dto.StudentDto;
+import com.softserve.teamproject.entity.EnglishLevel;
+import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Student;
-import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.StudentResourceAssembler;
 import com.softserve.teamproject.entity.resource.StudentResource;
 import com.softserve.teamproject.repository.EnglishLevelRepository;
+import com.softserve.teamproject.repository.ExpertRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.StudentRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.validation.StudentValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,6 +33,13 @@ public class StudentServiceImpl implements StudentService {
   private GroupRepository groupRepository;
   private StudentValidator studentValidator;
   private EnglishLevelRepository englishLevelRepository;
+  private MessageByLocaleService messageByLocaleService;
+  private ExpertRepository expertRepository;
+
+  @Autowired
+  public void setExpertRepository(ExpertRepository expertRepository) {
+    this.expertRepository = expertRepository;
+  }
 
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
@@ -59,6 +70,12 @@ public class StudentServiceImpl implements StudentService {
   @Autowired
   public void setEnglishLevelRepository(EnglishLevelRepository englishLevelRepository) {
     this.englishLevelRepository = englishLevelRepository;
+  }
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
   }
 
   /**
@@ -101,8 +118,25 @@ public class StudentServiceImpl implements StudentService {
     studentValidator.checkCoordinatorLocationToManipulateStudent(group, userName);
     for (Student student : students) {
       student.setGroup(group);
+      if (student.getFirstName() == null) {
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.firstName")
+        );
+      }
+      if (student.getLastName() == null) {
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.lastName")
+        );
+      }
       if (student.getEnglishLevel() == null) {
-        student.setEnglishLevel(englishLevelRepository.findByName("intermediate"));
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.englishLevel")
+        );
+      }
+      if (student.getTestApprovedByExpert() == null) {
+        throw new IllegalArgumentException(
+            messageByLocaleService.getMessage("illegalArgs.student.expert")
+        );
       }
     }
     studentRepository.save(students);
@@ -168,4 +202,58 @@ public class StudentServiceImpl implements StudentService {
     student = studentRepository.save(student);
     return studentResourceAssembler.toResource(student);
   }
+
+
+  public List<StudentDto> getAllStudentDto() {
+    List<Student> allStudents = studentRepository.findAll();
+    return allStudents.stream().map(StudentDto::new).collect(Collectors.toList());
+  }
+
+  @Override
+  public EditStudentDto findStudentToEdit(int studentId) {
+    List<String> englishLevels = englishLevelRepository.findAll().stream()
+        .map(EnglishLevel::getName)
+        .collect(Collectors.toList());
+    List<String> experts = expertRepository.findAll().stream().map(Expert::getExpertName).collect(
+        Collectors.toList());
+    List<String> groups = groupRepository.findAll().stream().map(Group::getName).collect(
+        Collectors.toList());
+    EditStudentDto editStudentDto = null;
+    try {
+      if (studentId == -1) {
+        editStudentDto = new EditStudentDto();
+      } else {
+        Student student = studentRepository.findOne(studentId);
+        editStudentDto = new EditStudentDto(student);
+      }
+      return editStudentDto;
+    } finally {
+      editStudentDto.setGroups(groups);
+      editStudentDto.setExperts(experts);
+      editStudentDto.setEnglishLevels(englishLevels);
+    }
+  }
+
+  @Override
+  public void saveStudent(StudentDto studentDto) {
+    Student student = new Student();
+    student.setId(studentDto.getId());
+    Group group = groupRepository.findByName(studentDto.getGroup());
+    Expert expert = expertRepository.findByExpertName(studentDto.getExpert());
+    EnglishLevel englishLevel = englishLevelRepository.findByName(studentDto.getEnglishLevel());
+    student.setGroup(group);
+    student.setTestApprovedByExpert(expert);
+    student.setEnglishLevel(englishLevel);
+    student.setFirstName(studentDto.getFirstName());
+    student.setLastName(studentDto.getLastName());
+    student.setEntryScore(studentDto.getEntryScore());
+    student.setIncomingTest(studentDto.getIncomingTest());
+    studentRepository.save(student);
+  }
+
+  @Override
+  public void deleteStudent(int studentId) {
+    studentRepository.deleteById(studentId);
+  }
 }
+

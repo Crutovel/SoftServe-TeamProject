@@ -60,12 +60,13 @@ public class KeyDateDto {
   }
 
   public Event toEntity() {
-    return new Event(id, date.atTime(0, 0), 0, null, group, eventType);
+    return new Event(id, date.atTime(0, 0), date.atTime(0, 0),
+        null, group, eventType);
   }
 
   public KeyDateResponseDto toResponseDto(String message) {
-    return new KeyDateResponseDto((group!=null?group.getId():null),
-        (eventType!=null?eventType.getId():null), date, message);
+    return new KeyDateResponseDto((group != null ? group.getId() : null),
+        (eventType != null ? eventType.getId() : null), date, message);
   }
 
   @Override

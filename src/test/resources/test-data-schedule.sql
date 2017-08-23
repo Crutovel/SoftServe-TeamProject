@@ -87,14 +87,14 @@ insert into event_type (`name`) values ('lecture');
 insert into room (`number`,location_id) values ('705',1);
 insert into room (`number`,location_id) values ('703',1);
 
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-08-17 18:00:00',120,2,1,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-08-14 00:00:00',120,3,1,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-08-18 18:00:00',120,2,2,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-18 18:00:00',120,2,3,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-05 18:00:00',120,2,4,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-27 18:30:00',30,3,5,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,4,6,2);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 10:00:00',120,3,2,null);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-08-17 18:00:00','2017-08-17 20:00:00',2,1,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-08-14 00:00:00','2017-08-14 02:00:00',3,1,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-08-18 18:00:00','2017-08-18 20:00:00',2,2,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-18 18:00:00','2017-07-18 20:00:00',2,3,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-05 18:00:00','2017-07-05 20:00:00',2,4,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-27 18:30:00','2017-07-27 19:00:00',3,5,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00','2017-07-24 20:00:00',4,6,2);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-24 10:00:00','2017-07-24 12:00:00',3,2,null);
 
 insert into template (event_type_id,strategy_id, duration) values (1,1,21);
 insert into template (event_type_id,strategy_id, duration) values (1,2,28);

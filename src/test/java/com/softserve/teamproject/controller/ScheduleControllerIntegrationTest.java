@@ -323,7 +323,7 @@ public class ScheduleControllerIntegrationTest {
         .content(new ObjectMapper().writeValueAsString(wrapper)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE)))
-        .andExpect(jsonPath("$.succeed[0].dateTime", is(EXPECTED_DATE)))
+        .andExpect(jsonPath("$.succeed[0].start", is(EXPECTED_DATE)))
         .andExpect(jsonPath("$.succeed[0].links[2].href", containsString("groups/" + GROUP_ID)))
         .andExpect(
             jsonPath("$.succeed[0].links[3].href", containsString("eventTypes/" + EVENT_TYPE)));
@@ -351,7 +351,7 @@ public class ScheduleControllerIntegrationTest {
         .content(new ObjectMapper().writeValueAsString(wrapper)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE)))
-        .andExpect(jsonPath("$.succeed[0].dateTime", is(EXPECTED_DATE)))
+        .andExpect(jsonPath("$.succeed[0].start", is(EXPECTED_DATE)))
         .andExpect(jsonPath("$.succeed[0].links[2].href", containsString("groups/" + GROUP_ID)))
         .andExpect(
             jsonPath("$.succeed[0].links[3].href", containsString("eventTypes/" + EVENT_TYPE)));
@@ -520,12 +520,12 @@ public class ScheduleControllerIntegrationTest {
     final int GROUP_ID = 5;
     final int EVENT_TYPE = 1;
     final int ROOM_ID = 1;
-    final int duration = 120;
-    LocalDateTime date = LocalDate.parse("2017-08-28").atTime(6, 33);
+    LocalDateTime start = LocalDate.parse("2017-08-28").atTime(6, 33);
+    LocalDateTime end = LocalDate.parse("2017-08-28").atTime(8, 33);
     final int EXPECTED_SIZE = 1;
     final String TESTED_URL = "/events/groups/" + GROUP_ID;
     List<Event> events = new ArrayList<>();
-    events.add(getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, duration, date));
+    events.add(getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, start, end));
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
@@ -533,7 +533,7 @@ public class ScheduleControllerIntegrationTest {
         .content(new ObjectMapper().writeValueAsString(events)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE)))
-        .andExpect(jsonPath("$.succeed[0].dateTime", is("2017-08-28 06:33")))
+        .andExpect(jsonPath("$.succeed[0].start", is("2017-08-28 06:33")))
         .andExpect(jsonPath("$.succeed[0].links[2].href", containsString("groups/" + GROUP_ID)))
         .andExpect(jsonPath("$.succeed[0].links[4].href", containsString("rooms/" + ROOM_ID)));
   }

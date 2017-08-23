@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" type="text/css"
+        href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css"
+        href="/css/user-modal.css"/>
+  <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+  <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+  <script src="/js/user.js"></script>
+  </head>
+<body>
+<h1>
+  <span th:text="#{admin.title}"></span>
+</h1>
+
+<div class="col-md-2"></div>
+<div class="col-md-9">
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">Users</a></li>
+  <li><a href="allStudents.html">Students</a></li>
+  <li><a href="#">Groups</a></li>
+</ul>
+</div>
+
+  <div th:replace="fragments/users :: users" id="users"></div>
+
+</body>
+</html>

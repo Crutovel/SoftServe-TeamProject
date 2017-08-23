@@ -62,8 +62,8 @@ public class EventValidatorImpl implements EventValidator {
     User user = userRepository.getUserByNickName(principal.getName());
     checkLocationPermission(event, user, invalidField);
     checkAllFields(event, invalidField);
-    if (!isEventDateValid(event.getDateTime())) {
-      invalidField.setName("dateTime = "+event.getDateTime());
+    if (!isEventDateValid(event.getStart())) {
+      invalidField.setName("dateTime = "+event.getStart());
       throw new ValidationException("You cannot set the event time retroactively.");
     }
     if (!isEventInFreeRoom(event)) {
@@ -71,7 +71,7 @@ public class EventValidatorImpl implements EventValidator {
       throw new ValidationException(
           "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
               .getName() + " has already been taken for another event on " + DateTimeFormatter
-              .ofPattern("yyyy-MM-dd HH:mm").format(event.getDateTime()));
+              .ofPattern("yyyy-MM-dd HH:mm").format(event.getStart()));
     }
   }
 
@@ -141,7 +141,7 @@ public class EventValidatorImpl implements EventValidator {
       throw new ValidationException(
           "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
               .getName() + " has already been taken for another event on " + DateTimeFormatter
-              .ofPattern("yyyy-MM-dd HH:mm").format(event.getDateTime()));
+              .ofPattern("yyyy-MM-dd HH:mm").format(event.getStart()));
     }
   }
 
@@ -183,9 +183,8 @@ public class EventValidatorImpl implements EventValidator {
   }
 
   public boolean isEventInFreeRoom(Event event) {
-    int duration = event.getDuration();
-    LocalDateTime startTime = event.getDateTime();
-    LocalDateTime endTime = startTime.plusMinutes(duration);
+    LocalDateTime startTime = event.getStart();
+    LocalDateTime endTime = event.getEnd();
     List<Event> crossEvents = eventRepository.getCrossEvents(startTime, endTime);
     if (crossEvents.isEmpty()) {
       return true;
@@ -200,9 +199,8 @@ public class EventValidatorImpl implements EventValidator {
   }
 
   public boolean isUpdateEventInFreeRoom(Event event) {
-    int duration = event.getDuration();
-    LocalDateTime startTime = event.getDateTime();
-    LocalDateTime endTime = startTime.plusMinutes(duration);
+    LocalDateTime startTime = event.getStart();
+    LocalDateTime endTime = event.getEnd();
     List<Event> crossEvents = eventRepository.getCrossEvents(startTime, endTime);
     if (crossEvents.isEmpty()) {
       return true;

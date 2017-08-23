@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private UserDetailsServiceImpl userDetailsService;
@@ -52,15 +52,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //@formatter:off
     http
         .csrf().disable()
-        .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
+        .exceptionHandling()
+        .authenticationEntryPoint(restAuthenticationEntryPoint).and()
         .authorizeRequests()
-            .antMatchers("/**").authenticated().and()
+        .antMatchers("/**").authenticated().and()
         .addFilter(authenticationFilter())
+        .formLogin().loginPage("/signin.html").permitAll()
+        .usernameParameter("username")
+        .passwordParameter("password")
+        .defaultSuccessUrl("/admin.html").and()
         .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()).and()
+        .logoutUrl("/logout")
+        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()).and()
         .rememberMe().key("token").tokenValiditySeconds(3600);
-        //@formatter:on
+    //@formatter:on
   }
 
   @Override
@@ -68,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     web
         .ignoring()
         .antMatchers("/swagger-ui.html", "/webjars/**", "/swagger-resources/**",
-            "/v2/api-docs", "/configuration/ui", "/configuration/security");
+            "/v2/api-docs", "/configuration/ui", "/configuration/security", "/css/**", "/js/**");
   }
 
   @Bean
