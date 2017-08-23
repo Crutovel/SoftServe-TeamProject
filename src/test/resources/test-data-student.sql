@@ -80,10 +80,10 @@ insert into event_type (`name`) values ('lesson');
 insert into room (`number`,location_id) values ('705',1);
 insert into room (`number`,location_id) values ('703',1);
 
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,1,2,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-25 18:00:00',120,1,1,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00',120,2,2,1);
-insert into `event` (`datetime`,duration,group_id,event_type_id,room_id) values ('2017-07-25 18:00:00',120,2,1,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00','2017-07-24 20:00:00',1,2,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-25 18:00:00','2017-07-25 20:00:00',1,1,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-24 18:00:00','2017-07-24 20:00:00',2,2,1);
+insert into `event` (`start`,`end`,group_id,event_type_id,room_id) values ('2017-07-25 18:00:00','2017-07-25 20:00:00',2,1,1);
 
 insert into english_level (name,`level`) values ('elementary',1);
 insert into english_level (name,`level`) values ('pre-intermediate',2);

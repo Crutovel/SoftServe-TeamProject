@@ -92,13 +92,13 @@ public abstract class TestData {
   }
 
   public static Event getEvent(
-      Integer groupId, Integer roomId, Integer eventTypeId, int duration, LocalDateTime time) {
+      Integer groupId, Integer roomId, Integer eventTypeId, LocalDateTime start, LocalDateTime end) {
     Event event = new Event();
     Group group = new Group();
     group.setId(groupId);
     event.setGroup(group);
-    event.setDateTime(time);
-    event.setDuration(duration);
+    event.setStart(start);
+    event.setEnd(end);
     Room room = new Room();
     room.setId(roomId);
     event.setRoom(room);
