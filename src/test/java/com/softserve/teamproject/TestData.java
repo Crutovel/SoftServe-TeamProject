@@ -10,6 +10,7 @@ import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Room;
 import com.softserve.teamproject.entity.Specialization;
+import com.softserve.teamproject.entity.Strategy;
 import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import java.time.LocalDate;
@@ -55,6 +56,8 @@ public abstract class TestData {
   public static Group getGroup(String name) {
     Group group = new Group();
     group.setName(name);
+    group.setStartDate(LocalDate.parse("2017-01-01"));
+    group.setFinishDate(LocalDate.parse("2017-01-01"));
     group.setLocation(new Location() {{
       setName("Dnipro");
       setId(1);
@@ -62,6 +65,9 @@ public abstract class TestData {
     group.setSpecialization(new Specialization() {{
       setName("JAVA");
       setId(7);
+      setStrategy(new Strategy(){{
+        setId(1);
+      }});
     }});
     group.setBudgetOwner(new BudgetOwner() {{
       setId(1);
