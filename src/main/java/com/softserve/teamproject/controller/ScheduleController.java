@@ -190,10 +190,10 @@ public class ScheduleController {
    * @param copyPasteSchedule wrapper for request info such as group id, copy date, paste date
    * @return copyPasteSchedule wrapper with group id, copy date, paste date and conflicts
    */
-  @Validated
+
   @PostMapping("/events/copypaste")
   public CopyPasteScheduleWrapper copyPasteSchedule(
-      @RequestBody @ValidCopyPasteSchedule @Valid CopyPasteScheduleWrapper copyPasteSchedule) {
+      @RequestBody @Valid CopyPasteScheduleWrapper copyPasteSchedule) {
     copyPasteSchedule.setConflicts(scheduleService.copyPasteSchedule(copyPasteSchedule));
     return copyPasteSchedule;
   }

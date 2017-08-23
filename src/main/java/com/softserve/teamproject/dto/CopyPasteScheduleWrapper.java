@@ -9,10 +9,12 @@ import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupSerializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.entity.serializer.LocalDateSerializer;
+import com.softserve.teamproject.validation.ValidCopyPasteSchedule;
 import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@ValidCopyPasteSchedule
 public class CopyPasteScheduleWrapper {
 
   @NotNull(message = "{NotNull.copyPasteScheduleWrapper.group}")

@@ -82,7 +82,7 @@ insert into user (first_name,last_name,role_id,nick_name,password_hash_code,loca
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Taras','Shevchenko',3,'IveCriedForUkr','gdsfg3fgcccc',3);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Bogdan','Khmelniskiy',3,'SonKiller','sdfgvbcvb32dsf',3);
 insert into user (first_name,last_name,role_id,nick_name,password_hash_code,location_id) values ('Bill','Gates',3,'HonoredCitizen',',mnbvcgfd3',4);
-insert into educational_group (`name`,location_id,start_date,finish_date,status_id,specialization_id,budget_owner_id) values ('DP-115',1,'2017-04-29', '2017-08-18',4,7,1);
+insert into educational_group (`name`,location_id,start_date,finish_date,status_id,specialization_id,budget_owner_id) values ('DP-115',1,'2017-04-29', '2017-08-25',4,7,1);
 insert into educational_group (`name`,location_id,start_date,finish_date,status_id,specialization_id,budget_owner_id,is_deleted) values ('DP-116',1,'2017-04-29', '2017-08-18',6,6,1, TRUE);
 insert into educational_group (`name`,location_id,start_date,finish_date,status_id,specialization_id,budget_owner_id) values ('DP-111-net',1,'2016-04-30','2016-08-01',6,9,1);
 insert into educational_group (`name`,location_id,start_date,finish_date,status_id,specialization_id,budget_owner_id) values ('SF-120-js',2,'2018-01-10','2018-04-10',1,2,2);
