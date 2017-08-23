@@ -11,27 +11,23 @@ $(document).ready(
 
 function buttonClickHandler(event, button) {
   console.log("buttonClickHandler " + button.val());
-  //stop submit the form, we will post it manually.
   event.preventDefault();
   var requestDetails = {}
-  requestDetails["user"] = button.val();
+  requestDetails["student"] = button.val();
   if (button.hasClass("delete-button")) {
-    requestDetails["url"] = "/admin/user/delete";
+    requestDetails["url"] = "/admin/student/delete";
   }
   if (button.hasClass("edit-button")) {
-    requestDetails["url"] = "/admin/user/data";
+    requestDetails["url"] = "/admin/student/data";
   }
   if (button.hasClass("save-button")) {
-    requestDetails["url"] = "/admin/user/save";
+    requestDetails["url"] = "/admin/student/save";
     var modalJsonData = getModalJson();
-    requestDetails["user"] = JSON.stringify(modalJsonData);
+    requestDetails["student"] = JSON.stringify(modalJsonData);
   }
   if (button.hasClass("add-button")) {
-    requestDetails["url"] = "/admin/user/data";
-    requestDetails["user"] = "-1";
-    // var modalJsonData = getModalJson();
-    // requestDetails["user"] = JSON.stringify(modalJsonData);
-    // return;
+    requestDetails["url"] = "/admin/student/data";
+    requestDetails["student"] = "-1";
   }
   fireAjaxSubmit(requestDetails);
 }
@@ -51,41 +47,47 @@ function getModalJson() {
 function modalHandler(button) {
   console.log("modalHandler");
   if (button.hasClass("modal-handler")) {
-    $("#userModal").modal();
+    $("#studentModal").modal();
   }
 }
 
 function fillUserModal(result) {
-  console.log("fillUserModal");
-  $('#modalUserId').val(result.id);
+  console.log("fillStudentModal");
+  $('#modalStudentId').val(result.id);
   $('#firstName').val(result.firstName);
   $('#lastName').val(result.lastName);
-  $('#roleSelect option').remove();
-  $.each(result.roles, function (i, role) {
-    $('#roleSelect').append($('<option>').text(role).val(role));
+  $('#groupSelect option').remove();
+  $.each(result.groups, function (i, group) {
+    $('#groupSelect').append($('<option>').text(group).val(group));
   });
-  $("#roleSelect option[value=" + result.role + "]").attr('selected', 'true');
-  $('#locationSelect option').remove();
-  $.each(result.locations, function (i, location) {
-    $('#locationSelect').append($('<option>').text(location).val(location));
+  $("#groupSelect option[value=" + result.group + "]").attr('selected', 'true');
+  $('#englishLevelSelect option').remove();
+  $.each(result.englishLevels, function (i, englishLevel) {
+    $('#englishLevelSelect').append(
+        $('<option>').text(englishLevel).val(englishLevel));
   });
-  $("#locationSelect option[value=" + result.location + "]").attr('selected',
+  $("#englishLevelSelect option[value=" + result.englishLevel + "]").attr(
+      'selected', 'true');
+  $('#incomingTest').val(result.incomingTest);
+  $('#entryScore').val(result.entryScore);
+  $('#expertSelect option').remove();
+  $.each(result.experts, function (i, expert) {
+    $('#expertSelect').append($('<option>').text(expert).val(expert));
+  });
+  $("#expertSelect option[value=" + result.expert + "]").attr('selected',
       'true');
-  $('#photo').val(result.photo);
-  $('#login').val(result.login);
-  $('#password').val(result.password);
 }
 
 function handleSuccessAjax(requestDetails, result) {
   console.log("handleSuccessAjax - " + requestDetails["url"]);
-  if (requestDetails["url"] == "/admin/user/delete") {
+  if (requestDetails["url"] == "/admin/student/delete") {
     cleanTable();
     fillTable(result);
   }
-  if (requestDetails["url"] == "/admin/user/data") {
+  if (requestDetails["url"] == "/admin/student/data") {
     fillUserModal(result);
   }
-  if (requestDetails["url"] == "/admin/user/save") {
+  if (requestDetails["url"] == "/admin/student/save") {
     cleanTable();
     fillTable(result);
   }
@@ -98,11 +100,11 @@ function fillTable(result) {
             $('<td>').text(item.id).css("display", "none"),
             $('<td>').text(item.firstName),
             $('<td>').text(item.lastName),
-            $('<td>').text(item.role),
-            $('<td>').text(item.location),
-            $('<td>').text(item.photo),
-            $('<td>').text(item.login),
-            $('<td>').text(item.password),
+            $('<td>').text(item.group),
+            $('<td>').text(item.englishLevel),
+            $('<td>').text(item.incomingTest),
+            $('<td>').text(item.entryScore),
+            $('<td>').text(item.expert),
             $('<td>').append(
                 $('<button>').text(editButtonName).addClass(
                     'btn btn-primary edit-button modal-handler').attr(
@@ -113,7 +115,6 @@ function fillTable(result) {
                 .attr('value', item.id)
             )
         ).appendTo("table.table.table-striped tbody");
-        //was buttonClickHandler
       }
   );
   $('button').unbind('click');
@@ -133,7 +134,7 @@ function fireAjaxSubmit(requestDetails) {
         type: "POST",
         contentType: "application/json",
         url: requestDetails["url"],
-        data: requestDetails["user"],
+        data: requestDetails["student"],
         dataType: 'json',
         success: function (result) {
           console.log("success");
