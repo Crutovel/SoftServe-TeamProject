@@ -1,6 +1,7 @@
 package com.softserve.teamproject.repository.custom;
 
 import static com.softserve.teamproject.repository.expression.EventExpressions.eventByEventTypeId;
+import static com.softserve.teamproject.repository.expression.EventExpressions.getCrossedEvents;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventBetweenDates;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventByGroupId;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventsBeforeStart;
@@ -50,21 +51,16 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
   }
 
   @Override
-  public List<Event> getCrossEvents(LocalDateTime start,
-      LocalDateTime finish) {
-    List<Event> crossDate = new ArrayList<>();
-    crossDate = from(QEvent.event)
-        .where(getEventBetweenDates(start, finish)).fetch();
-    if (crossDate.size() == 0) {
-      List<Event> allEventsBeforeStarfrom = from(QEvent.event)
-          .where(getEventsBeforeStart(start)).fetch();
-      for (Event event : allEventsBeforeStarfrom) {
-        if (event.getEnd().isAfter(start)) {
-          crossDate.add(event);
-        }
-      }
-    }
-    return crossDate;
+  public Event getCrossEvents(LocalDateTime start,
+      LocalDateTime finish, Integer roomId) {
+    return from(QEvent.event).where(getCrossedEvents(start, finish, roomId)).fetchFirst();
+  }
+
+  @Override
+  public Event getCrossEvents(LocalDateTime start,
+      LocalDateTime finish, Integer roomId, Integer eventId) {
+    return from(QEvent.event)
+        .where(getCrossedEvents(start, finish, roomId), QEvent.event.id.ne(eventId)).fetchFirst();
   }
 
   @Override

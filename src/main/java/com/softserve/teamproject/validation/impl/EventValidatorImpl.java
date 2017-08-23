@@ -63,7 +63,7 @@ public class EventValidatorImpl implements EventValidator {
     checkLocationPermission(event, user, invalidField);
     checkAllFields(event, invalidField);
     if (!isEventDateValid(event.getStart())) {
-      invalidField.setName("dateTime = "+event.getStart());
+      invalidField.setName("dateTime = " + event.getStart());
       throw new ValidationException("You cannot set the event time retroactively.");
     }
     if (!isEventTypeValid(event.getEventType())) {
@@ -81,6 +81,7 @@ public class EventValidatorImpl implements EventValidator {
 
   /**
    * Method checks whether the coordinator tries to make changes in schedule for his location.
+   *
    * @param event to be changed or added
    * @param user - a coordinator
    */
@@ -103,7 +104,7 @@ public class EventValidatorImpl implements EventValidator {
     for (Field field : eventClass.getDeclaredFields()) {
       field.setAccessible(true);
       try {
-        if (field.get(event) == null&&!(field.getName().equals("id"))) {
+        if (field.get(event) == null && !(field.getName().equals("id"))) {
           invalidField.setName(field.getName());
           throw new ValidationException(
               "Please, provide the relevant information for the field -" + field.getName()
@@ -121,14 +122,15 @@ public class EventValidatorImpl implements EventValidator {
    *
    * @param event of the Event type
    */
-  public void isEventUpdateValid(Event event, Principal principal, InvalidField invalidField) throws ValidationException {
+  public void isEventUpdateValid(Event event, Principal principal, InvalidField invalidField)
+      throws ValidationException {
     User user = userRepository.getUserByNickName(principal.getName());
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
       invalidField.setName("location");
       throw new AccessDeniedException(
           ": The coordinators can create the schedule only in their location");
     }
-    if (event.getId()==null) {
+    if (event.getId() == null) {
       invalidField.setName("eventId");
       throw new ValidationException("Please specify the event you are going to change.");
     }
@@ -187,35 +189,13 @@ public class EventValidatorImpl implements EventValidator {
   }
 
   public boolean isEventInFreeRoom(Event event) {
-    LocalDateTime startTime = event.getStart();
-    LocalDateTime endTime = event.getEnd();
-    List<Event> crossEvents = eventRepository.getCrossEvents(startTime, endTime);
-    if (crossEvents.isEmpty()) {
-      return true;
-    } else {
-      for (Event e : crossEvents) {
-        if (event.getRoom().equals(e.getRoom())) {
-          return false;
-        }
-      }
-      return true;
-    }
+    return eventRepository.getCrossEvents(event.getStart(), event.getEnd(),
+        event.getRoom().getId()) == null;
   }
 
   public boolean isUpdateEventInFreeRoom(Event event) {
-    LocalDateTime startTime = event.getStart();
-    LocalDateTime endTime = event.getEnd();
-    List<Event> crossEvents = eventRepository.getCrossEvents(startTime, endTime);
-    if (crossEvents.isEmpty()) {
-      return true;
-    } else {
-      for (Event e : crossEvents) {
-        if (event.getRoom().equals(e.getRoom()) && !(event.getId().equals(e.getId()))) {
-          return false;
-        }
-      }
-      return true;
-    }
+    return eventRepository.getCrossEvents(event.getStart(), event.getEnd(),
+        event.getRoom().getId(),event.getId()) == null;
   }
 }
 

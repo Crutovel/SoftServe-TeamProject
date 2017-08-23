@@ -407,17 +407,7 @@ public class ScheduleServiceImpl implements ScheduleService {
    * @return if conflicts true, if not false
    */
   private boolean isEventConflicts(Event event) {
-    List<Event> events = eventRepository
-        .getEventsByGroupId(Arrays.asList(getGroupIdsByLocation(event)),
-            event.getStart().toLocalDate().atStartOfDay(),
-            event.getStart().plusDays(1).toLocalDate().atStartOfDay());
-    for (Event item : events) {
-      if (event.getEnd().isAfter(item.getStart())
-          && event.getStart().isBefore(item.getEnd())) {
-        return true;
-      }
-    }
-    return false;
+    return eventRepository.getCrossEvents(event.getStart(), event.getEnd(),
+        event.getRoom().getId()) != null;
   }
-
 }
