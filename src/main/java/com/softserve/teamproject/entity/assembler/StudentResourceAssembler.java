@@ -94,19 +94,19 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     studentResource.setFinalBasTest(student.getFinalBasTest());
     studentResource.setFinalLanguageTest(student.getFinalLanguageTest());
     studentResource.setLearningAbilityByTeacher(student.getLearningAbilityByTeacher());
-//    studentResource.setLearningAbilityByExpert(student.getLearningAbilityByExpert());
-//    studentResource
-//        .setOverallTechnicalCompetenceByTeacher(student.getOverallTechnicalCompetenceByTeacher());
-//    studentResource
-//        .setOverallTechnicalCompetenceByExpert(student.getOverallTechnicalCompetenceByExpert());
-//    studentResource.setPassionalInitiativeByTeacher(student.getPassionalInitiativeByTeacher());
-//    studentResource.setPassionalInitiativeByExpert(student.getPassionalInitiativeByExpert());
-//    studentResource.setTeamWorkByTeacher(student.getTeamWorkByTeacher());
-//    studentResource.setTeamWorkByExpert(student.getTeamWorkByExpert());
-//    studentResource.setGettingThingsDoneByTeacher(student.getGettingThingsDoneByTeacher());
-//    studentResource.setGetGettingThingsDoneByExpert(student.getGetGettingThingsDoneByExpert());
-//    studentResource.setActiveCommunicatorByTeacher(student.getActiveCommunicatorByTeacher());
-//    studentResource.setActiveCommunicatorByExpert(student.getActiveCommunicatorByExpert());
+    studentResource.setLearningAbilityByExpert(student.getLearningAbilityByExpert());
+    studentResource
+        .setOverallTechnicalCompetenceByTeacher(student.getOverallTechnicalCompetenceByTeacher());
+    studentResource
+        .setOverallTechnicalCompetenceByExpert(student.getOverallTechnicalCompetenceByExpert());
+    studentResource.setPassionalInitiativeByTeacher(student.getPassionalInitiativeByTeacher());
+    studentResource.setPassionalInitiativeByExpert(student.getPassionalInitiativeByExpert());
+    studentResource.setTeamWorkByTeacher(student.getTeamWorkByTeacher());
+    studentResource.setTeamWorkByExpert(student.getTeamWorkByExpert());
+    studentResource.setGettingThingsDoneByTeacher(student.getGettingThingsDoneByTeacher());
+    studentResource.setGetGettingThingsDoneByExpert(student.getGetGettingThingsDoneByExpert());
+    studentResource.setActiveCommunicatorByTeacher(student.getActiveCommunicatorByTeacher());
+    studentResource.setActiveCommunicatorByExpert(student.getActiveCommunicatorByExpert());
 
   }
 }
