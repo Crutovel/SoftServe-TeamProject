@@ -39,7 +39,8 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     addEntityFieldLinkToResource(studentResource, student.getGroup().getId(), Group.class);
     addEntityFieldLinkToResource(studentResource, student.getEnglishLevel().getId(),
         EnglishLevel.class);
-    addEntityFieldLinkToResource(studentResource,student.getTestApprovedByExpert().getId(), Expert.class);
+    addEntityFieldLinkToResource(studentResource, student.getTestApprovedByExpert().getId(),
+        Expert.class);
 
     return studentResource;
   }
@@ -81,5 +82,31 @@ public class StudentResourceAssembler extends ResourceAssemblerSupport<Student, 
     studentResource.setTeacherFeedback(student.getTeacherFeedback());
     studentResource.setExpertScore(student.getExpertScore());
     studentResource.setExpertFeedback(student.getExpertFeedback());
+    studentResource.setInterviewerScore(student.getInterviewerScore());
+    studentResource.setInterviewerFeedback(student.getInterviewerFeedback());
+    studentResource.setTest1Mark(student.getTest1Mark());
+    studentResource.setTest2Mark(student.getTest2Mark());
+    studentResource.setTest3Mark(student.getTest3Mark());
+    studentResource.setTest4Mark(student.getTest4Mark());
+    studentResource.setTest5Mark(student.getTest5Mark());
+    studentResource.setIntermediateBasTest(student.getIntermediateBasTest());
+    studentResource.setIntermediateLanguageTest(student.getIntermediateLanguageTest());
+    studentResource.setFinalBasTest(student.getFinalBasTest());
+    studentResource.setFinalLanguageTest(student.getFinalLanguageTest());
+    studentResource.setLearningAbilityByTeacher(student.getLearningAbilityByTeacher());
+//    studentResource.setLearningAbilityByExpert(student.getLearningAbilityByExpert());
+//    studentResource
+//        .setOverallTechnicalCompetenceByTeacher(student.getOverallTechnicalCompetenceByTeacher());
+//    studentResource
+//        .setOverallTechnicalCompetenceByExpert(student.getOverallTechnicalCompetenceByExpert());
+//    studentResource.setPassionalInitiativeByTeacher(student.getPassionalInitiativeByTeacher());
+//    studentResource.setPassionalInitiativeByExpert(student.getPassionalInitiativeByExpert());
+//    studentResource.setTeamWorkByTeacher(student.getTeamWorkByTeacher());
+//    studentResource.setTeamWorkByExpert(student.getTeamWorkByExpert());
+//    studentResource.setGettingThingsDoneByTeacher(student.getGettingThingsDoneByTeacher());
+//    studentResource.setGetGettingThingsDoneByExpert(student.getGetGettingThingsDoneByExpert());
+//    studentResource.setActiveCommunicatorByTeacher(student.getActiveCommunicatorByTeacher());
+//    studentResource.setActiveCommunicatorByExpert(student.getActiveCommunicatorByExpert());
+
   }
 }

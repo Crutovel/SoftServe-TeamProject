@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -82,6 +84,88 @@ public class Student {
 
   @Column(name = "expert_feedback")
   private String expertFeedback;
+
+  @Column(name = "interviewer_score")
+  private Integer interviewerScore;
+
+  @Column(name = "interviewer_feedback")
+  private String interviewerFeedback;
+
+  @Column(name = "test1_mark")
+  private Integer test1Mark;
+
+  @Column(name = "test2_mark")
+  private Integer test2Mark;
+
+  @Column(name = "test3_mark")
+  private Integer test3Mark;
+
+  @Column(name = "test4_mark")
+  private Integer test4Mark;
+
+  @Column(name = "test5_mark")
+  private Integer test5Mark;
+
+  @Column(name = "intermediate_bas_test")
+  private Integer intermediateBasTest;
+
+  @Column(name = "intermediate_language_test")
+  private Integer intermediateLanguageTest;
+
+  @Column(name = "final_bas_test")
+  private Integer finalBasTest;
+
+  @Column(name = "final_language_test")
+  private Integer finalLanguageTest;
+
+  @Column(name = "learning_ability_by_teacher")
+  @Enumerated(EnumType.STRING)
+  private LearningAbility learningAbilityByTeacher;
+
+//  @Column(name = "learning_ability_by_expert")
+//  @Enumerated(EnumType.STRING)
+//  private LearningAbility learningAbilityByExpert;
+//
+//  @Column(name = "overall_technical_competence_by_teacher")
+//  @Enumerated(EnumType.STRING)
+//  private OverallTechnicalCompetence overallTechnicalCompetenceByTeacher;
+//
+//  @Column(name = "overall_technical_competence_by_expert")
+//  @Enumerated(EnumType.STRING)
+//  private OverallTechnicalCompetence overallTechnicalCompetenceByExpert;
+//
+//  @Column(name = "passional_initiative_by_teacher")
+//  @Enumerated(EnumType.STRING)
+//  private PassionalInitiative passionalInitiativeByTeacher;
+//
+//  @Column(name = "passional_initiative_by_expert")
+//  @Enumerated(EnumType.STRING)
+//  private PassionalInitiative passionalInitiativeByExpert;
+//
+//  @Column(name = "team_work_by_teacher")
+//  @Enumerated(EnumType.STRING)
+//  private TeamWork teamWorkByTeacher;
+//
+//  @Column(name = "team_work_by_expert")
+//  @Enumerated(EnumType.STRING)
+//  private TeamWork teamWorkByExpert;
+//
+//  @Column(name = "getting_things_done_by_teacher")
+//  @Enumerated(EnumType.STRING)
+//  private GettingThingsDone gettingThingsDoneByTeacher;
+//
+//  @Column(name = "getting_things_done_by_expert")
+//  @Enumerated(EnumType.STRING)
+//  private GettingThingsDone getGettingThingsDoneByExpert;
+//
+//  @Column(name = "active_communicator_by_teacher")
+//  @Enumerated(EnumType.STRING)
+//  private ActiveCommunicator activeCommunicatorByTeacher;
+//
+//  @Column(name = "active_communicator_by_expert")
+//  @Enumerated(EnumType.STRING)
+//  private ActiveCommunicator activeCommunicatorByExpert;
+
 
   public Integer getIncomingTest() {
     return incomingTest;
@@ -210,6 +294,200 @@ public class Student {
   public void setExpertFeedback(String expertFeedback) {
     this.expertFeedback = expertFeedback;
   }
+
+  public Integer getInterviewerScore() {
+    return interviewerScore;
+  }
+
+  public void setInterviewerScore(Integer interviewerScore) {
+    this.interviewerScore = interviewerScore;
+  }
+
+  public String getInterviewerFeedback() {
+    return interviewerFeedback;
+  }
+
+  public void setInterviewerFeedback(String interviewerFeedback) {
+    this.interviewerFeedback = interviewerFeedback;
+  }
+
+  public Integer getTest1Mark() {
+    return test1Mark;
+  }
+
+  public void setTest1Mark(Integer test1Mark) {
+    this.test1Mark = test1Mark;
+  }
+
+  public Integer getTest2Mark() {
+    return test2Mark;
+  }
+
+  public void setTest2Mark(Integer test2Mark) {
+    this.test2Mark = test2Mark;
+  }
+
+  public Integer getTest3Mark() {
+    return test3Mark;
+  }
+
+  public void setTest3Mark(Integer test3Mark) {
+    this.test3Mark = test3Mark;
+  }
+
+  public Integer getTest4Mark() {
+    return test4Mark;
+  }
+
+  public void setTest4Mark(Integer test4Mark) {
+    this.test4Mark = test4Mark;
+  }
+
+  public Integer getTest5Mark() {
+    return test5Mark;
+  }
+
+  public void setTest5Mark(Integer test5Mark) {
+    this.test5Mark = test5Mark;
+  }
+
+  public Integer getIntermediateBasTest() {
+    return intermediateBasTest;
+  }
+
+  public void setIntermediateBasTest(Integer intermediateBasTest) {
+    this.intermediateBasTest = intermediateBasTest;
+  }
+
+  public Integer getIntermediateLanguageTest() {
+    return intermediateLanguageTest;
+  }
+
+  public void setIntermediateLanguageTest(Integer intermediateLanguageTest) {
+    this.intermediateLanguageTest = intermediateLanguageTest;
+  }
+
+  public Integer getFinalBasTest() {
+    return finalBasTest;
+  }
+
+  public void setFinalBasTest(Integer finalBasTest) {
+    this.finalBasTest = finalBasTest;
+  }
+
+  public Integer getFinalLanguageTest() {
+    return finalLanguageTest;
+  }
+
+  public void setFinalLanguageTest(Integer finalLanguageTest) {
+    this.finalLanguageTest = finalLanguageTest;
+  }
+
+  public LearningAbility getLearningAbilityByTeacher() {
+    return learningAbilityByTeacher;
+  }
+
+  public void setLearningAbilityByTeacher(
+      LearningAbility learningAbilityByTeacher) {
+    this.learningAbilityByTeacher = learningAbilityByTeacher;
+  }
+
+//  public LearningAbility getLearningAbilityByExpert() {
+//    return learningAbilityByExpert;
+//  }
+
+//  public void setLearningAbilityByExpert(
+//      LearningAbility learningAbilityByExpert) {
+//    this.learningAbilityByExpert = learningAbilityByExpert;
+//  }
+//
+//  public OverallTechnicalCompetence getOverallTechnicalCompetenceByTeacher() {
+//    return overallTechnicalCompetenceByTeacher;
+//  }
+//
+//  public void setOverallTechnicalCompetenceByTeacher(
+//      OverallTechnicalCompetence overallTechnicalCompetenceByTeacher) {
+//    this.overallTechnicalCompetenceByTeacher = overallTechnicalCompetenceByTeacher;
+//  }
+//
+//  public OverallTechnicalCompetence getOverallTechnicalCompetenceByExpert() {
+//    return overallTechnicalCompetenceByExpert;
+//  }
+//
+//  public void setOverallTechnicalCompetenceByExpert(
+//      OverallTechnicalCompetence overallTechnicalCompetenceByExpert) {
+//    this.overallTechnicalCompetenceByExpert = overallTechnicalCompetenceByExpert;
+//  }
+//
+//  public PassionalInitiative getPassionalInitiativeByTeacher() {
+//    return passionalInitiativeByTeacher;
+//  }
+//
+//  public void setPassionalInitiativeByTeacher(
+//      PassionalInitiative passionalInitiativeByTeacher) {
+//    this.passionalInitiativeByTeacher = passionalInitiativeByTeacher;
+//  }
+//
+//  public PassionalInitiative getPassionalInitiativeByExpert() {
+//    return passionalInitiativeByExpert;
+//  }
+//
+//  public void setPassionalInitiativeByExpert(
+//      PassionalInitiative passionalInitiativeByExpert) {
+//    this.passionalInitiativeByExpert = passionalInitiativeByExpert;
+//  }
+//
+//  public TeamWork getTeamWorkByTeacher() {
+//    return teamWorkByTeacher;
+//  }
+//
+//  public void setTeamWorkByTeacher(TeamWork teamWorkByTeacher) {
+//    this.teamWorkByTeacher = teamWorkByTeacher;
+//  }
+//
+//  public TeamWork getTeamWorkByExpert() {
+//    return teamWorkByExpert;
+//  }
+//
+//  public void setTeamWorkByExpert(TeamWork teamWorkByExpert) {
+//    this.teamWorkByExpert = teamWorkByExpert;
+//  }
+//
+//  public GettingThingsDone getGettingThingsDoneByTeacher() {
+//    return gettingThingsDoneByTeacher;
+//  }
+//
+//  public void setGettingThingsDoneByTeacher(
+//      GettingThingsDone gettingThingsDoneByTeacher) {
+//    this.gettingThingsDoneByTeacher = gettingThingsDoneByTeacher;
+//  }
+//
+//  public GettingThingsDone getGetGettingThingsDoneByExpert() {
+//    return getGettingThingsDoneByExpert;
+//  }
+//
+//  public void setGetGettingThingsDoneByExpert(
+//      GettingThingsDone getGettingThingsDoneByExpert) {
+//    this.getGettingThingsDoneByExpert = getGettingThingsDoneByExpert;
+//  }
+//
+//  public ActiveCommunicator getActiveCommunicatorByTeacher() {
+//    return activeCommunicatorByTeacher;
+//  }
+//
+//  public void setActiveCommunicatorByTeacher(
+//      ActiveCommunicator activeCommunicatorByTeacher) {
+//    this.activeCommunicatorByTeacher = activeCommunicatorByTeacher;
+//  }
+//
+//  public ActiveCommunicator getActiveCommunicatorByExpert() {
+//    return activeCommunicatorByExpert;
+//  }
+//
+//  public void setActiveCommunicatorByExpert(
+//      ActiveCommunicator activeCommunicatorByExpert) {
+//    this.activeCommunicatorByExpert = activeCommunicatorByExpert;
+//  }
 
   @Override
   public boolean equals(Object otherObject) {
