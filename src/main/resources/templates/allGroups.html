@@ -6,10 +6,10 @@
   <link rel="stylesheet" type="text/css"
         href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"/>
   <link rel="stylesheet" type="text/css"
-        href="/css/student-modal.css"/>
+        href="/css/group-modal.css"/>
   <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
   <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-  <script src="/js/student.js"></script>
+  <script src="/js/group.js"></script>
 </head>
 <body>
 <h1>
@@ -17,14 +17,14 @@
 </h1>
 
 <div class="col-md-2"></div>
-<div class="col-md-9">
-<ul class="nav nav-tabs">
-  <li><a href="admin.html">Users</a></li>
-  <li class="active"><a href="#">Students</a></li>
-  <li><a href="allGroups.html">Groups</a></li>
-</ul>
+<div class="col-md-12">
+  <ul class="nav nav-tabs">
+    <li><a href="admin.html">Users</a></li>
+    <li><a href="allStudents.html">Students</a></li>
+    <li class="active"><a href="#">Groups</a></li>
+  </ul>
 </div>
 
-<div th:replace="fragments/students :: students"></div>
+<div th:replace="fragments/groups :: groups"></div>
 </body>
 </html>
