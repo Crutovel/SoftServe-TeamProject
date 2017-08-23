@@ -59,7 +59,7 @@ public class EventRepositoryImpl extends QueryDslRepositorySupport implements
       List<Event> allEventsBeforeStarfrom = from(QEvent.event)
           .where(getEventsBeforeStart(start)).fetch();
       for (Event event : allEventsBeforeStarfrom) {
-        if (event.getDateTime().plusMinutes(event.getDuration()).isAfter(start)) {
+        if (event.getEnd().isAfter(start)) {
           crossDate.add(event);
         }
       }

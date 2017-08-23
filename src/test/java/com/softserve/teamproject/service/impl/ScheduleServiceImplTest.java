@@ -53,7 +53,7 @@ public class ScheduleServiceImplTest {
 
     //Assert
     assertEquals(EXPECTED_SIZE, events.size());
-    events.forEach(event -> assertTrue(week.contains(event.getDateTime().toLocalDate())));
+    events.forEach(event -> assertTrue(week.contains(event.getStart().toLocalDate())));
   }
 
   @TestSchedule
@@ -67,7 +67,7 @@ public class ScheduleServiceImplTest {
     List<EventResource> events = scheduleService.getLastWeekEvents(CURRENT_GROUP_ID);
 
     //Assert
-    events.forEach(event -> assertTrue(week.contains(event.getDateTime().toLocalDate())));
+    events.forEach(event -> assertTrue(week.contains(event.getStart().toLocalDate())));
   }
 
   @TestSchedule
