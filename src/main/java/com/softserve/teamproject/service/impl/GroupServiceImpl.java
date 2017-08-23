@@ -1,9 +1,12 @@
 package com.softserve.teamproject.service.impl;
 
+import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.GroupsFilter;
+import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Status;
+import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
@@ -16,6 +19,7 @@ import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.validation.GroupValidator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.ValidationException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -211,5 +215,13 @@ public class GroupServiceImpl implements GroupService {
     Set<GroupResource> groupResources = new HashSet<>();
     groups.forEach(group -> groupResources.add(groupResourceAssembler.toResource(group)));
     return groupResources;
+  }
+
+  @Override
+  public List<GroupDto> getAllGroupsDto() {
+    List<Group> allGroups = groupRep.findAll();
+    return allGroups.stream()
+        .map(GroupDto::new)
+        .collect(Collectors.toList());
   }
 }

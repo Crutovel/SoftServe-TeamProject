@@ -1,6 +1,8 @@
 package com.softserve.teamproject.service;
 
+import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.GroupsFilter;
+import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
@@ -40,4 +42,7 @@ public interface GroupService {
    */
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
   Set<GroupResource> getGroupResourcesFromUserLocation(String principalName);
+
+  @PreAuthorize("hasAnyAuthority('coordinator', 'admin')")
+  public List<GroupDto> getAllGroupsDto();
 }
