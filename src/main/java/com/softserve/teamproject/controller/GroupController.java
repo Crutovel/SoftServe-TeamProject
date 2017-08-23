@@ -2,7 +2,6 @@ package com.softserve.teamproject.controller;
 
 import com.softserve.teamproject.dto.GroupsFilter;
 import com.softserve.teamproject.entity.Group;
-import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.resource.GroupResource;
 import com.softserve.teamproject.service.GroupService;
 import com.softserve.teamproject.service.TeacherGroupsManipulationService;
@@ -123,9 +122,8 @@ public class GroupController {
   @ApiOperation(value = "Update group", response = Group.class)
   public GroupResource editGroup(@RequestBody Group group, @PathVariable Integer id, Principal principal) {
     group.setId(id);
-    Status currentStatus = groupService.getGroupById(id).getStatus();
     groupValidator.fieldsCheck(group);
-    return groupService.updateGroup(group, currentStatus, principal.getName());
+    return groupService.updateGroup(group, group.getStatus(), principal.getName());
   }
 
   /**

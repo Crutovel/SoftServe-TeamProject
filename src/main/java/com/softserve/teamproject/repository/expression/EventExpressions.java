@@ -2,6 +2,7 @@ package com.softserve.teamproject.repository.expression;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.softserve.teamproject.entity.QEvent;
+import com.softserve.teamproject.entity.Room;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,5 +34,11 @@ public class EventExpressions {
 
   public static BooleanExpression getNotKeyDates() {
     return QEvent.event.eventType.isKeyDate.eq(false);
+  }
+
+  public static BooleanExpression getCrossedEvents(LocalDateTime start, LocalDateTime finish,
+      Integer roomId) {
+    return QEvent.event.start.before(finish).and(QEvent.event.end.after(start))
+        .and(QEvent.event.room.id.eq(roomId));
   }
 }

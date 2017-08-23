@@ -1,5 +1,7 @@
 package com.softserve.teamproject.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.softserve.teamproject.entity.Group;
@@ -7,10 +9,12 @@ import com.softserve.teamproject.entity.deserializer.GroupDeserializer;
 import com.softserve.teamproject.entity.deserializer.GroupSerializer;
 import com.softserve.teamproject.entity.deserializer.LocalDateDeserializer;
 import com.softserve.teamproject.entity.serializer.LocalDateSerializer;
+import com.softserve.teamproject.validation.ValidCopyPasteSchedule;
 import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@ValidCopyPasteSchedule
 public class CopyPasteScheduleWrapper {
 
   @NotNull(message = "{NotNull.copyPasteScheduleWrapper.group}")
@@ -24,11 +28,13 @@ public class CopyPasteScheduleWrapper {
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate copyWeekDate;
 
+  @JsonInclude(Include.NON_NULL)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate pasteWeekDate;
 
+  @JsonInclude(Include.NON_NULL)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

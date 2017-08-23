@@ -29,6 +29,7 @@ import javax.validation.ValidationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,8 @@ public class GroupServiceImplTest {
   private final String COORDINATOR_OTHER_LOCATION = "LukasLukichich";
   private final String TEACHER_WITHOUT_GROUPS = "NogroupsUser";
   private final String TEACHER_LOCATION_WITHOUT_GROUPS = "NoOlegShvets";
+  @Mock
+  GroupScheduler scheduler;
   @Spy
   private GroupResourceAssembler groupResourceAssembler;
   @Autowired
@@ -71,6 +74,7 @@ public class GroupServiceImplTest {
     MockitoAnnotations.initMocks(this);
     doNothing().when(groupResourceAssembler).initLinks(any(), any());
     groupService.setGroupResourceAssembler(groupResourceAssembler);
+    groupService.setScheduler(scheduler);
   }
 
   @TestGroup

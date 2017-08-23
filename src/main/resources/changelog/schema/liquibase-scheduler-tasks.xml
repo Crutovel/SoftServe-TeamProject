@@ -1,0 +1,62 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+  <changeSet id="scheduler-1" author="TDK">
+    <createTable tableName="task_scheduler">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="date_Of_Update" type="date">
+        <constraints nullable="false"/>
+      </column>
+      <column name="group_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="status_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet id="scheduler-2" author="TDK">
+    <createIndex tableName="task_scheduler" indexName="fk_task_scheduler_group_idx">
+      <column name="group_id" type="INT"/>
+    </createIndex>
+    <createIndex tableName="task_scheduler" indexName="fk_task_scheduler_status_idx">
+      <column name="status_id" type="INT"/>
+    </createIndex>
+    <addForeignKeyConstraint baseTableName="task_scheduler" baseColumnNames="group_id"
+      constraintName="fk_task_scheduler_group" referencedTableName="educational_group"
+      referencedColumnNames="id"/>
+    <addForeignKeyConstraint baseTableName="task_scheduler" baseColumnNames="status_id"
+      constraintName="fk_task_scheduler_status" referencedTableName="status"
+      referencedColumnNames="id"/>
+  </changeSet>
+  <changeSet id="scheduler-3" author="TDK">
+    <addNotNullConstraint tableName="educational_group" columnName="start_date" columnDataType="DATE"/>
+    <addNotNullConstraint tableName="educational_group" columnName="finish_date" columnDataType="DATE"/>
+  </changeSet>
+  <changeSet id="scheduler-4" author="TDK">
+    <renameTable oldTableName="template" newTableName="key_event_template"/>
+    <addColumn tableName="key_event_template">
+      <column name="template_order" type="INT"/>
+      <column name="rel" type="INT"/>
+    </addColumn>
+  </changeSet>
+  <changeSet author="TDK" id="scheduler-5">
+    <createTable tableName="status_template">
+      <column autoIncrement="true" name="id" type="INT">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="status_id" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="strategy_id" type="INT"/>
+      <column name="duration" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="template_order" type="INT"/>
+      <column name="rel" type="INT"/>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>

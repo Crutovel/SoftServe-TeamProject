@@ -11,6 +11,6 @@ public class RoomSerializer extends JsonSerializer<Room> {
   @Override
   public void serialize(Room room, JsonGenerator generator,
       SerializerProvider provider) throws IOException {
-    generator.writeString(room.getNumber());
+    generator.writeString(room.getId().toString());
   }
 }

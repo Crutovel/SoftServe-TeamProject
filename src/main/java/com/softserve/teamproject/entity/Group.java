@@ -54,16 +54,18 @@ public class Group {
   @JsonDeserialize(using = LocationDeserializer.class)
   private Location location;
 
-  @Column(name = "start_date", columnDefinition = "DATE")
+  @Column(name = "start_date", columnDefinition = "DATE", nullable = false)
   @DateTimeFormat(pattern = "dd/MM/yyyy")
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
+  @NotNull
   private LocalDate startDate;
 
-  @Column(name = "finish_date", columnDefinition = "DATE")
+  @Column(name = "finish_date", columnDefinition = "DATE", nullable = false)
   @DateTimeFormat(pattern = "dd/MM/yyyy")
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
+  @NotNull
   private LocalDate finishDate;
 
   @ManyToOne

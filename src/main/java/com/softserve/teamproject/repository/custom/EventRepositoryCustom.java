@@ -16,12 +16,14 @@ public interface EventRepositoryCustom {
 
   List<Event> getEventsByTime(LocalDateTime start, LocalDateTime finish);
 
-  List<Event> getCrossEvents(LocalDateTime start, LocalDateTime finish);
+  Event getCrossEvents(LocalDateTime start, LocalDateTime finish, Integer roomId);
+
+  Event getCrossEvents(LocalDateTime start, LocalDateTime finish, Integer roomId, Integer eventId);
 
   Event getEventByEventTypeId(Integer eventTypeId, Integer groupId);
 
   List<Event> getNotKeyEventsByGroupId(Integer groupId, LocalDateTime start,
       LocalDateTime finish);
 
-  List<Event> getEventsByGroupId(Integer groupId) ;
+  List<Event> getEventsByGroupId(Integer groupId);
 }

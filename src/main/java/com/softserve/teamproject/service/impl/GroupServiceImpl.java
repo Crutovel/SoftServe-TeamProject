@@ -30,6 +30,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class GroupServiceImpl implements GroupService {
 
+  private GroupScheduler scheduler;
   private GroupRepository groupRep;
   private UserRepository userRepository;
   private StatusRepository statusRepository;
@@ -45,6 +46,11 @@ public class GroupServiceImpl implements GroupService {
   public void setMessageByLocaleService(
       MessageByLocaleService messageByLocaleService) {
     this.messageByLocaleService = messageByLocaleService;
+  }
+
+  @Autowired
+  public void setScheduler(GroupScheduler scheduler) {
+    this.scheduler = scheduler;
   }
 
   @Autowired
@@ -108,6 +114,7 @@ public class GroupServiceImpl implements GroupService {
     Status status = statusRepository.getStatusByName(plannedGroupStatus);
     group.setStatus(status);
     group = groupRep.save(group);
+    scheduler.updateTasks(group);
     return groupResourceAssembler.toResource(group);
   }
 
@@ -126,6 +133,7 @@ public class GroupServiceImpl implements GroupService {
     if (group == null) {
       throw new ValidationException(messageByLocaleService.getMessage("valid.error.group.notExist"));
     }
+    scheduler.clearTasks(group);
     groupValidator.checkCoordinatorLocationToManipulateGroup(user, group);
     if (!group.getStatus().getName().equalsIgnoreCase(plannedGroupStatus)) {
       group.setDeleted(true);
@@ -155,6 +163,7 @@ public class GroupServiceImpl implements GroupService {
     User user = userRepository.getUserByNickName(userName);
     groupValidator.checkGroupEditPermissions(user, group, currentStatus);
     group = groupRep.save(group);
+    scheduler.updateTasks(group);
     return groupResourceAssembler.toResource(group);
   }
 

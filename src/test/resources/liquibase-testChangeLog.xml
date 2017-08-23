@@ -3,5 +3,6 @@
    <include file="changelog/schema/liquibase-initialChangeLog.xml"/>
    <include file="changelog/schema/liquibase-addCvChangeLog.xml"/>
    <include file="changelog/schema/liquibase-changeLog-studentTable.xml"/>
+   <include file="changelog/schema/liquibase-scheduler-tasks.xml"/>
    <include file="changelog/schema/liquibase-changeLog-eventTableUpdate.xml"/>
 </databaseChangeLog>

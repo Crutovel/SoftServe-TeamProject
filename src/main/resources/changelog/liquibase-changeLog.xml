@@ -4,6 +4,7 @@
    <include file="changelog/schema/liquibase-addCvChangeLog.xml"/>
    <include file="changelog/schema/liquibase-changeLog-studentTable.xml"/>
    <include file="changelog/schema/liquibase-changeImageTypeChangeLog.xml"/>
+   <include file="changelog/schema/liquibase-scheduler-tasks.xml"/>
    <include file="changelog/schema/liquibase-changeLog-eventTableUpdate.xml"/>
    <!-- this changelog has to be last one -->
    <include file="changelog/data/liquibase-testData.xml"/>
