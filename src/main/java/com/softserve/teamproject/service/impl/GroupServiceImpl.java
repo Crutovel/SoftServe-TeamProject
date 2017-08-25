@@ -1,18 +1,13 @@
 package com.softserve.teamproject.service.impl;
 
 import com.softserve.teamproject.dto.EditGroupDto;
-import com.softserve.teamproject.dto.EditStudentDto;
 import com.softserve.teamproject.dto.GroupDto;
 import com.softserve.teamproject.dto.GroupsFilter;
-import com.softserve.teamproject.dto.StudentDto;
 import com.softserve.teamproject.entity.BudgetOwner;
-import com.softserve.teamproject.entity.EnglishLevel;
-import com.softserve.teamproject.entity.Expert;
 import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Location;
 import com.softserve.teamproject.entity.Specialization;
 import com.softserve.teamproject.entity.Status;
-import com.softserve.teamproject.entity.Student;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.entity.assembler.GroupResourceAssembler;
 import com.softserve.teamproject.entity.resource.GroupResource;
@@ -185,7 +180,8 @@ public class GroupServiceImpl implements GroupService {
   public GroupResource updateGroup(Group group, Status currentStatus, String userName)
       throws AccessDeniedException {
     if (!groupValidator.isValidGroupName(group)) {
-      throw new ValidationException(messageByLocaleService.getMessage("valid.error.group.exist"));
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.error.group.exist"));
     }
     User user = userRepository.getUserByNickName(userName);
     groupValidator.checkGroupEditPermissions(user, group, currentStatus);

@@ -6,9 +6,7 @@ import static com.softserve.teamproject.utils.DateUtil.getSundayDateOfWeek;
 
 import com.softserve.teamproject.dto.CopyPasteScheduleWrapper;
 import com.softserve.teamproject.dto.EventDto;
-import com.softserve.teamproject.dto.EventResponseWrapper;
 import com.softserve.teamproject.dto.KeyDateDto;
-import com.softserve.teamproject.dto.KeyDateResponseDto;
 import com.softserve.teamproject.dto.ScheduleResponseWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.Group;
@@ -28,9 +26,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 
 @Service
@@ -260,18 +255,11 @@ public class ScheduleServiceImpl implements ScheduleService {
    * invalid events.
    */
 
-  public EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result) {
-    List<KeyDateResponseDto> invalidEvents = new ArrayList<>();
-    result.getFieldErrors().forEach(error -> {
-      events.remove(KeyDateDto.class.cast(error.getRejectedValue()));
-      invalidEvents
-          .add(((KeyDateDto) error.getRejectedValue()).toResponseDto(error.getDefaultMessage()));
-    });
-
+  public List<EventResource> addKeyDates(List<KeyDateDto> events) {
     List<Event> savedEvents = saveKeyDates(events.stream().map(
         KeyDateDto::toEntity).collect(Collectors.toList()));
 
-    return new EventResponseWrapper(convertToResource(savedEvents), invalidEvents);
+    return convertToResource(savedEvents);
   }
 
   private List<Event> saveKeyDates(List<Event> events) {
@@ -371,13 +359,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     if (pasteWeekDate != null) {
       start = getMondayDateOfWeek(pasteWeekDate);
+      LocalDate temp = LocalDate.now();
+      if (start.isBefore(temp)) {
+        start = temp;
+      }
       end = getSundayDateOfWeek(pasteWeekDate);
     } else {
-      if (copyWeekDate.isBefore(LocalDate.now())) {
-        start = LocalDate.now();
-      } else {
-        start = copyWeekDate;
-      }
+      start = LocalDate.now();
       end = pasteEnd;
     }
     generateEventsForPaste(copyEvents, start, end, correct, incorrect);

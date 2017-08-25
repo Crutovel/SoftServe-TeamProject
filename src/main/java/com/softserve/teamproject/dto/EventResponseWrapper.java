@@ -24,6 +24,10 @@ public class EventResponseWrapper {
     this.invalid = invalid;
   }
 
+  public EventResponseWrapper() {
+
+  }
+
   public EventResponseWrapper(List<EventResource> succeed, List<KeyDateResponseDto> invalid) {
     this.succeed = succeed;
     this.invalid = invalid;

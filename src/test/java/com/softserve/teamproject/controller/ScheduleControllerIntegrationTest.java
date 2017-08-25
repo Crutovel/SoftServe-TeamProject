@@ -18,7 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softserve.teamproject.dto.EventsFilter;
 import com.softserve.teamproject.dto.KeyDateDto;
-import com.softserve.teamproject.dto.KeyDateWrapper;
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.service.TestSchedule;
@@ -315,13 +314,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.succeed[0].start", is(EXPECTED_DATE)))
@@ -343,13 +340,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.succeed", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.succeed[0].start", is(EXPECTED_DATE)))
@@ -371,13 +366,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(null, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.invalid[0].groupId", isEmptyOrNullString()))
@@ -396,13 +389,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, null, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.invalid[0].eventTypeId", isEmptyOrNullString()))
@@ -423,13 +414,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.invalid[0].date", is(EXPECTED_DATE)))
@@ -449,13 +438,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
@@ -475,13 +462,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));
@@ -500,13 +485,11 @@ public class ScheduleControllerIntegrationTest {
     final String TESTED_URL = "/events/demo";
     List<KeyDateDto> dtoList = new ArrayList<>();
     dtoList.add(getKeyDateDto(GROUP_ID, EVENT_TYPE, date));
-    KeyDateWrapper wrapper = new KeyDateWrapper();
-    wrapper.setDates(dtoList);
 
     //Act&Assert
     mvc.perform(post(TESTED_URL)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(wrapper)))
+        .content(new ObjectMapper().writeValueAsString(dtoList)))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.invalid", hasSize(EXPECTED_SIZE)))
         .andExpect(jsonPath("$.invalid[0].errorMessage", is(EXPECTED_MESSAGE)));

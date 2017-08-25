@@ -4,14 +4,12 @@ import static com.softserve.teamproject.repository.expression.EventExpressions.e
 import static com.softserve.teamproject.repository.expression.EventExpressions.getCrossedEvents;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventBetweenDates;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getEventByGroupId;
-import static com.softserve.teamproject.repository.expression.EventExpressions.getEventsBeforeStart;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getKeyDates;
 import static com.softserve.teamproject.repository.expression.EventExpressions.getNotKeyDates;
 
 import com.softserve.teamproject.entity.Event;
 import com.softserve.teamproject.entity.QEvent;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 

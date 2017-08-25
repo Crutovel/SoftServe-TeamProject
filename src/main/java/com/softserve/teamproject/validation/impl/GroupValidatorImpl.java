@@ -4,6 +4,7 @@ import com.softserve.teamproject.entity.Group;
 import com.softserve.teamproject.entity.Status;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.GroupRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.validation.GroupValidator;
 import java.lang.reflect.Field;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,17 @@ import org.springframework.stereotype.Component;
 public class GroupValidatorImpl implements GroupValidator {
 
   private GroupRepository groupRepository;
+  private MessageByLocaleService messageByLocaleService;
 
   @Autowired
   public void setGroupRepository(GroupRepository groupRepository) {
     this.groupRepository = groupRepository;
+  }
+
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
   }
 
   /**
@@ -69,38 +77,43 @@ public class GroupValidatorImpl implements GroupValidator {
   @Override
   public boolean isValidGroupName(Group group) {
     Group currentGroup = groupRepository.findByName(group.getName());
-    if (currentGroup == null) {
-      return true;
-    }
-    if (currentGroup.getName().equals(group.getName()) && currentGroup.getId() != group.getId()) {
-      return false;
-    }
-    return true;
+    return currentGroup == null || !currentGroup.getName().equals(group.getName())
+        || currentGroup.getId().equals(group.getId());
   }
 
   @Override
   public void checkCoordinatorLocationToManipulateGroup(User user, Group group) {
     if (user.getRole().getName().equals("coordinator")
         && !user.getLocation().equals(group.getLocation())) {
-      throw new AccessDeniedException("Coordinator can't delete group in alien location");
+      throw new AccessDeniedException(
+          messageByLocaleService.getMessage("auth.group.delete.coordinator")
+      );
     }
   }
 
   @Override
-  public void checkGroupEditPermissions(User user, Group group, Status currentStatus){
+  public void checkGroupEditPermissions(User user, Group group, Status currentStatus) {
     if (user.getRole().getName().equals("teacher")) {
       if (group.getTeachers().contains(user) && !user.getLocation().equals(group.getLocation())) {
-        throw new AccessDeniedException("Teacher can't edit group in alien location");
+        throw new AccessDeniedException(
+            messageByLocaleService.getMessage("auth.group.edit.teacher.alienLocation")
+        );
       } else if (!group.getTeachers().contains(user)) {
-        throw new AccessDeniedException("Teacher can't edit group which is not assigned to him.");
+        throw new AccessDeniedException(
+            messageByLocaleService.getMessage("auth.group.edit.teacher.notAssigned")
+        );
       } else if (group.getTeachers().contains(user)
           && user.getLocation().equals(group.getLocation()) && currentStatus
           .getName().equalsIgnoreCase("graduated")) {
-        throw new AccessDeniedException("Teacher can't edit group which is graduated.");
+        throw new AccessDeniedException(
+            messageByLocaleService.getMessage("auth.group.edit.teacher.groupGraduated")
+        );
       }
     } else if (user.getRole().getName().equals("coordinator")
         && !user.getLocation().equals(group.getLocation())) {
-      throw new AccessDeniedException("Coordinator can't edit group in alien location");
+      throw new AccessDeniedException(
+          messageByLocaleService.getMessage("auth.group.edit.coordinator.alienLocation")
+      );
     }
   }
 }

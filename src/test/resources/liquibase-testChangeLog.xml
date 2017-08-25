@@ -5,4 +5,5 @@
    <include file="changelog/schema/liquibase-changeLog-studentTable.xml"/>
    <include file="changelog/schema/liquibase-scheduler-tasks.xml"/>
    <include file="changelog/schema/liquibase-changeLog-eventTableUpdate.xml"/>
+   <include file="changelog/schema/liquibase-changeImageTypeChangeLog.xml"/>
 </databaseChangeLog>

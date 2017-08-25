@@ -39,7 +39,7 @@ public interface ScheduleService {
   EventResource getEvent(Integer id);
 
   @PreAuthorize("hasAnyAuthority('teacher','coordinator', 'admin')")
-  EventResponseWrapper addKeyDates(List<KeyDateDto> events, BindingResult result);
+  List<EventResource> addKeyDates(List<KeyDateDto> events);
 
   @PreAuthorize("hasAuthority('coordinator')")
   ScheduleResponseWrapper addSchedule(List<Event> events, Integer groupId, Principal principal)

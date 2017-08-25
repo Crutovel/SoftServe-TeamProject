@@ -12,11 +12,13 @@ import java.util.stream.Stream;
 public class DateUtil {
 
   public static LocalDate getMondayDateOfWeek(LocalDate weekDate) {
-    return weekDate.minusDays(weekDate.getDayOfWeek().getValue() - 1);
+    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
+    return weekDate.with(temporalField, 1);
   }
 
   public static LocalDate getSundayDateOfWeek(LocalDate weekDate) {
-    return weekDate.plusDays(7 - weekDate.getDayOfWeek().getValue());
+    TemporalField temporalField = WeekFields.of(Locale.forLanguageTag("ru")).dayOfWeek();
+    return weekDate.with(temporalField, 7);
   }
 
 
