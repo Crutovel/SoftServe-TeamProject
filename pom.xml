@@ -4,12 +4,12 @@
 
   <groupId>com.softserve</groupId>
   <artifactId>team-project-dp115</artifactId>
-  <version>0.0.6-SNAPSHOT</version>
+  <version>0.0.6</version>
   <packaging>jar</packaging>
   <scm>
     <developerConnection>scm:git:https://github.com/Crutovel/SoftServe-TeamProject
     </developerConnection>
-    <tag>HEAD</tag>
+    <tag>0.0.6-demo</tag>
   </scm>
   <name>team-project-dp115</name>
   <description>DP-115 Team project</description>
