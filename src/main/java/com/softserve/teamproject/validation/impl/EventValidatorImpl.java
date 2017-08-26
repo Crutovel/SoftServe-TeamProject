@@ -8,12 +8,12 @@ import com.softserve.teamproject.repository.EventRepository;
 import com.softserve.teamproject.repository.EventTypeRepository;
 import com.softserve.teamproject.repository.RoomRepository;
 import com.softserve.teamproject.repository.UserRepository;
+import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.validation.EventValidator;
 import java.lang.reflect.Field;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -29,6 +29,7 @@ public class EventValidatorImpl implements EventValidator {
   private EventTypeRepository eventTypeRepository;
   private EventRepository eventRepository;
   private UserRepository userRepository;
+  private MessageByLocaleService messageByLocaleService;
 
   @Autowired
   public void setUserRepository(UserRepository userRepository) {
@@ -50,6 +51,12 @@ public class EventValidatorImpl implements EventValidator {
     this.roomRepository = roomRepository;
   }
 
+  @Autowired
+  public void setMessageByLocaleService(
+      MessageByLocaleService messageByLocaleService) {
+    this.messageByLocaleService = messageByLocaleService;
+  }
+
   /**
    * Method checks whether the room with the specified id exists and whether the time for the event
    * is valid and whether all the fields are present to create a valid event.
@@ -63,19 +70,22 @@ public class EventValidatorImpl implements EventValidator {
     checkLocationPermission(event, user, invalidField);
     checkAllFields(event, invalidField);
     if (!isEventDateValid(event.getStart())) {
-      invalidField.setName("dateTime = " + event.getStart());
-      throw new ValidationException("You cannot set the event time retroactively.");
+      invalidField.setName("startTime = " + event.getStart());
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.schedule.edit.startTime.retroactive")
+      );
     }
     if (!isEventTypeValid(event.getEventType())) {
       invalidField.setName("eventType");
-      throw new ValidationException("The event type doesn't exist or incorrect.");
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.schedule.edit.eventType.incorrect")
+      );
     }
     if (!isEventInFreeRoom(event)) {
       invalidField.setName("room id=" + event.getRoom().getId());
       throw new ValidationException(
-          "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
-              .getName() + " has already been taken for another event on " + DateTimeFormatter
-              .ofPattern("yyyy-MM-dd HH:mm").format(event.getStart()));
+          messageByLocaleService.getMessage("valid.schedule.edit.room.isBusy")
+              + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(event.getStart()));
     }
   }
 
@@ -107,8 +117,8 @@ public class EventValidatorImpl implements EventValidator {
         if (field.get(event) == null && !(field.getName().equals("id"))) {
           invalidField.setName(field.getName());
           throw new ValidationException(
-              "Please, provide the relevant information for the field -" + field.getName()
-                  + "- to create an event.");
+              messageByLocaleService.getMessage("valid.checkAllFields")
+                  + field.getName());
         }
       } catch (IllegalAccessException e) {
         e.printStackTrace();
@@ -128,26 +138,32 @@ public class EventValidatorImpl implements EventValidator {
     if (!event.getGroup().getLocation().equals(user.getLocation())) {
       invalidField.setName("location");
       throw new AccessDeniedException(
-          ": The coordinators can create the schedule only in their location");
+          messageByLocaleService.getMessage("auth.schedule.create.coordinator.alienLocation")
+      );
     }
     if (event.getId() == null) {
       invalidField.setName("eventId");
-      throw new ValidationException("Please specify the event you are going to change.");
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.schedule.edit.eventId.isNull")
+      );
     }
     if (!isEventTypeValid(event.getEventType())) {
       invalidField.setName("eventType");
-      throw new ValidationException("The event type doesn't exist or inappropriate.");
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.schedule.edit.eventType.incorrect")
+      );
     }
     if (!doesRoomExist(event.getRoom())) {
       invalidField.setName("room id=" + event.getRoom().getId());
-      throw new ValidationException("The room doesn't exist.");
+      throw new ValidationException(
+          messageByLocaleService.getMessage("valid.schedule.edit.room.notExist"));
     }
     if (!isUpdateEventInFreeRoom(event)) {
       invalidField.setName("room id=" + event.getRoom().getId());
       throw new ValidationException(
-          "The room " + event.getRoom().getNumber() + " in " + event.getRoom().getLocation()
-              .getName() + " has already been taken for another event on " + DateTimeFormatter
-              .ofPattern("yyyy-MM-dd HH:mm").format(event.getStart()));
+          messageByLocaleService.getMessage("valid.schedule.edit.room.isBusy")
+              + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(event.getStart())
+      );
     }
   }
 
@@ -195,7 +211,7 @@ public class EventValidatorImpl implements EventValidator {
 
   public boolean isUpdateEventInFreeRoom(Event event) {
     return eventRepository.getCrossEvents(event.getStart(), event.getEnd(),
-        event.getRoom().getId(),event.getId()) == null;
+        event.getRoom().getId(), event.getId()) == null;
   }
 }
 

@@ -71,7 +71,9 @@ public class StudentValidatorImpl implements StudentValidator {
     User user = userRepository.getUserByNickName(userName);
     if (user.getRole().getName().equals("coordinator") && !user.getLocation()
         .equals(group.getLocation())) {
-      throw new AccessDeniedException("Coordinator can't add/edit students in the alien location.");
+      throw new AccessDeniedException(
+          messageByLocaleService.getMessage("auth.student.addEdit.coordinator.alienLocation")
+      );
     }
   }
 

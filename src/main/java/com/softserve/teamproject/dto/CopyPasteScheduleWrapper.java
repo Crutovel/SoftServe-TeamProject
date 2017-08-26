@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@ValidCopyPasteSchedule
+
 public class CopyPasteScheduleWrapper {
 
   @NotNull(message = "{NotNull.copyPasteScheduleWrapper.group}")

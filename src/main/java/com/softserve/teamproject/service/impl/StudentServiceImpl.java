@@ -12,7 +12,6 @@ import com.softserve.teamproject.repository.EnglishLevelRepository;
 import com.softserve.teamproject.repository.ExpertRepository;
 import com.softserve.teamproject.repository.GroupRepository;
 import com.softserve.teamproject.repository.StudentRepository;
-import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.MessageByLocaleService;
 import com.softserve.teamproject.service.StudentService;
 import com.softserve.teamproject.validation.StudentValidator;
@@ -28,7 +27,6 @@ import org.springframework.validation.annotation.Validated;
 public class StudentServiceImpl implements StudentService {
 
   private StudentRepository studentRepository;
-  private UserRepository userRepository;
   private StudentResourceAssembler studentResourceAssembler;
   private GroupRepository groupRepository;
   private StudentValidator studentValidator;
@@ -44,11 +42,6 @@ public class StudentServiceImpl implements StudentService {
   @Autowired
   public void setStudentRepository(StudentRepository studentRepository) {
     this.studentRepository = studentRepository;
-  }
-
-  @Autowired
-  public void setUserRepository(UserRepository userRepository) {
-    this.userRepository = userRepository;
   }
 
   @Autowired
