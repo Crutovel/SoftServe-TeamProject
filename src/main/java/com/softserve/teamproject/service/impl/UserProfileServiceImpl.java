@@ -1,6 +1,5 @@
 package com.softserve.teamproject.service.impl;
 
-import com.softserve.teamproject.dto.UserDto;
 import com.softserve.teamproject.entity.User;
 import com.softserve.teamproject.repository.UserRepository;
 import com.softserve.teamproject.service.UserProfileService;
@@ -24,6 +23,8 @@ public class UserProfileServiceImpl implements UserProfileService {
 
   @Override
   public User getUserProfileWithImage(String principalName) {
-    return userRepository.getUserByNickNameWithImage(principalName);
+    User user = getUserProfile(principalName);
+    user.setImageAsBase64();
+    return user;
   }
 }

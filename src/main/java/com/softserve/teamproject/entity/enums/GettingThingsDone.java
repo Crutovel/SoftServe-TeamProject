@@ -1,4 +1,4 @@
-package com.softserve.teamproject.entity;
+package com.softserve.teamproject.entity.enums;
 
 public enum GettingThingsDone {
   STRONG_AREA,

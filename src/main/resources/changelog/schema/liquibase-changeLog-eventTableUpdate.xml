@@ -6,10 +6,13 @@
       newColumnName="start"
       oldColumnName="datetime"
       tableName="event"/>
+  </changeSet>
+  <changeSet id="dur-2" author="Lev">
     <addColumn tableName="event">
-     <column name="end" type="TIMESTAMP(6)">
-       <constraints nullable="false"/>
-     </column>
+     <column name="end" type="TIMESTAMP(6)"/>
     </addColumn>
+  </changeSet>
+  <changeSet id="dur-3" author="Lev">
+    <addNotNullConstraint tableName="event" columnName="end" columnDataType="TIMESTAMP(6)"/>
   </changeSet>
 </databaseChangeLog>
