@@ -1,12 +1,11 @@
 package com.softserve.teamproject.entity.resource;
 
-import com.softserve.teamproject.entity.ActiveCommunicator;
-import com.softserve.teamproject.entity.Expert;
-import com.softserve.teamproject.entity.GettingThingsDone;
-import com.softserve.teamproject.entity.LearningAbility;
-import com.softserve.teamproject.entity.OverallTechnicalCompetence;
-import com.softserve.teamproject.entity.PassionalInitiative;
-import com.softserve.teamproject.entity.TeamWork;
+import com.softserve.teamproject.entity.enums.ActiveCommunicator;
+import com.softserve.teamproject.entity.enums.GettingThingsDone;
+import com.softserve.teamproject.entity.enums.LearningAbility;
+import com.softserve.teamproject.entity.enums.OverallTechnicalCompetence;
+import com.softserve.teamproject.entity.enums.PassionalInitiative;
+import com.softserve.teamproject.entity.enums.TeamWork;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.stereotype.Component;
 

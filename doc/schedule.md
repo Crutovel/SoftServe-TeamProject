@@ -681,61 +681,55 @@ None
 ### Data Params :
 **Required:**
 
-    {
-        "dates":[
-        	        {
-                        "group":{
-                            "id":integer
-                        },
-                        "eventType":{
-                            "id":integer
-                        },
-                        "date":"yyyy-MM-dd"
-        		    }
-        		]
-
-    }
+        [
+            {
+                "group":{
+                    "id":integer
+                },
+                "eventType":{
+                    "id":integer
+                },
+                "date":"yyyy-MM-dd"
+            }
+        ]
 
 Example:
 
-    {
-            "dates":[
-            	        {
-                            "group":{
-                                "id":1
-                            },
-                            "eventType":{
-                                "id":1
-                            },
-                            "date":"2017-05-15"
-            		    },
-            		      {
-            		        "group":{
-                                "id":1
-                            },
-                            "eventType":{
-                                "id":2
-                            },
-                            "date":"2017-06-09"
-                        },
-                        {
-                            "eventType":{
-                                 "id":2
-                            },
-                            "date":"2017-06-08"
-                        },
-                        {
-                            "group":{
-                                  "id":1
-                            },
-                            "eventType":{
-                                    "id":7
-                            },
-                            "date":"2017-06-08"
-                        }
-            		]
-
+    [
+        {
+            "group":{
+                "id":1
+            },
+            "eventType":{
+                "id":1
+            },
+            "date":"2017-05-15"
+        },
+          {
+            "group":{
+                "id":1
+            },
+            "eventType":{
+                "id":2
+            },
+            "date":"2017-06-09"
+        },
+        {
+            "eventType":{
+                 "id":2
+            },
+            "date":"2017-06-08"
+        },
+        {
+            "group":{
+                  "id":1
+            },
+            "eventType":{
+                    "id":7
+            },
+            "date":"2017-06-08"
         }
+    ]
 
 <a name="add-key-events-data-type"></a>
 ### Data type :

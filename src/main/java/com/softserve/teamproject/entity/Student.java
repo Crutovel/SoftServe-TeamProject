@@ -2,6 +2,12 @@ package com.softserve.teamproject.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.softserve.teamproject.entity.deserializer.ExpertDeserializer;
+import com.softserve.teamproject.entity.enums.ActiveCommunicator;
+import com.softserve.teamproject.entity.enums.GettingThingsDone;
+import com.softserve.teamproject.entity.enums.LearningAbility;
+import com.softserve.teamproject.entity.enums.OverallTechnicalCompetence;
+import com.softserve.teamproject.entity.enums.PassionalInitiative;
+import com.softserve.teamproject.entity.enums.TeamWork;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;

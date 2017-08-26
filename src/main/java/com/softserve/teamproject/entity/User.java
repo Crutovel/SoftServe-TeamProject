@@ -1,8 +1,9 @@
 package com.softserve.teamproject.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.Arrays;
+import com.softserve.teamproject.utils.ImageMaster;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "user")
@@ -45,6 +44,9 @@ public class User {
   @ManyToOne
   @JoinColumn(name = "location_id", referencedColumnName = "id", nullable = false)
   private Location location;
+
+  private static final String PATH = System.getProperty("user.dir")
+      + "/src/main/resources/images/";
 
   public int getId() {
     return id;
@@ -109,6 +111,13 @@ public class User {
 
   public void setLocation(Location location) {
     this.location = location;
+  }
+
+  public void setImageAsBase64() {
+    ImageMaster master = new ImageMaster();
+    Path path = Paths.get(PATH + getImage());
+    String imageBase64 = master.encodeImage(path);
+    setImage(imageBase64);
   }
 
   @Override

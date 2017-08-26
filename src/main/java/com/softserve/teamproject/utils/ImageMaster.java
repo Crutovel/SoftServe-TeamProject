@@ -1,4 +1,4 @@
-package com.softserve.teamproject.dto;
+package com.softserve.teamproject.utils;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import java.io.IOException;
