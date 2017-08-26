@@ -154,24 +154,35 @@ public class ScheduleController {
     return scheduleService.getEvent(id);
   }
 
+  private String getAllConstraintViolations(
+      Set<ConstraintViolation<KeyDateDto>> constraintViolations) {
+    StringBuilder message = new StringBuilder();
+    for (ConstraintViolation<KeyDateDto> violation : constraintViolations) {
+      message.append(violation.getMessage());
+    }
+    return message.toString();
+  }
+
+  private void validateKeyEvents(List<KeyDateDto> src, List<KeyDateDto> validEvents,
+      List<KeyDateResponseDto> invalidEvents) {
+    Set<ConstraintViolation<KeyDateDto>> constraintViolations;
+    for (KeyDateDto date : src) {
+      constraintViolations = validator.validate(date);
+      if (constraintViolations.size() > 0) {
+        invalidEvents.add(date.toResponseDto(getAllConstraintViolations(constraintViolations)));
+      } else {
+        validEvents.add(date);
+      }
+    }
+  }
+
   @PostMapping(value = "/events/demo")
   @ApiOperation(value = "Add key events for selected groups", response = EventResponseWrapper.class)
   public EventResponseWrapper addKeyDates(@ApiParam("Only need date, event type id, group id")
   @RequestBody List<KeyDateDto> dates) {
     List<KeyDateDto> validEvents = new ArrayList<>();
     List<KeyDateResponseDto> invalidEvents = new ArrayList<>();
-    Set<ConstraintViolation<KeyDateDto>> constraintViolations;
-    StringBuilder message = new StringBuilder();
-    for (KeyDateDto date : dates) {
-      constraintViolations = validator.validate(date);
-      if (constraintViolations.size() > 0) {
-        constraintViolations.forEach(violation -> message.append(violation.getMessage()));
-        invalidEvents.add(date.toResponseDto(message.toString()));
-      } else {
-        validEvents.add(date);
-      }
-      message.setLength(0);
-    }
+    validateKeyEvents(dates, validEvents, invalidEvents);
     return new EventResponseWrapper(scheduleService.addKeyDates(validEvents), invalidEvents);
   }
 
