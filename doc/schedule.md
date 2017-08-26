@@ -64,7 +64,23 @@
     - [Data Type](#lastWeekEvents-data-type)
     - [Success Response](#lastWeekEvents-success-response)
     - [Error Response](#lastWeekEvents-error-response)
-    
+- [Add events](#add-events)
+    - [URL](#add-events-url)
+    - [Method](#add-events-method)
+    - [URL Params](#add-events-url-params)
+    - [Data Params](#add-events-data-params)
+    - [Data Type](#add-events-data-type)
+    - [Success Response](#add-events-success-response)
+    - [Error Response](#add-events-error-response)
+- [Edit events](#edit-events)
+    - [URL](#edit-events-url)
+    - [Method](#edit-events-method)
+    - [URL Params](#edit-events-url-params)
+    - [Data Params](#edit-events-data-params)
+    - [Data Type](#edit-events-data-type)
+    - [Success Response](#edit-events-success-response)
+    - [Error Response](#edit-events-error-response)
+
 <a name="events"></a>
 ## Show schedule
 
@@ -950,7 +966,7 @@ application/json
 
 <a name="lastWeekEvents-url"></a>
 ### URL :
-/events/copypaste
+/events/lastweek
 
 <a name="lastWeekEvents-method"></a>
 ### Method :
@@ -1063,4 +1079,237 @@ application/json
     } 
 
      
+[Table of content](#table-of-content)
+
+<a name="add-events"></a>
+## Add event/events
+
+<a name="add-events-url"></a>
+### URL :
+/events
+
+<a name="add-events-method"></a>
+### Method :
+POST
+
+<a name="add-events-url-params"></a>
+### URL Params :
+**Required** `groupid=[integer]`
+
+Example: `groupid=8`
+
+<a name="add-events-data-params"></a>
+### Data Params :
+**Required:**
+
+    [
+        {
+                "start": [yyyy-mm-dd mm:ss],
+                "end": [yyyy-mm-dd mm:ss],
+                "eventType":{
+                  "id":[integer]
+                },
+                "room":{
+                  "id":[integer]
+                }
+        }
+    ]
+
+Example:
+
+    [
+    {
+            "start": "2019-07-25 15:00",
+            "end": "2019-07-25 15:50",
+            "eventType":{
+              "id":9
+            },
+            "room":{
+              "id":1
+            }
+    },{
+            "start": "2019-07-26 16:00",
+            "end": "2019-07-26 16:50",
+            "eventType":{
+              "id":9
+            },
+            "room":{
+              "id":1
+            }
+    }
+    ]
+
+<a name="add-events-data-type"></a>
+### Data type :
+application/json
+
+<a name="add-events-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:**
+
+     {
+     "succeed": [
+            {
+                "eventId": 41,
+                "start": "2019-07-25 15:00",
+                "end": "2019-07-25 15:50",
+                "links": [
+                    {
+                        "rel": "self",
+                        "href": "http://localhost:8080/events/41"
+                    },
+                    {
+                        "rel": "event",
+                        "href": "http://localhost:8080/events/41"
+                    },
+                    {
+                        "rel": "group",
+                        "href": "http://localhost:8080/groups/8"
+                    },
+                    {
+                        "rel": "eventType",
+                        "href": "http://localhost:8080/eventTypes/9"
+                    },
+                    {
+                        "rel": "room",
+                        "href": "http://localhost:8080/rooms/1"
+                    }
+                ]
+            }
+            ],
+     "invalid": [
+            {
+            "start": "2019-07-26 16:00",
+            "end": "2019-07-26 16:50",
+            "room": "1",
+            "eventType": "practice",
+            "message": "The room has already been taken for another event on:2019-07-26 16:00"
+             }
+            ]
+     }
+
+<a name="add-events-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/events?groupid=8"
+    }
+
+**Code:** 400 Bad Request
+
+**Content:** None
+
+[Table of content](#table-of-content)
+
+<a name="edit-events"></a>
+## Edit event/events
+
+<a name="edit-events-url"></a>
+### URL :
+/events
+
+<a name="edit-events-method"></a>
+### Method :
+PUT
+
+<a name="edit-events-url-params"></a>
+### URL Params :
+None
+
+<a name="edit-events-data-params"></a>
+### Data Params :
+**Required:**
+
+    [{
+    	"id":[integer],
+      "start": [yyyy-mm-dd mm:ss],
+      "end": [yyyy-mm-dd mm:ss],
+      "eventType":{
+       "id":[integer]
+        }
+
+    }]
+
+Example:
+
+    [{
+        	"id":12,
+          "start": "2017-07-27 23:00",
+          "end": "2017-07-27 23:22",
+          "eventType":{
+           "id":9
+            }
+
+    }]
+
+<a name="edit-events-data-type"></a>
+### Data type :
+application/json
+
+<a name="edit-events-success-response"></a>
+### Success Response:
+**Code:** 200 OK
+
+**Content:**
+
+     {
+     "succeed": [
+             {
+                 "eventId": 12,
+                 "start": "2017-07-27 23:00",
+                 "end": "2017-07-27 23:22",
+                 "links": [
+                     {
+                         "rel": "self",
+                         "href": "http://localhost:8080/events/12"
+                     },
+                     {
+                         "rel": "event",
+                         "href": "http://localhost:8080/events/12"
+                     },
+                     {
+                         "rel": "group",
+                         "href": "http://localhost:8080/groups/1"
+                     },
+                     {
+                         "rel": "eventType",
+                         "href": "http://localhost:8080/eventTypes/9"
+                     },
+                     {
+                         "rel": "room",
+                         "href": "http://localhost:8080/rooms/1"
+                     }
+                 ]
+             }
+         ],
+         "invalid": []
+     }
+
+<a name="edit-events-error-response"></a>
+### Error Response :
+**Code:** 401 Unauthorized
+
+**Content:**
+
+    {
+        "timestamp": 1500674037140,
+        "status": 401,
+        "error": "Unauthorized",
+        "message": "Unauthorized",
+        "path": "/events"
+    }
+
+**Code:** 400 Bad Request
+
+**Content:** None
+
 [Table of content](#table-of-content)

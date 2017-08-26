@@ -507,7 +507,7 @@ public class ScheduleControllerIntegrationTest {
     LocalDateTime start = LocalDate.parse("2017-08-28").atTime(6, 33);
     LocalDateTime end = LocalDate.parse("2017-08-28").atTime(8, 33);
     final int EXPECTED_SIZE = 1;
-    final String TESTED_URL = "/events/groups/" + GROUP_ID;
+    final String TESTED_URL = String.format("/events?groupid=%d", GROUP_ID);
     List<Event> events = new ArrayList<>();
     events.add(getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, start, end));
 
@@ -534,7 +534,7 @@ public class ScheduleControllerIntegrationTest {
     LocalDateTime end = LocalDate.parse("2017-08-28").atTime(8, 33);
     final int EXPECTED_SIZE_SUCCEED = 0;
     final int EXPECTED_SIZE_INVALID = 1;
-    final String TESTED_URL = "/events/groups/" + GROUP_ID;
+    final String TESTED_URL = String.format("/events?groupid=%d", GROUP_ID);
     List<Event> events = new ArrayList<>();
     events.add(getEvent(GROUP_ID, ROOM_ID, EVENT_TYPE, start, end));
 
@@ -611,7 +611,7 @@ public class ScheduleControllerIntegrationTest {
   public void addSchedule_teacherAuth_forbiddenExpected() throws Exception {
     //Arrange
     final int GROUP_ID = 5;
-    final String TESTED_URL = "/events/groups/" + GROUP_ID;
+    final String TESTED_URL = String.format("/events?groupid=%d", GROUP_ID);
     List<Event> events = new ArrayList<>();
 
     //Act&Assert
