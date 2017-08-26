@@ -179,16 +179,16 @@ public class ScheduleController {
    * Method allows to create a schedule (add all events from the list) for the group with the
    * specified id.
    *
+   * @param groupId is received as a request param
    * @param events list of events in JSON format
-   * @param id id of the selected group as a url parameter
    */
-  @PostMapping(value = "/events/groups/{id}")
+  @PostMapping(value = "/events")
   @ApiOperation(value = "Add schedule (list of events) for the selected group", response = Event.class,
       responseContainer = "List")
   public ScheduleResponseWrapper addSchedule(@RequestBody List<Event> events,
-      @PathVariable Integer id,
-      Principal principal) throws ValidationException {
-    return scheduleService.addSchedule(events, id, principal);
+      @RequestParam(value = "groupid") Integer groupId, Principal principal)
+      throws ValidationException {
+    return scheduleService.addSchedule(events, groupId, principal);
   }
 
   /**
